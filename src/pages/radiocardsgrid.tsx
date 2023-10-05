@@ -50,7 +50,7 @@ export default function RadioCards() {
                                 ? 'ring-2 ring-white ring-opacity-60 ring-offset-2 ring-offset-sky-300'
                                 : ''
                             } 
-                            ${checked ? 'bg-gray-600 bg-opacity-75 ' : 'bg-none hover:bg-gray-300'
+                            ${checked ? 'bg-gray-600 bg-opacity-75 ' : 'bg-gray-300'
                         }
                         text-white relative px-12 py-12 cursor-pointer rounded-lg shadow-md focus:outline-none`
                     }

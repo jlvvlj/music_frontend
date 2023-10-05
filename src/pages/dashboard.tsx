@@ -1,11 +1,7 @@
 import '../app/globals.css'
 import { ThemeProvider } from "@/components/theme-provider"
-
 import { Metadata } from "next"
 import Image from "next/image"
-
-import { Sidebar } from '@/components/music/sidebar'
-import { playlists } from "../components/music/playlists"
 
 import { Button } from "../components/ui/button"
 import {
