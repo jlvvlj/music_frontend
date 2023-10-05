@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function AuthenticationPage() {
   return (
     <>
-      <div className="md:hidden">
+      {/* <div className="md:hidden">
         <Image
           src="/examples/authentication-light.png"
           width={1280}
@@ -32,11 +32,11 @@ export default function AuthenticationPage() {
           alt="Authentication"
           className="hidden dark:block"
         />
-      </div>
+      </div> */}
       <div className="container relative hidden h-[800px] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
         {/* <div className="relative z-20 flex flex-col items-center justify-center px-10 py-16 space-y-8 bg-white dark:bg-zinc-900 lg:px-20 lg:py-24"> */}
         <Link
-          href="/new-dashboard"
+          href="/dashboard"
           className={cn(
             buttonVariants({ variant: "ghost" }),
             "absolute right-4 top-4 md:right-8 md:top-8"

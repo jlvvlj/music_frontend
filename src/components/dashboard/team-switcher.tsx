@@ -49,23 +49,27 @@ import {
 
 const groups = [
   {
-    label: "Personal Account",
+    label: "Miuu Account",
     teams: [
       {
-        label: "Alicia Koch",
+        label: "Administrator",
         value: "personal",
       },
     ],
   },
   {
-    label: "Teams",
+    label: "User Accounts",
     teams: [
       {
-        label: "Acme Inc.",
+        label: "Jazzy Jones",
         value: "acme-inc",
       },
       {
-        label: "Monsters Inc.",
+        label: "DJ Kuddy",
+        value: "monsters",
+      },
+      {
+        label: "Kayla",
         value: "monsters",
       },
     ],
@@ -97,11 +101,11 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
             className={cn("w-[200px] justify-between", className)}
           >
             <Avatar className="mr-2 h-5 w-5">
-              <AvatarImage
+              {/* <AvatarImage
                 src={`https://avatar.vercel.sh/${selectedTeam.value}.png`}
                 alt={selectedTeam.label}
-              />
-              <AvatarFallback>SC</AvatarFallback>
+              /> */}
+              <AvatarFallback>AD</AvatarFallback>
             </Avatar>
             {selectedTeam.label}
             <CaretSortIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />
@@ -156,7 +160,7 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
                     }}
                   >
                     <PlusCircledIcon className="mr-2 h-5 w-5" />
-                    Create Team
+                    Create a new user
                   </CommandItem>
                 </DialogTrigger>
               </CommandGroup>

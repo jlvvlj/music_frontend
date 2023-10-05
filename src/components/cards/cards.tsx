@@ -3,15 +3,15 @@ import Image from "next/image"
 
 import { cn } from "@/lib/utils"
 
-import { DemoCookieSettings } from "./cardsComponents/cookie-settings"
-import { DemoCreateAccount } from "./cardsComponents/create-account"
-import { DemoDatePicker } from "./cardsComponents/date-picker"
-import { DemoGithub } from "./cardsComponents/github-card"
-import { DemoNotifications } from "./cardsComponents/notifications"
-import { DemoPaymentMethod } from "./cardsComponents/payment-method"
-import { DemoReportAnIssue } from "./cardsComponents/report-an-issue"
-import { DemoShareDocument } from "./cardsComponents/share-document"
-import { DemoTeamMembers } from "./cardsComponents/team-members"
+import DemoCookieSettings from "./cookie-settings"
+import DemoCreateAccount from "./create-account"
+import DemoDatePicker from "./date-picker"
+import DemoGithub from "./github-card"
+import DemoNotifications from "./notifications"
+import DemoPaymentMethod from "./payment-method"
+import DemoReportAnIssue from "./report-an-issue"
+import DemoShareDocument from "./share-document"
+import DemoTeamMembers from "./team-members"
 
 export const metadata: Metadata = {
   title: "Cards",
@@ -57,9 +57,9 @@ export default function CardsPage() {
           <DemoContainer>
             <DemoCreateAccount />
           </DemoContainer>
-          <DemoContainer>
+          {/* <DemoContainer>
             <DemoPaymentMethod />
-          </DemoContainer>
+          </DemoContainer> */}
         </div>
         <div className="col-span-2 grid items-start gap-6 lg:col-span-1">
           <DemoContainer>

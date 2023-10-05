@@ -12,25 +12,25 @@ export default function MainNav({
       {...props}
     >
       <Link
-        href="/examples/dashboard"
+        href="/dashboard"
         className="text-sm font-medium transition-colors hover:text-primary"
       >
-        Overview
+        Dashboard
       </Link>
       <Link
-        href="/examples/dashboard"
+        href="/contracts/creation_modal"
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
-        Customers
+        Create Track
       </Link>
       <Link
-        href="/examples/dashboard"
+        href="/music/"
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
-        Products
+        Your Tracks
       </Link>
       <Link
-        href="/examples/dashboard"
+        href="/settings"
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
         Settings

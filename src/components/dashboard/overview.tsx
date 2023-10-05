@@ -117,7 +117,7 @@ export default function Overview() {
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
-          <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
+          <Area type="monotone" dataKey="uv" stroke="white" fill="white" />
         </AreaChart>
       </ResponsiveContainer>
 
@@ -137,7 +137,7 @@ export default function Overview() {
           axisLine={false}
           tickFormatter={(value) => `$${value}`}
           />
-        <Bar dataKey="total" fill="#adfa1d" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="total" fill="white" radius={[4, 4, 0, 0]} />
           
       </BarChart>
           </ResponsiveContainer>

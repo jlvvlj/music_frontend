@@ -1,7 +1,7 @@
 import { JSX, SVGProps, useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
 import '../app/globals.css'
-import Navbar from './navbar'
+import Navbar from '../components/navbar/navbar'
 
 const plans = [
     {
