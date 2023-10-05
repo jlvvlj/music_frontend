@@ -1,75 +1,40 @@
-// import '../app/globals.css'
-'use client'
-import { ThemeProvider } from "@/components/theme-provider"
 // import { Metadata } from "next"
-import Layout from "@/app/contracts/creation_modal/layout"
-import ModalLayout from '@/app/archive/modallayout'
+// export const metadata: Metadata = {
+//     title: "Dashboard",
+//     description: "Example dashboard app using the components.",
+// }
+
+import '@/app/globals.css'
+import { ThemeProvider } from "@/components/theme-provider"
 import CreationModal from "@/app/contracts/creation_modal/page"
 import Image from "next/image"
-import { Separator } from "@/components/ui/separator"
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-import { SidebarNav } from "@/app/settings/components/sidebar-nav"
+import Layout from "@/app/contracts/creation_modal/layout"
 
-const sidebarNavItems = [
-    {
-        title: "Profile",
-        href: "/contracts/creation_modal",
-    },
-    {
-        title: "Account",
-        href: "/contracts/creation_modal/account",
-    },
-    {
-        title: "Appearance",
-        href: "/contracts/creation_modal/appearance",
-    },
-    {
-        title: "Notifications",
-        href: "/contracts/creation_modal/notifications",
-    },
-    {
-        title: "Display",
-        href: "/contracts/creation_modal/display",
-    },
-]
-
-import { Button } from "@/components/ui/button"
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from "@/components/ui/card"
+} from "../../components/ui/card"
 import {
     Tabs,
     TabsContent,
     TabsList,
     TabsTrigger,
 } from "@/components/ui/tabs"
-import CalendarDateRangePicker from "@/components/dashboard/date-range-picker"
-import MainNav from "@/components/dashboard/main-nav"
-import Overview from "@/components/dashboard/overview"
-import RecentSales from "@/components/dashboard/recent-sales"
-import Search from "@/components/dashboard/search"
-import TeamSwitcher from "@/components/dashboard/team-switcher"
-import UserNav from "@/components/dashboard/user-nav"
 
-import ModeToggle from '@/components/ui/mode-toggle'
-import CreateTrackTabs from '@/components/track/createTrackTabs'
+import MainNav from "../../components/dashboard/main-nav"
+import Overview from "../../components/dashboard/overview"
+import RecentSales from "../../components/dashboard/recent-sales"
+import Search from "../../components/dashboard/search"
+import TeamSwitcher from "../../components/dashboard/team-switcher"
+import UserNav from "../../components/dashboard/user-nav"
 
-// export const metadata: Metadata = {
-//     title: "Dashboard",
-//     description: "Example dashboard app using the components.",
-// }
+import ModeToggle from '../../components/ui/mode-toggle'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import CreateTrackModal from '@/app/contracts/creation_modal/page'
 
 export default function DashboardPage() {
     return (
@@ -107,37 +72,11 @@ export default function DashboardPage() {
                     <div className="flex items-center justify-between space-y-2">
                         <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
                         <div className="flex items-center space-x-2">
-                            <Dialog>
-                                <DialogTrigger asChild>
-                                    <Button >Add a new track</Button>
-                                </DialogTrigger>
-                                <DialogContent className="sm:max-w-[1200px]">
-                                    <DialogHeader>
-                                        <DialogTitle>Add a track</DialogTitle>
-                                        <DialogDescription>
-                                            Add your track information here. Click submit when you're done.
-                                        </DialogDescription>
-                                    </DialogHeader>
-
-                                    <div className="grid grid-cols-5">
-                                        <div className="col-span-3">
-                                            <CreateTrackTabs />
-                                        </div>
-                                        <div className="col-span-2">
-                                            <Image
-                                                src="https://www.billboard.com/wp-content/uploads/2022/06/beyonce-Lemonade-album-art-billboard-1240.jpg?w=1024"
-                                                width={600}
-                                                height={330}
-                                                alt="track"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <DialogFooter>
-                                        <Button type="submit">Save changes</Button>
-                                    </DialogFooter>
-                                </DialogContent>
-                            </Dialog>
+                            {/* <Link href="/contracts/creation_modal">
+                                <Button className="hidden md:block">Add a new track
+                                </Button>
+                            </Link> */}
+                            {/* <CreateTrackModal/> */}
                         </div>
                     </div>
                     <Tabs defaultValue="overview" className="space-y-4">

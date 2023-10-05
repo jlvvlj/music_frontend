@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog"
 import UploadFile from "@/components/ui/upload-file"
 import CreateTrackTabs from "../components/track/createTrackTabs"
+import createTrackModal from "@/pages/createTrackModal"
 
 export default function CreateTrackModal() {
     return (
@@ -29,7 +30,7 @@ export default function CreateTrackModal() {
                 </DialogHeader>
                 {/* <UploadFile input="Track File" />
                 <UploadFile input="Track Image" /> */}
-                <CreateTrackTabs/>
+                <createTrackModal/>
                 <DialogFooter>
                     <Button type="submit">Save changes</Button>
                 </DialogFooter>
