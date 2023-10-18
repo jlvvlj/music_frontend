@@ -22,7 +22,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           {...props}
           
           />
-      <Slider className="w-[100px]" />
             </>
     )
   }

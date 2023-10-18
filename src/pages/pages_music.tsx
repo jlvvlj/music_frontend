@@ -1,12 +1,12 @@
-// import { Layout } from '../layouts/layout'
+import '../app/globals.css'
 // import '../styles/transitions.css'
-import '../globals.css'
+
 import { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
 
-import { Card } from './components/Card'
-import albums from './data/albums.json'
+import { Card } from './music/components/Card'
+import albums from './music/data/albums.json'
 
 import { PlusCircledIcon } from "@radix-ui/react-icons"
 
@@ -21,12 +21,12 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 
-import { AlbumArtwork } from "./components/album-artwork"
-import { Menu } from "./components/menu"
-import { PodcastEmptyPlaceholder } from "./components/podcast-empty-placeholder"
-import { Sidebar } from "./components/sidebar"
-import { listenNowAlbums, madeForYouAlbums } from "./data/albums"
-import { playlists } from "./data/playlists"
+import { AlbumArtwork } from "./music/components/album-artwork"
+import { Menu } from "./music/components/menu"
+import { PodcastEmptyPlaceholder } from "./music/components/podcast-empty-placeholder"
+import { Sidebar } from "./music/components/sidebar"
+import { listenNowAlbums, madeForYouAlbums } from "./music/data/albums"
+import { playlists } from "./music/data/playlists"
 
 import MainNav from "@/components/dashboard/main-nav"
 import TeamSwitcher from "@/components/dashboard/team-switcher"
@@ -131,7 +131,7 @@ export default function MusicPage() {
                           <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
                             {
                               albums.results.map((album: { idAlbum: string; strAlbum: string; strArtist: string; strAlbumThumb: string }) => (
-                                <Link href={`music/${album.idAlbum}`}>
+                                <Link href={`album/${album.idAlbum}`}>
                                   <Card
                                     key={album.idAlbum}
                                     // viewTransitionName={album.idAlbum}

@@ -65,6 +65,8 @@ import UserNav from "@/components/dashboard/user-nav"
 
 import ModeToggle from '@/components/ui/mode-toggle'
 import CreateTrackTabs from '@/components/track/createTrackTabs'
+import ProgressDemo from "@/registry/default/example/progress-demo"
+import TracksTable from "./tracks_table"
 
 // export const metadata: Metadata = {
 //     title: "Dashboard",
@@ -176,7 +178,7 @@ export default function DashboardPage() {
                                 <Card>
                                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                         <CardTitle className="text-sm font-medium">
-                                            Subscriptions
+                                            Monthly Revenue
                                         </CardTitle>
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -275,6 +277,7 @@ export default function DashboardPage() {
                     </Tabs>
                 </div>
             </div>
+            <TracksTable/>
         </ThemeProvider>
     )
 }

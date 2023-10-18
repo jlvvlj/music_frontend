@@ -1,7 +1,5 @@
 import "../../app/globals.css"
-import { ChevronDownIcon } from "@radix-ui/react-icons"
 import { BellIcon, EyeNoneIcon, PersonIcon } from "@radix-ui/react-icons"
-
 
 import {
     Avatar,
@@ -10,18 +8,12 @@ import {
 } from "../ui/avatar"
 
 import { Icons } from "@/components/ui/icons"
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "../ui/select"
+import { RadioGroup } from "../ui/radio-group"
+import { Notifications } from "@/components/track/notifications"
+
 
 import { MiniCard } from "../cards/minicard"
 
-import { Button } from "@/components/ui/button"
 import {
     Card,
     CardContent,
@@ -42,9 +34,15 @@ import UploadFile from "../ui/upload-file"
 import { Separator } from "../ui/separator"
 import { Label } from "../ui/label"
 import { Switch } from "../ui/switch"
+import ProgressDemo from "@/registry/default/example/progress-demo"
 
 export default function CreateTrackTabs() {
     return (
+        <>
+        <div className="my-4 w-full">
+        <ProgressDemo/>
+
+        </div>
         <Tabs defaultValue="Track" className="w-[600px]">
             <TabsList className="grid w-full  grid-cols-5">
                 <TabsTrigger value="Track">Track</TabsTrigger>
@@ -93,11 +91,11 @@ export default function CreateTrackTabs() {
                             Define the terms of the contract here. When submitting, the contract will be minted on chain.
                         </CardDescription>
                     </CardHeader>
-                    <CardContent className="space-y-2">
+                    <CardContent className="space-y-4">
                         <RadioGroup defaultValue="card" className="grid grid-cols-3 gap-4">
-                            <MiniCard icon={<Icons.spinner />} title="Apple" />
-                            <MiniCard icon={<Icons.paypal />} title="Paypal" />
-                            <MiniCard icon={<Icons.apple />} title="Spinner" />
+                            <MiniCard icon={<Icons.spinner />} title="Option A" />
+                            <MiniCard icon={<Icons.spinner />} title="Option B" />
+                            <MiniCard icon={<Icons.spinner />} title="Option C" />
                         </RadioGroup>
                     </  CardContent>
                 </  Card>
@@ -106,283 +104,17 @@ export default function CreateTrackTabs() {
             <TabsContent value="Contract II">
                 <Card className="h-[400px]">
                     <CardHeader>
-                        <CardTitle>Contract</CardTitle>
+                        <CardTitle>Contract II</CardTitle>
                         <CardDescription>
                             Define the terms of the contract here. When submitting, the contract will be minted on chain.
                         </CardDescription>
                     </CardHeader>
-                    <div className="flex items-center justify-between  space-x-4">
-                        <div className="flex items-center space-x-4">
-                            <Avatar>
-                                <AvatarImage src="/avatars/01.png" />
-                                <AvatarFallback>OM</AvatarFallback>
-                            </Avatar>
-                            <div>
-                                <p className="text-sm font-medium leading-none">Sofia Davis</p>
-                                <p className="text-sm text-muted-foreground">m@example.com</p>
-                            </div>
-                        </div>
-                        <Popover>
-                            <PopoverTrigger asChild>
-                                <Button variant="outline" className="ml-auto">
-                                    Owner{" "}
-                                    <ChevronDownIcon className="ml-2 h-4 w-4 text-muted-foreground" />
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="p-0" align="end">
-                                <Command>
-                                    <CommandInput placeholder="Select new role..." />
-                                    <CommandList>
-                                        <CommandEmpty>No roles found.</CommandEmpty>
-                                        <CommandGroup>
-                                            <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                                                <p>Viewer</p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Can view and comment.
-                                                </p>
-                                            </CommandItem>
-                                            <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                                                <p>Developer</p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Can view, comment and edit.
-                                                </p>
-                                            </CommandItem>
-                                            <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                                                <p>Billing</p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Can view, comment and manage billing.
-                                                </p>
-                                            </CommandItem>
-                                            <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                                                <p>Owner</p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Admin-level access to all resources.
-                                                </p>
-                                            </CommandItem>
-                                        </CommandGroup>
-                                    </CommandList>
-                                </Command>
-                            </PopoverContent>
-                        </Popover>
-                    </div>
-                    <div className="flex items-center justify-between pt-6 space-x-4">
-                        <div className="flex items-center space-x-4">
-                            <Avatar>
-                                <AvatarImage src="/avatars/02.png" />
-                                <AvatarFallback>JL</AvatarFallback>
-                            </Avatar>
-                            <div>
-                                <p className="text-sm font-medium leading-none">Jackson Lee</p>
-                                <p className="text-sm text-muted-foreground">p@example.com</p>
-                            </div>
-                        </div>
-                        <Popover>
-                            <PopoverTrigger asChild>
-                                <Button variant="outline" className="ml-auto">
-                                    Member{" "}
-                                    <ChevronDownIcon className="ml-2 h-4 w-4 text-muted-foreground" />
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="p-0" align="end">
-                                <Command>
-                                    <CommandInput placeholder="Select new role..." />
-                                    <CommandList>
-                                        <CommandEmpty>No roles found.</CommandEmpty>
-                                        <CommandGroup className="p-1.5">
-                                            <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                                                <p>Viewer</p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Can view and comment.
-                                                </p>
-                                            </CommandItem>
-                                            <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                                                <p>Developer</p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Can view, comment and edit.
-                                                </p>
-                                            </CommandItem>
-                                            <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                                                <p>Billing</p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Can view, comment and manage billing.
-                                                </p>
-                                            </CommandItem>
-                                            <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                                                <p>Owner</p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Admin-level access to all resources.
-                                                </p>
-                                            </CommandItem>
-                                        </CommandGroup>
-                                    </CommandList>
-                                </Command>
-                            </PopoverContent>
-                        </Popover>
-                    </div>
-                    <div className="flex items-center justify-between pt-6 space-x-4">
-                        <div className="flex items-center space-x-4">
-                            <Avatar>
-                                <AvatarImage src="/avatars/02.png" />
-                                <AvatarFallback>JL</AvatarFallback>
-                            </Avatar>
-                            <div>
-                                <p className="text-sm font-medium leading-none">Jackson Lee</p>
-                                <p className="text-sm text-muted-foreground">p@example.com</p>
-                            </div>
-                        </div>
-                        <Popover>
-                            <PopoverTrigger asChild>
-                                <Button variant="outline" className="ml-auto">
-                                    Member{" "}
-                                    <ChevronDownIcon className="ml-2 h-4 w-4 text-muted-foreground" />
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="p-0" align="end">
-                                <Command>
-                                    <CommandInput placeholder="Select new role..." />
-                                    <CommandList>
-                                        <CommandEmpty>No roles found.</CommandEmpty>
-                                        <CommandGroup className="p-1.5">
-                                            <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                                                <p>Viewer</p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Can view and comment.
-                                                </p>
-                                            </CommandItem>
-                                            <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                                                <p>Developer</p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Can view, comment and edit.
-                                                </p>
-                                            </CommandItem>
-                                            <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                                                <p>Billing</p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Can view, comment and manage billing.
-                                                </p>
-                                            </CommandItem>
-                                            <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                                                <p>Owner</p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Admin-level access to all resources.
-                                                </p>
-                                            </CommandItem>
-                                        </CommandGroup>
-                                    </CommandList>
-                                </Command>
-                            </PopoverContent>
-                        </Popover>
-                    </div>
-                    <div className="flex items-center justify-between pt-6 space-x-4">
-                        <div className="flex items-center space-x-4">
-                            <Avatar>
-                                <AvatarImage src="/avatars/02.png" />
-                                <AvatarFallback>JL</AvatarFallback>
-                            </Avatar>
-                            <div>
-                                <p className="text-sm font-medium leading-none">Jackson Lee</p>
-                                <p className="text-sm text-muted-foreground">p@example.com</p>
-                            </div>
-                        </div>
-                        <Popover>
-                            <PopoverTrigger asChild>
-                                <Button variant="outline" className="ml-auto">
-                                    Member{" "}
-                                    <ChevronDownIcon className="ml-2 h-4 w-4 text-muted-foreground" />
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="p-0" align="end">
-                                <Command>
-                                    <CommandInput placeholder="Select new role..." />
-                                    <CommandList>
-                                        <CommandEmpty>No roles found.</CommandEmpty>
-                                        <CommandGroup className="p-1.5">
-                                            <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                                                <p>Viewer</p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Can view and comment.
-                                                </p>
-                                            </CommandItem>
-                                            <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                                                <p>Developer</p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Can view, comment and edit.
-                                                </p>
-                                            </CommandItem>
-                                            <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                                                <p>Billing</p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Can view, comment and manage billing.
-                                                </p>
-                                            </CommandItem>
-                                            <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                                                <p>Owner</p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Admin-level access to all resources.
-                                                </p>
-                                            </CommandItem>
-                                        </CommandGroup>
-                                    </CommandList>
-                                </Command>
-                            </PopoverContent>
-                        </Popover>
-                    </div>
-                    <div className="flex items-center justify-between pt-6 space-x-4">
-                        <div className="flex items-center space-x-4">
-                            <Avatar>
-                                <AvatarImage src="/avatars/02.png" />
-                                <AvatarFallback>JL</AvatarFallback>
-                            </Avatar>
-                            <div>
-                                <p className="text-sm font-medium leading-none">Jackson Lee</p>
-                                <p className="text-sm text-muted-foreground">p@example.com</p>
-                            </div>
-                        </div>
-                        <Popover>
-                            <PopoverTrigger asChild>
-                                <Button variant="outline" className="ml-auto">
-                                    Member{" "}
-                                    <ChevronDownIcon className="ml-2 h-4 w-4 text-muted-foreground" />
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="p-0" align="end">
-                                <Command>
-                                    <CommandInput placeholder="Select new role..." />
-                                    <CommandList>
-                                        <CommandEmpty>No roles found.</CommandEmpty>
-                                        <CommandGroup className="p-1.5">
-                                            <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                                                <p>Viewer</p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Can view and comment.
-                                                </p>
-                                            </CommandItem>
-                                            <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                                                <p>Developer</p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Can view, comment and edit.
-                                                </p>
-                                            </CommandItem>
-                                            <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                                                <p>Billing</p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Can view, comment and manage billing.
-                                                </p>
-                                            </CommandItem>
-                                            <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                                                <p>Owner</p>
-                                                <p className="text-sm text-muted-foreground">
-                                                    Admin-level access to all resources.
-                                                </p>
-                                            </CommandItem>
-                                        </CommandGroup>
-                                    </CommandList>
-                                </Command>
-                            </PopoverContent>
-                        </Popover>
-                    </div>
-                </Card>
+                    <CardContent className="space-y-4">
+                       <Notifications/>
+                    </  CardContent>
+                </  Card>
             </TabsContent>
+
 
             <TabsContent value="Contract III">
                 <Card className="h-[400px]">
@@ -473,5 +205,6 @@ export default function CreateTrackTabs() {
                     </Card>
                 </TabsContent>
         </Tabs>
+        </>
     )
 }
