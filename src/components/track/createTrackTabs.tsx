@@ -9,20 +9,6 @@ import {
     AvatarImage,
 } from "../ui/avatar"
 
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList,
-} from "../ui/command"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "../ui/popover"
-
 import { Icons } from "@/components/ui/icons"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 import {
