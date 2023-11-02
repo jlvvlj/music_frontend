@@ -10,11 +10,6 @@ import Search from "@/components/dashboard/search"
 import ModeToggle from "@/components/ui/mode-toggle"
 import UserNav from "@/components/dashboard/user-nav"
 import ProgressDemo from "@/registry/default/example/progress-demo"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { RadioGroup } from "@/components/ui/radio-group"
-import { MiniCard } from "@/components/cards/minicard"
-import { Icons } from "@/components/ui/icons"
-import Link from "next/link"
 
 const sidebarNavItems = [
   {
@@ -57,39 +52,33 @@ export default function Layout({ children }: SettingsLayoutProps) {
           </div>
         </div>
       </div>
-      <div className="mt-6">
-      <ProgressDemo  />
-      </div>
+
+        <ProgressDemo />
       <div className="hidden space-y-6 p-8 pb-16 md:block">
-        {/* <div className="flex justify-center flex-col m-auto">
-          <div className=" w-1/3 mx-auto">
-              <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
-              <p className="text-muted-foreground">
-                Manage your account settings and set e-mail preferences.
-              </p>
-            </div>
-        </div> */}
-        <div className="mt-12 mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-          <div className="flex flex-col space-y-2 text-center">
-            <h1 className="text-3xl font-semibold tracking-tight">
-              Creating a new contract
-            </h1>
-            <p className="text-sm text-muted-foreground">
-              Please answer the following questions.
-            </p>
+        <div className="content-center space-y-0.5">
+          <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
+          <p className="text-muted-foreground">
+            Manage your account settings and set e-mail preferences.
+          </p>
+        </div>
+        <Separator className="my-6" />
+        <div className="grid grid-cols-5 space-x-8">
+          <div className="col-span-3 flex flex-cols-2 space-x-12 mx-8">
+            <aside className="-mx-4 lg:w-1/5">
+              <SidebarNav items={sidebarNavItems} />
+            </aside>
+            <div className="lg:max-w-2xl">{children}</div>
+          </div>
+          <div className="col-span-2">
+            <Image
+              src="https://www.billboard.com/wp-content/uploads/2022/06/beyonce-Lemonade-album-art-billboard-1240.jpg?w=1024"
+              width={600}
+              height={330}
+              alt="track"
+            />
           </div>
         </div>
       </div>
-      <CardContent className="space-y-6">
-        <RadioGroup defaultValue="card" className="grid grid-cols-2 gap-4">
-          <Link href="/contracts/creation_modal">
-          <MiniCard icon={<Icons.spinner />} title="Option A" />
-          </Link>
-          <Link href="/contracts/creation_modal/layout">
-          <MiniCard icon={<Icons.spinner />} title="Option B" />
-          </Link>
-        </RadioGroup>
-      </  CardContent>
     </>
   )
 }

@@ -10,127 +10,127 @@ export default function RecentSales() {
       <div className="flex items-center">
         <Avatar className="h-9 w-9">
           <AvatarImage src="" alt="@shadcn" />
-          <AvatarFallback>OM</AvatarFallback>
+          <AvatarFallback>IT</AvatarFallback>
         </Avatar>
         <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none"> Martin</p>
+          <p className="text-sm font-medium leading-none"> In the end</p>
           <p className="text-sm text-muted-foreground">
-            View Contract
+          <p className="text-sm text-muted-foreground">View Contract</p>
           </p>
         </div>
-        <div className="ml-auto font-medium">+$1,999.00</div>
+        <div className="ml-auto font-medium">€1,999.00</div>
       </div>
       <div className="flex items-center">
         <Avatar className="flex h-9 w-9 items-center justify-center space-y-0 border">
           <AvatarImage src="" alt="@shadcn" />
-          <AvatarFallback>JL</AvatarFallback>
+          <AvatarFallback>YB</AvatarFallback>
         </Avatar>
         <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Jackson Lee</p>
+          <p className="text-sm font-medium leading-none">You belong with me</p>
           <p className="text-sm text-muted-foreground">View Contract</p>
         </div>
-        <div className="ml-auto font-medium">+$39.00</div>
+        <div className="ml-auto font-medium">€379.00</div>
       </div>
       <div className="flex items-center">
         <Avatar className="h-9 w-9">
           <AvatarImage src="/avatars/03.png" alt="Avatar" />
-          <AvatarFallback>IN</AvatarFallback>
+          <AvatarFallback>LS</AvatarFallback>
         </Avatar>
         <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Isabella Nguyen</p>
+          <p className="text-sm font-medium leading-none">Love story</p>
           <p className="text-sm text-muted-foreground">
           View Contract
           </p>
         </div>
-        <div className="ml-auto font-medium">+$299.00</div>
+        <div className="ml-auto font-medium">€299.00</div>
       </div>
       <div className="flex items-center">
         <Avatar className="h-9 w-9">
           <AvatarImage src="/avatars/04.png" alt="Avatar" />
-          <AvatarFallback>WK</AvatarFallback>
+          <AvatarFallback>SI</AvatarFallback>
         </Avatar>
         <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">William Kim</p>
+          <p className="text-sm font-medium leading-none">Shake it off</p>
           <p className="text-sm text-muted-foreground">View Contract</p>
         </div>
-        <div className="ml-auto font-medium">+$99.00</div>
+        <div className="ml-auto font-medium">€9879.00</div>
       </div>
       <div className="flex items-center">
         <Avatar className="h-9 w-9">
           <AvatarImage src="/avatars/05.png" alt="Avatar" />
-          <AvatarFallback>SD</AvatarFallback>
+          <AvatarFallback>BB</AvatarFallback>
         </Avatar>
         <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Sofia Davis</p>
-          <p className="text-sm text-muted-foreground">View Contractm</p>
+          <p className="text-sm font-medium leading-none">Bad blood</p>
+          <p className="text-sm text-muted-foreground">View Contract</p>
         </div>
-        <div className="ml-auto font-medium">+$39.00</div>
+        <div className="ml-auto font-medium">€674.00</div>
       </div>
       <div className="flex items-center">
         <Avatar className="h-9 w-9">
           <AvatarImage src="/avatars/06.png" alt="Avatar" />
-          <AvatarFallback>AD</AvatarFallback>
+          <AvatarFallback>WD</AvatarFallback>
         </Avatar>
         <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Ava Davidson</p>
+          <p className="text-sm font-medium leading-none">Wildest dreams</p>
           <p className="text-sm text-muted-foreground">View Contract</p>
         </div>
-        <div className="ml-auto font-medium">+$39.00</div>
+        <div className="ml-auto font-medium">€129.00</div>
       </div>
       <div className="flex items-center">
         <Avatar className="h-9 w-9">
           <AvatarImage src="/avatars/07.png" alt="Avatar" />
-          <AvatarFallback>AD</AvatarFallback>
+          <AvatarFallback>DE</AvatarFallback>
         </Avatar>
         <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Riley Harrison</p>
+          <p className="text-sm font-medium leading-none">Delicate</p>
           <p className="text-sm text-muted-foreground">View Contract</p>
         </div>
-        <div className="ml-auto font-medium">+$39.00</div>
+        <div className="ml-auto font-medium">€892.00</div>
       </div>
       <div className="flex items-center">
         <Avatar className="h-9 w-9">
           <AvatarImage src="/avatars/06.png" alt="Avatar" />
-          <AvatarFallback>AD</AvatarFallback>
+          <AvatarFallback>BT</AvatarFallback>
         </Avatar>
         <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Ava Davidson</p>
+          <p className="text-sm font-medium leading-none">Back to december</p>
           <p className="text-sm text-muted-foreground">View Contract</p>
         </div>
-        <div className="ml-auto font-medium">+$39.00</div>
+        <div className="ml-auto font-medium">€83.00</div>
       </div>
       <div className="flex items-center">
         <Avatar className="h-9 w-9">
           <AvatarImage src="/avatars/07.png" alt="Avatar" />
-          <AvatarFallback>AD</AvatarFallback>
+          <AvatarFallback>FI</AvatarFallback>
         </Avatar>
         <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Riley Harrison</p>
+          <p className="text-sm font-medium leading-none">Fifteen</p>
           <p className="text-sm text-muted-foreground">View Contract</p>
         </div>
-        <div className="ml-auto font-medium">+$39.00</div>
+        <div className="ml-auto font-medium">€672.00</div>
       </div>
       <div className="flex items-center">
         <Avatar className="h-9 w-9">
           <AvatarImage src="/avatars/06.png" alt="Avatar" />
-          <AvatarFallback>AD</AvatarFallback>
+          <AvatarFallback>TS</AvatarFallback>
         </Avatar>
         <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Ava Davidson</p>
+          <p className="text-sm font-medium leading-none">The story of us</p>
           <p className="text-sm text-muted-foreground">View Contract</p>
         </div>
-        <div className="ml-auto font-medium">+$39.00</div>
+        <div className="ml-auto font-medium">€874.00</div>
       </div>
       <div className="flex items-center">
         <Avatar className="h-9 w-9">
           <AvatarImage src="/avatars/07.png" alt="Avatar" />
-          <AvatarFallback>AD</AvatarFallback>
+          <AvatarFallback>NR</AvatarFallback>
         </Avatar>
         <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Riley Harrison</p>
+          <p className="text-sm font-medium leading-none">New romantics</p>
           <p className="text-sm text-muted-foreground">View Contract</p>
         </div>
-        <div className="ml-auto font-medium">+$39.00</div>
+        <div className="ml-auto font-medium">€543.00</div>
       </div>
 
 
