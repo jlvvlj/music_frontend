@@ -49,24 +49,26 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+
 import {
     Tabs,
     TabsContent,
     TabsList,
     TabsTrigger,
 } from "@/components/ui/tabs"
+
 import CalendarDateRangePicker from "@/components/dashboard/date-range-picker"
 import MainNav from "@/components/dashboard/main-nav"
-import Overview from "@/components/dashboard/overview"
+import Overview from "../../components/dashboard/overview"
 import RecentSales from "@/components/dashboard/recent-sales"
 import Search from "@/components/dashboard/search"
 import TeamSwitcher from "@/components/dashboard/team-switcher"
 import UserNav from "@/components/dashboard/user-nav"
-
 import ModeToggle from '@/components/ui/mode-toggle'
 import CreateTrackTabs from '@/components/track/createTrackTabs'
 import ProgressDemo from "@/registry/default/example/progress-demo"
 import TracksTable from "./tracks_table"
+import Link from "next/link"
 
 // export const metadata: Metadata = {
 //     title: "Dashboard",
@@ -78,7 +80,7 @@ export default function DashboardPage() {
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
 
             <div className="md:hidden">
-                <Image
+                {/* <Image
                     src="/examples/dashboard-light.png"
                     width={1280}
                     height={866}
@@ -91,7 +93,7 @@ export default function DashboardPage() {
                     height={866}
                     alt="Dashboard"
                     className="hidden dark:block"
-                />
+                /> */}
             </div>
             <div className="hidden flex-col md:flex">
                 <div className="border-b">
@@ -107,17 +109,20 @@ export default function DashboardPage() {
                 </div>
                 <div className="flex-1 space-y-4 p-8 pt-6">
                     <div className="flex items-center justify-between space-y-2">
-                        <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
+                        <h2 className="text-3xl font-bold tracking-tight">Your Dashboard</h2>
                         <div className="flex items-center space-x-2">
-                            <Dialog>
+                            <Link href="/contracts/creation_modal"> 
+                                <Button variant="outline">Add a new contract</Button>
+                            </Link>
+                            {/* <Dialog>
                                 <DialogTrigger asChild>
                                     <Button >Add a new track</Button>
                                 </DialogTrigger>
                                 <DialogContent className="sm:max-w-[1200px]">
                                     <DialogHeader>
-                                        <DialogTitle>Add a track</DialogTitle>
+                                        <DialogTitle>New Contract</DialogTitle>
                                         <DialogDescription>
-                                            Add your track information here. Click submit when you're done.
+                                            Add your contract information here. Click submit when you're done.
                                         </DialogDescription>
                                     </DialogHeader>
 
@@ -139,14 +144,14 @@ export default function DashboardPage() {
                                         <Button type="submit">Save changes</Button>
                                     </DialogFooter>
                                 </DialogContent>
-                            </Dialog>
+                            </Dialog> */}
                         </div>
                     </div>
                     <Tabs defaultValue="overview" className="space-y-4">
                         <TabsList>
                             <TabsTrigger value="overview">Overview</TabsTrigger>
                             <TabsTrigger value="analytics" > Streams</TabsTrigger>
-                            <TabsTrigger value="reports">Revenues</TabsTrigger>
+                            <TabsTrigger value="reports">Revenue</TabsTrigger>
                         </TabsList>
                         <TabsContent value="overview" className="space-y-4">
                             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -169,16 +174,16 @@ export default function DashboardPage() {
                                         </svg>
                                     </CardHeader>
                                     <CardContent>
-                                        <div className="text-2xl font-bold">$0.0</div>
+                                        <div className="text-2xl font-bold">$4236.0</div>
                                         <p className="text-xs text-muted-foreground">
-                                            +0% from last month
+                                            +34% from last month
                                         </p>
                                     </CardContent>
                                 </Card>
                                 <Card>
                                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                         <CardTitle className="text-sm font-medium">
-                                            Monthly Revenue
+                                            Monthly Streams Revenue
                                         </CardTitle>
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -196,15 +201,15 @@ export default function DashboardPage() {
                                         </svg>
                                     </CardHeader>
                                     <CardContent>
-                                        <div className="text-2xl font-bold">+0</div>
+                                        <div className="text-2xl font-bold">$436.0</div>
                                         <p className="text-xs text-muted-foreground">
-                                            +0% from last month
+                                            +10% from last month
                                         </p>
                                     </CardContent>
                                 </Card>
                                 <Card>
                                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                        <CardTitle className="text-sm font-medium">Sales</CardTitle>
+                                        <CardTitle className="text-sm font-medium">Monthly Sales Revenue</CardTitle>
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 24 24"
@@ -220,16 +225,16 @@ export default function DashboardPage() {
                                         </svg>
                                     </CardHeader>
                                     <CardContent>
-                                        <div className="text-2xl font-bold">+0</div>
+                                        <div className="text-2xl font-bold">$236.0</div>
                                         <p className="text-xs text-muted-foreground">
-                                            +0% from last month
+                                            +38% from last month
                                         </p>
                                     </CardContent>
                                 </Card>
                                 <Card>
                                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                         <CardTitle className="text-sm font-medium">
-                                            Active Now
+                                            Balance
                                         </CardTitle>
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -245,7 +250,7 @@ export default function DashboardPage() {
                                         </svg>
                                     </CardHeader>
                                     <CardContent>
-                                        <div className="text-2xl font-bold">+573</div>
+                                        <div className="text-2xl font-bold">$52 236.0</div>
                                         <p className="text-xs text-muted-foreground">
                                             +201 since last hour
                                         </p>
@@ -277,7 +282,7 @@ export default function DashboardPage() {
                     </Tabs>
                 </div>
             </div>
-            <TracksTable/>
+            <TracksTable />
         </ThemeProvider>
     )
 }

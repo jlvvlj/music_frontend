@@ -15,29 +15,30 @@ export const labels = [
     label: "Bug",
   },
   {
-    value: "feature",
-    label: "Feature",
+    value: "First Album",
+    label: "First Album",
   },
   {
-    value: "documentation",
-    label: "Documentation",
+    value: "Second Album",
+    label: "Second Album",
   },
 ]
 
 export const statuses = [
   {
-    value: "backlog",
-    label: "Backlog",
+    value: "processing",
+    label: "Processing",
+
     icon: QuestionMarkCircledIcon,
   },
   {
-    value: "todo",
-    label: "Todo",
+    value: "upload",
+    label: "Uploading",
     icon: CircleIcon,
   },
   {
-    value: "in progress",
-    label: "In Progress",
+    value: "live",
+    label: "Live",
     icon: StopwatchIcon,
   },
   {
@@ -54,17 +55,17 @@ export const statuses = [
 
 export const priorities = [
   {
-    label: "Low",
+    label: "Decreasing",
     value: "low",
     icon: ArrowDownIcon,
   },
   {
-    label: "Medium",
+    label: "Stable",
     value: "medium",
     icon: ArrowRightIcon,
   },
   {
-    label: "High",
+    label: "Growing",
     value: "high",
     icon: ArrowUpIcon,
   },

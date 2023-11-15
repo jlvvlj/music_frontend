@@ -98,7 +98,7 @@ export function ProfileForm() {
                 <Input placeholder="shadcn" {...field} />
               </FormControl>
               <FormDescription>
-                This is your public display name. It can be your real name or a
+                Youw public display name. It can be your real name or a
                 pseudonym. You can only change this once every 30 days.
               </FormDescription>
               <FormMessage />
@@ -184,8 +184,8 @@ export function ProfileForm() {
             Add URL
           </Button>
         </div>
-        <Link href = "/contracts/creation_modal/account">
-        <Button type="submit">Go to Next Step</Button>
+        <Link href="/contracts/creation_modal/account">
+          <Button type="submit">Go to Next Step</Button>
         </Link>
       </form>
     </Form>

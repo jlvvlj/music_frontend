@@ -5,8 +5,7 @@ import { Table } from "@tanstack/react-table"
 
 import { Button } from "@/registry/new-york/ui/button"
 import { Input } from "@/registry/new-york/ui/input"
-import { DataTableViewOptions } from "@/app/examples/tasks/components/data-table-view-options"
-
+import { DataTableViewOptions } from "@/app/dashboard/components/data-table-view-options"
 import { priorities, statuses } from "../data/data"
 import { DataTableFacetedFilter } from "./data-table-faceted-filter"
 
@@ -40,7 +39,7 @@ export function DataTableToolbar<TData>({
         {table.getColumn("priority") && (
           <DataTableFacetedFilter
             column={table.getColumn("priority")}
-            title="Priority"
+            title="Revenues"
             options={priorities}
           />
         )}

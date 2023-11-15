@@ -1,6 +1,6 @@
 // import "../app/globals.css"
 // import Simpleform from "@/pages/simpleform"
-// import TrackCreationTabs from "@/components/track/createTrackTabs"
+import TrackCreationTabs from "@/components/track/createTrackTabs"
 
 "use client";
 import { Button } from "@/components/ui/button"
