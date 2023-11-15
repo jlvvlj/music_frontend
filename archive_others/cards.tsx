@@ -1,7 +1,7 @@
 'use client';
 
 import '../app/globals.css'
-import Navbar from '../../components/navbar/navbar'
+import Navbar from '../src/components/navbar/navbar'
 
 
 import { Metadata } from "next"
@@ -9,15 +9,15 @@ import Image from "next/image"
 
 import { cn } from "@/lib/utils"
 
-import DemoCookieSettings from "../../components/cards/cookie-settings"
-import DemoCreateAccount from "../../components/cards/create-account"
-import DemoDatePicker from "../../components/cards/date-picker"
-import DemoGithub from "../../components/cards/github-card"
-import DemoNotifications  from "../../components/cards/notifications"
-import DemoPaymentMethod from "../../components/cards/payment-method"
-import DemoReportAnIssue from "../../components/cards/report-an-issue"
-import DemoShareDocument from "../../components/cards/share-document"
-import DemoTeamMembers from "../../components/cards/team-members"
+import DemoCookieSettings from "../src/components/cards/cookie-settings"
+import DemoCreateAccount from "../src/components/cards/create-account"
+import DemoDatePicker from "../src/components/cards/date-picker"
+import DemoGithub from "../src/components/cards/github-card"
+import DemoNotifications from "../src/components/cards/notifications"
+import DemoPaymentMethod from "../src/components/cards/payment-method"
+import DemoReportAnIssue from "../src/components/cards/report-an-issue"
+import DemoShareDocument from "../src/components/cards/share-document"
+import DemoTeamMembers from "../src/components/cards/team-members"
 
 export const metadata: Metadata = {
   title: "Cards",

@@ -5,7 +5,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/registry/new-york/ui/badge"
 import { Checkbox } from "@/registry/new-york/ui/checkbox"
 
-import { labels, priorities, statuses } from "../data/data"
+import { albums, priorities, statuses, titles } from "../data/data"
 import { Task } from "../data/schema"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
@@ -42,21 +42,45 @@ export const columns: ColumnDef<Task>[] = [
     enableHiding: false,
   },
   {
+    accessorKey: "album",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Album" />
+    ),
+    cell: ({ row }) => {
+      const album = albums.find(
+        (album) => album.value === row.getValue("album"))
+
+      return (
+        <button className="w-[80px]">{row.getValue("album")}</button>
+      )
+      
+      
+
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
+  },
+  {
     accessorKey: "title",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Title" />
     ),
     cell: ({ row }) => {
-      const label = labels.find((label) => label.value === row.original.label)
+      const title = titles.find(
+        (title) => title.value === row.getValue("title"))
 
       return (
         <div className="flex space-x-2">
-          {label && <Badge variant="outline">{label.label}</Badge>}
+          {title && <Badge variant="outline">{title.label}</Badge>}
           <span className="max-w-[500px] truncate font-medium">
             {row.getValue("title")}
           </span>
         </div>
       )
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
     },
   },
   {
@@ -66,8 +90,7 @@ export const columns: ColumnDef<Task>[] = [
     ),
     cell: ({ row }) => {
       const status = statuses.find(
-        (status) => status.value === row.getValue("status")
-      )
+        (status) => status.value === row.getValue("status"))
 
       if (!status) {
         return null
@@ -86,6 +109,7 @@ export const columns: ColumnDef<Task>[] = [
       return value.includes(row.getValue(id))
     },
   },
+
   {
     accessorKey: "revenue",
     header: ({ column }) => (

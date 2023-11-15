@@ -4,10 +4,10 @@ import Image from "next/image"
 import { Separator } from "@/registry/new-york/ui/separator"
 import { SidebarNav } from "@/app/examples/forms/components/sidebar-nav"
 
-export const metadata: Metadata = {
-  title: "Forms",
-  description: "Advanced form example using react-hook-form and Zod.",
-}
+// export const metadata: Metadata = {
+//   title: "Forms",
+//   description: "Advanced form example using react-hook-form and Zod.",
+// }
 
 const sidebarNavItems = [
   {

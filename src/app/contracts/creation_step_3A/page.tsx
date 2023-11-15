@@ -9,7 +9,7 @@ import TeamSwitcher from "@/components/dashboard/team-switcher"
 import Search from "@/components/dashboard/search"
 import ModeToggle from "@/components/ui/mode-toggle"
 import UserNav from "@/components/dashboard/user-nav"
-import ProgressDemo from "@/registry/default/example/progress-demo"
+import ProgressBar from "../components/progress-bar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { RadioGroup } from "@/components/ui/radio-group"
 import { MiniCard } from "@/components/cards/minicard"
@@ -58,7 +58,7 @@ export default function Layout({ children }: SettingsLayoutProps) {
         </div>
       </div>
       <div className="mt-6">
-      <ProgressDemo  />
+      <ProgressBar />
       </div>
       <div className="hidden space-y-6 p-8 pb-16 md:block">
         {/* <div className="flex justify-center flex-col m-auto">
@@ -72,7 +72,7 @@ export default function Layout({ children }: SettingsLayoutProps) {
         <div className="mt-12 mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col space-y-2 text-center">
             <h1 className="text-3xl font-semibold tracking-tight">
-              Creating a new contract
+              Creating a new contract 3A
             </h1>
             <p className="text-sm text-muted-foreground">
               Please answer the following questions.
@@ -82,10 +82,10 @@ export default function Layout({ children }: SettingsLayoutProps) {
       </div>
       <CardContent className="space-y-6">
         <RadioGroup defaultValue="card" className="grid grid-cols-2 gap-4">
-          <Link href="/contracts/creation_modal/">
+          <Link href="/contracts/creation_step_4A">
           <MiniCard icon={<Icons.spinner />} title="Option A" />
           </Link>
-          <Link href="/contracts/creation_modal/">
+          <Link href="/contracts/creation_step_4B">
           <MiniCard icon={<Icons.spinner />} title="Option B" />
           </Link>
         </RadioGroup>

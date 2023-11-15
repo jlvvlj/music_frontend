@@ -117,7 +117,7 @@ export default function Overview() {
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
-          <Area type="monotone" dataKey="uv" stroke="white" fill="white" />
+          <Area type="monotone" dataKey="uv" stroke="cyan" fill="cyan" />
         </AreaChart>
       </ResponsiveContainer>
 

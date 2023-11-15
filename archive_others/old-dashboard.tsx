@@ -1,6 +1,6 @@
 import '../app/globals.css'
-import ExamplesLayout from "../../app/examples/forms/layout"
-import TeamCreator from "../../components/team/team_creator"
+import ExamplesLayout from "../src/app/examples/forms/layout"
+import TeamCreator from "../src/components/team/team_creator"
 
 import {
     Dialog,
@@ -33,30 +33,30 @@ import UploadFile from "@/components/ui/upload-file"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Metadata } from "next"
 import Image from "next/image"
-import { Button } from "../../components/ui/button"
+import { Button } from "../src/components/ui/button"
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from "../../components/ui/card"
+} from "../src/components/ui/card"
 
 import {
     Tabs,
     TabsContent,
     TabsList,
     TabsTrigger,
-} from "../../components/ui/tabs"
+} from "../src/components/ui/tabs"
 
-import MainNav from "../../components/dashboard/main-nav"
-import Overview from "../../components/dashboard/overview"
-import RecentSales from "../../components/dashboard/recent-sales"
-import Search from "../../components/dashboard/search"
-import TeamSwitcher from "../../components/dashboard/team-switcher"
-import UserNav from "../../components/dashboard/user-nav"
+import MainNav from "../src/components/dashboard/main-nav"
+import Overview from "../src/components/dashboard/overview"
+import RecentSales from "../src/components/dashboard/recent-sales"
+import Search from "../src/components/dashboard/search"
+import TeamSwitcher from "../src/components/dashboard/team-switcher"
+import UserNav from "../src/components/dashboard/user-nav"
 
-import ModeToggle from '../../components/ui/mode-toggle'
+import ModeToggle from '../src/components/ui/mode-toggle'
 
 export const metadata: Metadata = {
     title: "Dashboard",

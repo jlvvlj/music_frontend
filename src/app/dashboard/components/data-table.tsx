@@ -107,29 +107,17 @@ export function DataTable<TData, TValue>({
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <>
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell
-                        onClick={ ()=> {
-                          if (cell.id === isActive) {setIsActive("")}
-                          else {setIsActive(cell.id); console.log(cell.id)}}}
-                        key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        {cell.id === isActive && <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                </>
-
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell
+                      key={cell.id}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
+                  ))}
+                </TableRow>
               ))
             ) : (
               <TableRow>
@@ -148,3 +136,9 @@ export function DataTable<TData, TValue>({
     </div>
   )
 }
+
+
+
+// onClick={ ()=> {
+//   if (cell.id === isActive) {setIsActive("")}
+//   else {setIsActive(cell.id); console.log(cell.id)}}}

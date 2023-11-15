@@ -5,14 +5,14 @@ import Link from "next/link"
 import { ArrowRightIcon } from "@radix-ui/react-icons"
 
 import { cn } from "@/lib/utils"
-import { ExamplesNav } from "../../components/examples-nav"
+import { ExamplesNav } from "../src/components/examples-nav"
 import {
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
-} from "../../components/page-header"
-import { buttonVariants } from "../../components/ui/button"
-import { Separator } from "../../components/ui/separator"
+} from "../src/components/page-header"
+import { buttonVariants } from "../src/components/ui/button"
+import { Separator } from "../src/components/ui/separator"
 
 // export const metadata: Metadata = {
 //   title: "Examples",

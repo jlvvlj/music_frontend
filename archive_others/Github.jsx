@@ -4,10 +4,10 @@ import { CSS } from '@dnd-kit/utilities';
 
 import '../app/globals.css'
 
-import DemoDatePicker from "../../components/cards/date-picker"
+import DemoGithub from "../src/components/cards/github-card"
 
 
-export default function DatePicker(props) {
+export default function Github(props) {
     const {
         attributes,
         listeners,
@@ -23,8 +23,8 @@ export default function DatePicker(props) {
     return (
         <div
             ref={setNodeRef} style={style} {...attributes} {...listeners}>
-            <DemoDatePicker>
-            </DemoDatePicker>
+            <DemoGithub>
+            </DemoGithub>
         </div>
     );
 }

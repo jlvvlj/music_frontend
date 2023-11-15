@@ -14,7 +14,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "../components/ui/sheet"
-import Tabs from "../components/archive/tabs"
+import Tabs from "../../archive/tabs"
 import Navbar from "../components/navbar/navbar"
 
 const SHEET_SIDES = ["top", "right", "bottom", "left"] as const

@@ -18,7 +18,7 @@ export default function MainNav({
         Dashboard
       </Link>
       <Link
-        href="/contracts/creation_modal"
+        href="/contracts/creation_step_1"
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
         Create Track

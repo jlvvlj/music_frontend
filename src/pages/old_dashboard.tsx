@@ -1,9 +1,9 @@
 import '../app/globals.css'
 import { ThemeProvider } from "@/components/theme-provider"
 import { Metadata } from "next"
-import Layout from "@/app/contracts/creation_modal/layout"
+import Layout from "@/app/contracts/creation_modal/page"
 import ModalLayout from '@/app/archive/modallayout'
-import CreationModal from "@/app/contracts/creation_modal/page"
+import CreationModal from "../../archive_others/creation_modal_oldpage"
 import Image from "next/image"
 import { Separator } from "@/components/ui/separator"
 import {

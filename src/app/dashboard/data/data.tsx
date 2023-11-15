@@ -9,11 +9,7 @@ import {
   StopwatchIcon,
 } from "@radix-ui/react-icons"
 
-export const labels = [
-  {
-    value: "bug",
-    label: "Bug",
-  },
+export const albums = [
   {
     value: "First Album",
     label: "First Album",
@@ -21,6 +17,21 @@ export const labels = [
   {
     value: "Second Album",
     label: "Second Album",
+  },
+  {
+    value: "Third Album",
+    label: "Third Album",
+  },
+]
+
+export const titles = [
+  {
+    value: "Night Live",
+    label: "Night Live",
+  },
+  {
+    value: "Overbearing",
+    label: "Overbearing",
   },
 ]
 

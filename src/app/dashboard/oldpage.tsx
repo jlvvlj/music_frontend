@@ -6,9 +6,9 @@
 
 import '@/app/globals.css'
 import { ThemeProvider } from "@/components/theme-provider"
-import CreationModal from "@/app/contracts/creation_modal/page"
+import CreationModal from "../../../archive_others/creation_modal_oldpage"
 import Image from "next/image"
-import Layout from "@/app/contracts/creation_modal/layout"
+import Layout from "@/app/contracts/creation_modal/page"
 
 import {
     Card,
@@ -35,7 +35,7 @@ import UserNav from "../../components/dashboard/user-nav"
 import ModeToggle from '../../components/ui/mode-toggle'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import CreateTrackModal from '@/app/contracts/creation_modal/page'
+import CreateTrackModal from '../../../archive_others/creation_modal_oldpage'
 
 export default function DashboardPage() {
     return (

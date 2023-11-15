@@ -1,6 +1,6 @@
 import { Separator } from "@/registry/new-york/ui/separator"
 import { AccountForm } from "@/app/contracts/creation_modal/account/account-form"
-import ModalLayout from "@/app/contracts/creation_modal/layout"
+import ModalLayout from "@/app/contracts/creation_modal/page"
 export default function SettingsAccountPage() {
   return (
     <div className="space-y-6">
