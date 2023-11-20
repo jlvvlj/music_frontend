@@ -17,8 +17,8 @@ import UserNav from "@/components/dashboard/user-nav"
 
 const sidebarNavItems = [
   {
-    title: "Settings",
-    href: "/settings/",
+    title: "Profile",
+    href: "/tracks",
   },
   {
     title: "Account",

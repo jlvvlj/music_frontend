@@ -72,39 +72,20 @@ import ProgressDemo from "@/registry/default/example/progress-demo"
 import TracksTable from "./tracks_table"
 import Link from "next/link"
 
-// export const metadata: Metadata = {
-//     title: "Dashboard",
-//     description: "Example dashboard app using the components.",
-// }
-
 export default function DashboardPage() {
     return (
         <>
             <div>
-
                 {/* <Nav /> */}
             </div>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                 <div className="md:hidden">
-                    {/* <Image
-                    src="/examples/dashboard-light.png"
-                    width={1280}
-                    height={866}
-                    alt="Dashboard"
-                    className="block dark:hidden"
-                />
-                <Image
-                    src="/examples/dashboard-dark.png"
-                    width={1280}
-                    height={866}
-                    alt="Dashboard"
-                    className="hidden dark:block"
-                /> */}
                 </div>
                 <div className="hidden flex-col md:flex">
                     <div className="border-b">
                         <div className="flex h-16 items-center px-4">
                             <TeamSwitcher />
+                            <MainNav className="mx-6" />
                             <div className="ml-auto flex items-center space-x-4">
                                 <Search />
                                 <ModeToggle />
@@ -119,7 +100,7 @@ export default function DashboardPage() {
                                 <Link href="/contracts/creation_step_1/">
                                     <Button variant="outline">Add a new contract</Button>
                                 </Link>
-                                {/* <Dialog>
+                                <Dialog>
                                 <DialogTrigger asChild>
                                     <Button >Add a new track</Button>
                                 </DialogTrigger>
@@ -149,7 +130,7 @@ export default function DashboardPage() {
                                         <Button type="submit">Save changes</Button>
                                     </DialogFooter>
                                 </DialogContent>
-                            </Dialog> */}
+                            </Dialog>
                             </div>
                         </div>
                         <Tabs defaultValue="overview" className="space-y-4">

@@ -6,6 +6,9 @@ import { columns } from "./components/columns"
 import { DataTable } from "./components/data-table"
 import { UserNav } from "./components/user-nav"
 
+import { tracks } from "@/app/data/data";
+
+
 
 // Simulate a database read for tasks.
 // async function getTasks() {
@@ -20,79 +23,79 @@ import { UserNav } from "./components/user-nav"
 
 export default async function TaskPage() {
     const tasks = [{
-        "id": "TRACK-878",
+        "id": "CTR-1",
         "title": "Night Live",
         "status": "upload",
         "album": "First Album",
     },
     {
-        "id": "TRACK-787",
+        "id": "CTR-2",
         "title": "Overbearing",
         "status": "live",
         "album": "First Album",
     },
     {
-        "id": "TRACK-783",
+        "id": "CTR-3",
         "title": "We need you",
         "status": "processing",
         "album": "Second Album",
     },
     {
-        "id": "TASK-7839",
+        "id": "CTR-4",
         "title": "Bypass",
         "status": "todo",
         "album": "Second Album",
     },
     {
-        "id": "TASK-5562",
+        "id": "CTR-5",
         "title": "The source",
         "status": "backlog",
         "album": "Second Album",
     },
     {
-        "id": "TASK-8686",
+        "id": "CTR-6",
         "title": "I'll be there",
         "status": "canceled",
         "album": "Second Album",
     },
     {
-        "id": "TASK-1280",
+        "id": "CTR-7",
         "title": "Used",
         "status": "done",
         "album": "Second Album",
     },
     {
-        "id": "TASK-7262",
+        "id": "CTR-8",
         "title": "In the end",
         "status": "done",
         "album": "First Album",
     },
     {
-        "id": "TASK-1138",
+        "id": "CTR-9",
         "title": "Generations",
         "status": "in progress",
         "album": "First Album",
     },
     {
-        "id": "TASK-7184",
+        "id": "CTR-10",
         "title": "We need each other",
         "status": "todo",
         "album": "First Album",
     },
     {
-        "id": "TASK-5160",
+        "id": "CTR-11",
         "title": "Calculating the love",
         "status": "in progress",
         "album": "First Album",
     },
     {
-        "id": "TASK-5618",
+        "id": "CTR-12",
         "title": "Generating Pillows",
         "status": "done",
         "album": "First Album",
     },
     {
-        "id": "TASK-6699",
+        "id": "CTR-13",
         "title": "Wireless Relationships",
         "status": "backlog",
         "album": "Second Album",
@@ -128,7 +131,7 @@ export default async function TaskPage() {
                         <UserNav />
                     </div>
                 </div>
-                <DataTable data={tasks} columns={columns} />
+                <DataTable data={tracks} columns={columns} />
             </div>
         </>
     )

@@ -1,5 +1,7 @@
 "use client"
 
+import Link from "next/link"
+
 import { ColumnDef } from "@tanstack/react-table"
 
 import { Badge } from "@/registry/new-york/ui/badge"
@@ -37,7 +39,10 @@ export const columns: ColumnDef<Task>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Tracks" />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
+    cell: ({ row }) =>
+      <Link href={`contracts_settings/${row.getValue("id")}`}>
+        <div className="w-[160px]">{row.getValue("id")}</div>
+      </Link>,
     enableSorting: false,
     enableHiding: false,
   },
@@ -51,10 +56,10 @@ export const columns: ColumnDef<Task>[] = [
         (album) => album.value === row.getValue("album"))
 
       return (
-        <button className="w-[80px]">{row.getValue("album")}</button>
+        <div className="w-[160px]">{row.getValue("album")}</div>
       )
-      
-      
+
+
 
     },
     filterFn: (row, id, value) => {

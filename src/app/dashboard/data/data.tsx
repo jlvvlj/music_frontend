@@ -81,3 +81,82 @@ export const priorities = [
     icon: ArrowUpIcon,
   },
 ]
+
+export const tracks = [{
+  "id": "CTR-1",
+  "title": "Night Live",
+  "status": "upload",
+  "album": "First Album",
+},
+{
+  "id": "CTR-2",
+  "title": "Overbearing",
+  "status": "live",
+  "album": "First Album",
+},
+{
+  "id": "CTR-3",
+  "title": "We need you",
+  "status": "processing",
+  "album": "Second Album",
+},
+{
+  "id": "CTR-4",
+  "title": "Bypass",
+  "status": "todo",
+  "album": "Second Album",
+},
+{
+  "id": "CTR-5",
+  "title": "The source",
+  "status": "backlog",
+  "album": "Second Album",
+},
+{
+  "id": "CTR-6",
+  "title": "I'll be there",
+  "status": "canceled",
+  "album": "Second Album",
+},
+{
+  "id": "CTR-7",
+  "title": "Used",
+  "status": "done",
+  "album": "Second Album",
+},
+{
+  "id": "CTR-8",
+  "title": "In the end",
+  "status": "done",
+  "album": "First Album",
+},
+{
+  "id": "CTR-9",
+  "title": "Generations",
+  "status": "in progress",
+  "album": "First Album",
+},
+{
+  "id": "CTR-10",
+  "title": "We need each other",
+  "status": "todo",
+  "album": "First Album",
+},
+{
+  "id": "CTR-11",
+  "title": "Calculating the love",
+  "status": "in progress",
+  "album": "First Album",
+},
+{
+  "id": "CTR-12",
+  "title": "Generating Pillows",
+  "status": "done",
+  "album": "First Album",
+},
+{
+  "id": "CTR-13",
+  "title": "Wireless Relationships",
+  "status": "backlog",
+  "album": "Second Album",
+}]
