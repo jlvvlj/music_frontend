@@ -98,7 +98,7 @@ export default function CreateTrackTabs() {
                             <MiniCard icon={<Icons.spinner />} title="Option C" />
                         </RadioGroup>
                     </  CardContent>
-                </  Card>
+                </Card>
             </TabsContent>
 
             <TabsContent value="Contract II">
@@ -112,7 +112,7 @@ export default function CreateTrackTabs() {
                     <CardContent className="space-y-4">
                        <Notifications/>
                     </  CardContent>
-                </  Card>
+                </Card>
             </TabsContent>
 
 
