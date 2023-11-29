@@ -1,3 +1,4 @@
+"use client"
 import { useDropzone, FileWithPath } from "react-dropzone";
 import { ArrowUpTrayIcon } from "@heroicons/react/20/solid";
 import { Input } from "@/components/ui/input";

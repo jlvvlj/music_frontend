@@ -5,6 +5,7 @@ import clsx from "clsx";
 
 export enum StepType {
   TRACK = 1,
+  TEAM_MEMBERS,
   SHARES,
   CONTRACT,
   CONTRACT2,
@@ -15,6 +16,10 @@ const steps = [
   {
     label: "Track",
     step: StepType.TRACK,
+  },
+  {
+    label: "Team Members",
+    step: StepType.TEAM_MEMBERS,
   },
   {
     label: "Shares",
@@ -44,12 +49,14 @@ const ProgressSteps = ({
 
   const afterWidth = () => {
     const width = `${((100 / (totalSteps - 1)) * (activeStep - 1)).toFixed()}`;
-    return activeStep === StepType.SHARES
-      ? "after:w-[25%]"
+    return activeStep === StepType.TEAM_MEMBERS
+      ? "after:w-[20%]"
+      : activeStep === StepType.SHARES
+      ? "after:w-[40%]"
       : activeStep === StepType.CONTRACT
-      ? "after:w-[50%]"
+      ? "after:w-[60%]"
       : activeStep === StepType.CONTRACT2
-      ? "after:w-[75%]"
+      ? "after:w-[80%]"
       : activeStep >= StepType.CONTRACT3
       ? "after:w-full"
       : "";
@@ -72,7 +79,7 @@ const ProgressSteps = ({
                   activeStep >= step ? "bg-indigo-600" : " bg-white"
                 )}
                 onClick={() => {
-                  if (updateStep) updateStep(step)
+                  if (updateStep) updateStep(step);
                 }}
               >
                 {activeStep > step ? (
@@ -83,14 +90,14 @@ const ProgressSteps = ({
                     />
                   </span>
                 ) : (
-                    <span
-                      className={clsx(
-                        "text-lg",
-                        activeStep >= step ? "text-white" : "text-indigo-300"
-                      )}
-                    >
-                      {step}
-                    </span>
+                  <span
+                    className={clsx(
+                      "text-lg",
+                      activeStep >= step ? "text-white" : "text-indigo-300"
+                    )}
+                  >
+                    {step}
+                  </span>
                 )}
               </div>
               <div className="absolute top-16 left-1/2 -translate-x-1/2 -translate-y-1/2">

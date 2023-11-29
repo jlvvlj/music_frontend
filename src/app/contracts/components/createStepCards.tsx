@@ -19,6 +19,7 @@ import { StepType } from "./progress-steps";
 import { MiniCard } from "@/components/cards/minicard";
 import { Icons } from "@/components/ui/icons";
 import { Notifications } from "@/components/track/notifications";
+import TeamMember from "@/components/team/team_member";
 
 const CreateStepCards = ({ step }: { step: StepType }) => {
   const loadCardByStep = useCallback(() => {
@@ -39,6 +40,20 @@ const CreateStepCards = ({ step }: { step: StepType }) => {
             <CardContent className="space-y-2">
               <UploadFile input="Track Image" />
             </CardContent>
+          </Card>
+        );
+      case StepType.TEAM_MEMBERS:
+        return (
+          <Card className="h-[400px]">
+            <CardHeader>
+              <CardTitle>Team Members</CardTitle>
+              <CardDescription>
+                Invite your team members to collaborate.
+              </CardDescription>
+              <div className="h-4"></div>
+              <TeamMember />
+            </CardHeader>
+            <CardContent className="space-y-2"></CardContent>
           </Card>
         );
       case StepType.SHARES:
