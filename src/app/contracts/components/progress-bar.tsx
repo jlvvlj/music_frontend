@@ -1,16 +1,21 @@
 "use client"
 
-import * as React from "react"
+import React, { useState, useEffect } from "react"
 
 import { Progress } from "@/registry/default/ui/progress"
 
-export default function ProgressBar() {
-  const [progress, setProgress] = React.useState(80)
+const totalSteps = 4
 
-  React.useEffect(() => {
-    const timer = setTimeout(() => setProgress(100), 500)
-    return () => clearTimeout(timer)
-  }, [])
-
-  return <Progress value={progress} className="w-[600px]" />
+export default function ProgressBar({step} : { step: number}) {
+  const [progress, setProgress] = useState(25)
+  
+  useEffect(() => {
+    const calculateProgress = () => {
+      const _progress = step * 100 / totalSteps
+      setProgress(_progress)
+    }
+    calculateProgress()
+  }, [step]);
+  
+  return <Progress value={progress} className="" />
 }
