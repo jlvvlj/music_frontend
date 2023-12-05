@@ -21,7 +21,7 @@ import { RadioGroup } from "@/components/ui/radio-group";
 import { MiniCard } from "@/components/cards/minicard";
 import { Icons } from "@/components/ui/icons";
 import Link from "next/link";
-import ProgressSteps from "../components/progress-steps";
+import ProgressSteps from "../components/ProgressSteps";
 
 const sidebarNavItems = [
   {

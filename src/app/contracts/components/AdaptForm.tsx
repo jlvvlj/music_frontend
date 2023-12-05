@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useFieldArray, useForm } from "react-hook-form"
-import * as z from "zod"
+import Link from "next/link";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useFieldArray, useForm } from "react-hook-form";
+import * as z from "zod";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/registry/new-york/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,17 +15,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/registry/new-york/ui/form"
-import { Input } from "@/registry/new-york/ui/input"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/registry/new-york/ui/select"
-import { Textarea } from "@/registry/new-york/ui/textarea"
-import { toast } from "@/registry/new-york/ui/use-toast"
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/components/ui/use-toast";
 
 const profileFormSchema = z.object({
   username: z
@@ -49,30 +49,29 @@ const profileFormSchema = z.object({
       })
     )
     .optional(),
-})
+});
 
-type ProfileFormValues = z.infer<typeof profileFormSchema>
+type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
 // This can come from your database or API.
 const defaultValues: Partial<ProfileFormValues> = {
   bio: "I own a computer.",
   urls: [
     { value: "https://shadcn.com" },
-    { value: "http://twitter.com/shadcn" },
   ],
-}
+};
 
-export function ProfileForm() {
+const AdaptForm = () => {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues,
     mode: "onChange",
-  })
+  });
 
   const { fields, append } = useFieldArray({
     name: "urls",
     control: form.control,
-  })
+  });
 
   function onSubmit(data: ProfileFormValues) {
     toast({
@@ -82,7 +81,7 @@ export function ProfileForm() {
           <code className="text-white">{JSON.stringify(data, null, 2)}</code>
         </pre>
       ),
-    })
+    });
   }
 
   return (
@@ -98,7 +97,7 @@ export function ProfileForm() {
                 <Input placeholder="shadcn" {...field} />
               </FormControl>
               <FormDescription>
-                Youw public display name. It can be your real name or a
+                This is your public display name. It can be your real name or a
                 pseudonym. You can only change this once every 30 days.
               </FormDescription>
               <FormMessage />
@@ -184,10 +183,9 @@ export function ProfileForm() {
             Add URL
           </Button>
         </div>
-        <Link href="/contracts/creation_modal/account">
-          <Button type="submit" className="mt-4">Go to Next Step</Button>
-        </Link>
       </form>
     </Form>
-  )
-}
+  );
+};
+
+export default AdaptForm;

@@ -1,6 +1,6 @@
-import Link from "next/link"
+import Link from "next/link";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 export default function MainNav({
   className,
@@ -18,7 +18,7 @@ export default function MainNav({
         Dashboard
       </Link>
       <Link
-        href="/contracts/creation_step_1"
+        href="/contracts"
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
         Create Track
@@ -36,5 +36,5 @@ export default function MainNav({
         Settings
       </Link>
     </nav>
-  )
+  );
 }
