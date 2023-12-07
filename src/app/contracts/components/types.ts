@@ -1,12 +1,18 @@
 export interface Recording {
   image: string;
   title: string;
-  number: number;
-  type: RecordingType;
-  programType: ProgramType;
-  completedAt: string;
-  releasedAt: string;
-  optionRightsLimit: string;
+  number: string;
+  recordingType: string;
+  programType: string;
+  completedAt: Date;
+  releasedAt: Date;
+  optionRightsLimit: Date;
+}
+export interface ArtistRecording {
+  image: string;
+  trackName: string;
+  audio: string;
+  recordingType: string;
 }
 
 type RecordingType = {

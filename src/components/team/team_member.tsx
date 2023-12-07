@@ -30,21 +30,8 @@ type PropsType = {
   data?: TeamMember[];
 };
 
-const mockData: TeamMember[] = [
-  {
-    name: "Olivia Martin",
-    email: "m@example.com",
-    avatar: "/avatars/03.png",
-  },
-  {
-    name: "Jane Lee",
-    email: "j@example.com",
-    avatar: "/avatars/04.png",
-  },
-];
-
-export default function TeamMember({ data = mockData }: PropsType) {
-  const [members, setMembers] = useState<TeamMember[]>(mockData);
+export default function TeamMember({ data }: PropsType) {
+  const [members, setMembers] = useState<TeamMember[]>([]);
   const [inputs, setInputs] = useState<TeamMember | null>(null);
 
   const handleChangeInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,7 +53,7 @@ export default function TeamMember({ data = mockData }: PropsType) {
     <div className="space-y-4">
       <div className="grid gap-6">
         {members.map((member, index) => (
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4" key={index}>
             <Avatar>
               <AvatarImage src={member.avatar} />
               <AvatarFallback>{fallbackAvatar(member.name)}</AvatarFallback>

@@ -154,10 +154,10 @@ const ProgressSteps = ({
 
   return (
     <>
-      <div className="w-full max-w-[1000px] my-0 mx-auto py-0 px-4">
+      <div className="w-full max-w-[1200px] my-0 mx-auto py-0 px-4">
         <div
           className={clsx(
-            "flex justify-between mt-[70px] relative before:absolute before:bg-[#f3e7f3] before:h-1 before:w-[99%] before:top-[50%] before:-translate-y-1/2 before:left-0 after:absolute after:bg-indigo-600 after:h-1 after:top-[45%] after:transition-all after:duration-500 after:ease-in-out after:-translae-y-1/2 after:left-0",
+            "flex justify-between mt-[70px] relative before:absolute before:bg-[#f3e7f3] before:h-1 before:w-[99%] before:top-[50%] before:-translate-y-1/2 before:left-0 after:absolute after:bg-accent after:h-1 after:top-[45%] after:transition-all after:duration-500 after:ease-in-out after:-translae-y-1/2 after:left-0",
             afterWidth()
           )}
         >
@@ -165,15 +165,15 @@ const ProgressSteps = ({
             <div key={step} className="relative z-[1] w-fit">
               <div
                 className={clsx(
-                  "w-9 h-9 rounded-full border-[3px] border-solid duration-300 ease-in flex justify-center items-center border-indigo-600 cursor-pointer",
-                  activeStep >= step ? "bg-indigo-600" : " bg-white"
+                  "w-9 h-9 rounded-full border-2 border-muted  duration-300 ease-in flex justify-center items-center cursor-pointer",
+                  activeStep >= step ? "bg-popover" : " bg-accent"
                 )}
                 onClick={() => {
                   if (updateStep) updateStep(step);
                 }}
               >
                 {activeStep > step ? (
-                  <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 group-hover:bg-indigo-800">
+                  <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-popover group-hover:bg-indigo-800">
                     <CheckIcon
                       className="h-5 w-5 text-white"
                       aria-hidden="true"
@@ -182,8 +182,8 @@ const ProgressSteps = ({
                 ) : (
                   <span
                     className={clsx(
-                      "text-lg",
-                      activeStep >= step ? "text-white" : "text-indigo-300"
+                      activeStep >= step ? "text-white" : "text-[#f3e7f3]",
+                      activeStep === step ? "text-xl" : "text-md"
                     )}
                   >
                     {step}

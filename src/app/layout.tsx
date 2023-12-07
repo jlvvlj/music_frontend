@@ -1,5 +1,6 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Providers } from "./providers";
 // import './globals.css'
 import { Roboto_Mono, Inter } from "next/font/google";
 
@@ -18,13 +19,15 @@ export default function RootLayout({
 }) {
   return (
     // <ClerkProvider>
-      <html lang="en">
-        <body className={roboto.className}>
+    <html lang="en">
+      <body className={roboto.className}>
+        <Providers>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
           </ThemeProvider>
-        </body>
-      </html>
+        </Providers>
+      </body>
+    </html>
     // </ClerkProvider>
   );
 }

@@ -21,17 +21,29 @@ type Props = {
   option1: string;
   option2: string;
   type: "role" | "contribution";
+  updateStep: VoidFunction;
+  setProducer?: (isProducer: boolean) => void;
 };
-const CardFilter = ({ option1 = "Yes", option2 = "No", type }: Props) => {
-  const handleClickCard = (type: number) => {
+const CardFilter = ({ option1 = "Yes", option2 = "No", type, updateStep, setProducer }: Props) => {
+  const handleClickCard = (answer: number) => {
     console.log(type);
+    if (type === "role") {
+      if (answer === 0) {
+        setProducer!(true);
+      } else {
+        setProducer!(false);
+      }
+    } else {
+
+    }
+    updateStep();
   };
 
   return (
     <>
       <div className=" grid grid-cols-2 gap-4">
         <Card
-          className="h-[300px] flex justify-center items-center"
+          className="h-[300px] flex justify-center items-center hover:bg-accent hover:text-accent-foreground "
           onClick={() => handleClickCard(0)}
         >
           <CardContent className="flex flex-col items-center gap-10 h-full justify-evenly">
@@ -45,8 +57,8 @@ const CardFilter = ({ option1 = "Yes", option2 = "No", type }: Props) => {
           </CardContent>
         </Card>
         <Card
-          className="h-[300px] flex justify-center items-center"
-          onClick={() => handleClickCard(0)}
+          className="h-[300px] flex justify-center items-center hover:bg-accent hover:text-accent-foreground "
+          onClick={() => handleClickCard(1)}
         >
           <CardContent className="flex flex-col items-center gap-10 h-full justify-evenly">
             <Image

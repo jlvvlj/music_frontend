@@ -62,7 +62,7 @@ export default function NewContract({ children }: SettingsLayoutProps) {
       <div className="mt-6 mx-4">
         <ProgressSteps step={activeStep} updateStep={handleUpdateActiveStep} />
       </div>
-      <CreateStepCards step={activeStep} />
+      <CreateStepCards step={activeStep} updateStep={handleClickSave} />
       {/* <div className="mt-4 flex justify-end">
         <Button onClick={handleClickSave}>Save</Button>
       </div> */}

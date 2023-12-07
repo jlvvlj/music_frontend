@@ -7,12 +7,19 @@ import { Calendar as CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
 import { Calendar } from "./calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "./../ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import { SelectSingleEventHandler } from "react-day-picker";
 
+interface DatePickerProps extends React.HTMLAttributes<HTMLDivElement> {
+  date: Date;
+  onDateChange: SelectSingleEventHandler;
+}
 export default function DatePicker({
   className,
-}: React.HTMLAttributes<HTMLDivElement>) {
-  const [date, setDate] = React.useState<Date>();
+  placeholder,
+  date,
+  onDateChange,
+}: DatePickerProps) {
 
   return (
     <div className={cn("grid gap-2", className)}>
@@ -30,7 +37,7 @@ export default function DatePicker({
             {date ? (
               <span>{format(date, "LLL dd, y")}</span>
             ) : (
-              <span>Pick a date</span>
+              <span>{placeholder}</span>
             )}
           </Button>
         </PopoverTrigger>
@@ -40,7 +47,7 @@ export default function DatePicker({
             mode="single"
             defaultMonth={date}
             selected={date}
-            onSelect={setDate}
+            onSelect={onDateChange}
           />
         </PopoverContent>
       </Popover>
