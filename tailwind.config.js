@@ -77,6 +77,7 @@ module.exports = {
   },
   // plugins: [require("tailwindcss-animate"), nextui()],
   plugins: [require("tailwindcss-animate")],
+  // plugins: [require("tailwindcss-animate"), require("@tailwindcss/forms")],
 };
 
 //For records animation

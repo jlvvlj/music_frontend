@@ -31,6 +31,7 @@ import Broadcasting from "./Broadcasting";
 import ProducerForm from "./ProducerForm";
 import ArtistForm from "./ArtistForm";
 import ArtistRecordings from "./ArtistRecordings";
+import Stacked from "./Stacked";
 
 const CreateStepCards = ({
   step,
@@ -87,6 +88,8 @@ const CreateStepCards = ({
         return <Abatements />;
       case StepIndex.BROADCASTING:
         return <Broadcasting />;
+      case StepIndex.STACKED:
+        return <Stacked />;
       default:
         return <></>;
     }

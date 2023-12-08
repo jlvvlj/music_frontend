@@ -35,6 +35,7 @@ import { Input } from "@/components/ui/input";
 import DatePicker from "@/components/ui/date-picker";
 import UploadButton from "@/components/ui/upload-button";
 import { Separator } from "@/components/ui/separator";
+import UploadFile from "@/components/ui/upload-file";
 
 const recordingFormSchema = z.object({
   image: z.string(),
@@ -86,7 +87,7 @@ const ArtistRecordings = () => {
 
   return (
     <>
-      <Card className="border-none mx-20">
+      <Card className="mx-auto max-w-[766px]">
         <CardHeader>
           <CardTitle></CardTitle>
           <CardDescription></CardDescription>
@@ -96,13 +97,13 @@ const ArtistRecordings = () => {
             <Button variant="outline">Firm</Button>
             <Button variant="outline">Optional</Button>
           </div>
-          <div className="grid grid-cols-3 item-center">
-            <Separator />
-            <span className="w-fit">RECORDINGS INFORMATION</span>
-            <Separator />
+          <div className="flex items-center">
+            <Separator className="flex-auto" />
+            <p className="text-sm flex-none">RECORDINGS INFORMATION</p>
+            <Separator className="flex-auto" />
           </div>
           {recordings.map((recording, index) => (
-            <div key={index} className="grid grid-cols-10">
+            <div key={index} className="grid grid-cols-8 gap-3">
               <Image
                 src={recording.image}
                 className="col-span-1"
@@ -110,7 +111,7 @@ const ArtistRecordings = () => {
                 height={50}
                 alt="track"
               />
-              <div className="col-span-3 space-y-3">
+              <div className="col-span-4 space-y-3">
                 <p className="text-[#F8FAFC] text-sm font-normal">
                   {recording.trackName}
                 </p>
@@ -122,38 +123,46 @@ const ArtistRecordings = () => {
           ))}
           {/* Add section */}
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="flex gap-4">
-                <FormField
-                  control={form.control}
-                  name="trackName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input placeholder="" {...field} />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="image"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <UploadButton
-                          files={files}
-                          setFiles={setFiles}
-                          imageUrl={field.value}
-                          onImageChange={field.onChange}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <FormField
+                control={form.control}
+                name="trackName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Track Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="" {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="image"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Upload Track</FormLabel>
+                    <FormControl>
+                      <UploadFile input="" />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="image"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Upload Cover</FormLabel>
+                    <FormControl>
+                      <UploadFile input="" buttonLabel="" />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <div className="flex justify-end">
                 <Button type="submit" className="px-8">
-                  ADD
+                  ADD +
                 </Button>
               </div>
             </form>

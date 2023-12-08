@@ -14,6 +14,7 @@ export enum StepIndex {
   ROYALTIES,
   ABATEMENTS,
   BROADCASTING,
+  STACKED,
 }
 
 export enum ContributionSubType {}
@@ -97,6 +98,13 @@ export const STEPS = [
     saveBtnHidden: false,
     description: "Enter the contract secondary use details",
   },
+  {
+    label: "Stacked",
+    step: StepIndex.STACKED,
+    title: "Broadcasting right & Secondary Use",
+    saveBtnHidden: false,
+    description: "Enter the contract secondary use details",
+  },
 
   // {
   //   label: "Contract",
@@ -132,23 +140,25 @@ const ProgressSteps = ({
   const afterWidth = () => {
     const width = `${((100 / (totalSteps - 1)) * (activeStep - 1)).toFixed()}`;
     return activeStep === StepIndex.CONTRIBUTORS
-      ? "after:w-[11%]"
+      ? "after:w-[10%]"
       : activeStep === StepIndex.SHARES
-      ? "after:w-[22%]"
+      ? "after:w-[20%]"
       : activeStep === StepIndex.ROLE
-      ? "after:w-[33%]"
+      ? "after:w-[30%]"
       : activeStep === StepIndex.FORM
-      ? "after:w-[44%]"
+      ? "after:w-[40%]"
       : activeStep === StepIndex.RECORDINGS
-      ? "after:w-[55%]"
+      ? "after:w-[50%]"
       : activeStep === StepIndex.BUDGET
-      ? "after:w-[67%]"
+      ? "after:w-[60%]"
       : activeStep === StepIndex.ROYALTIES
-      ? "after:w-[78%]"
+      ? "after:w-[70%]"
       : activeStep === StepIndex.ABATEMENTS
-      ? "after:w-[89%]"
-      : activeStep >= StepIndex.BROADCASTING
-      ? "after:w-[99%]"
+      ? "after:w-[80%]"
+      : activeStep === StepIndex.BROADCASTING
+      ? "after:w-[90%]"
+      : activeStep >= StepIndex.STACKED
+      ? "after:w-[100%]"
       : "";
   };
 
