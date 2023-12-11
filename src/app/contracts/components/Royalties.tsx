@@ -1,4 +1,9 @@
-import { useState, FormEvent, FormEventHandler, ChangeEvent } from "react";
+import React, {
+  useState,
+  FormEvent,
+  FormEventHandler,
+  ChangeEvent,
+} from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -28,7 +33,12 @@ const Royalties = () => {
   const [singleRates, setSingleRates] = useState<SingleRate[]>([]);
   const [physicalSingleRate, setPhysicalSingleRate] =
     useState<SingleRate | null>(null);
+  const [physicalTieredRate, setPhysicalTieredRate] =
+    useState<TieredRate | null>(null);
   const [digitalSingleRate, setDigitalSingleRate] = useState<SingleRate | null>(
+    null
+  );
+  const [digitalTieredRate, setDigitalTieredRate] = useState<TieredRate | null>(
     null
   );
   const [tieredRates, setTieredRates] = useState<TieredRate[]>([]);
@@ -40,6 +50,27 @@ const Royalties = () => {
   );
 
   // **
+
+  const handleChangePhysicalSingleRatePercentage = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = e.target.value;
+    const name = e.target.name;
+    setPhysicalSingleRate((prev: any) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  const handleChangeDigitalSingleRatePercentage = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = e.target.value;
+    const name = e.target.name;
+    setDigitalSingleRate((prev: any) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleChangePhysicalFormInputs = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -81,31 +112,28 @@ const Royalties = () => {
     setDigitalRateInputs(null);
   };
 
-  const handleChangeSwitch = (
-    enabled: boolean,
-    rate: TieredRate,
-    index: number
-  ) => {
-    const _tieredRates = [...tieredRates];
-    const _rate = {
-      ...rate,
-      enabled,
-    };
-
-    _tieredRates.splice(index, 1, _rate);
-    setTieredRates(_tieredRates);
+  const handleChangeSwitch = (enabled: boolean) => {
+    // const _tieredRates = [...tieredRates];
+    // const _rate = {
+    //   ...rate,
+    //   enabled,
+    // };
+    // _tieredRates.splice(index, 1, _rate);
+    // setTieredRates(_tieredRates);
   };
 
   const handleChangePhysicalSingleRateEnabled = (enabled: boolean) => {
     setPhysicalSingleRate((prev: any) => ({
       ...prev,
       enabled,
+      percentage: enabled ? prev?.percentage || "" : "",
     }));
   };
   const handleChangeDigitalSingleRateEnabled = (enabled: boolean) => {
     setDigitalSingleRate((prev: any) => ({
       ...prev,
       enabled,
+      percentage: enabled ? prev?.percentage || "" : "",
     }));
   };
 
@@ -147,65 +175,115 @@ const Royalties = () => {
               <div className="col-span-2">
                 <CurrencyInput
                   title="Royalites"
+                  name="percentage"
                   currency="%"
+                  className={
+                    physicalSingleRate?.enabled
+                      ? "text-white"
+                      : "text-[#A1A1AA]"
+                  }
                   disabled={!physicalSingleRate?.enabled}
+                  value={physicalSingleRate?.percentage || ""}
+                  onChange={handleChangePhysicalSingleRatePercentage}
                 />
               </div>
             </div>
-            {tieredRates &&
-              !!tieredRates.length &&
-              tieredRates.map((rate, index) => {
-                if (rate.type === "physical") {
-                  return (
-                    <div
-                      key={index}
-                      className="grid grid-cols-12 gap-4 items-center"
-                    >
-                      <div className="col-span-2">
-                        <p
-                          className={cn(
-                            "text-sm font-normal",
-                            rate.enabled ? "text-white" : "text-[#A1A1AA]"
-                          )}
-                        >
-                          Tiered Rates
-                        </p>
-                      </div>
-                      <div className="col-span-1 flex justify-center items-center">
-                        <Switch
-                          checked={rate.enabled}
-                          onCheckedChange={(e) =>
-                            handleChangeSwitch(e, rate, index)
-                          }
-                          aria-readonly
-                        />
-                      </div>
-                      <div className="col-span-2">
-                        <span className="text-sm font-normal text-[#FFFFFF]">
-                          From&nbsp;
-                        </span>
-                        <span className="text-sm font-normal text-[#94A3B8]">
-                          {rate.from}&nbsp;
-                        </span>
-                        <span className="text-sm font-normal text-[#FFFFFF]">
-                          To&nbsp;
-                        </span>
-                        <span className="text-sm font-normal text-[#94A3B8]">
-                          {rate.to}&nbsp;
-                        </span>
-                        <span className="text-sm font-normal text-[#FFFFFF]">
-                          Copies&nbsp;:&nbsp;
-                        </span>
-                        <span className="text-sm font-normal text-[#94A3B8]">
-                          {rate.percentage}%
-                        </span>
-                      </div>
-                    </div>
-                  );
-                } else {
-                  return null;
-                }
-              })}
+            <div className="grid grid-cols-12 gap-4">
+              <div className="col-span-2">
+                <p
+                  className={cn(
+                    "text-sm font-normal",
+                    !physicalSingleRate?.enabled
+                      ? "text-white"
+                      : "text-[#A1A1AA]"
+                  )}
+                >
+                  Tiered Rates
+                </p>
+              </div>
+              <div className="col-span-1 flex justify-center">
+                <Switch
+                  checked={!physicalSingleRate?.enabled}
+                  onCheckedChange={(e) =>
+                    handleChangePhysicalSingleRateEnabled(!e)
+                  }
+                  aria-readonly
+                />
+              </div>
+              <div className="col-span-9 space-y-4">
+                {tieredRates &&
+                  !!tieredRates.length &&
+                  tieredRates.map((rate, index) => {
+                    if (rate.type === "physical") {
+                      return (
+                        <React.Fragment key={index}>
+                          <div className="">
+                            <span
+                              className={cn(
+                                "text-sm font-normal",
+                                !physicalSingleRate?.enabled
+                                  ? "text-white"
+                                  : "text-[#A1A1AA]"
+                              )}
+                            >
+                              From&nbsp;
+                            </span>
+                            <span
+                              className={cn(
+                                "text-sm font-normal",
+                                !physicalSingleRate?.enabled
+                                  ? "text-[#94A3B8]"
+                                  : "text-[#505357]"
+                              )}
+                            >
+                              {rate.from}&nbsp;
+                            </span>
+                            <span
+                              className={cn(
+                                "text-sm font-normal ",
+                                !physicalSingleRate?.enabled
+                                  ? "text-white"
+                                  : "text-[#94A3B8]"
+                              )}
+                            >
+                              To&nbsp;
+                            </span>
+                            <span
+                              className={cn(
+                                "text-sm font-normal",
+                                !physicalSingleRate?.enabled
+                                  ? "text-[#94A3B8]"
+                                  : "text-[#505357]"
+                              )}
+                            >
+                              {rate.to}&nbsp;
+                            </span>
+                            <span
+                              className={cn(
+                                "text-sm font-normal",
+                                !physicalSingleRate?.enabled
+                                  ? "text-white"
+                                  : "text-[#94A3B8]"
+                              )}
+                            >
+                              Copies&nbsp;:&nbsp;
+                            </span>
+                            <span
+                              className={cn(
+                                "text-sm font-normal text-[#94A3B8]"
+                              )}
+                            >
+                              {rate.percentage}&nbsp;%
+                            </span>
+                          </div>
+                        </React.Fragment>
+                      );
+                    } else {
+                      return null;
+                    }
+                  })}
+              </div>
+            </div>
 
             <form onSubmit={onSubmitPhysicalForm}>
               <div className="grid grid-cols-12 gap-4 items-center">
@@ -218,6 +296,7 @@ const Royalties = () => {
                     currency="Copies"
                     value={physicalRateInputs?.from || ""}
                     onChange={handleChangePhysicalFormInputs}
+                    disabled={physicalSingleRate?.enabled}
                   />
                 </div>
                 <div className="col-span-1">
@@ -227,6 +306,7 @@ const Royalties = () => {
                     currency="Copies"
                     value={physicalRateInputs?.to || ""}
                     onChange={handleChangePhysicalFormInputs}
+                    disabled={physicalSingleRate?.enabled}
                   />
                 </div>
                 <div className="col-span-1">
@@ -236,10 +316,13 @@ const Royalties = () => {
                     currency="%"
                     value={physicalRateInputs?.percentage || ""}
                     onChange={handleChangePhysicalFormInputs}
+                    disabled={physicalSingleRate?.enabled}
                   />
                 </div>
                 <div className="col-span-1 flex justify-center items-end h-full">
-                  <Button type="submit">ADD</Button>
+                  <Button type="submit" disabled={physicalSingleRate?.enabled}>
+                    ADD
+                  </Button>
                 </div>
               </div>
             </form>
@@ -268,66 +351,113 @@ const Royalties = () => {
               <div className="col-span-2">
                 <CurrencyInput
                   title="Royalites"
+                  name="percentage"
                   currency="%"
                   disabled={!digitalSingleRate?.enabled}
+                  className={
+                    digitalSingleRate?.enabled ? "text-white" : "text-[#A1A1AA]"
+                  }
+                  value={digitalSingleRate?.percentage || ""}
+                  onChange={handleChangeDigitalSingleRatePercentage}
                 />
               </div>
             </div>
-            {tieredRates &&
-              !!tieredRates.length &&
-              tieredRates.map((rate, index) => {
-                if (rate.type === "digital") {
-                  return (
-                    <div
-                      key={index}
-                      className="grid grid-cols-12 gap-4 items-center"
-                    >
-                      <div className="col-span-2">
-                        <p
-                          className={cn(
-                            "text-sm font-normal",
-                            rate.enabled ? "text-white" : "text-[#A1A1AA]"
-                          )}
-                        >
-                          Tiered Rates
-                        </p>
-                      </div>
-                      <div className="col-span-1 flex justify-center items-center">
-                        <Switch
-                          checked={rate.enabled}
-                          onCheckedChange={(e) =>
-                            handleChangeSwitch(e, rate, index)
-                          }
-                          aria-readonly
-                        />
-                      </div>
-                      <div className="col-span-2">
-                        <span className="text-sm font-normal text-[#FFFFFF]">
-                          From&nbsp;
-                        </span>
-                        <span className="text-sm font-normal text-[#94A3B8]">
-                          {rate.from}&nbsp;
-                        </span>
-                        <span className="text-sm font-normal text-[#FFFFFF]">
-                          To&nbsp;
-                        </span>
-                        <span className="text-sm font-normal text-[#94A3B8]">
-                          {rate.to}&nbsp;
-                        </span>
-                        <span className="text-sm font-normal text-[#FFFFFF]">
-                          Copies&nbsp;:&nbsp;
-                        </span>
-                        <span className="text-sm font-normal text-[#94A3B8]">
-                          {rate.percentage}%
-                        </span>
-                      </div>
-                    </div>
-                  );
-                } else {
-                  return null;
-                }
-              })}
-
+            <div className="grid grid-cols-12 gap-4">
+              <div className="col-span-2">
+                <p
+                  className={cn(
+                    "text-sm font-normal",
+                    !digitalSingleRate?.enabled
+                      ? "text-white"
+                      : "text-[#A1A1AA]"
+                  )}
+                >
+                  Tiered Rates
+                </p>
+              </div>
+              <div className="col-span-1 flex justify-center">
+                <Switch
+                  checked={!digitalSingleRate?.enabled}
+                  onCheckedChange={(e) =>
+                    handleChangeDigitalSingleRateEnabled(!e)
+                  }
+                  aria-readonly
+                />
+              </div>
+              <div className="col-span-9 space-y-4">
+                {tieredRates &&
+                  !!tieredRates.length &&
+                  tieredRates.map((rate, index) => {
+                    if (rate.type === "digital") {
+                      return (
+                        <React.Fragment key={index}>
+                          <div>
+                            <span
+                              className={cn(
+                                "text-sm font-normal",
+                                !digitalSingleRate?.enabled
+                                  ? "text-white"
+                                  : "text-[#A1A1AA]"
+                              )}
+                            >
+                              From&nbsp;
+                            </span>
+                            <span
+                              className={cn(
+                                "text-sm font-normal",
+                                !digitalSingleRate?.enabled
+                                  ? "text-[#94A3B8]"
+                                  : "text-[#505357]"
+                              )}
+                            >
+                              {rate.from}&nbsp;
+                            </span>
+                            <span
+                              className={cn(
+                                "text-sm font-normal ",
+                                !digitalSingleRate?.enabled
+                                  ? "text-white"
+                                  : "text-[#94A3B8]"
+                              )}
+                            >
+                              To&nbsp;
+                            </span>
+                            <span
+                              className={cn(
+                                "text-sm font-normal",
+                                !digitalSingleRate?.enabled
+                                  ? "text-[#94A3B8]"
+                                  : "text-[#505357]"
+                              )}
+                            >
+                              {rate.to}&nbsp;
+                            </span>
+                            <span
+                              className={cn(
+                                "text-sm font-normal",
+                                !digitalSingleRate?.enabled
+                                  ? "text-white"
+                                  : "text-[#94A3B8]"
+                              )}
+                            >
+                              Copies&nbsp;:&nbsp;
+                            </span>
+                            <span
+                              className={cn(
+                                "text-sm font-normal text-[#94A3B8]"
+                              )}
+                            >
+                              {rate.percentage}&nbsp;%
+                            </span>
+                          </div>
+                        </React.Fragment>
+                      );
+                    } else {
+                      return null;
+                    }
+                  })}
+              </div>
+            </div>
             <form onSubmit={onSubmitDigitalForm}>
               <div className="grid grid-cols-12 gap-4 items-center">
                 <div className="col-span-2"></div>
@@ -339,6 +469,7 @@ const Royalties = () => {
                     currency="Copies"
                     value={digitalRateInputs?.from || ""}
                     onChange={handleChangeDigitalFormInputs}
+                    disabled={digitalSingleRate?.enabled}
                   />
                 </div>
                 <div className="col-span-1">
@@ -348,6 +479,7 @@ const Royalties = () => {
                     currency="Copies"
                     value={digitalRateInputs?.to || ""}
                     onChange={handleChangeDigitalFormInputs}
+                    disabled={digitalSingleRate?.enabled}
                   />
                 </div>
                 <div className="col-span-1">
@@ -357,10 +489,13 @@ const Royalties = () => {
                     currency="%"
                     value={digitalRateInputs?.percentage || ""}
                     onChange={handleChangeDigitalFormInputs}
+                    disabled={digitalSingleRate?.enabled}
                   />
                 </div>
                 <div className="col-span-1 flex justify-center items-end h-full">
-                  <Button type="submit">ADD</Button>
+                  <Button type="submit" disabled={digitalSingleRate?.enabled}>
+                    ADD
+                  </Button>
                 </div>
               </div>
             </form>

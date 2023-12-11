@@ -1,11 +1,13 @@
 "use client";
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import Image from "next/image";
 import { useDropzone, FileWithPath } from "react-dropzone";
 import { Input } from "@/components/ui/input";
 import { Button } from "./button";
+import { cn } from "@/lib/utils";
 
-interface ButtonProps {
+interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
+  title: string;
   imageUrl: string | null;
   files: any[];
   setFiles: Dispatch<SetStateAction<any[]>>;
@@ -13,6 +15,8 @@ interface ButtonProps {
 }
 
 export default function UploadButton({
+  title,
+  className,
   imageUrl,
   files,
   setFiles,
@@ -42,21 +46,27 @@ export default function UploadButton({
       {imageUrl ? (
         <div
           {...getRootProps({
-            className: "dropzone w-[50px] h-[50px] overflow-hidden",
+            className: cn(
+              "dropzone w-[50px] h-[50px] overflow-hidden",
+              className
+            ),
           })}
         >
           <Image src={imageUrl} width={50} height={50} alt="track" />
           <Input id="input" type="file" {...getInputProps()} />
         </div>
       ) : (
-        <Button
+        <button
           {...getRootProps({
-            className: "dropzone !bg-[#1E293B] text-white",
+            className: cn(
+              "dropzone w-[50px] h-[50px] !bg-[#1E293B] text-white",
+              className
+            ),
           })}
         >
           <Input id="input" type="file" {...getInputProps()} />
-          <span>+</span>
-        </Button>
+          <span>{title}</span>
+        </button>
       )}
     </>
   );

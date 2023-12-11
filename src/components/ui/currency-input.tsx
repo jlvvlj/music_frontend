@@ -14,7 +14,7 @@ const CurrencyInput = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, title, currency = "EUR", ...props }, ref) => {
     return (
       <>
-        <p className="text-sm font-normal text-[#FAFAFA]">{title}</p>
+        <p className={cn("text-sm font-normal", className)}>{title}</p>
         <div className="max-w-[128px] pl-2 pr-3 py-1 mt-3 flex items-center gap-2 rounded-md border border-solid border-[#27272A] ">
           <input
             type="text"

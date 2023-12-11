@@ -29,21 +29,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Recording } from "./types";
+import { ProgramType, ProgramTypes, Recording } from "./types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import DatePicker from "@/components/ui/date-picker";
 import UploadButton from "@/components/ui/upload-button";
+import { MultiSelect } from "@/components/ui/multi-select";
 
 const recordingFormSchema = z.object({
   image: z.string(),
   title: z.string().default(""),
   number: z.string(),
   recordingType: z.string(),
-  programType: z.string(),
-  completedAt: z.date(),
-  releasedAt: z.date(),
-  optionRightsLimit: z.date(),
+  completedAt: z.date().default(new Date()),
+  releasedAt: z.date().default(new Date()),
+  optionRightsLimit: z.date().default(new Date()),
+  programType: z.array(
+    z.object({
+      value: z.string(),
+    })
+  ),
 });
 
 type RecordingFormValues = z.infer<typeof recordingFormSchema>;
@@ -58,12 +63,14 @@ const ProducerRecordings = () => {
       title: "Fire Emblem",
       number: "12",
       recordingType: "Optional",
-      programType: "Firm",
-      completedAt: new Date("01/22/2022"),
-      releasedAt: new Date("01/22/2022"),
-      optionRightsLimit: new Date("01/22/2022"),
+      programType: ["Firm"],
+      completedAt: new Date("01/22/2023"),
+      releasedAt: new Date("01/22/2023"),
+      optionRightsLimit: new Date("01/22/2023"),
     },
   ]);
+
+  const [programTypes, setProgramTypes] = useState(ProgramTypes);
 
   const [files, setFiles] = useState<any[]>([]);
 
@@ -74,6 +81,10 @@ const ProducerRecordings = () => {
     mode: "onChange",
   });
 
+  const { fields, append } = useFieldArray({
+    name: "programType",
+    control: form.control,
+  });
   // **
 
   useEffect(() => {
@@ -83,8 +94,12 @@ const ProducerRecordings = () => {
 
   const onSubmit = (data: RecordingFormValues) => {
     console.log(data);
+    const _data = {
+      ...data,
+      programType: programTypes,
+    };
     const _recordings = [...recordings];
-    _recordings.push(data);
+    _recordings.push(_data);
     setRecordings(_recordings);
     setTimeout(() => {
       form.reset({
@@ -92,9 +107,19 @@ const ProducerRecordings = () => {
         title: "",
         number: "",
         recordingType: "",
-        programType: "",
       });
     }, 1000);
+  };
+
+  // ** Action
+  const handleChangeProgramType = (
+    selected: boolean,
+    programType: ProgramType
+  ) => {
+    const _programTypes = [...programTypes];
+    const index = programTypes.findIndex((p) => p.label === programType.label);
+    _programTypes.splice(index, 1, { ...programType, checked: selected });
+    setProgramTypes(_programTypes);
   };
 
   return (
@@ -153,7 +178,7 @@ const ProducerRecordings = () => {
           {/* Add section */}
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="flex gap-4">
+              <div className="flex flex-wrap gap-4 items-end">
                 <FormField
                   control={form.control}
                   name="image"
@@ -161,6 +186,7 @@ const ProducerRecordings = () => {
                     <FormItem>
                       <FormControl>
                         <UploadButton
+                          title="+"
                           files={files}
                           setFiles={setFiles}
                           imageUrl={field.value}
@@ -221,7 +247,6 @@ const ProducerRecordings = () => {
                           <SelectItem value="other">Other</SelectItem>
                         </SelectContent>
                       </Select>
-                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -230,22 +255,15 @@ const ProducerRecordings = () => {
                   name="programType"
                   render={({ field }) => (
                     <FormItem>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger className="ml-auto w-[180px]">
-                            <SelectValue placeholder="Program type" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent className="ml-auto w-[250px]">
-                          <SelectItem value="firm">Firm</SelectItem>
-                          <SelectItem value="optional">Optional</SelectItem>
-                          <SelectItem value="other">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
+                      <FormControl>
+                        <MultiSelect
+                          title="Program Type"
+                          dataArr={programTypes}
+                          handleCheckChanged={(selected, obj) =>
+                            handleChangeProgramType(selected, obj)
+                          }
+                        />
+                      </FormControl>
                     </FormItem>
                   )}
                 />
@@ -254,15 +272,15 @@ const ProducerRecordings = () => {
                   name="completedAt"
                   render={({ field }) => (
                     <FormItem>
+                      <FormLabel>Completion date</FormLabel>
                       <FormControl>
                         <DatePicker
                           className="max-w-[170px]"
                           date={field.value}
-                          placeholder="Jan 20, 2022"
+                          placeholder="Jan 20, 2023"
                           onDateChange={(d) => field.onChange(d || new Date())}
                         />
                       </FormControl>
-                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -271,15 +289,15 @@ const ProducerRecordings = () => {
                   name="releasedAt"
                   render={({ field }) => (
                     <FormItem>
+                      <FormLabel>Completion date</FormLabel>
                       <FormControl>
                         <DatePicker
                           className="max-w-[170px]"
-                          placeholder="Jan 20, 2022"
+                          placeholder="Jan 20, 2023"
                           date={field.value}
                           onDateChange={(d) => field.onChange(d || new Date())}
                         />
                       </FormControl>
-                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -288,15 +306,15 @@ const ProducerRecordings = () => {
                   name="optionRightsLimit"
                   render={({ field }) => (
                     <FormItem>
+                      <FormLabel>Completion date</FormLabel>
                       <FormControl>
                         <DatePicker
                           className="max-w-[170px]"
-                          placeholder="Jan 20, 2022"
+                          placeholder="Jan 20, 2023"
                           date={field.value}
                           onDateChange={(d) => field.onChange(d || new Date())}
                         />
                       </FormControl>
-                      <FormMessage />
                     </FormItem>
                   )}
                 />
