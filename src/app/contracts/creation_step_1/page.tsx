@@ -1,11 +1,6 @@
-"use client";
-import { useState, useEffect } from "react";
-import CreateStepCards from "../components/CreateStepCards";
-
-export default function Layout({ activeStep }: { activeStep: number }) {
+export default function Layout() {
   return (
     <>
-      <CreateStepCards step={activeStep} />
     </>
   );
 }

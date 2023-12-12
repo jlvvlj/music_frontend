@@ -12,7 +12,6 @@ import {
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { RadioGroup } from "@/components/ui/radio-group";
-import { STEPS, StepIndex } from "./ProgressSteps";
 import { MiniCard } from "@/components/cards/minicard";
 import { Icons } from "@/components/ui/icons";
 import { Notifications } from "@/components/track/notifications";
@@ -32,6 +31,9 @@ import ProducerForm from "./ProducerForm";
 import ArtistForm from "./ArtistForm";
 import ArtistRecordings from "./ArtistRecordings";
 import Stacked from "./Stacked";
+import ContractBaseForm from "./ContractBaseForm";
+import { StepIndex } from "./types";
+import Contributors from "./Contributors";
 
 const CreateStepCards = ({
   step,
@@ -59,7 +61,7 @@ const CreateStepCards = ({
           />
         );
       case StepIndex.CONTRIBUTORS:
-        return <TeamAllocation />;
+        return <Contributors />;
       case StepIndex.SHARES:
         return <Shares />;
       case StepIndex.ROLE:
@@ -97,29 +99,8 @@ const CreateStepCards = ({
 
   return (
     <>
-      <div className="hidden space-y-6 p-8 pb-16 md:block mt-6">
-        <div className="mt-12 mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[500px]">
-          <div className="flex flex-col space-y-8 text-center w-full">
-            <h1 className="text-3xl font-semibold tracking-tight">
-              {STEPS[step - 1].title}
-            </h1>
-            <p className="text-sm text-muted-foreground">
-              {STEPS[step - 1].description}
-            </p>
-          </div>
-        </div>
-      </div>
-      <div className="px-8 pb-8">{loadCardByStep()}</div>
-      <div className="w-full flex justify-end px-12 mb-5">
-        <Button
-          className={clsx(
-            "px-12",
-            STEPS[step - 1].saveBtnHidden ? "hidden" : ""
-          )}
-          onClick={updateStep}
-        >
-          Save
-        </Button>
+      <div className="px-8 pb-8">
+        <ContractBaseForm step={step}>{loadCardByStep()}</ContractBaseForm>
       </div>
     </>
   );

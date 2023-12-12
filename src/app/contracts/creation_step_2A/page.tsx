@@ -46,11 +46,8 @@ const sidebarNavItems = [
   },
 ];
 
-interface SettingsLayoutProps {
-  children: React.ReactNode;
-}
 
-export default function Layout({ children }: SettingsLayoutProps) {
+export default function Layout() {
   return (
     <>
       <div className="border-b">

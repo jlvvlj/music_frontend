@@ -59,7 +59,7 @@ export default function UploadButton({
         <button
           {...getRootProps({
             className: cn(
-              "dropzone w-[50px] h-[50px] !bg-[#1E293B] text-white",
+              "dropzone w-[50px] h-[50px] !bg-[#A3D3FF] text-white",
               className
             ),
           })}
