@@ -17,6 +17,7 @@ import { CurrencyInput } from "@/components/ui/currency-input";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import { DemoPaymentMethod } from "@/app/examples/cards/components/payment-method";
+import { CardsActivityGoal } from "@/components/ui/activity-goal";
 // import DemoPaymentMethod from "@/components/cards/payment-method";
 
 interface SingleRate {
@@ -33,19 +34,10 @@ interface TieredRate extends SingleRate {
 type InputType = Omit<TieredRate, "enabled" | "type">;
 
 const Royalties = () => {
-  const [singleRates, setSingleRates] = useState<SingleRate[]>([]);
-  const [physicalSingleRate, setPhysicalSingleRate] =
+  const [singleRate, setSingleRate] =
     useState<SingleRate | null>(null);
-  const [physicalTieredRate, setPhysicalTieredRate] =
-    useState<TieredRate | null>(null);
-  const [digitalSingleRate, setDigitalSingleRate] = useState<SingleRate | null>(
-    null
-  );
-  const [digitalTieredRate, setDigitalTieredRate] = useState<TieredRate | null>(
-    null
-  );
-  const [tieredRates, setTieredRates] = useState<TieredRate[]>([]);
 
+  const [tieredRates, setTieredRates] = useState<TieredRate[]>([]);
   const [physicalRateInputs, setPhysicalRateInputs] =
     useState<InputType | null>(null);
   const [digitalRateInputs, setDigitalRateInputs] = useState<InputType | null>(
@@ -59,20 +51,7 @@ const Royalties = () => {
   ) => {
     const value = e.target.value;
     const name = e.target.name;
-    setPhysicalSingleRate((prev: any) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-  const handleChangeDigitalSingleRatePercentage = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = e.target.value;
-    const name = e.target.name;
-    setDigitalSingleRate((prev: any) => ({
-      ...prev,
-      [name]: value,
-    }));
+
   };
 
   const handleChangePhysicalFormInputs = (e: ChangeEvent<HTMLInputElement>) => {
@@ -125,150 +104,141 @@ const Royalties = () => {
     // setTieredRates(_tieredRates);
   };
 
-  const handleChangePhysicalSingleRateEnabled = (enabled: boolean) => {
-    setPhysicalSingleRate((prev: any) => ({
-      ...prev,
-      enabled,
-      percentage: enabled ? prev?.percentage || "" : "",
-    }));
-  };
-  const handleChangeDigitalSingleRateEnabled = (enabled: boolean) => {
-    setDigitalSingleRate((prev: any) => ({
-      ...prev,
-      enabled,
-      percentage: enabled ? prev?.percentage || "" : "",
-    }));
-  };
-
   return (
     <>
       <Card className="border-none">
         <CardContent className="space-y-6">
           <Tabs defaultValue="single" className="w-full px-10">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-2 mb-10">
               <TabsTrigger value="single">Single Rate</TabsTrigger>
               <TabsTrigger value="tiered">Tiered Rate</TabsTrigger>
             </TabsList>
             <TabsContent value="single">
-              <div className="col-span-2 mt-10">
-                <CurrencyInput
-                  title="Royalites"
-                  name="percentage"
-                  currency="%"
-                  className="text-white"
-                  value={physicalSingleRate?.percentage || ""}
-                  onChange={handleChangePhysicalSingleRatePercentage}
-                />
+              <div className="grid grid-cols-12 gap-6 mt-10">
+                <div
+                  className={cn(
+                    "flex items-center pl-4 rounded-md bg-[#131313] col-span-12 xl:col-span-10 2xl:col-span-6 w-full"
+                  )}
+                >
+                  <div>
+                    <p
+                      className={cn(
+                        "text-sm font-medium leading-none text-[#FAFAFA]"
+                      )}
+                    >
+                      Royalties
+                    </p>
+                    <p className="text-sm text-[#B9B9BA]">Lorem ipsum</p>
+                  </div>
+                  <CardsActivityGoal
+                    label="SHARES OF REVENUES"
+                    initialValue={30}
+                    unit="%"
+                    step={10}
+                    buttonTitle="Set Share"
+                    minValue={0}
+                    maxValue={100}
+                    buttonHidden
+                    onClickButton={() => {}}
+                    isOwner={true}
+                  />
+                </div>
               </div>
             </TabsContent>
-            <TabsContent value="tiered">
-              <div className="col-span-9 space-y-4">
+            <TabsContent value="tiered" className="w-fit">
+              <div className="col-span-9 space-y-4 mb-5">
                 {tieredRates &&
                   !!tieredRates.length &&
-                  tieredRates.map((rate, index) => {
-                    if (rate.type === "physical") {
-                      return (
-                        <React.Fragment key={index}>
-                          <div className="">
-                            <span
-                              className={cn(
-                                "text-sm font-normal",
-                                !physicalSingleRate?.enabled
-                                  ? "text-white"
-                                  : "text-[#A1A1AA]"
-                              )}
-                            >
-                              From&nbsp;
-                            </span>
-                            <span
-                              className={cn(
-                                "text-sm font-normal",
-                                !physicalSingleRate?.enabled
-                                  ? "text-[#94A3B8]"
-                                  : "text-[#505357]"
-                              )}
-                            >
-                              {rate.from}&nbsp;
-                            </span>
-                            <span
-                              className={cn(
-                                "text-sm font-normal ",
-                                !physicalSingleRate?.enabled
-                                  ? "text-white"
-                                  : "text-[#94A3B8]"
-                              )}
-                            >
-                              To&nbsp;
-                            </span>
-                            <span
-                              className={cn(
-                                "text-sm font-normal",
-                                !physicalSingleRate?.enabled
-                                  ? "text-[#94A3B8]"
-                                  : "text-[#505357]"
-                              )}
-                            >
-                              {rate.to}&nbsp;
-                            </span>
-                            <span
-                              className={cn(
-                                "text-sm font-normal",
-                                !physicalSingleRate?.enabled
-                                  ? "text-white"
-                                  : "text-[#94A3B8]"
-                              )}
-                            >
-                              Copies&nbsp;:&nbsp;
-                            </span>
-                            <span
-                              className={cn(
-                                "text-sm font-normal text-[#94A3B8]"
-                              )}
-                            >
-                              {rate.percentage}&nbsp;%
-                            </span>
-                          </div>
-                        </React.Fragment>
-                      );
-                    } else {
-                      return null;
-                    }
-                  })}
+                  tieredRates.map((rate, index) => (
+                    <div
+                      key={index}
+                      className="flex rounded-md bg-[#131313] w-full"
+                    >
+                      <CardsActivityGoal
+                        cardTitle="From"
+                        label="copies"
+                        initialValue={30}
+                        unit="%"
+                        step={10}
+                        buttonTitle="Set Share"
+                        minValue={0}
+                        maxValue={100}
+                        buttonHidden
+                        onClickButton={() => {}}
+                        isOwner={true}
+                      />
+                      <CardsActivityGoal
+                        cardTitle="To"
+                        label="copies"
+                        initialValue={30}
+                        unit="%"
+                        step={10}
+                        buttonTitle="Set Share"
+                        minValue={0}
+                        maxValue={100}
+                        buttonHidden
+                        onClickButton={() => {}}
+                        isOwner={true}
+                      />
+                      <CardsActivityGoal
+                        cardTitle="&nbsp;"
+                        label="SHARES OF REVENUES"
+                        initialValue={30}
+                        unit="%"
+                        step={10}
+                        buttonTitle="Set Share"
+                        minValue={0}
+                        maxValue={100}
+                        buttonHidden
+                        onClickButton={() => {}}
+                        isOwner={true}
+                      />
+                    </div>
+                  ))}
               </div>
               <form onSubmit={onSubmitPhysicalForm}>
-                <div className="grid grid-cols-12 gap-4 items-center mt-10">
-                  <div className="col-span-4">
-                    <CurrencyInput
-                      title="From"
-                      name="from"
-                      currency="Copies"
-                      value={physicalRateInputs?.from || ""}
-                      onChange={handleChangePhysicalFormInputs}
-                      disabled={physicalSingleRate?.enabled}
-                    />
-                  </div>
-                  <div className="col-span-4">
-                    <CurrencyInput
-                      title="To"
-                      name="to"
-                      currency="Copies"
-                      value={physicalRateInputs?.to || ""}
-                      onChange={handleChangePhysicalFormInputs}
-                      disabled={physicalSingleRate?.enabled}
-                    />
-                  </div>
-                  <div className="col-span-4">
-                    <CurrencyInput
-                      title="Royalties"
-                      name="percentage"
-                      currency="%"
-                      value={physicalRateInputs?.percentage || ""}
-                      onChange={handleChangePhysicalFormInputs}
-                      disabled={physicalSingleRate?.enabled}
-                    />
-                  </div>
+                <div className="flex justify-around rounded-md bg-[#131313]">
+                  <CardsActivityGoal
+                    label="COPIES"
+                    initialValue={0}
+                    unit=""
+                    step={1}
+                    buttonTitle="Set Share"
+                    minValue={0}
+                    maxValue={5000}
+                    buttonHidden
+                    onClickButton={() => {}}
+                    cardTitle="From"
+                    isOwner={true}
+                  />
+                  <CardsActivityGoal
+                    label="COPIES"
+                    initialValue={0}
+                    unit=""
+                    step={1}
+                    buttonTitle="Set Share"
+                    minValue={0}
+                    maxValue={5000}
+                    buttonHidden
+                    onClickButton={() => {}}
+                    cardTitle="To"
+                    isOwner={true}
+                  />
+                  <CardsActivityGoal
+                    label="SHARES OF REVENUES"
+                    initialValue={0}
+                    unit="%"
+                    step={10}
+                    buttonTitle="Set Share"
+                    minValue={0}
+                    maxValue={100}
+                    buttonHidden
+                    cardTitle="&nbsp;"
+                    onClickButton={() => {}}
+                    isOwner={true}
+                  />
                 </div>
-                <div className="flex justify-end items-center h-full w-full !mt-7">
+                <div className="flex justify-end items-center h-full !mt-7">
                   <button type="submit" className="text-[#2997FF]">
                     + Add a tier
                   </button>
@@ -276,7 +246,7 @@ const Royalties = () => {
               </form>
             </TabsContent>
           </Tabs>
-          <Button className="w-full !mt-20">Next</Button>
+          {/* <Button className="w-full !mt-20">Next</Button> */}
         </CardContent>
       </Card>
     </>

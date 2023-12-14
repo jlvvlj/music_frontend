@@ -1,58 +1,83 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { TeamMember } from "./types";
-import { fallbackAvatar } from "@/lib/utils";
+import { cn, fallbackAvatar } from "@/lib/utils";
 import Image from "next/image";
+import MinusIcon from "@/components/contract/MinusIcon";
+import PlusIcon from "@/components/contract/PlusIcon";
+import ChartBarIcon from "@/components/contract/ChartBarIcon";
+import { isOwner } from "./utils";
+import { CardsActivityGoal } from "@/components/ui/activity-goal";
 
 const ShareCard = ({ member }: { member: TeamMember }) => {
   return (
-    <div className="flex items-center space-x-4 px-4 bg-accent py-3 rounded-md w-full mb-5">
-      <Avatar className="bg-[#A3D3FF]">
+    <div
+      className={cn(
+        "flex items-start gap-8 px-4  py-3 rounded-md mb-5 w-fit mx-auto",
+        isOwner(member) ? "bg-[#2997FF]" : "bg-accent"
+      )}
+    >
+      <Avatar className="bg-[#A3D3FF] mt-2">
         <AvatarImage src={member.avatar} />
         <AvatarFallback className="bg-transparent">
           {fallbackAvatar(member.name)}
         </AvatarFallback>
       </Avatar>
-      <div>
+      <div className="pt-3">
         <p className="text-sm font-medium leading-none">{member.name}</p>
         <p className="text-sm text-muted-foreground">{member.role}</p>
       </div>
-      <div>
-        <div className="flex items-center justify-between">
-          <div className="border border-solid border-[#8AC4FB] rounded-full w-2 h-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="6"
-              height="6"
-              viewBox="0 0 6 6"
-              fill="none"
-            >
-              <g clip-path="url(#clip0_376_15720)">
-                <path
-                  d="M1.70422 3.04199H4.50741"
-                  stroke="white"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_376_15720">
-                  <rect
-                    width="4.80546"
-                    height="4.80546"
-                    fill="white"
-                    transform="translate(0.703125 0.63916)"
-                  />
-                </clipPath>
-              </defs>
-            </svg>
-          </div>
-          <div></div>
-          <div></div>
-        </div>
-        <div></div>
-        <div></div>
+      <div className="">
+        <CardsActivityGoal
+          label="SHARES OF REVENUES"
+          initialValue={50}
+          unit="%"
+          step={10}
+          buttonTitle="Set Share"
+          minValue={0}
+          maxValue={100}
+          onClickButton={() => {}}
+          isOwner={isOwner(member)}
+        />
       </div>
+      {/* <div className="space-y-1">
+        <div className="flex items-center justify-around">
+          <div
+            className={cn(
+              "border border-solid rounded-full w-[14px] h-[14px] flex justify-center items-center",
+              isOwner(member) ? "border-[#8AC4FB]" : "border-[#0F172A]"
+            )}
+          >
+            <MinusIcon />
+          </div>
+          <div className="text-[#F8FAFC] text-[21px] font-normal text-center">
+            50%
+          </div>
+          <div
+            className={cn(
+              "border border-solid rounded-full w-[14px] h-[14px] flex justify-center items-center",
+              isOwner(member) ? "border-[#8AC4FB]" : "border-[#0F172A]"
+            )}
+          >
+            <PlusIcon />
+          </div>
+        </div>
+        <div className="text-white text-center text-[8px] font-normal uppercase">
+          SHARES OF REVENUES
+        </div>
+        <div className="w-full flex justify-center items-center">
+          <ChartBarIcon />
+        </div>
+        <button
+          className={cn(
+            " rounded-[20px] px-5 py-1 text-[12px] font-normal text-center",
+            isOwner(member)
+              ? "bg-white text-[#3B82F6]"
+              : "bg-[#3B82F6] text-[#0F172A]"
+          )}
+        >
+          Set Share
+        </button>
+      </div> */}
     </div>
   );
 };

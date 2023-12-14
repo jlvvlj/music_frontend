@@ -28,12 +28,9 @@ import ProgressSteps from "./components/ProgressSteps";
 import CreateTrackTabs from "@/components/track/createTrackTabs";
 import CreateStepCards from "./components/CreateStepCards";
 import Layout from "./creation_step_1/page";
+import { STEPS } from "./components/types";
 
-interface SettingsLayoutProps {
-  children: React.ReactNode;
-}
-
-export default function NewContract({ children }: SettingsLayoutProps) {
+export default function NewContract() {
   const [activeStep, setActiveStep] = useState(1);
 
   const handleUpdateActiveStep = (step = 1) => {
@@ -42,30 +39,22 @@ export default function NewContract({ children }: SettingsLayoutProps) {
 
   // ** Actions
   const handleClickSave = () => {
-    setActiveStep(activeStep + 1);
+    if (activeStep < STEPS.length) {
+      setActiveStep(activeStep + 1);
+    }
   };
 
   return (
-    <>
-      <div className="border-b">
-        <div className="flex h-16 items-center px-4">
-          <TeamSwitcher />
-          <MainNav className="mx-6" />
-          <div className="ml-auto flex items-center space-x-4">
-            <Search />
-            <ModeToggle />
-            <UserNav />
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-6 mx-4">
+    <div className="h-full flex flex-col">
+      <div className="mx-4">
         <ProgressSteps step={activeStep} updateStep={handleUpdateActiveStep} />
       </div>
-      <CreateStepCards step={activeStep} updateStep={handleClickSave} />
+      <div className="flex-1">
+        <CreateStepCards step={activeStep} updateStep={handleClickSave} />
+      </div>
       {/* <div className="mt-4 flex justify-end">
         <Button onClick={handleClickSave}>Save</Button>
       </div> */}
-    </>
+    </div>
   );
 }

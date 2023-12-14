@@ -60,18 +60,33 @@ export const ProgramTypes: ProgramType[] = [
   },
 ];
 
+export const COUNTRIES = [
+  {
+    label: "France",
+    checked: false,
+  },
+  {
+    label: "Spain",
+    checked: false,
+  },
+  {
+    label: "England",
+    checked: false,
+  },
+]
+
 export enum StepIndex {
-  CONTRIBUTIONS = 1,
-  CONTRIBUTORS,
+  // CONTRIBUTIONS = 1,
+  CONTRIBUTORS = 1,
   SHARES,
-  ROLE,
-  FORM,
+  // ROLE,
+  // FORM,
   RECORDINGS,
   BUDGET,
   ROYALTIES,
   ABATEMENTS,
   BROADCASTING,
-  STACKED,
+  // STACKED,
 }
 
 export enum ContributionSubType {}
@@ -85,13 +100,13 @@ export type Step = {
 };
 
 export const STEPS = [
-  {
-    label: "Contributions",
-    step: StepIndex.CONTRIBUTIONS,
-    title: "Contributions",
-    saveBtnHidden: true,
-    description: "Does the contract involve multiple stakeholders?",
-  },
+  // {
+  //   label: "Contributions",
+  //   step: StepIndex.CONTRIBUTIONS,
+  //   title: "Contributions",
+  //   saveBtnHidden: true,
+  //   description: "Does the contract involve multiple stakeholders?",
+  // },
   {
     label: "Contributors",
     step: StepIndex.CONTRIBUTORS,
@@ -107,20 +122,20 @@ export const STEPS = [
     description:
       "Enter the appropriate amount of shares to everyone on the team",
   },
-  {
-    label: "Role",
-    step: StepIndex.ROLE,
-    title: "Role",
-    saveBtnHidden: true,
-    description: "Are you a producer or an artist?",
-  },
-  {
-    label: "Form",
-    step: StepIndex.FORM,
-    title: "Personal Information",
-    saveBtnHidden: false,
-    description: "Pleas add some details about you",
-  },
+  // {
+  //   label: "Role",
+  //   step: StepIndex.ROLE,
+  //   title: "Role",
+  //   saveBtnHidden: true,
+  //   description: "Are you a producer or an artist?",
+  // },
+  // {
+  //   label: "Form",
+  //   step: StepIndex.FORM,
+  //   title: "Personal Information",
+  //   saveBtnHidden: false,
+  //   description: "Pleas add some details about you",
+  // },
   {
     label: "Recordings",
     step: StepIndex.RECORDINGS,
@@ -156,13 +171,13 @@ export const STEPS = [
     saveBtnHidden: false,
     description: "Enter the contract secondary use details",
   },
-  {
-    label: "Stacked",
-    step: StepIndex.STACKED,
-    title: "Broadcasting right & Secondary Use",
-    saveBtnHidden: false,
-    description: "Enter the contract secondary use details",
-  },
+  // {
+  //   label: "Stacked",
+  //   step: StepIndex.STACKED,
+  //   title: "Broadcasting right & Secondary Use",
+  //   saveBtnHidden: false,
+  //   description: "Enter the contract secondary use details",
+  // },
 
   // {
   //   label: "Contract",

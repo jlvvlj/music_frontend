@@ -17,16 +17,33 @@ const member: TeamMember = {
   email: "",
   role: "Master Owner",
 };
+
+const members: TeamMember[] = [
+  {
+    name: "Julie Depree",
+    surName: "",
+    email: "",
+    role: "Master Owner",
+  },
+  {
+    name: "Charly Jones",
+    surName: "",
+    email: "",
+    role: "Singer",
+  },
+  {
+    name: "Orlane Moog",
+    surName: "",
+    email: "",
+    role: "Musician",
+  },
+];
 const Shares = () => {
   return (
     <>
-      <Card className="w-full mx-auto border-none p-0">
-        <CardContent className="space-y-2">
-          <div>
-            <ShareCard member={member} />
-          </div>
-        </CardContent>
-      </Card>
+      {members.map((member, index) => (
+        <ShareCard key={index} member={member} />
+      ))}
     </>
   );
 };

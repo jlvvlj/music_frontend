@@ -44,9 +44,11 @@ const defaultValues: Partial<BaseFormValues> = {};
 
 const ContractBaseForm = ({
   step = 0,
+  updateStep,
   children,
 }: {
   step: number;
+  updateStep: VoidFunction;
   children: React.ReactNode;
 }) => {
   // ** form
@@ -61,23 +63,28 @@ const ContractBaseForm = ({
   };
 
   const isLeftside = () => {
-    switch (step) {
-      case StepIndex.CONTRIBUTORS:
-        return true;
-      case StepIndex.SHARES:
-        return true;
-      case StepIndex.ROYALTIES:
-        return true;
-      default:
-        return false;
-    }
+    return true;
+    // switch (step) {
+    //   case StepIndex.CONTRIBUTORS:
+    //     return true;
+    //   case StepIndex.SHARES:
+    //     return true;
+    //   case StepIndex.ROYALTIES:
+    //     return true;
+    //   case StepIndex.RECORDINGS:
+    //     return true;
+    //   case StepIndex.BUDGET:
+    //     return true;
+    //   default:
+    //     return false;
+    // }
   };
 
   return (
-    <div className={cn("grid grid-cols-2 mt-40")}>
+    <div className={cn("grid grid-cols-2 mt-20 h-full")}>
       <div
         className={cn(
-          "col-span-1 px-24 pt-4 pb-12 ",
+          "col-span-1 px-12 2xl:px-24 pt-4 pb-12 flex flex-col h-full",
           !isLeftside() ? "order-last" : ""
         )}
       >
@@ -94,9 +101,19 @@ const ContractBaseForm = ({
             {STEPS[step - 1].description}
           </p>
         </div>
-        <div className={cn(!isLeftside() ? "pt-20" : "")}>{children}</div>
+        <div className={cn("flex-1", !isLeftside() ? "pt-20" : "")}>
+          {children}
+        </div>
+        <div className="w-full flex justify-center">
+          <Button
+            className="bg-[#3B82F6] px-24 text-white !mb-5"
+            onClick={updateStep}
+          >
+            Next
+          </Button>
+        </div>
       </div>
-      <div className="col-span-1 px-24 pt-4 pb-12 space-y-4">
+      <div className="col-span-1 px-12 2xl:px-24 pt-4 pb-12 space-y-4 relative flex flex-col h-full">
         <div
           className={cn(
             "flex flex-col space-y-6 w-full mb-14",
@@ -111,9 +128,9 @@ const ContractBaseForm = ({
           </p>
         </div>
 
-        <Tabs
+        {/* <Tabs
           defaultValue="option1"
-          className={cn("w-full px-10", isLeftside() ? "pt-20" : "")}
+          className={cn("w-full px-10 flex-1", isLeftside() ? "pt-20" : "")}
         >
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="option1">Option1</TabsTrigger>
@@ -207,7 +224,10 @@ const ContractBaseForm = ({
               </Label>
             </RadioGroup>
           </TabsContent>
-        </Tabs>
+        </Tabs> */}
+        <div className="w-full flex justify-center !mb-5">
+          <Button className="bg-[#3B82F6] px-24 text-white hidden">Next</Button>
+        </div>
       </div>
     </div>
   );

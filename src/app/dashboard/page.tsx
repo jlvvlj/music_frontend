@@ -66,6 +66,7 @@ import CreateTrackTabs from "@/components/track/createTrackTabs";
 import ProgressDemo from "@/registry/default/example/progress-demo";
 import TracksTable from "./tracks_table";
 import Link from "next/link";
+import NewContract from "../contracts/page";
 
 export default function DashboardPage() {
   return (
@@ -91,9 +92,17 @@ export default function DashboardPage() {
                 Your Dashboard
               </h2>
               <div className="flex items-center space-x-2">
-                <Link href="/contracts">
+                {/* <Link href="/contracts">
                   <Button variant="outline">Add a new contract</Button>
-                </Link>
+                </Link> */}
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="outline">Add a new contract</Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-[95%] h-[90%] overflow-y-scroll no-scrollbar">
+                    <NewContract />
+                  </DialogContent>
+                </Dialog>
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button>Add a new track</Button>

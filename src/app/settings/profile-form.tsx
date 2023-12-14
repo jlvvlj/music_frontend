@@ -1,12 +1,15 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useFieldArray, useForm } from "react-hook-form"
-import * as z from "zod"
+import Link from "next/link";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useFieldArray, useForm } from "react-hook-form";
+import * as z from "zod";
 
-import { cn } from "@/lib/utils"
-import { Button } from "../../components/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "../../components/ui/button";
+import UploadFile from "@/components/ui/upload-file";
+import { Slider } from "@/components/ui/slider";
+import { Icons } from "@/components/icons";
 import {
   Form,
   FormControl,
@@ -15,64 +18,51 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../components/ui/form"
-import { Input } from "../../components/ui/input"
+} from "../../components/ui/form";
+import { Input } from "../../components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../components/ui/select"
-import { Textarea } from "../../components/ui/textarea"
-import { toast } from "../../components/ui/use-toast"
+} from "../../components/ui/select";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Textarea } from "../../components/ui/textarea";
+import { toast } from "../../components/ui/use-toast";
+import UploadComponent from "@/components/drag/UploadDragDrop";
 
 const profileFormSchema = z.object({
-  username: z
-    .string()
-    .min(2, {
-      message: "Username must be at least 2 characters.",
-    })
-    .max(30, {
-      message: "Username must not be longer than 30 characters.",
-    }),
-  email: z
-    .string({
-      required_error: "Please select an email to display.",
-    })
-    .email(),
-  bio: z.string().max(160).min(4),
-  urls: z
-    .array(
-      z.object({
-        value: z.string().url({ message: "Please enter a valid URL." }),
-      })
-    )
-    .optional(),
-})
+  companyName: z.string().min(2, {
+    message: "Company name must be at least 2 characters.",
+  }),
+  postalCode: z.string(),
+  corporateForm: z.string(),
+  nrcs: z.string(),
+  city: z.string(),
+  shareOfCapital: z.string(),
+  headOfficeAddress: z.string(),
+  rib: z.string(),
+  kbis: z.string(),
+});
 
-type ProfileFormValues = z.infer<typeof profileFormSchema>
+type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
 // This can come from your database or API.
-const defaultValues: Partial<ProfileFormValues> = {
-  bio: "I own a computer.",
-  urls: [
-    { value: "https://shadcn.com" },
-    { value: "http://twitter.com/shadcn" },
-  ],
-}
+const defaultValues: Partial<ProfileFormValues> = {};
 
 export function ProfileForm() {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues,
     mode: "onChange",
-  })
-
-  const { fields, append } = useFieldArray({
-    name: "urls",
-    control: form.control,
-  })
+  });
 
   function onSubmit(data: ProfileFormValues) {
     toast({
@@ -82,111 +72,191 @@ export function ProfileForm() {
           <code className="text-white">{JSON.stringify(data, null, 2)}</code>
         </pre>
       ),
-    })
+    });
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name. It can be your real name or a
-                pseudonym. You can only change this once every 30 days.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a verified email to display" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="m@example.com">m@example.com</SelectItem>
-                  <SelectItem value="m@google.com">m@google.com</SelectItem>
-                  <SelectItem value="m@support.com">m@support.com</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormDescription>
-                You can manage verified email addresses in your{" "}
-                <Link href="/examples/forms">email settings</Link>.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="bio"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Bio</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Tell us a little bit about yourself"
-                  className="resize-none"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>
-                You can <span>@mention</span> other users and organizations to
-                link to them.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <div>
-          {fields.map((field, index) => (
+          <FormField
+            control={form.control}
+            name="companyName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Company Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Your company" {...field} />
+                </FormControl>
+                <FormDescription>
+                  Please enter the same name as in your company incorporation
+                  documents.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="corporateForm"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Corporate form (e.g. SAS, SARL, association)
+                </FormLabel>
+                <FormControl>
+                  <Input placeholder="" {...field} />
+                </FormControl>
+                <FormDescription></FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="w-full grid grid-cols-4 gap-6">
             <FormField
               control={form.control}
-              key={field.id}
-              name={`urls.${index}.value`}
+              name="nrcs"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className={cn(index !== 0 && "sr-only")}>
-                    URLs
-                  </FormLabel>
-                  <FormDescription className={cn(index !== 0 && "sr-only")}>
-                    Add links to your website, blog, or social media profiles.
-                  </FormDescription>
+                  <FormLabel>N°RCS</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input placeholder="" {...field} />
                   </FormControl>
+                  <FormDescription></FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
-          ))}
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            className="mt-2"
-            onClick={() => append({ value: "" })}
-          >
-            Add URL
-          </Button>
+            <FormField
+              control={form.control}
+              name="shareOfCapital"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Share of capital</FormLabel>
+                  <FormControl>
+                    <div className="mt-4 flex flex-col items-center">
+                      <Input placeholder="%" className="mb-2" {...field} />
+                      <Slider />
+                    </div>
+                  </FormControl>
+                  <FormDescription></FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="city"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>City</FormLabel>
+                  <FormControl>
+                    <Input placeholder="" {...field} />
+                  </FormControl>
+                  <FormDescription></FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="postalCode"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Post Code</FormLabel>
+                  <FormControl>
+                    <Input placeholder="" {...field} />
+                  </FormControl>
+                  <FormDescription></FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <FormField
+            control={form.control}
+            name="headOfficeAddress"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Head office address</FormLabel>
+                <FormControl>
+                  <Input placeholder="" {...field} />
+                </FormControl>
+                <FormDescription></FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Card className="mt-5">
+            <CardHeader className="flex flex-row items-center p-3 pl-5 gap-5 border-b">
+              <div>
+                <Icons.upload />
+              </div>
+              <div>
+                <CardTitle className="text-base">
+                  Upload your documents
+                </CardTitle>
+                <CardDescription>
+                  Drag and drop your RIB and Kbis or Sirene.
+                </CardDescription>
+              </div>
+            </CardHeader>
+            <CardContent className="grid grid-cols-2 pt-5">
+              <FormField
+                control={form.control}
+                name="rib"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <UploadComponent inputTitle="Select RIB" />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="kbis"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <UploadComponent inputTitle="Select KBIS" />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </CardContent>
+          </Card>
+          <div className="w-full grid-cols-2 gap-10 hidden">
+            <FormField
+              control={form.control}
+              name="rib"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Upload your RIB</FormLabel>
+                  <FormControl>
+                    <UploadFile input="" />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="kbis"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Upload your Kbis or SIRENE </FormLabel>
+                  <FormControl>
+                    <UploadFile input="" />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
         </div>
-        <Button type="submit">Go to Next Step</Button>
-
+        <div className="w-full flex justify-end">
+          <Button type="submit">Save Settings</Button>
+        </div>
       </form>
     </Form>
-  )
+  );
 }

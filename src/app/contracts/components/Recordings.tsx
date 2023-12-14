@@ -6,6 +6,10 @@ import { useFieldArray, useForm } from "react-hook-form";
 import * as z from "zod";
 import { format } from "date-fns";
 // ** Components
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { Icons } from "@/components/icons";
 import {
   Form,
   FormControl,
@@ -35,6 +39,8 @@ import { Input } from "@/components/ui/input";
 import DatePicker from "@/components/ui/date-picker";
 import UploadButton from "@/components/ui/upload-button";
 import { MultiSelect } from "@/components/ui/multi-select";
+import { cn } from "@/lib/utils";
+import { CardsActivityGoal } from "@/components/ui/activity-goal";
 
 const recordingFormSchema = z.object({
   image: z.string(),
@@ -55,7 +61,7 @@ type RecordingFormValues = z.infer<typeof recordingFormSchema>;
 
 const defaultValues: Partial<RecordingFormValues> = {};
 
-const ProducerRecordings = () => {
+const Recordings = () => {
   const [recordings, setRecordings] = useState<Recording[]>([
     {
       image:
@@ -125,61 +131,151 @@ const ProducerRecordings = () => {
   return (
     <>
       <Card className="border-none">
-        <CardHeader>
-          <CardTitle></CardTitle>
-          <CardDescription>
-            Enter the name and details of recording programs below.
-          </CardDescription>
-        </CardHeader>
         <CardContent className="space-y-6">
-          {recordings.map((recording, index) => (
-            <div key={index} className="grid grid-cols-10">
-              <Image
-                src={recording.image}
-                className="col-span-1"
-                width={50}
-                height={50}
-                alt="track"
-              />
-              <div className="col-span-3 space-y-3">
-                <p className="text-[#F8FAFC] text-sm font-normal">
-                  {recording.title}
-                </p>
-                <p className="text-[#94A3B8] text-sm font-normal">
-                  {`${recording.number} Singles (SPs) ${recording.recordingType}`}
-                </p>
-              </div>
-              <div className="col-span-2 space-y-3">
-                <p className="text-[#F8FAFC] text-sm font-normal">
-                  Completion Date
-                </p>
-                <p className="text-[#94A3B8] text-sm font-normal">
-                  {format(recording.completedAt, "LLL dd, y")}
-                </p>
-              </div>
-              <div className="col-span-2 space-y-3">
-                <p className="text-[#F8FAFC] text-sm font-normal">
-                  Commercial release
-                </p>
-                <p className="text-[#94A3B8] text-sm font-normal">
-                  {format(recording.releasedAt, "LLL dd, y")}
-                </p>
-              </div>
-              <div className="col-span-2 space-y-3">
-                <p className="text-[#F8FAFC] text-sm font-normal">
-                  Option rights limit
-                </p>
-                <p className="text-[#94A3B8] text-sm font-normal">
-                  {format(recording.optionRightsLimit, "LLL dd, y")}
-                </p>
-              </div>
-            </div>
-          ))}
-          {/* Add section */}
+          <Tabs defaultValue="firm" className={cn("w-full px-10 flex-1")}>
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="firm">Firm</TabsTrigger>
+              <TabsTrigger value="optional">Optional</TabsTrigger>
+            </TabsList>
+            <TabsContent value="firm" className="mt-10">
+              <RadioGroup
+                defaultValue="album"
+                className="grid grid-cols-3 gap-4"
+              >
+                <Label
+                  htmlFor="album"
+                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
+                >
+                  <RadioGroupItem
+                    value="album"
+                    id="album"
+                    className="sr-only"
+                  />
+                  <Icons.card className="mb-3 h-6 w-6" />
+                  Albums
+                </Label>
+                <Label
+                  htmlFor="single"
+                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
+                >
+                  <RadioGroupItem
+                    value="single"
+                    id="single"
+                    className="sr-only"
+                  />
+                  <Icons.card className="mb-3 h-6 w-6" />
+                  Singles
+                </Label>
+                <Label
+                  htmlFor="mini-album"
+                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
+                >
+                  <RadioGroupItem
+                    value="mini-album"
+                    id="mini-album"
+                    className="sr-only"
+                  />
+                  <Icons.card className="mb-3 h-6 w-6" />
+                  Mini-Albums
+                </Label>
+                <Label
+                  htmlFor="maxi-single"
+                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
+                >
+                  <RadioGroupItem
+                    value="maxi-single"
+                    id="maxi-single"
+                    className="sr-only"
+                  />
+                  <Icons.card className="mb-3 h-6 w-6" />
+                  Maxi-Single
+                </Label>
+                <Label
+                  htmlFor="other"
+                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
+                >
+                  <RadioGroupItem
+                    value="other"
+                    id="other"
+                    className="sr-only"
+                  />
+                  <Icons.card className="mb-3 h-6 w-6" />
+                  Other
+                </Label>
+              </RadioGroup>
+            </TabsContent>
+            <TabsContent value="optional" className="mt-10">
+              <RadioGroup
+                defaultValue="album"
+                className="grid grid-cols-3 gap-4"
+              >
+                <Label
+                  htmlFor="album"
+                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
+                >
+                  <RadioGroupItem
+                    value="album"
+                    id="album"
+                    className="sr-only"
+                  />
+                  <Icons.card className="mb-3 h-6 w-6" />
+                  Albums
+                </Label>
+                <Label
+                  htmlFor="single"
+                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
+                >
+                  <RadioGroupItem
+                    value="single"
+                    id="single"
+                    className="sr-only"
+                  />
+                  <Icons.card className="mb-3 h-6 w-6" />
+                  Singles
+                </Label>
+                <Label
+                  htmlFor="mini-album"
+                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
+                >
+                  <RadioGroupItem
+                    value="mini-album"
+                    id="mini-album"
+                    className="sr-only"
+                  />
+                  <Icons.card className="mb-3 h-6 w-6" />
+                  Mini-Albums
+                </Label>
+                <Label
+                  htmlFor="maxi-single"
+                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
+                >
+                  <RadioGroupItem
+                    value="maxi-single"
+                    id="maxi-single"
+                    className="sr-only"
+                  />
+                  <Icons.card className="mb-3 h-6 w-6" />
+                  Maxi-Single
+                </Label>
+                <Label
+                  htmlFor="other"
+                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
+                >
+                  <RadioGroupItem
+                    value="other"
+                    id="other"
+                    className="sr-only"
+                  />
+                  <Icons.card className="mb-3 h-6 w-6" />
+                  Other
+                </Label>
+              </RadioGroup>
+            </TabsContent>
+          </Tabs>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="flex flex-wrap gap-4 items-end">
-                <FormField
+            <form className="" onSubmit={form.handleSubmit(onSubmit)}>
+              <div className="grid grid-cols-2 gap-4 items-end w-fit mx-auto">
+                {/* <FormField
                   control={form.control}
                   name="image"
                   render={({ field }) => (
@@ -195,7 +291,7 @@ const ProducerRecordings = () => {
                       </FormControl>
                     </FormItem>
                   )}
-                />
+                /> */}
 
                 <FormField
                   control={form.control}
@@ -218,16 +314,24 @@ const ProducerRecordings = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <Input
-                          placeholder="Rcording Number"
-                          className="max-w-[180px]"
-                          {...field}
+                        <CardsActivityGoal
+                          label="ReCordings"
+                          initialValue={50}
+                          unit=""
+                          step={10}
+                          buttonTitle="Set Share"
+                          minValue={0}
+                          maxValue={100}
+                          buttonHidden
+                          chartHidden
+                          onClickButton={() => {}}
+                          isOwner={false}
                         />
                       </FormControl>
                     </FormItem>
                   )}
                 />
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="recordingType"
                   render={({ field }) => (
@@ -266,7 +370,7 @@ const ProducerRecordings = () => {
                       </FormControl>
                     </FormItem>
                   )}
-                />
+                /> */}
                 <FormField
                   control={form.control}
                   name="completedAt"
@@ -318,8 +422,10 @@ const ProducerRecordings = () => {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="px-8">
-                  ADD
+              </div>
+              <div className="w-full flex justify-center items-center pt-8">
+                <Button type="submit" variant="outline" className="px-8">
+                  Add recording
                 </Button>
               </div>
             </form>
@@ -330,4 +436,4 @@ const ProducerRecordings = () => {
   );
 };
 
-export default ProducerRecordings;
+export default Recordings;

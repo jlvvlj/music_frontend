@@ -17,15 +17,15 @@ import UserNav from "@/components/dashboard/user-nav"
 
 const sidebarNavItems = [
   {
-    title: "Profile",
+    title: "Settings",
     href: "/settings/",
   },
   {
-    title: "Owner Account",
+    title: "Account",
     href: "/settings/account",
   },
   {
-    title: "Artist Account",
+    title: "Appearance",
     href: "/settings/appearance",
   },
   {

@@ -30,8 +30,7 @@ import { Input } from "@/components/ui/input";
 import { cn, fallbackAvatar } from "@/lib/utils";
 import UploadButton from "@/components/ui/upload-button";
 import { TeamMember } from "./types";
-
-
+import { isOwner } from "./utils";
 
 type PropsType = {
   data?: TeamMember[];
@@ -114,7 +113,10 @@ const Contributors = () => {
           <div className="grid gap-6 items-center justify-center">
             {members.map((member, index) => (
               <div
-                className="flex items-center space-x-4 px-4 bg-accent py-3 rounded-md w-full mb-5"
+                className={cn(
+                  "flex items-center space-x-4 px-4 bg-accent py-3 rounded-md w-full",
+                  isOwner(member) ? "bg-[#2997FF]" : "bg-accent"
+                )}
                 key={index}
               >
                 {/* <Avatar className="bg-[#A3D3FF]">
@@ -131,11 +133,15 @@ const Contributors = () => {
                   imageUrl={member.avatar || null}
                   onImageChange={(url) => handleAvatarImageChange(url, member)}
                 />
-                <div>
-                  <p className="text-sm font-medium leading-none">
+                <div
+                  className={cn(
+                    isOwner(member) ? "text-white" : "text-[#3B82F6]"
+                  )}
+                >
+                  <p className={cn("text-sm font-medium leading-none")}>
                     {member.name}
                   </p>
-                  <p className="text-sm text-muted-foreground">{member.role}</p>
+                  <p className="text-sm">{member.role}</p>
                 </div>
               </div>
             ))}
