@@ -41,7 +41,7 @@ export const columns: ColumnDef<Task>[] = [
     ),
     cell: ({ row }) =>
       <Link href={`contracts_settings/${row.getValue("id")}`}>
-        <div className="w-[160px]">{row.getValue("id")}</div>
+        <div className="max-w-[160px]">{row.getValue("id")}</div>
       </Link>,
     enableSorting: false,
     enableHiding: false,

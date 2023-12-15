@@ -291,3 +291,8 @@
     scrollbar-width: none; /* Firefox */
   }
 }
+
+.collapse-tableRow td:nth-child(2){
+    display: flex;
+    padding: 14px 8px;
+}

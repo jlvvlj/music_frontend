@@ -26,7 +26,7 @@ import Link from "next/link";
 import Stepper from "./components/stepper";
 import ProgressSteps from "./components/ProgressSteps";
 import CreateTrackTabs from "@/components/track/createTrackTabs";
-import CreateStepCards from "./components/CreateStepCards";
+import CreateStepCards from "../contracts/components/createStepCards";
 import Layout from "./creation_step_1/page";
 import { STEPS } from "./components/types";
 
