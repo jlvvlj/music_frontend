@@ -1,21 +1,27 @@
-import { Separator } from "@/registry/new-york/ui/separator"
-import { ProfileForm } from "@/app/examples/forms/profile-form"
-import { Button } from "@/components/ui/button"
+import { Separator } from "@/registry/new-york/ui/separator";
+import { ProfileForm } from "@/app/examples/forms/profile-form";
+import { Button } from "@/components/ui/button";
 // import SettingsLayout from "@/app/contracts/creation_modal/oldlayout"
-import Image from "next/image"
-import { SidebarNav } from "@/app/settings/components/sidebar-nav"
-import MainNav from "@/components/dashboard/main-nav"
-import TeamSwitcher from "@/components/dashboard/team-switcher"
-import Search from "@/components/dashboard/search"
-import ModeToggle from "@/components/ui/mode-toggle"
-import UserNav from "@/components/dashboard/user-nav"
-import ProgressBar from "../components/progress-bar"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { RadioGroup } from "@/components/ui/radio-group"
-import { MiniCard } from "@/components/cards/minicard"
-import { Icons } from "@/components/ui/icons"
-import Link from "next/link"
-import ProgressSteps from "../components/progress-steps"
+import Image from "next/image";
+import { SidebarNav } from "@/app/settings/components/sidebar-nav";
+import MainNav from "@/components/dashboard/main-nav";
+import TeamSwitcher from "@/components/dashboard/team-switcher";
+import Search from "@/components/dashboard/search";
+import ModeToggle from "@/components/ui/mode-toggle";
+import UserNav from "@/components/dashboard/user-nav";
+import ProgressBar from "../components/progress-bar";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { RadioGroup } from "@/components/ui/radio-group";
+import { MiniCard } from "@/components/cards/minicard";
+import { Icons } from "@/components/ui/icons";
+import Link from "next/link";
+import ProgressSteps from "../components/ProgressSteps";
 
 const sidebarNavItems = [
   {
@@ -38,10 +44,10 @@ const sidebarNavItems = [
     title: "Display",
     href: "/contracts/creation_modal/display",
   },
-]
+];
 
 interface SettingsLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export default function Layout({ children }: SettingsLayoutProps) {
@@ -60,6 +66,7 @@ export default function Layout({ children }: SettingsLayoutProps) {
       </div>
       <div className="mt-6 mx-4">
         <ProgressSteps step={3} />
+        {children}
       </div>
       <div className="hidden space-y-6 p-8 pb-16 md:block">
         {/* <div className="flex justify-center flex-col m-auto">
@@ -84,14 +91,13 @@ export default function Layout({ children }: SettingsLayoutProps) {
       <CardContent className="space-y-6">
         <RadioGroup defaultValue="card" className="grid grid-cols-2 gap-4">
           <Link href="/contracts/creation_step_4A">
-          <MiniCard icon={<Icons.spinner />} title="Option A" />
+            <MiniCard icon={<Icons.spinner />} title="Option A" />
           </Link>
           <Link href="/contracts/creation_step_4B">
-          <MiniCard icon={<Icons.spinner />} title="Option B" />
+            <MiniCard icon={<Icons.spinner />} title="Option B" />
           </Link>
         </RadioGroup>
-      </  CardContent>
+      </CardContent>
     </>
-  )
+  );
 }
-

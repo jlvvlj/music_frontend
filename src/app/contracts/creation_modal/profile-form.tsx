@@ -185,7 +185,7 @@ export function ProfileForm() {
           </Button>
         </div>
         <Link href="/contracts/creation_modal/account">
-          <Button type="submit">Go to Next Step</Button>
+          <Button type="submit" className="mt-4">Go to Next Step</Button>
         </Link>
       </form>
     </Form>

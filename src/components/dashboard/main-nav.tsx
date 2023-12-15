@@ -1,6 +1,16 @@
-import Link from "next/link"
-
-import { cn } from "@/lib/utils"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
+import NewContract from "@/app/contracts/page";
 
 export default function MainNav({
   className,
@@ -17,8 +27,25 @@ export default function MainNav({
       >
         Dashboard
       </Link>
+      {/* <Dialog>
+        <DialogTrigger asChild>
+          <button >Add a new contract</button>
+        </DialogTrigger>
+        <DialogContent className="max-w-[95%]">
+          <DialogHeader>
+            <DialogTitle>New Contract</DialogTitle>
+            <DialogDescription>
+              Add your contract information here. Click submit when you're done.
+            </DialogDescription>
+          </DialogHeader>
+          <NewContract />
+          <DialogFooter>
+            <Button type="submit">Save changes</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog> */}
       <Link
-        href="/contracts/creation_step_1"
+        href="/contracts"
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
         Create Track
@@ -33,8 +60,14 @@ export default function MainNav({
         href="/settings"
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
-        Settings
+        Owner Settings
+      </Link>
+      <Link
+        href="/artist-settings"
+        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+      >
+        Artist Settings
       </Link>
     </nav>
-  )
+  );
 }

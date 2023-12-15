@@ -44,13 +44,14 @@ export default function ModalLayout({ children }: SettingsLayoutProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button >Add a new track</Button>
+        <Button>Add a new track</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[1000px]">
         <DialogHeader>
           <DialogTitle>Add a track</DialogTitle>
           <DialogDescription>
-            Add your edtrase information here. Click submit when you're done.
+            Add your edtrase information here. Click submit when you&apos;re
+            done.
           </DialogDescription>
         </DialogHeader>
         <div className="hidden space-y-6 p-8 pb-16 md:block">
@@ -69,7 +70,8 @@ export default function ModalLayout({ children }: SettingsLayoutProps) {
               <div className="lg:max-w-2xl">{children}</div>
             </div>
             <Image
-              src="https://images.unsplash.com/photo-1615247001958-f4bc92fa6a4a?w=300&dpr=2&q=80" alt="track"
+              src="https://images.unsplash.com/photo-1615247001958-f4bc92fa6a4a?w=300&dpr=2&q=80"
+              alt="track"
               width={600}
               height={330}
             />
@@ -80,5 +82,5 @@ export default function ModalLayout({ children }: SettingsLayoutProps) {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

@@ -134,9 +134,9 @@ export const columns: ColumnDef<Task>[] = [
           {priority.icon && (
             <priority.icon className="mr-2 h-4 w-4 text-muted-foreground" />
           )}
-          <span>"{priority.label}"</span>
+          <span>&quot;{priority.label}&quot;</span>
         </div>
-      )
+      );
     },
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))

@@ -65,6 +65,7 @@ export default function Layout({ children }: SettingsLayoutProps) {
       </div>
       <div className="mt-6 mx-4">
         <ProgressBar step={4} />
+        {children}
       </div>
       <div className="hidden space-y-6 p-8 pb-16 md:block">
         {/* <div className="flex justify-center flex-col m-auto">

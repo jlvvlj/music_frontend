@@ -59,6 +59,7 @@ export default function Layout({ children }: SettingsLayoutProps) {
       </div>
       <div className="mt-6 mx-4">
         <ProgressBar step={3} />
+        {children}
       </div>
       <div className="hidden space-y-6 p-8 pb-16 md:block">
         {/* <div className="flex justify-center flex-col m-auto">
@@ -83,14 +84,14 @@ export default function Layout({ children }: SettingsLayoutProps) {
       <CardContent className="space-y-6">
         <RadioGroup defaultValue="card" className="grid grid-cols-2 gap-4">
           <Link href="/contracts/creation_step_4A/">
-          <MiniCard icon={<Icons.spinner />} title="Option A" />
+            <MiniCard icon={<Icons.spinner />} title="Option A" />
           </Link>
           <Link href="/contracts/creation_step_4B/">
-          <MiniCard icon={<Icons.spinner />} title="Option B" />
+            <MiniCard icon={<Icons.spinner />} title="Option B" />
           </Link>
         </RadioGroup>
-      </  CardContent>
+      </CardContent>
     </>
-  )
+  );
 }
 

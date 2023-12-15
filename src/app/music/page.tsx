@@ -130,8 +130,8 @@ export default function MusicPage() {
 
                           <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
                             {
-                              albums.results.map((album: { idAlbum: string; strAlbum: string; strArtist: string; strAlbumThumb: string }) => (
-                                <Link href={`music/${album.idAlbum}`}>
+                              albums.results.map((album: { idAlbum: string; strAlbum: string; strArtist: string; strAlbumThumb: string }, index) => (
+                                <Link key={index} href={`music/${album.idAlbum}`}>
                                   <Card
                                     key={album.idAlbum}
                                     // viewTransitionName={album.idAlbum}
@@ -165,8 +165,8 @@ export default function MusicPage() {
                       <div className="relative">
                         <ScrollArea>
                           <div className="flex space-x-4 pb-4">
-                            {listenNowAlbums.map((album) => (
-                              <Link href="/contracts/contract_page">
+                            {listenNowAlbums.map((album, index) => (
+                              <Link key={index} href="/contracts/contract_page">
                                 <AlbumArtwork
                                   key={album.name}
                                   album={album}
