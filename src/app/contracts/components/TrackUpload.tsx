@@ -16,7 +16,7 @@ const TrackUpload = () => {
           <CardTitle>Upload a Track</CardTitle>
           <CardDescription>
             Upload a Track (mp3, aac accepted) and an Image. Click save when
-            you're done.
+            you&apos;re done.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-8">

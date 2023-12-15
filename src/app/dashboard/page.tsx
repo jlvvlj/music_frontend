@@ -112,7 +112,7 @@ export default function DashboardPage() {
                       <DialogTitle>New Contract</DialogTitle>
                       <DialogDescription>
                         Add your contract information here. Click submit when
-                        you're done.
+                        you&apos;re done.
                       </DialogDescription>
                     </DialogHeader>
 
