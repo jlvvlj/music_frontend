@@ -78,7 +78,7 @@ export const columns: ColumnDef<Task>[] = [
       return (
         <div className="flex space-x-2">
           {title && <Badge variant="outline">{title.label}</Badge>}
-          <span className="max-w-[500px] truncate font-medium">
+          <span className="max-w-[400px] truncate font-medium">
             {row.getValue("title")}
           </span>
         </div>
@@ -102,11 +102,11 @@ export const columns: ColumnDef<Task>[] = [
       }
 
       return (
-        <div className="flex w-[100px] items-center">
+        <div className="flex w-25 items-center gap-2">
           {status.icon && (
-            <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+            <span className={`w-2.5 h-2.5 rounded-full ${status.icon}`} />
           )}
-          <span>{status.label}</span>
+           <span>{status.label}</span>
         </div>
       )
     },

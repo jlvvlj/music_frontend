@@ -2,11 +2,6 @@ import {
   ArrowDownIcon,
   ArrowRightIcon,
   ArrowUpIcon,
-  CheckCircledIcon,
-  CircleIcon,
-  CrossCircledIcon,
-  QuestionMarkCircledIcon,
-  StopwatchIcon,
 } from "@radix-ui/react-icons"
 
 export const albums = [
@@ -39,28 +34,17 @@ export const statuses = [
   {
     value: "processing",
     label: "Processing",
-
-    icon: QuestionMarkCircledIcon,
-  },
-  {
-    value: "upload",
-    label: "Uploading",
-    icon: CircleIcon,
+    icon: "bg-[#3498DB]",
   },
   {
     value: "live",
     label: "Live",
-    icon: StopwatchIcon,
+    icon: "bg-[#45A557]",
   },
   {
-    value: "done",
-    label: "Done",
-    icon: CheckCircledIcon,
-  },
-  {
-    value: "canceled",
-    label: "Canceled",
-    icon: CrossCircledIcon,
+    value: "cancelled",
+    label: "Cancelled",
+    icon: "bg-[#9B59B6]",
   },
 ]
 
@@ -103,7 +87,7 @@ export const tracks = [{
 {
   "id": "CTR-4",
   "title": "Bypass",
-  "status": "todo",
+  "status": "backlog",
   "album": "Second Album",
 },
 {
@@ -139,7 +123,7 @@ export const tracks = [{
 {
   "id": "CTR-10",
   "title": "We need each other",
-  "status": "todo",
+  "status": "backlog",
   "album": "First Album",
 },
 {
