@@ -6,7 +6,7 @@ import MinusIcon from "@/components/contract/MinusIcon";
 import PlusIcon from "@/components/contract/PlusIcon";
 import ChartBarIcon from "@/components/contract/ChartBarIcon";
 import { isOwner } from "./utils";
-import { CardsActivityGoal } from "@/components/ui/activity-goal";
+import { CardsActivityGoal } from "@/components/activity-goal";
 
 const ShareCard = ({ member }: { member: TeamMember }) => {
   return (
@@ -37,6 +37,7 @@ const ShareCard = ({ member }: { member: TeamMember }) => {
           maxValue={100}
           onClickButton={() => {}}
           isOwner={isOwner(member)}
+          setGoal={(v) => {}}
         />
       </div>
       {/* <div className="space-y-1">

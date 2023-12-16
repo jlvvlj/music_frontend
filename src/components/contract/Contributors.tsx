@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { cn, fallbackAvatar } from "@/lib/utils";
-import UploadButton from "@/components/ui/upload-button";
+import UploadButton from "@/components/upload-button";
 import { TeamMember } from "./types";
 import { isOwner } from "./utils";
 

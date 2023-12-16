@@ -9,7 +9,7 @@ import TeamSwitcher from "@/components/dashboard/team-switcher";
 import Search from "@/components/dashboard/search";
 import ModeToggle from "@/components/ui/mode-toggle";
 import UserNav from "@/components/dashboard/user-nav";
-import ProgressBar from "../components/progress-bar";
+import ProgressBar from "../../../components/contract/progress-bar";
 import {
   Card,
   CardContent,
@@ -21,7 +21,7 @@ import { RadioGroup } from "@/components/ui/radio-group";
 import { MiniCard } from "@/components/cards/minicard";
 import { Icons } from "@/components/ui/icons";
 import Link from "next/link";
-import ProgressSteps from "../components/ProgressSteps";
+import ProgressSteps from "../../../components/contract/ProgressSteps";
 
 const sidebarNavItems = [
   {

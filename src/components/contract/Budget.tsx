@@ -8,16 +8,58 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CurrencyInput } from "@/components/ui/currency-input";
-import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
-import { CardsActivityGoal } from "@/components/ui/activity-goal";
+import { CardsActivityGoal } from "@/components/activity-goal";
+
+// ** type
+
+interface Budget {
+  registration: {
+    minimum: number;
+    maximum: number;
+    royalties: number;
+  };
+  multimedia: {
+    salary: number;
+  };
+  promotion: {
+    salary: number;
+  };
+}
 
 const Budget = () => {
+  const [budget, setBudget] = useState<Budget>({
+    registration: {
+      minimum: 200,
+      maximum: 1000,
+      royalties: 300,
+    },
+    multimedia: {
+      salary: 3000,
+    },
+    promotion: {
+      salary: 3000,
+    },
+  });
+
+  const handleChangeGoalValues = (
+    parent: "registration" | "multimedia" | "promotion",
+    subField: "minimum" | "maximum" | "royalties" | "salary",
+    value: number
+  ) => {
+    setBudget((prev) => ({
+      ...prev,
+      [parent]: {
+        ...prev[parent],
+        [subField]: value,
+      },
+    }));
+  };
+
   return (
     <>
       <Card className="bg-transparent border-none">
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 p-0">
           <Tabs defaultValue="registration" className="w-full px-10">
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="registration">Registration</TabsTrigger>
@@ -37,7 +79,7 @@ const Budget = () => {
                 <div className="grid grid-cols-12 gap-6">
                   <div
                     className={cn(
-                      "flex items-center pl-4 rounded-md bg-[#5D9DF1] col-span-12 xl:col-span-10 2xl:col-span-6 w-full"
+                      "flex items-center pl-4 rounded-md bg-[#5D9DF1] col-span-12 lg:col-span-10 2xl:col-span-6 w-full"
                     )}
                   >
                     <div>
@@ -52,7 +94,7 @@ const Budget = () => {
                     </div>
                     <CardsActivityGoal
                       label="EUR"
-                      initialValue={3000}
+                      initialValue={budget.registration.minimum}
                       unit=""
                       step={10}
                       buttonTitle="Set Share"
@@ -61,13 +103,16 @@ const Budget = () => {
                       buttonHidden
                       onClickButton={() => {}}
                       isOwner={true}
+                      setGoal={(value) =>
+                        handleChangeGoalValues("registration", "minimum", value)
+                      }
                     />
                   </div>
                 </div>
                 <div className="grid grid-cols-12 gap-6">
                   <div
                     className={cn(
-                      "flex items-center pl-4 rounded-md bg-[#5D9DF1] col-span-12 xl:col-span-10 2xl:col-span-6 w-full"
+                      "flex items-center pl-4 rounded-md bg-[#5D9DF1] col-span-12 lg:col-span-10 2xl:col-span-6 w-full"
                     )}
                   >
                     <div>
@@ -82,7 +127,7 @@ const Budget = () => {
                     </div>
                     <CardsActivityGoal
                       label="EUR"
-                      initialValue={5000}
+                      initialValue={budget.registration.maximum}
                       unit=""
                       step={10}
                       buttonTitle="Set Share"
@@ -91,13 +136,16 @@ const Budget = () => {
                       buttonHidden
                       onClickButton={() => {}}
                       isOwner={true}
+                      setGoal={(value) =>
+                        handleChangeGoalValues("registration", "maximum", value)
+                      }
                     />
                   </div>
                 </div>
                 <div className="grid grid-cols-12 gap-6">
                   <div
                     className={cn(
-                      "flex items-center pl-4 rounded-md bg-[#5D9DF1] col-span-12 xl:col-span-10 2xl:col-span-6 w-full"
+                      "flex items-center pl-4 rounded-md bg-[#5D9DF1] col-span-12 lg:col-span-10 2xl:col-span-6 w-full"
                     )}
                   >
                     <div>
@@ -112,7 +160,7 @@ const Budget = () => {
                     </div>
                     <CardsActivityGoal
                       label="SHARES OF REVENUES"
-                      initialValue={30}
+                      initialValue={budget.registration.royalties}
                       unit="%"
                       step={10}
                       buttonTitle="Set Share"
@@ -121,6 +169,13 @@ const Budget = () => {
                       buttonHidden
                       onClickButton={() => {}}
                       isOwner={true}
+                      setGoal={(value) =>
+                        handleChangeGoalValues(
+                          "registration",
+                          "royalties",
+                          value
+                        )
+                      }
                     />
                   </div>
                 </div>
@@ -155,7 +210,7 @@ const Budget = () => {
                     </div>
                     <CardsActivityGoal
                       label="EUR"
-                      initialValue={3000}
+                      initialValue={budget.multimedia.salary}
                       unit=""
                       step={10}
                       buttonTitle="Set Share"
@@ -164,6 +219,9 @@ const Budget = () => {
                       buttonHidden
                       onClickButton={() => {}}
                       isOwner={true}
+                      setGoal={(value) =>
+                        handleChangeGoalValues("multimedia", "salary", value)
+                      }
                     />
                   </div>
                 </div>
@@ -198,7 +256,7 @@ const Budget = () => {
                     </div>
                     <CardsActivityGoal
                       label="EUR"
-                      initialValue={3000}
+                      initialValue={budget.promotion.salary}
                       unit=""
                       step={10}
                       buttonTitle="Set Share"
@@ -207,6 +265,9 @@ const Budget = () => {
                       buttonHidden
                       onClickButton={() => {}}
                       isOwner={true}
+                      setGoal={(value) =>
+                        handleChangeGoalValues("promotion", "salary", value)
+                      }
                     />
                   </div>
                 </div>

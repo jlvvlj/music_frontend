@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React, { useState, useEffect} from "react";
 import { Minus, Plus } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Bar, BarChart, ResponsiveContainer } from "recharts";
@@ -72,6 +72,7 @@ interface Props extends React.HtmlHTMLAttributes<HTMLElement> {
   buttonHidden?: boolean;
   chartHidden?: boolean;
   onClickButton: VoidFunction;
+  setGoal: (value: number) => void;
 }
 
 export function CardsActivityGoal({
@@ -88,15 +89,18 @@ export function CardsActivityGoal({
   buttonHidden = false,
   chartHidden = false,
   isOwner,
+  setGoal,
 }: Props) {
   const { theme: mode } = useTheme();
   const [config] = useConfig();
 
   const theme = themes.find((theme) => theme.name === config.theme);
-  const [goal, setGoal] = React.useState(initialValue);
 
+  useEffect(() => {
+
+  }, [initialValue]);
   function onClick(adjustment: number) {
-    setGoal(goal + adjustment);
+    setGoal(initialValue + adjustment);
   }
 
   return (
@@ -116,14 +120,14 @@ export function CardsActivityGoal({
               isOwner ? "border-[#8AC4FB]" : "border-[#0F172A]"
             )}
             onClick={() => onClick(-step)}
-            disabled={goal <= minValue}
+            disabled={initialValue <= minValue}
           >
             <Minus className="h-[10px] w-[10px]" />
             <span className="sr-only">Decrease</span>
           </Button>
           <div className="flex-1 text-center">
             <div className="text-[21px] font-bold tracking-tighter">
-              {goal}
+              {initialValue}
               {unit || ""}
             </div>
             <div className="text-[0.40rem] uppercase text-white">{label}</div>
@@ -137,7 +141,7 @@ export function CardsActivityGoal({
               isOwner ? "border-[#8AC4FB]" : "border-[#0F172A]"
             )}
             onClick={() => onClick(step)}
-            disabled={goal >= maxValue}
+            disabled={initialValue >= maxValue}
           >
             <Plus className="h-[10px] w-[10px]" />
             <span className="sr-only">Increase</span>
@@ -156,7 +160,7 @@ export function CardsActivityGoal({
                   dataKey="goal"
                   style={
                     {
-                      fill: isOwner ? "#fff": "#6DB5F9",
+                      fill: isOwner ? "#fff" : "#6DB5F9",
                       opacity: 0.2,
                       "--theme-primary": `hsl(${
                         theme?.cssVars[mode === "dark" ? "dark" : "light"]

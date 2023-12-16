@@ -7,11 +7,11 @@ export type TeamMember = {
 };
 
 export interface Recording {
-  image: string;
+  image?: string;
   title: string;
   number: string;
-  recordingType: string;
-  programType: any[];
+  recordingType: RecordingType;
+  programType: ProgramType;
   completedAt: Date;
   releasedAt: Date;
   optionRightsLimit: Date;
@@ -23,17 +23,15 @@ export interface ArtistRecording {
   recordingType: string;
 }
 
-type RecordingType = {
-  name: "Firm" | "Optional" | "Other";
-  description: string;
-};
+export type RecordingType = "firm" | "optional";
+export type ProgramType = "album" | "single" | "mini-album" | "maxi-single" | "other"; 
 
-export type ProgramType = {
+export type Program = {
   label: string;
   checked: boolean;
 };
 
-export const ProgramTypes: ProgramType[] = [
+export const ProgramTypes: Program[] = [
   {
     label: "Single (SP)",
     checked: false,

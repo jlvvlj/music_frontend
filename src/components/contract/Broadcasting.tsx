@@ -18,9 +18,19 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
-import { CardsActivityGoal } from "@/components/ui/activity-goal";
+import { CardsActivityGoal } from "@/components/activity-goal";
+import { useState } from "react";
 
-const TABS = [
+type Tab = {
+  label: string;
+  value: TabName;
+  description: string;
+  cardTitle: string;
+};
+
+type TabName = "foreignSales" | "secondaryUses";
+
+const TABS: Tab[] = [
   {
     label: "Foreign sales",
     value: "foreignSales",
@@ -35,7 +45,42 @@ const TABS = [
     cardTitle: "Share",
   },
 ];
+
+interface BroadCasting {
+  foreignSales: {
+    percentage: number;
+  };
+  secondaryUses: {
+    percentage: number;
+  };
+}
+
+const baseBroadCasting = {
+  foreignSales: {
+    percentage: 0,
+  },
+  secondaryUses: {
+    percentage: 0,
+  },
+};
+
 const Broadcasting = () => {
+  const [broadCasting, setBroadCasting] =
+    useState<BroadCasting>(baseBroadCasting);
+  const handleChangeGoalValues = (
+    parent: TabName,
+    subField: "percentage",
+    value: number
+  ) => {
+    setBroadCasting((prev) => ({
+      ...prev,
+      [parent]: {
+        ...prev[parent],
+        [subField]: value,
+      },
+    }));
+  };
+
   return (
     <>
       <Card className="border-none">
@@ -76,7 +121,7 @@ const Broadcasting = () => {
                     </div>
                     <CardsActivityGoal
                       label="SHARES OF REVENUES"
-                      initialValue={30}
+                      initialValue={broadCasting[t.value].percentage}
                       unit="%"
                       step={10}
                       buttonTitle="Set Share"
@@ -85,6 +130,9 @@ const Broadcasting = () => {
                       buttonHidden
                       onClickButton={() => {}}
                       isOwner={true}
+                      setGoal={(value) =>
+                        handleChangeGoalValues(t.value, "percentage", value)
+                      }
                     />
                   </div>
                 </div>

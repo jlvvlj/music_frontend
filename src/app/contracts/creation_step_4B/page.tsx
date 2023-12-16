@@ -9,7 +9,7 @@ import TeamSwitcher from "@/components/dashboard/team-switcher";
 import Search from "@/components/dashboard/search";
 import ModeToggle from "@/components/ui/mode-toggle";
 import UserNav from "@/components/dashboard/user-nav";
-import ProgressBar from "../components/progress-bar";
+import ProgressBar from "../../../components/contract/progress-bar";
 import {
   Card,
   CardContent,

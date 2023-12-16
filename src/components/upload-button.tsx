@@ -3,7 +3,7 @@ import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import Image from "next/image";
 import { useDropzone, FileWithPath } from "react-dropzone";
 import { Input } from "@/components/ui/input";
-import { Button } from "./button";
+import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 
 interface ButtonProps extends React.HTMLAttributes<HTMLElement> {

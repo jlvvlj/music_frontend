@@ -13,7 +13,7 @@ import { Icons } from "@/components/ui/icons";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { ProfileForm } from "../creation_modal/profile-form";
+import { ProfileForm } from "../../app/contracts/creation_modal/profile-form";
 import { Separator } from "@/components/ui/separator";
 import { type } from "os";
 
@@ -24,7 +24,13 @@ type Props = {
   updateStep: VoidFunction;
   setProducer?: (isProducer: boolean) => void;
 };
-const CardFilter = ({ option1 = "Yes", option2 = "No", type, updateStep, setProducer }: Props) => {
+const CardFilter = ({
+  option1 = "Yes",
+  option2 = "No",
+  type,
+  updateStep,
+  setProducer,
+}: Props) => {
   const handleClickCard = (answer: number) => {
     console.log(type);
     if (type === "role") {
@@ -34,7 +40,6 @@ const CardFilter = ({ option1 = "Yes", option2 = "No", type, updateStep, setProd
         setProducer!(false);
       }
     } else {
-
     }
     updateStep();
   };

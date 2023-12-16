@@ -1,9 +1,6 @@
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "../ui/avatar"
-import { Button } from "../ui/button"
+import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,7 +10,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu"
+} from "../ui/dropdown-menu";
+
+import { DashboardIcon, ExitIcon, GearIcon } from "@radix-ui/react-icons";
 
 export default function UserNav() {
   return (
@@ -52,11 +51,14 @@ export default function UserNav() {
           <DropdownMenuItem>New Team</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          Log out
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+        <DropdownMenuItem asChild>
+          <Link href="/signout">
+            <ExitIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+            Log out
+            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+          </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }
