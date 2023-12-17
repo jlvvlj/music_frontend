@@ -87,12 +87,44 @@ export const tracks = [{
     "title": "Night Live",
     "status": "processing",
     "album": "First Album",
+    "subRows": [
+        {
+            "title": "Night Live",
+            "status": "processing",
+            "album": "Sub First Album - 1", 
+            "platforms": ["Spotify", "Youtube"],
+            "revenues":"€379.00"
+        },
+        {
+            "title": "Night Live",
+            "status": "processing",
+            "album": "Sub First Album - 2", 
+            "platforms": ["Deezer"],
+            "revenues":"€189.00"
+        },
+        {
+            "title": "Night Live",
+            "status": "processing",
+            "album": "Sub First Album - 3", 
+            "platforms": ["Spotify"],
+            "revenues":"€222.36"
+        },
+    ]
 },
 {
     "id": "CTR-2",
     "title": "Overbearing",
     "status": "live",
-    "album": "First Album",
+    "album": "Second Album",
+    "subRows": [
+        {
+            "title": "Night Live",
+            "status": "processing",
+            "album": "Sub Second Album - 1", 
+            "platforms": ["Spotify", "Youtube", "Deezer"],
+            "revenues":"€789.00"
+        },
+    ]
 },
 {
     "id": "CTR-3",

@@ -29,9 +29,16 @@ import { Badge } from "@/registry/new-york/ui/badge"
 
 import { DataTablePagination } from "./data-table-pagination"
 import { DataTableToolbar } from "./data-table-toolbar"
-import { Collapsible } from "@/components/ui/collapsible"
-import { ChevronDownIcon, StopwatchIcon } from "@radix-ui/react-icons"
+import { ChevronDownIcon } from "@radix-ui/react-icons"
+import { statuses } from "../data/data"
 
+interface SubRow {
+  album: string;
+  title: string;
+  platforms: string[];
+  status: string;
+  revenues: number;
+}
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -51,7 +58,7 @@ export function DataTable<TData, TValue>({
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [collapsedRows, setCollapsedRows] = useState<{ [key: string]: boolean }>({});
 
-  const table = useReactTable({
+  const table = useReactTable<any>({
     data,
     columns,
     state: {
@@ -94,9 +101,9 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   );
                 })}
@@ -107,56 +114,57 @@ export function DataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <React.Fragment key={row.id}>
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                  className="collapse-tableRow"
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell
-                      key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      {cell.column.id === "id" && <ChevronDownIcon className="h-4 w-4 mt-0.5 cursor-pointer ml-2" onClick={() => toggleRowCollapse(row.id)}/>}
-                    </TableCell>
-                  ))}
-                </TableRow>
-                {collapsedRows[row.id] && (
-                  <>
-                    <TableRow>
-                      <TableCell className="px-2 py-3.5" colSpan={2} />
-                      <TableCell className="px-2 py-3.5">
-                        Night Live
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                    className="collapse-tableRow"
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell
+                        key={cell.id}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        {cell.column.id === "id" && row?.original?.subRows?.length && <ChevronDownIcon className="h-4 w-4 mt-0.5 cursor-pointer ml-2" onClick={() => toggleRowCollapse(row.id)} />}
                       </TableCell>
-                      <TableCell className="px-2 py-3.5">
-                        First Album
-                      </TableCell>
-                      <TableCell className="px-2 py-3.5">
-                        <Badge variant="outline" className="bg-[#537297] text-[#97bce7] w-24 justify-center px-1">Live</Badge>
-                      </TableCell>
-                      <TableCell className="px-2 py-3.5">
-                        €379.00
-                      </TableCell>
-                      <TableCell className="px-2 py-3.5" />
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="px-2 py-3.5" colSpan={2} />
-                      <TableCell className="px-2 py-3.5">
-                        Overbearing
-                      </TableCell>
-                      <TableCell className="px-2 py-3.5">
-                        First Album
-                      </TableCell>
-                      <TableCell className="px-2 py-3.5">
-                        <Badge variant="outline" className="bg-[#537297] text-[#97bce7] w-24 justify-center px-1"><StopwatchIcon className="mr-0.5" />Processing</Badge>
-                      </TableCell>
-                      <TableCell className="px-2 py-3.5">
-                        €892.00
-                      </TableCell>
-                      <TableCell className="px-2 py-3.5" />
-                    </TableRow>
-                </>
-                )}
-              </React.Fragment>
+                    ))}
+                  </TableRow>
+                  {collapsedRows[row.id] && (
+                    row?.original?.subRows?.map((subrow:SubRow) => {
+                      const status: any = statuses.find(
+                        (status) => status.value === subrow?.status)
+
+                      return (
+                        <TableRow
+                          key={row.id}
+                          data-state={row.getIsSelected() && "selected"}
+                          className="collapse-tableRow"
+                        >                            <TableCell className="px-2 py-3.5" colSpan={2} />
+                          <TableCell className="px-2 py-3.5">
+                            {subrow?.album}
+                          </TableCell>
+                          <TableCell className="px-2 py-3.5">
+                            {subrow?.title}
+                          </TableCell>
+                          <TableCell className="px-2 py-3.5 flex gap-2">
+                            {subrow?.platforms?.map((platform: string) =>
+                              <Badge variant="outline" className="bg-[#0072F5] justify-center px-2.5 rounded-full">{platform}</Badge>
+                            )}
+                          </TableCell>
+                          <TableCell className="px-2 py-3.5">
+                            <div className="flex w-25 items-center gap-2">
+                              {status.color && (
+                                <span className={`w-2.5 h-2.5 rounded-full ${status.color}`} />
+                              )}
+                              <span>{status.label}</span>
+                            </div>
+                          </TableCell>
+                          <TableCell className="px-2 py-3.5">
+                            {subrow?.revenues}
+                          </TableCell>
+                        </TableRow>
+                      )
+                    })
+                  )}
+                </React.Fragment>
               ))
             ) : (
               <TableRow>
@@ -175,9 +183,3 @@ export function DataTable<TData, TValue>({
     </div>
   );
 }
-
-
-
-// onClick={ ()=> {
-//   if (cell.id === isActive) {setIsActive("")}
-//   else {setIsActive(cell.id); console.log(cell.id)}}}

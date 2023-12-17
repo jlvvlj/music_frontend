@@ -89,6 +89,18 @@ export const columns: ColumnDef<Task>[] = [
     },
   },
   {
+    accessorKey: "platforms",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Platforms" />
+    ),
+    cell:({ row }) => {
+      return
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
+  },
+  {
     accessorKey: "status",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Status" />
@@ -103,8 +115,8 @@ export const columns: ColumnDef<Task>[] = [
 
       return (
         <div className="flex w-25 items-center gap-2">
-          {status.icon && (
-            <span className={`w-2.5 h-2.5 rounded-full ${status.icon}`} />
+          {status.color && (
+            <span className={`w-2.5 h-2.5 rounded-full ${status.color}`} />
           )}
            <span>{status.label}</span>
         </div>

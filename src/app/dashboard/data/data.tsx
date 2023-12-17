@@ -34,17 +34,17 @@ export const statuses = [
   {
     value: "processing",
     label: "Processing",
-    icon: "bg-[#3498DB]",
+    color: "bg-[#3498DB]",
   },
   {
     value: "live",
     label: "Live",
-    icon: "bg-[#45A557]",
+    color: "bg-[#45A557]",
   },
   {
     value: "cancelled",
     label: "Cancelled",
-    icon: "bg-[#9B59B6]",
+    color: "bg-[#9B59B6]",
   },
 ]
 
