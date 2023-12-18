@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -34,6 +35,12 @@
         --ring: 215 20.2% 65.1%;
 
         --radius: 0.5rem;
+
+        --card-shine-opacity: .3;
+        --card-background-opacity: 1;
+        --card-shine-gradient: conic-gradient(from 225deg at 50% 50%, rgba(16, 185, 129, 0) 0deg, #10B981 25deg, #EDFAF6 285deg, #FFFFFF 345deg, rgba(16, 185, 129, 0) 360deg);
+        --card-tile-color: rgba(16, 185, 129, 0.08);
+        --card-line-color: #E9E9E7;
     }
 
     .dark {
@@ -65,6 +72,12 @@
         --destructive-foreground: 0 85.7% 97.3%;
 
         --ring: 217.2 32.6% 17.5%;
+
+        --card-shine-opacity: .1;
+        --card-background-opacity: .5;
+        --card-shine-gradient: conic-gradient(from 205deg at 50% 50%, rgba(16, 185, 129, 0) 0deg, #10B981 25deg, rgba(52, 211, 153, 0.18) 295deg, rgba(16, 185, 129, 0) 360deg);
+        --card-tile-color: rgba(16, 185, 129, 0.05);
+        --card-line-color: #2A2B2C;
     }
 }
 
@@ -295,4 +308,41 @@
 .collapse-tableRow td:nth-child(2){
     display: flex;
     padding: 14px 8px;
+}
+
+.card .background {
+  mask-image: radial-gradient(circle at 45% 0%, black 0%, black 0%, transparent 100%);
+}
+.card .background .tiles .tile {
+  animation-duration: 8s;
+  animation-iteration-count: infinite;
+}
+.card .background .tiles .tile.tile-4, .card .background .tiles .tile.tile-6, .card .background .tiles .tile.tile-10 {
+  animation-delay: -2s;
+}
+.card .background .tiles .tile.tile-3, .card .background .tiles .tile.tile-5, .card .background .tiles .tile.tile-8 {
+  animation-delay: -4s;
+}
+.card .background .tiles .tile.tile-2, .card .background .tiles .tile.tile-9 {
+  animation-delay: -6s;
+}
+@keyframes tile {
+  0%, 12.5%, 100% {
+    opacity: 1;
+  }
+  25%, 82.5% {
+    opacity: 0;
+  }
+}
+.card:hover .background .tiles .tile {
+  animation-name: tile;
+}
+.card:hover .background .line.line-1:before, .card:hover .background .line.line-1:after {
+  transition-delay: 0s;
+}
+.card:hover .background .line.line-2:before, .card:hover .background .line.line-2:after {
+  transition-delay: 0.15s;
+}
+.card:hover .background .line.line-3:before, .card:hover .background .line.line-3:after {
+  transition-delay: 0.3s;
 }

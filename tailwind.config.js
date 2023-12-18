@@ -25,6 +25,8 @@ module.exports = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        tile: "var(--card-tile-color)",
+        line: "var(--card-line-color)",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -52,7 +54,14 @@ module.exports = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
-        },
+        }
+      },
+      opacity: {
+        shine: "var(--card-shine-opacity)",
+        background: "var(--card-background-opacity)"
+      },
+      backgroundImage: {
+        shine: "var(--card-shine-gradient)",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -114,3 +123,6 @@ module.exports = {
 //   },
 //   plugins: [],
 // };
+
+
+

@@ -29,7 +29,7 @@ import { Badge } from "@/registry/new-york/ui/badge"
 
 import { DataTablePagination } from "./data-table-pagination"
 import { DataTableToolbar } from "./data-table-toolbar"
-import { ChevronDownIcon } from "@radix-ui/react-icons"
+import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons"
 import { statuses } from "../data/data"
 
 interface SubRow {
@@ -123,7 +123,8 @@ export function DataTable<TData, TValue>({
                       <TableCell
                         key={cell.id}>
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        {cell.column.id === "id" && row?.original?.subRows?.length && <ChevronDownIcon className="h-4 w-4 mt-0.5 cursor-pointer ml-2" onClick={() => toggleRowCollapse(row.id)} />}
+                        {cell.column.id === "id" && collapsedRows[row.id] && <ChevronUpIcon className="h-4 w-4 mt-0.5 cursor-pointer ml-2" onClick={() => toggleRowCollapse(row.id)} />}
+                        {cell.column.id === "id" && !collapsedRows[row.id] && row?.original?.subRows?.length && <ChevronDownIcon className="h-4 w-4 mt-0.5 cursor-pointer ml-2" onClick={() => toggleRowCollapse(row.id)} />}
                       </TableCell>
                     ))}
                   </TableRow>
