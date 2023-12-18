@@ -27,7 +27,7 @@ import {
 } from "@/registry/new-york/ui/table"
 import { Badge } from "@/registry/new-york/ui/badge"
 
-import { DashboardDataTablePagination } from "./dashboard-data-table-pagination"
+import { DataTablePagination } from "./data-table-pagination"
 import { DataTableToolbar } from "./data-table-toolbar"
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons"
 import { statuses } from "../data/data"
@@ -38,8 +38,6 @@ interface SubRow {
   platforms: string[];
   status: string;
   revenues: number;
-  YourShare: number;
-  YourRevenues: number;
 }
 
 interface DataTableProps<TData, TValue> {
@@ -92,14 +90,14 @@ export function DataTable<TData, TValue>({
   return (
     <div className="space-y-4">
       <DataTableToolbar table={table} />
-      <div className="pt-4">
+      <div className="rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} style={{border: 'none'}} className="bg-muted/50">
+              <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="first:rounded-s-[20px] last:rounded-r-[20px] text-center border-b-[3px] border-[#020817]">
+                    <TableHead key={header.id}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -112,18 +110,18 @@ export function DataTable<TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody className="dashboard-tablebody">
+          <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <React.Fragment key={row.id}>
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
-                    className="collapse-tableRow hover:bg-transparent"
+                    className="collapse-tableRow"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell
-                        key={cell.id} className="justify-center text-center">
+                        key={cell.id}>
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                         {cell.column.id === "id" && collapsedRows[row.id] && <ChevronUpIcon className="h-4 w-4 mt-0.5 cursor-pointer ml-2" onClick={() => toggleRowCollapse(row.id)} />}
                         {cell.column.id === "id" && !collapsedRows[row.id] && row?.original?.subRows?.length && <ChevronDownIcon className="h-4 w-4 mt-0.5 cursor-pointer ml-2" onClick={() => toggleRowCollapse(row.id)} />}
@@ -139,34 +137,29 @@ export function DataTable<TData, TValue>({
                         <TableRow
                           key={row.id}
                           data-state={row.getIsSelected() && "selected"}
-                        >                            <TableCell className="px-2 py-3.5 text-center" />
-                          <TableCell className="px-2 py-3.5 text-center">
+                          className="collapse-tableRow"
+                        >                            <TableCell className="px-2 py-3.5" colSpan={2} />
+                          <TableCell className="px-2 py-3.5">
                             {subrow?.album}
                           </TableCell>
-                          <TableCell className="px-2 py-3.5 text-center">
+                          <TableCell className="px-2 py-3.5">
                             {subrow?.title}
                           </TableCell>
-                          <TableCell className="px-2 py-3.5 flex gap-2 justify-center">
+                          <TableCell className="px-2 py-3.5 flex gap-2">
                             {subrow?.platforms?.map((platform: string) =>
                               <Badge variant="outline" className="bg-[#0072F5] justify-center px-2.5 rounded-full">{platform}</Badge>
                             )}
                           </TableCell>
-                          <TableCell className="px-2 py-3.5 text-center">
-                            <div className="flex w-25 items-center gap-2 justify-center">
+                          <TableCell className="px-2 py-3.5">
+                            <div className="flex w-25 items-center gap-2">
                               {status.color && (
                                 <span className={`w-2.5 h-2.5 rounded-full ${status.color}`} />
                               )}
                               <span>{status.label}</span>
                             </div>
                           </TableCell>
-                          <TableCell className="px-2 py-3.5 text-center">
+                          <TableCell className="px-2 py-3.5">
                             {subrow?.revenues}
-                          </TableCell>
-                          <TableCell className="px-2 py-3.5 text-center">
-                            {subrow?.YourShare}
-                          </TableCell>
-                          <TableCell className="px-2 py-3.5 text-center">
-                            {subrow?.YourRevenues}
                           </TableCell>
                         </TableRow>
                       )
@@ -187,7 +180,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <DashboardDataTablePagination table={table} />
+      <DataTablePagination table={table} />
     </div>
   );
 }

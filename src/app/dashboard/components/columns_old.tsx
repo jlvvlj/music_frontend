@@ -14,9 +14,30 @@ import { DataTableRowActions } from "./data-table-row-actions"
 
 export const columns: ColumnDef<Task>[] = [
   {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={table.getIsAllPageRowsSelected()}
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+        className="translate-y-[2px]"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+        className="translate-y-[2px]"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
     accessorKey: "id",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Contract" />
+      <DataTableColumnHeader column={column} title="Tracks" />
     ),
     cell: ({ row }) =>
       <Link href={`contracts_settings/${row.getValue("id")}`}>
@@ -24,29 +45,6 @@ export const columns: ColumnDef<Task>[] = [
       </Link>,
     enableSorting: false,
     enableHiding: false,
-  },
-  {
-    accessorKey: "title",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Track" />
-    ),
-    cell: ({ row }) => {
-      const title = titles.find(
-        (title) => title.value === row.getValue("title"))
-
-      return (
-        <div className="flex space-x-2 justify-center">
-          {title && <Badge variant="outline">{title.label}</Badge>}
-          <span className="max-w-[400px] truncate font-medium">
-            {row.getValue("title")}
-          </span>
-        </div>
-      )
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
-    },
-    enableSorting: false,
   },
   {
     accessorKey: "album",
@@ -58,7 +56,7 @@ export const columns: ColumnDef<Task>[] = [
         (album) => album.value === row.getValue("album"))
 
       return (
-        <div className="w-[160px] mx-auto text-center">{row.getValue("album")}</div>
+        <div className="w-[160px]">{row.getValue("album")}</div>
       )
 
 
@@ -67,23 +65,40 @@ export const columns: ColumnDef<Task>[] = [
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
-    enableSorting: false,
   },
-  
+  {
+    accessorKey: "title",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Title" />
+    ),
+    cell: ({ row }) => {
+      const title = titles.find(
+        (title) => title.value === row.getValue("title"))
+
+      return (
+        <div className="flex space-x-2">
+          {title && <Badge variant="outline">{title.label}</Badge>}
+          <span className="max-w-[400px] truncate font-medium">
+            {row.getValue("title")}
+          </span>
+        </div>
+      )
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
+  },
   {
     accessorKey: "platforms",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Platforms" />
     ),
     cell:({ row }) => {
-      return(
-        <Badge variant="outline" className="bg-[#0072F5] justify-center px-2.5 rounded-full">Youtube</Badge>
-      )
+      return
     },
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
-    enableSorting: false,
   },
   {
     accessorKey: "status",
@@ -99,7 +114,7 @@ export const columns: ColumnDef<Task>[] = [
       }
 
       return (
-        <div className="flex w-25 items-center gap-2 justify-center">
+        <div className="flex w-25 items-center gap-2">
           {status.color && (
             <span className={`w-2.5 h-2.5 rounded-full ${status.color}`} />
           )}
@@ -110,7 +125,6 @@ export const columns: ColumnDef<Task>[] = [
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
-    enableSorting: false,
   },
 
   {
@@ -139,28 +153,9 @@ export const columns: ColumnDef<Task>[] = [
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
-    enableSorting: false,
   },
   {
-    id: "Your Share",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Your Share" />
-    ),
-    cell:({ row }) => {
-      return(
-        <p>50%</p>
-      )
-    },
-  },
-  {
-    id: "Your Revenues",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Your Revenues" />
-    ),
-    cell:({ row }) => {
-      return(
-        <p>€17000.0</p>
-      )
-    },
+    id: "actions",
+    cell: ({ row }) => <DataTableRowActions row={row} />,
   },
 ]

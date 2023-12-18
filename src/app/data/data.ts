@@ -87,27 +87,34 @@ export const tracks = [{
     "title": "Night Live",
     "status": "processing",
     "album": "First Album",
+    "yourRevenues":"€17000.0",
     "subRows": [
         {
             "title": "Night Live",
             "status": "processing",
             "album": "Sub First Album - 1", 
             "platforms": ["Spotify", "Youtube"],
-            "revenues":"€379.00"
+            "revenues":"€379.00",
+            "YourShare": "50%",
+            "YourRevenues": "€17000.0"
         },
         {
             "title": "Night Live",
             "status": "processing",
             "album": "Sub First Album - 2", 
             "platforms": ["Deezer"],
-            "revenues":"€189.00"
+            "revenues":"€189.00",
+            "YourShare": "40%",
+            "YourRevenues": "€1200.0"
         },
         {
             "title": "Night Live",
             "status": "processing",
             "album": "Sub First Album - 3", 
             "platforms": ["Spotify"],
-            "revenues":"€222.36"
+            "revenues":"€222.36",
+            "YourShare": "37%",
+            "YourRevenues": "€1200.0"
         },
     ]
 },
@@ -122,7 +129,9 @@ export const tracks = [{
             "status": "processing",
             "album": "Sub Second Album - 1", 
             "platforms": ["Spotify", "Youtube", "Deezer"],
-            "revenues":"€789.00"
+            "revenues":"€789.00",
+            "YourShare": "28%",
+            "YourRevenues": "€3600.0"
         },
     ]
 },
