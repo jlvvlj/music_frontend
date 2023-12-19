@@ -33,7 +33,7 @@ import { ArtistRecording } from "./types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import DatePicker from "@/components/ui/date-picker";
-import UploadButton from "@/components/ui/upload-button";
+import UploadButton from "@/components/upload-button";
 import { Separator } from "@/components/ui/separator";
 import UploadFile from "@/components/ui/upload-file";
 

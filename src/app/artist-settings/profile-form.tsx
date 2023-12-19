@@ -37,11 +37,13 @@ const profileFormSchema = z.object({
       message: "Username must not be longer than 30 characters.",
     }),
   name: z.string(),
+  surName: z.string(),
   email: z
     .string({
       required_error: "Please select an email to display.",
     })
     .email(),
+  ssn: z.string(),
   bio: z.string().max(160).min(4),
   urls: z
     .array(
@@ -115,10 +117,36 @@ export function ProfileForm() {
         />
         <FormField
           control={form.control}
+          name="surName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Surname</FormLabel>
+              <FormControl>
+                <Input placeholder="" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="ssn"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Social Security number</FormLabel>
               <FormControl>
                 <Input placeholder="" {...field} />
               </FormControl>

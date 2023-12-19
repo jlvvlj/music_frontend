@@ -37,6 +37,7 @@ import {
 import { Textarea } from "../../components/ui/textarea";
 import { toast } from "../../components/ui/use-toast";
 import UploadComponent from "@/components/drag/UploadDragDrop";
+import { Separator } from "@/components/ui/separator";
 
 const profileFormSchema = z.object({
   companyName: z.string().min(2, {
@@ -50,6 +51,10 @@ const profileFormSchema = z.object({
   headOfficeAddress: z.string(),
   rib: z.string(),
   kbis: z.string(),
+  name: z.string(),
+  surName: z.string(),
+  email: z.string().email(),
+  role: z.string(),
 });
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
@@ -248,6 +253,64 @@ export function ProfileForm() {
                   <FormControl>
                     <UploadFile input="" />
                   </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+        </div>
+        <div className="w-full mt-10">
+          <h2>Legal representative</h2>
+          <Separator className="my-5" />
+          <div className="space-y-4">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="surName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Surname</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Surname" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Role</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Role" {...field} />
+                  </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />

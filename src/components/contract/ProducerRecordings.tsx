@@ -33,7 +33,7 @@ import { ProgramType, ProgramTypes, Recording } from "./types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import DatePicker from "@/components/ui/date-picker";
-import UploadButton from "@/components/ui/upload-button";
+import UploadButton from "@/components/upload-button";
 import { MultiSelect } from "@/components/ui/multi-select";
 
 const recordingFormSchema = z.object({

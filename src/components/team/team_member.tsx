@@ -32,7 +32,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Separator } from "../ui/separator";
-import UploadButton from "../ui/upload-button";
+import UploadButton from "../upload-button";
 
 type TeamMember = {
   name: string;

@@ -84,7 +84,7 @@ const ContractBaseForm = ({
     <div className={cn("grid grid-cols-2 mt-20 h-full")}>
       <div
         className={cn(
-          "col-span-1 px-12 2xl:px-24 pt-4 pb-12 flex flex-col h-full",
+          "col-span-1 px-8 2xl:px-16 pt-4 pb-12 flex flex-col h-full",
           !isLeftside() ? "order-last" : ""
         )}
       >
