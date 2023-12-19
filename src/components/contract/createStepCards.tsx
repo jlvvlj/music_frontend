@@ -32,7 +32,7 @@ import ArtistForm from "./ArtistForm";
 import ArtistRecordings from "./ArtistRecordings";
 import Stacked from "./Stacked";
 import ContractBaseForm from "./ContractBaseForm";
-import { StepIndex } from "./types";
+import { STEPS, StepIndex } from "./types";
 import Contributors from "./Contributors";
 import Recordings from "./Recordings";
 
@@ -41,7 +41,7 @@ const CreateStepCards = ({
   updateStep,
 }: {
   step: StepIndex;
-  updateStep: VoidFunction;
+  updateStep: (step: number) => void;
 }) => {
   const [isProducerMode, setIsProducerMode] = useState(false);
 
@@ -52,46 +52,21 @@ const CreateStepCards = ({
 
   const loadCardByStep = useCallback(() => {
     switch (step) {
-      // case StepIndex.CONTRIBUTIONS:
-      //   return (
-      //     <CardFilter
-      //       type="contribution"
-      //       option1="Yes"
-      //       option2="No"
-      //       updateStep={updateStep}
-      //     />
-      //   );
       case StepIndex.CONTRIBUTORS:
-        return <Contributors />;
+        return <Contributors updateStep={updateStep} />;
       case StepIndex.SHARES:
-        return <Shares />;
-      // // case StepIndex.ROLE:
-      // //   return (
-      // //     <CardFilter
-      // //       type="role"
-      // //       option1="Producer"
-      // //       option2="Artists"
-      // //       updateStep={updateStep}
-      // //       setProducer={handleSetProducer}
-      // //     />
-      // //   );
-      // case StepIndex.FORM:
-      //   return (
-      //     <div className="w-full max-w-[840px] mx-auto border border-solid border-[#27272A] rounded-xl px-20 py-8">
-      //       {isProducerMode ? <ProducerForm /> : <ArtistForm />}
-      //     </div>
-      //   );
+        return <Shares updateStep={updateStep} />;
       case StepIndex.RECORDINGS:
-        return <Recordings />;
-        // return isProducerMode ? <ProducerRecordings /> : <ArtistRecordings />;
+        return <Recordings updateStep={updateStep} />;
+      // return isProducerMode ? <ProducerRecordings /> : <ArtistRecordings />;
       case StepIndex.BUDGET:
-        return <Budget />;
+        return <Budget updateStep={updateStep} />;
       case StepIndex.ROYALTIES:
-        return <Royalties />;
+        return <Royalties updateStep={updateStep} />;
       case StepIndex.ABATEMENTS:
-        return <Abatements />;
+        return <Abatements updateStep={updateStep} />;
       case StepIndex.BROADCASTING:
-        return <Broadcasting />;
+        return <Broadcasting updateStep={updateStep} />;
       // case StepIndex.STACKED:
       //   return <Stacked />;
       default:
@@ -101,8 +76,16 @@ const CreateStepCards = ({
 
   return (
     <>
-      <div className="px-8 pb-8 h-full">
-        <ContractBaseForm step={step} updateStep={updateStep}>{loadCardByStep()}</ContractBaseForm>
+      <div className="px-8 h-full flex flex-col">
+        <div className="space-y-6 w-full mb-14">
+          <h1 className="text-3xl font-semibold tracking-tight">
+            {STEPS[step - 1].title}
+          </h1>
+          <p className="text-sm text-muted-foreground">
+            {STEPS[step - 1].description}
+          </p>
+        </div>
+        <div className="flex-1">{loadCardByStep()}</div>
       </div>
     </>
   );

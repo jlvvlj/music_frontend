@@ -33,7 +33,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ProgramType, Program, ProgramTypes, Recording } from "./types";
+import { ProgramType, Program, ProgramTypes, Recording, StepProps } from "./types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import DatePicker from "@/components/ui/date-picker";
@@ -70,7 +70,7 @@ type RecordingFormValues = z.infer<typeof recordingFormSchema>;
 
 const defaultValues: Partial<RecordingFormValues> = {};
 
-const Recordings = () => {
+const Recordings = ({ updateStep }: StepProps) => {
   const [recordings, setRecordings] = useState<Recording[]>([]);
   const [programTypes, setProgramTypes] = useState(ProgramTypes);
   const [files, setFiles] = useState<any[]>([]);
@@ -107,201 +107,198 @@ const Recordings = () => {
     }, 1000);
   };
 
-  return (
-    <>
-      <Card className="border-none">
-        <CardContent className="space-y-6">
-          <Form {...form}>
-            <form className="" onSubmit={form.handleSubmit(onSubmit)}>
-              <FormField
-                control={form.control}
-                name="recordingType"
-                render={({ field }) => (
-                  <FormControl>
-                    <RadioTab
-                      defaultValue={field.value || "firm"}
-                      handleValueChange={field.onChange}
-                    />
-                  </FormControl>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="programType"
-                render={({ field }) => (
-                  <FormControl>
-                    <RadioGroup
-                      defaultValue={field.value || "album"}
-                      onValueChange={(v) => field.onChange(v as ProgramType)}
-                      className="grid grid-cols-3 gap-4 mt-5"
-                    >
-                      <Label
-                        htmlFor="album"
-                        className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
-                      >
-                        <RadioGroupItem
-                          value="album"
-                          id="album"
-                          className="sr-only"
-                        />
-                        <Icons.card className="mb-3 h-6 w-6" />
-                        Albums
-                      </Label>
-                      <Label
-                        htmlFor="single"
-                        className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
-                      >
-                        <RadioGroupItem
-                          value="single"
-                          id="single"
-                          className="sr-only"
-                        />
-                        <Icons.card className="mb-3 h-6 w-6" />
-                        Singles
-                      </Label>
-                      <Label
-                        htmlFor="mini-album"
-                        className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
-                      >
-                        <RadioGroupItem
-                          value="mini-album"
-                          id="mini-album"
-                          className="sr-only"
-                        />
-                        <Icons.card className="mb-3 h-6 w-6" />
-                        Mini-Albums
-                      </Label>
-                      <Label
-                        htmlFor="maxi-single"
-                        className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
-                      >
-                        <RadioGroupItem
-                          value="maxi-single"
-                          id="maxi-single"
-                          className="sr-only"
-                        />
-                        <Icons.card className="mb-3 h-6 w-6" />
-                        Maxi-Single
-                      </Label>
-                      <Label
-                        htmlFor="other"
-                        className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
-                      >
-                        <RadioGroupItem
-                          value="other"
-                          id="other"
-                          className="sr-only"
-                        />
-                        <Icons.card className="mb-3 h-6 w-6" />
-                        Other
-                      </Label>
-                    </RadioGroup>
-                  </FormControl>
-                )}
-              />
+    const handleClickNext = () => {
+      updateStep(1);
+    };
 
-              <div className="grid grid-cols-2 gap-4 items-end w-fit mx-auto mt-4">
+    const handleClickBack = () => {
+      updateStep(-1);
+    };
+
+    const handleClickSkip = () => {
+      updateStep(1);
+    };
+
+  return (
+    <div className="grid grid-cols-2 h-full">
+      <div>
+        <Card className="border-none">
+          <CardContent className="space-y-10">
+            <Form {...form}>
+              <form
+                className="space-y-10"
+                onSubmit={form.handleSubmit(onSubmit)}
+              >
                 <FormField
                   control={form.control}
-                  name="title"
+                  name="recordingType"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input
-                          placeholder="Title"
-                          className="max-w-[180px]"
-                          {...field}
-                        />
-                      </FormControl>
-                    </FormItem>
+                    <FormControl>
+                      <RadioTab
+                        defaultValue={field.value || "firm"}
+                        handleValueChange={field.onChange}
+                      />
+                    </FormControl>
                   )}
                 />
                 <FormField
                   control={form.control}
-                  name="number"
+                  name="programType"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <CardsActivityGoal
-                          label="ReCordings"
-                          initialValue={50}
-                          unit=""
-                          step={10}
-                          buttonTitle="Set Share"
-                          minValue={0}
-                          maxValue={100}
-                          buttonHidden
-                          chartHidden
-                          onClickButton={() => {}}
-                          isOwner={false}
-                          setGoal={(value) => {}}
-                        />
-                      </FormControl>
-                    </FormItem>
+                    <FormControl>
+                      <RadioGroup
+                        defaultValue={field.value || "album"}
+                        onValueChange={(v) => field.onChange(v as ProgramType)}
+                        className="flex justify-center items-center gap-4 mt-5"
+                      >
+                        <Label
+                          htmlFor="album"
+                          className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
+                        >
+                          <RadioGroupItem
+                            value="album"
+                            id="album"
+                            className="sr-only"
+                          />
+                          <Icons.card className="mb-3 h-6 w-6" />
+                          Albums
+                        </Label>
+                        <Label
+                          htmlFor="single"
+                          className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
+                        >
+                          <RadioGroupItem
+                            value="single"
+                            id="single"
+                            className="sr-only"
+                          />
+                          <Icons.card className="mb-3 h-6 w-6" />
+                          Singles
+                        </Label>
+                      </RadioGroup>
+                    </FormControl>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="completedAt"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Completion date</FormLabel>
-                      <FormControl>
-                        <DatePicker
-                          className="max-w-[170px]"
-                          date={field.value}
-                          placeholder="Jan 20, 2023"
-                          onDateChange={(d) => field.onChange(d || new Date())}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="releasedAt"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Completion date</FormLabel>
-                      <FormControl>
-                        <DatePicker
-                          className="max-w-[170px]"
-                          placeholder="Jan 20, 2023"
-                          date={field.value}
-                          onDateChange={(d) => field.onChange(d || new Date())}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="optionRightsLimit"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Completion date</FormLabel>
-                      <FormControl>
-                        <DatePicker
-                          className="max-w-[170px]"
-                          placeholder="Jan 20, 2023"
-                          date={field.value}
-                          onDateChange={(d) => field.onChange(d || new Date())}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="w-full flex justify-center items-center pt-8">
-                <Button type="submit" variant="outline" className="px-8">
-                  Add recording
-                </Button>
-              </div>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
-    </>
+
+                <div className="grid grid-cols-2 gap-4 items-end w-fit mx-auto mt-4">
+                  <FormField
+                    control={form.control}
+                    name="title"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input
+                            placeholder="Title"
+                            className="max-w-[180px]"
+                            {...field}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="number"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <CardsActivityGoal
+                            label="ReCordings"
+                            initialValue={50}
+                            unit=""
+                            step={10}
+                            buttonTitle="Set Share"
+                            minValue={0}
+                            maxValue={100}
+                            buttonHidden
+                            chartHidden
+                            onClickButton={() => {}}
+                            isOwner={false}
+                            setGoal={(value) => {}}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="completedAt"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Completion date</FormLabel>
+                        <FormControl>
+                          <DatePicker
+                            className="max-w-[170px]"
+                            date={field.value}
+                            placeholder="Jan 20, 2023"
+                            onDateChange={(d) =>
+                              field.onChange(d || new Date())
+                            }
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="releasedAt"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Completion date</FormLabel>
+                        <FormControl>
+                          <DatePicker
+                            className="max-w-[170px]"
+                            placeholder="Jan 20, 2023"
+                            date={field.value}
+                            onDateChange={(d) =>
+                              field.onChange(d || new Date())
+                            }
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="optionRightsLimit"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Completion date</FormLabel>
+                        <FormControl>
+                          <DatePicker
+                            className="max-w-[170px]"
+                            placeholder="Jan 20, 2023"
+                            date={field.value}
+                            onDateChange={(d) =>
+                              field.onChange(d || new Date())
+                            }
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="w-full flex justify-center items-center pt-8">
+                  <Button type="submit" variant="outline" className="px-8">
+                    Add recording
+                  </Button>
+                </div>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
+      </div>
+      <div className="relative flex items-end px-4">
+        <div className="flex justify-between w-full">
+          <Button className="" variant="outline" onClick={handleClickBack}>
+            Back
+          </Button>
+          <Button className="" variant="outline" onClick={handleClickNext}>
+            Next
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 };
 

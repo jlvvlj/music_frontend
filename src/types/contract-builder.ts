@@ -1,4 +1,12 @@
-import { Recording, TeamMember } from "@/components/contract/types";
+import {
+  Abatement,
+  Recording,
+  TeamMember,
+  BroadCasting,
+  Budget,
+  SingleRate,
+  TieredRate,
+} from "@/components/contract/types";
 
 export type ActionMap<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
@@ -12,11 +20,12 @@ export type ActionMap<M extends { [index: string]: any }> = {
 };
 
 export type ContractBuilderState = {
-  contributor: {
-    type: "team" | "solo";
-    contributors: TeamMember[];
-  };
+  abatement: Abatement | null;
+  broadCasting: BroadCasting | null;
+  budget: Budget | null;
+  members: TeamMember[];
+  soloMember: TeamMember | null;
   recordings: Recording[];
+  singleRate: SingleRate | null;
+  tieredRates: TieredRate[];
 };
-
-export type {};

@@ -39,7 +39,7 @@ const ProgressSteps = ({
       <div className="w-full max-w-[1200px] my-0 mx-auto py-0 px-4">
         <div
           className={clsx(
-            "flex justify-between relative before:absolute before:bg-[#f3e7f3] before:h-1 before:w-[99%] before:top-[50%] before:-translate-y-1/2 before:left-0 after:absolute after:bg-accent after:h-1 after:top-[45%] after:transition-all after:duration-500 after:ease-in-out after:-translae-y-1/2 after:left-0",
+            "flex justify-between relative before:absolute before:bg-[#f3e7f3] before:h-1 before:w-[99%] before:top-[50%] before:-translate-y-1/2 before:left-0 after:absolute after:bg-accent after:h-1 after:top-[44%] after:transition-all after:duration-500 after:ease-in-out after:-translae-y-1/2 after:left-0",
             afterWidth()
           )}
         >

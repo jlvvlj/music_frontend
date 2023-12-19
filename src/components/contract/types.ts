@@ -1,3 +1,6 @@
+export type StepProps = {
+  updateStep: (step: number) => void;
+};
 export type TeamMember = {
   name: string;
   surName: string;
@@ -24,7 +27,12 @@ export interface ArtistRecording {
 }
 
 export type RecordingType = "firm" | "optional";
-export type ProgramType = "album" | "single" | "mini-album" | "maxi-single" | "other"; 
+export type ProgramType =
+  | "album"
+  | "single"
+  | "mini-album"
+  | "maxi-single"
+  | "other";
 
 export type Program = {
   label: string;
@@ -71,20 +79,16 @@ export const COUNTRIES = [
     label: "England",
     checked: false,
   },
-]
+];
 
 export enum StepIndex {
-  // CONTRIBUTIONS = 1,
   CONTRIBUTORS = 1,
   SHARES,
-  // ROLE,
-  // FORM,
   RECORDINGS,
   BUDGET,
   ROYALTIES,
   ABATEMENTS,
   BROADCASTING,
-  // STACKED,
 }
 
 export enum ContributionSubType {}
@@ -98,13 +102,6 @@ export type Step = {
 };
 
 export const STEPS = [
-  // {
-  //   label: "Contributions",
-  //   step: StepIndex.CONTRIBUTIONS,
-  //   title: "Contributions",
-  //   saveBtnHidden: true,
-  //   description: "Does the contract involve multiple stakeholders?",
-  // },
   {
     label: "Contributors",
     step: StepIndex.CONTRIBUTORS,
@@ -120,20 +117,6 @@ export const STEPS = [
     description:
       "Enter the appropriate amount of shares to everyone on the team",
   },
-  // {
-  //   label: "Role",
-  //   step: StepIndex.ROLE,
-  //   title: "Role",
-  //   saveBtnHidden: true,
-  //   description: "Are you a producer or an artist?",
-  // },
-  // {
-  //   label: "Form",
-  //   step: StepIndex.FORM,
-  //   title: "Personal Information",
-  //   saveBtnHidden: false,
-  //   description: "Pleas add some details about you",
-  // },
   {
     label: "Recordings",
     step: StepIndex.RECORDINGS,
@@ -169,33 +152,57 @@ export const STEPS = [
     saveBtnHidden: false,
     description: "Enter the contract secondary use details",
   },
-  // {
-  //   label: "Stacked",
-  //   step: StepIndex.STACKED,
-  //   title: "Broadcasting right & Secondary Use",
-  //   saveBtnHidden: false,
-  //   description: "Enter the contract secondary use details",
-  // },
-
-  // {
-  //   label: "Contract",
-  //   step: StepIndex.CONTRACT,
-  //   title: "",
-  //   saveBtnHidden: false,
-  //   description: "",
-  // },
-  // {
-  //   label: "Contract II",
-  //   step: StepIndex.CONTRACT2,
-  //   title: "",
-  //   saveBtnHidden: false,
-  //   description: "",
-  // },
-  // {
-  //   label: "Contract III",
-  //   step: StepIndex.CONTRACT3,
-  //   title: "",
-  //   saveBtnHidden: false,
-  //   description: "",
-  // },
 ];
+
+// ** types
+export type Country = {
+  label: string;
+  value: string;
+};
+export interface Abatement {
+  foreignSales: {
+    percentage: number;
+    countries: Country[];
+  };
+  compilation: {
+    percentage: number;
+  };
+  promotion: {
+    percentage: number;
+  };
+  advances: {
+    percentage: number;
+  };
+}
+
+export interface BroadCasting {
+  foreignSales: {
+    percentage: number;
+  };
+  secondaryUses: {
+    percentage: number;
+  };
+}
+
+export interface Budget {
+  registration: {
+    minimum: number;
+    maximum: number;
+    royalties: number;
+  };
+  multimedia: {
+    salary: number;
+  };
+  promotion: {
+    salary: number;
+  };
+}
+
+export interface SingleRate {
+  percentage: number;
+}
+
+export interface TieredRate extends SingleRate {
+  from: number;
+  to: number;
+}

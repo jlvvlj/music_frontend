@@ -2,24 +2,12 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { CurrencyInput } from "@/components/ui/currency-input";
-import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { CardsActivityGoal } from "@/components/activity-goal";
 import { useState } from "react";
+import { BroadCasting, StepProps } from "./types";
 
 type Tab = {
   label: string;
@@ -46,14 +34,7 @@ const TABS: Tab[] = [
   },
 ];
 
-interface BroadCasting {
-  foreignSales: {
-    percentage: number;
-  };
-  secondaryUses: {
-    percentage: number;
-  };
-}
+
 
 const baseBroadCasting = {
   foreignSales: {
@@ -64,7 +45,7 @@ const baseBroadCasting = {
   },
 };
 
-const Broadcasting = () => {
+const Broadcasting = ({ updateStep }: StepProps) => {
   const [broadCasting, setBroadCasting] =
     useState<BroadCasting>(baseBroadCasting);
   const handleChangeGoalValues = (
@@ -81,67 +62,95 @@ const Broadcasting = () => {
     }));
   };
 
+    const handleClickNext = () => {
+      updateStep(1);
+    };
+
+    const handleClickBack = () => {
+      updateStep(-1);
+    };
+
+    const handleClickSkip = () => {
+      updateStep(1);
+    };
+
   return (
-    <>
-      <Card className="border-none">
-        <CardContent className="space-y-6">
-          <Tabs defaultValue="foreignSales" className="w-full px-10">
-            <TabsList className="grid w-full grid-cols-2">
-              {TABS.map((t, index) => (
-                <TabsTrigger key={index} value={t.value}>
-                  {t.label}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-            {TABS.map((t, index) => (
-              <TabsContent key={index} value={t.value} className="mt-10">
-                <div>
-                  <p className="text-[#FAFAFA] text-base font-normal">
+    <div className="grid grid-cols-2 h-full">
+      <div className="flex flex-col">
+        <Card className="border-none flex-1">
+          <CardContent className="space-y-6">
+            <Tabs defaultValue="foreignSales" className="w-full px-10">
+              <TabsList className="grid w-full grid-cols-2">
+                {TABS.map((t, index) => (
+                  <TabsTrigger key={index} value={t.value}>
                     {t.label}
-                  </p>
-                  <p className="text-[#A1A1AA] text-sm font-normal">
-                    {t.description}
-                  </p>
-                </div>
-                <div className="flex gap-6 items-center space-y-4 mt-6">
-                  <div
-                    className={cn(
-                      "flex items-center pl-4 rounded-md bg-[#5D9DF1] col-span-12 xl:col-span-10 2xl:col-span-6"
-                    )}
-                  >
-                    <div>
-                      <p
-                        className={cn(
-                          "text-sm font-medium leading-none text-[#FAFAFA]"
-                        )}
-                      >
-                        {t.cardTitle}
-                      </p>
-                      <p className="text-sm text-[#B9B9BA]">Lorem ipsum</p>
-                    </div>
-                    <CardsActivityGoal
-                      label="SHARES OF REVENUES"
-                      initialValue={broadCasting[t.value].percentage}
-                      unit="%"
-                      step={10}
-                      buttonTitle="Set Share"
-                      minValue={0}
-                      maxValue={100}
-                      buttonHidden
-                      onClickButton={() => {}}
-                      isOwner={true}
-                      setGoal={(value) =>
-                        handleChangeGoalValues(t.value, "percentage", value)
-                      }
-                    />
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+              {TABS.map((t, index) => (
+                <TabsContent key={index} value={t.value} className="mt-10">
+                  <div>
+                    <p className="text-[#FAFAFA] text-base font-normal">
+                      {t.label}
+                    </p>
+                    <p className="text-[#A1A1AA] text-sm font-normal">
+                      {t.description}
+                    </p>
                   </div>
-                </div>
-              </TabsContent>
-            ))}
-          </Tabs>
-        </CardContent>
-      </Card>
-    </>
+                  <div className="flex gap-6 items-center space-y-4 mt-6">
+                    <div
+                      className={cn(
+                        "flex items-center pl-4 rounded-md bg-[#5D9DF1] col-span-12 xl:col-span-10 2xl:col-span-6"
+                      )}
+                    >
+                      <div>
+                        <p
+                          className={cn(
+                            "text-sm font-medium leading-none text-[#FAFAFA]"
+                          )}
+                        >
+                          {t.cardTitle}
+                        </p>
+                        <p className="text-sm text-[#B9B9BA]">Lorem ipsum</p>
+                      </div>
+                      <CardsActivityGoal
+                        label="SHARES OF REVENUES"
+                        initialValue={broadCasting[t.value].percentage}
+                        unit="%"
+                        step={10}
+                        buttonTitle="Set Share"
+                        minValue={0}
+                        maxValue={100}
+                        buttonHidden
+                        onClickButton={() => {}}
+                        isOwner={true}
+                        setGoal={(value) =>
+                          handleChangeGoalValues(t.value, "percentage", value)
+                        }
+                      />
+                    </div>
+                  </div>
+                </TabsContent>
+              ))}
+            </Tabs>
+          </CardContent>
+        </Card>
+        <div className="flex justify-between w-full mt-10">
+          <Button className="" variant="outline" onClick={handleClickBack}>
+            Back
+          </Button>
+          <div className="flex gap-4">
+            <Button className="" variant="outline" onClick={handleClickNext}>
+              Skip
+            </Button>
+            <Button className="" variant="outline" onClick={handleClickNext}>
+              Next
+            </Button>
+          </div>
+        </div>
+      </div>
+      <div></div>
+    </div>
   );
 };
 

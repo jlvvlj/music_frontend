@@ -1,3 +1,4 @@
+import '../globals.css';
 import { Separator } from "../../components/ui/separator"
 import { ProfileForm } from "./profile-form"
 

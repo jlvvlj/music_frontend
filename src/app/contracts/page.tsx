@@ -4,7 +4,7 @@ import ProgressSteps from "@/components/contract/ProgressSteps";
 import CreateStepCards from "@/components/contract/createStepCards";
 import { STEPS } from "@/components/contract/types";
 
-export default function NewContract() {
+export default function NewContractPage() {
   const [activeStep, setActiveStep] = useState(1);
 
   const handleUpdateActiveStep = (step = 1) => {

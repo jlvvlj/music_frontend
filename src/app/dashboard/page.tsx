@@ -47,8 +47,9 @@ import UserNav from "@/components/dashboard/user-nav";
 import ModeToggle from "@/components/ui/mode-toggle";
 import CreateTrackTabs from "@/components/track/createTrackTabs";
 import TracksTable from "./tracks_table";
-import NewContract from "../contracts/page";
 import Graph from "./graph";
+import Link from "next/link";
+import NewContract from "@/components/contract/NewContractModal";
 
 export default function DashboardPage() {
 

@@ -5,7 +5,15 @@ import { type UserRole } from "@/types";
 // Please edit this to allow other routes to be public as needed.
 // See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your Middleware
 export default authMiddleware({
-  publicRoutes: ["/", "/login(.*)", "/sso-callback(.*)(.*)", "/signout", "/dashboard(.*)"],
+  publicRoutes: [
+    "/",
+    "/login(.*)",
+    "/sso-callback(.*)(.*)",
+    "/signout",
+    "/dashboard(.*)",
+    "/settings",
+    "/artist-settings",
+  ],
 
   async afterAuth(auth, req) {
     if (auth.isPublicRoute) {
