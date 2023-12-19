@@ -16,20 +16,20 @@ const ProgressSteps = ({
   const afterWidth = () => {
     const width = `${((100 / (totalSteps - 1)) * (activeStep - 1)).toFixed()}`;
     return activeStep === StepIndex.SHARES
-      ? "after:w-[17%]"
+      ? "after:w-[12.5%]"
       : activeStep === StepIndex.RECORDINGS
-      ? "after:w-[33%]"
-      : // : activeStep === StepIndex.ROLE
-      // ? "after:w-[30%]"
-      // : activeStep === StepIndex.FORM
-      // ? "after:w-[40%]"
-      activeStep === StepIndex.BUDGET
-      ? "after:w-[50%]"
+      ? "after:w-[25%]"
+      : activeStep === StepIndex.BUDGET
+      ? "after:w-[37.5%]"
       : activeStep === StepIndex.ROYALTIES
-      ? "after:w-[66%]"
+      ? "after:w-[50%]"
+      : activeStep === StepIndex.ROYALTIES_ADVANCES
+      ? "after:w-[62.5%]"
       : activeStep === StepIndex.ABATEMENTS
-      ? "after:w-[83%]"
+      ? "after:w-[75%]"
       : activeStep === StepIndex.BROADCASTING
+      ? "after:w-[87.5%]"
+      : activeStep === StepIndex.DERIVATIVE_USE
       ? "after:w-[100%]"
       : "";
   };
@@ -39,7 +39,7 @@ const ProgressSteps = ({
       <div className="w-full max-w-[1200px] my-0 mx-auto py-0 px-4">
         <div
           className={clsx(
-            "flex justify-between relative before:absolute before:bg-[#f3e7f3] before:h-1 before:w-[99%] before:top-[50%] before:-translate-y-1/2 before:left-0 after:absolute after:bg-accent after:h-1 after:top-[44%] after:transition-all after:duration-500 after:ease-in-out after:-translae-y-1/2 after:left-0",
+            "flex justify-between relative before:absolute before:bg-[#f3e7f3] before:h-1 before:w-[99%] before:top-[50%] before:-translate-y-1/2 before:left-0 after:absolute after:bg-accent after:h-[5px] after:top-[50%] after:-translate-y-1/2 after:transition-all after:duration-500 after:ease-in-out after:-translae-y-1/2 after:left-0",
             afterWidth()
           )}
         >

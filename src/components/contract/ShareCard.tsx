@@ -40,45 +40,6 @@ const ShareCard = ({ member }: { member: TeamMember }) => {
           setGoal={(v) => {}}
         />
       </div>
-      {/* <div className="space-y-1">
-        <div className="flex items-center justify-around">
-          <div
-            className={cn(
-              "border border-solid rounded-full w-[14px] h-[14px] flex justify-center items-center",
-              isOwner(member) ? "border-[#8AC4FB]" : "border-[#0F172A]"
-            )}
-          >
-            <MinusIcon />
-          </div>
-          <div className="text-[#F8FAFC] text-[21px] font-normal text-center">
-            50%
-          </div>
-          <div
-            className={cn(
-              "border border-solid rounded-full w-[14px] h-[14px] flex justify-center items-center",
-              isOwner(member) ? "border-[#8AC4FB]" : "border-[#0F172A]"
-            )}
-          >
-            <PlusIcon />
-          </div>
-        </div>
-        <div className="text-white text-center text-[8px] font-normal uppercase">
-          SHARES OF REVENUES
-        </div>
-        <div className="w-full flex justify-center items-center">
-          <ChartBarIcon />
-        </div>
-        <button
-          className={cn(
-            " rounded-[20px] px-5 py-1 text-[12px] font-normal text-center",
-            isOwner(member)
-              ? "bg-white text-[#3B82F6]"
-              : "bg-[#3B82F6] text-[#0F172A]"
-          )}
-        >
-          Set Share
-        </button>
-      </div> */}
     </div>
   );
 };

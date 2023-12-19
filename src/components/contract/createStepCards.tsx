@@ -35,6 +35,8 @@ import ContractBaseForm from "./ContractBaseForm";
 import { STEPS, StepIndex } from "./types";
 import Contributors from "./Contributors";
 import Recordings from "./Recordings";
+import RoyaltyAdvances from "./RoyaltyAdvances";
+import BaseFilterWrapper from "./BaseFilterWrapper";
 
 const CreateStepCards = ({
   step,
@@ -63,28 +65,22 @@ const CreateStepCards = ({
         return <Budget updateStep={updateStep} />;
       case StepIndex.ROYALTIES:
         return <Royalties updateStep={updateStep} />;
-      case StepIndex.ABATEMENTS:
-        return <Abatements updateStep={updateStep} />;
-      case StepIndex.BROADCASTING:
-        return <Broadcasting updateStep={updateStep} />;
-      // case StepIndex.STACKED:
-      //   return <Stacked />;
+      // case StepIndex.ROYALTIES_ADVANCES:
+      //   return <RoyaltyAdvances updateStep={updateStep} />;
+      // case StepIndex.ABATEMENTS:
+      //   return <Abatements updateStep={updateStep} />;
+      // case StepIndex.BROADCASTING:
+      //   return <Broadcasting updateStep={updateStep} />;
+      // case StepIndex.DERIVATIVE_USE:
+      //   return <Broadcasting updateStep={updateStep} />;
       default:
-        return <></>;
+        return <BaseFilterWrapper currentStep={step} updateStep={updateStep} />;
     }
   }, [step]);
 
   return (
     <>
       <div className="px-8 h-full flex flex-col">
-        <div className="space-y-6 w-full mb-14">
-          <h1 className="text-3xl font-semibold tracking-tight">
-            {STEPS[step - 1].title}
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            {STEPS[step - 1].description}
-          </p>
-        </div>
         <div className="flex-1">{loadCardByStep()}</div>
       </div>
     </>
