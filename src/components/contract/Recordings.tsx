@@ -95,6 +95,7 @@ const Recordings = ({ updateStep }: StepProps) => {
   const [recordings, setRecordings] = useState<Recording[]>([]);
   const [programTypes, setProgramTypes] = useState(ProgramTypes);
   const [files, setFiles] = useState<any[]>([]);
+  const [tab, setTab] = useState("firm");
 
   // ** form
   const form = useForm<RecordingFormValues>({
@@ -141,7 +142,7 @@ const Recordings = ({ updateStep }: StepProps) => {
   };
 
   return (
-    <div className="grid grid-cols-2 h-full">
+    <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
       <div className="w-full px-10 py-7 bg-modal rounded-s-3xl h-full flex flex-col justify-between">
         <div>
           <h1 className="text-3xl font-semibold tracking-tight mb-3">
@@ -151,69 +152,19 @@ const Recordings = ({ updateStep }: StepProps) => {
             Enter firm and optional recordings details.
           </p>
           <Card className="border-none bg-transparent shadow-none">
-            <Tabs defaultValue="Firm" className="w-full px-10">
+            <Tabs defaultValue="firm" className="w-full px-10" onValueChange={(e) => setTab(e)}>
               <TabsList className="grid w-full grid-cols-2 mb-11 mx-auto max-w-[70%]">
-                <TabsTrigger value="Firm">Firm</TabsTrigger>
-                <TabsTrigger value="Optional">Optional</TabsTrigger>
+                <TabsTrigger value="firm">Firm</TabsTrigger>
+                <TabsTrigger value="optional">Optional</TabsTrigger>
               </TabsList>
-              <TabsContent value="Firm" className="mt-10">
+
+              <TabsContent value={tab} className="mt-10">
                 <CardContent className="space-y-10">
                   <Form {...form}>
                     <form
                       className="space-y-10"
                       onSubmit={form.handleSubmit(onSubmit)}
                     >
-                      {/* <FormField
-                        control={form.control}
-                        name="recordingType"
-                        render={({ field }) => (
-                          <FormControl>
-                            <RadioTab
-                              defaultValue={field.value || "firm"}
-                              handleValueChange={field.onChange}
-                            />
-                          </FormControl>
-                        )}
-                      /> */}
-                      {/* <FormField
-                        control={form.control}
-                        name="programType"
-                        render={({ field }) => (
-                          <FormControl>
-                            <RadioGroup
-                              defaultValue={field.value || "album"}
-                              onValueChange={(v) => field.onChange(v as ProgramType)}
-                              className="flex justify-center items-center gap-4 mt-5"
-                            >
-                              <Label
-                                htmlFor="album"
-                                className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
-                              >
-                                <RadioGroupItem
-                                  value="album"
-                                  id="album"
-                                  className="sr-only"
-                                />
-                                <Icons.card className="mb-3 h-6 w-6" />
-                                Albums
-                              </Label>
-                              <Label
-                                htmlFor="single"
-                                className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
-                              >
-                                <RadioGroupItem
-                                  value="single"
-                                  id="single"
-                                  className="sr-only"
-                                />
-                                <Icons.card className="mb-3 h-6 w-6" />
-                                Singles
-                              </Label>
-                            </RadioGroup>
-                          </FormControl>
-                        )}
-                      /> */}
-
                       <div className="grid grid-cols-2 gap-4 items-end w-fit mx-auto mt-4">
                         <FormField
                           control={form.control}

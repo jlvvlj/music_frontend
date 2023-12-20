@@ -17,12 +17,6 @@ import ShareCard from "./ShareCard";
 import ShareCardRight from "./ShareCardRight";
 import { StepProps, TeamMember } from "./types";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
-const member: TeamMember = {
-  name: "Julie Depree",
-  surName: "",
-  email: "",
-  role: "Master Owner",
-};
 
 const members: TeamMember[] = [
   {
@@ -30,18 +24,21 @@ const members: TeamMember[] = [
     surName: "",
     email: "",
     role: "Master Owner",
+    avatar:"/amandine.svg"
   },
   {
     name: "Charly Jones",
     surName: "",
     email: "",
     role: "Singer",
+    avatar:"/orlane.svg"
   },
   {
     name: "Orlane Moog",
     surName: "",
     email: "",
     role: "Musician",
+    avatar:"/jon.svg"
   },
 ];
 
@@ -55,11 +52,9 @@ const Shares = ({ updateStep }: StepProps) => {
     updateStep(-1);
   };
 
-  const handleClickSkip = () => {
-    updateStep(1);
-  };
+
   return (
-    <div className="grid grid-cols-2 h-full">
+    <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
       <div className="w-full px-10 py-7 bg-modal rounded-s-3xl h-full flex flex-col justify-between">
         <div>
           <h6 className="text-2xl	mb-3">Now time to allocate shares</h6>

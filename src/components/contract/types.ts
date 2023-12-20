@@ -5,7 +5,7 @@ export type TeamMember = {
   name: string;
   surName: string;
   email: string;
-  avatar?: string;
+  avatar: string;
   role: string;
 };
 

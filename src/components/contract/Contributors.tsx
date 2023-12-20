@@ -8,6 +8,7 @@ import * as z from "zod";
 // ** Component
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
@@ -253,7 +254,7 @@ const Contributors = ({ updateStep }: StepProps) => {
                         )}
                       />
                       <div className="col-span-2 mt-4">
-                        <Button type="submit" className="w-full hover:bg-[#5D9DF1] bg-[#5D9DF1] text-white" variant="default">
+                        <Button type="submit" className="w-full hover:bg-[#5D9DF1] bg-[#5D9DF1] text-foreground" variant="default">
                           Add contributor
                         </Button>
                       </div>
@@ -303,20 +304,20 @@ const Contributors = ({ updateStep }: StepProps) => {
               <div className="flex flex-col items-center">
                 <p className="text-[#94A3B8] text-sm mb-3.5">Master Owner</p>
                 <Avatar className="h-11 w-11 border border-white">
-                  <AvatarImage src="https://ui.shadcn.com/avatars/01.png" />
+                  <Image src="/julie.svg" width={100} height={100} alt="avatar" />
                 </Avatar>
               </div>
               <div className="flex flex-col">
                 <p className="text-[#94A3B8] text-sm mb-3.5">Artists</p>
                 <div className="flex">
                   <Avatar className="h-11 w-11 border border-white">
-                    <AvatarImage src="https://ui.shadcn.com/avatars/02.png" />
+                    <Image src="/amandine.svg" width={100} height={100} alt="avatar" />
                   </Avatar>
                   <Avatar className="h-11 w-11 -ml-2 border border-white">
-                    <AvatarImage src="https://ui.shadcn.com/avatars/03.png" />
+                    <Image src="/orlane.svg" width={100} height={100} alt="avatar" />
                   </Avatar>
                   <Avatar className="h-11 w-11 -ml-2 border border-white">
-                    <AvatarImage src="https://ui.shadcn.com/avatars/04.png" />
+                    <Image src="/jon.svg" width={100} height={100} alt="avatar" />
                   </Avatar>
                 </div>
               </div>

@@ -17,10 +17,7 @@ const ShareCard = ({ member }: { member: TeamMember }) => {
       )}
     >
       <Avatar className="bg-[#A3D3FF] mt-2">
-        <AvatarImage src={member.avatar} />
-        <AvatarFallback className="bg-transparent">
-          {fallbackAvatar(member.name)}
-        </AvatarFallback>
+        <Image src={member.avatar} width={100} height={100} alt="avatar" />
       </Avatar>
       <div className="pt-3">
         <p className="text-sm font-medium leading-none">{member.name}</p>

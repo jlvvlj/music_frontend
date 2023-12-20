@@ -83,7 +83,6 @@ const Budget = ({ updateStep }: StepProps) => {
   };
 
   const handleClickNextTab = () => {
-    console.log("Eeeeeeeeeeeeeeeeeeeeee", currentTabIndex)
     setCurrentTabIndex(currentTabIndex + 1);
   };
 
@@ -91,15 +90,20 @@ const Budget = ({ updateStep }: StepProps) => {
     updateStep(-1);
   };
 
-  const handleClickSkip = () => {
-    updateStep(1);
+  const onTabChange = (value: string) => {
+    setTab(value as string);
   };
 
   return (
-    <div className="grid grid-cols-2 h-full">
-      <div className="w-full px-10 py-7 bg-modal rounded-s-3xl h-full flex flex-col justify-between">
+    <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
+      <div className="w-full px-10 py-7 bg-modal rounded-s-3xl h-full flex flex-col justify-between relative">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight mb-3">
+          <div className="absolute top-6 right-6">
+            <Button className="bg-[#5D9DF1]" variant="outline" onClick={handleClickNext}>
+              Skip
+            </Button>
+          </div>
+          <h1 className="text-3xl font-semibold tracking-tight mb-3 mt-2.5">
             Initial Budget
           </h1>
           <p className="text-sm text-muted-foreground mb-12">
@@ -107,7 +111,9 @@ const Budget = ({ updateStep }: StepProps) => {
           </p>
           <Card className="bg-transparent border-none shadow-none">
             <CardContent className="space-y-6 p-0">
-              <Tabs defaultValue="registration" className="w-full px-10">
+            <Tabs
+                value={tab}
+                className="w-full px-10" onValueChange={onTabChange}>
                 <TabsList className="grid w-full grid-cols-3 mb-11">
                   {TABS.map((t, index) => (
                     <TabsTrigger key={index} value={t.value}>{t.label}</TabsTrigger>
