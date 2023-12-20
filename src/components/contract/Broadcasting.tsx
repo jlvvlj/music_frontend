@@ -91,8 +91,8 @@ const Broadcasting = ({ updateStep }: StepProps) => {
   };
 
   return (
-    <div className="grid grid-cols-2 h-full">
-      <div className="flex flex-col gap-10 bg-[#060606] p-8 rounded-l-2xl">
+    <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
+      <div className="flex flex-col gap-10 bg-modal p-8 rounded-l-3xl">
         <div className="w-full flex justify-between">
           <div className="space-y-6">
             <h1 className="text-3xl font-semibold tracking-tight">
@@ -102,16 +102,20 @@ const Broadcasting = ({ updateStep }: StepProps) => {
               Enter the broadcasting budget
             </p>
           </div>
-          <Button variant="outline" onClick={handleClickSkip}>
+          <Button
+            className="bg-cblue"
+            variant="outline"
+            onClick={handleClickSkip}
+          >
             Skip
           </Button>
         </div>
-        <Card className="border-none bg-transparent flex-1">
-          <CardContent className="space-y-6">
+        <Card className="border-none bg-transparent flex-1 p-0">
+          <CardContent className="space-y-6 p-0">
             <Tabs
               value={tab}
               onValueChange={onTabChange}
-              className="w-full px-10"
+              className="w-full px-8"
             >
               <TabsList className="grid w-full grid-cols-2">
                 {TABS.map((t, index) => (
@@ -121,7 +125,7 @@ const Broadcasting = ({ updateStep }: StepProps) => {
                 ))}
               </TabsList>
               {TABS.map((t, index) => (
-                <TabsContent key={index} value={t.value} className="mt-10">
+                <TabsContent key={index} value={t.value} className="mt-7">
                   <div>
                     <p className="text-[#FAFAFA] text-base font-normal">
                       {t.label}
@@ -130,7 +134,7 @@ const Broadcasting = ({ updateStep }: StepProps) => {
                       {t.description}
                     </p>
                   </div>
-                  <div className="flex gap-6 items-center space-y-4 mt-6">
+                  <div className="flex gap-6 items-center space-y-4 mt-8">
                     <div
                       className={cn(
                         "flex items-center pl-4 rounded-md bg-[#5D9DF1] col-span-12 xl:col-span-10 2xl:col-span-6"
@@ -169,21 +173,29 @@ const Broadcasting = ({ updateStep }: StepProps) => {
           </CardContent>
         </Card>
         <div className="flex justify-between w-full mt-10">
-          <Button className="" variant="outline" onClick={handleClickBack}>
+          <Button
+            className="bg-cblue"
+            variant="outline"
+            onClick={handleClickBack}
+          >
             Back
           </Button>
           <div className="flex gap-4">
             <Button className="" variant="outline" onClick={handleClickNext}>
               Skip
             </Button>
-            <Button className="" variant="outline" onClick={handleClickNext}>
+            <Button
+              className="bg-cblue"
+              variant="outline"
+              onClick={handleClickNext}
+            >
               Next
             </Button>
           </div>
         </div>
       </div>
-      <div className="bg-[#131313] px-4 py-4 rounded-r-2xl">
-        <Card className="bg-[#060606] border-none">
+      <div className="bg-modal-foreground px-4 py-4 rounded-r-3xl">
+        <Card className="bg-modal border-muted">
           <CardHeader>
             <CardTitle>Broadcasting right & Secondary Use</CardTitle>
             <CardDescription>
@@ -191,7 +203,7 @@ const Broadcasting = ({ updateStep }: StepProps) => {
             </CardDescription>
           </CardHeader>
           <CardContent className="">
-            <Card className="bg-[#060606] border-none">
+            <Card className="bg-modal border-none">
               <CardHeader>
                 <CardTitle>Broadcasting</CardTitle>
                 <CardDescription>
@@ -199,11 +211,23 @@ const Broadcasting = ({ updateStep }: StepProps) => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex justify-start items-center gap-6">
-                <div className="rounded-xl bg-[#131313] px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
-                  <p className="text-white text-[12px] font-normal">
-                    Royalty rate
-                  </p>
-                  <p className="text-[#4EABFE] text-[12px] font-normal">20%</p>
+                <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
+                  <p className="text-[12px] font-normal">Royalty rate</p>
+                  <p className="text-cblue text-[12px] font-normal">20%</p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="bg-modal border-none">
+              <CardHeader>
+                <CardTitle>Secondary Use</CardTitle>
+                <CardDescription>
+                  Royalties to be paid for secondary use
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex justify-start items-center gap-6">
+                <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
+                  <p className="text-[12px] font-normal">Royalty rate</p>
+                  <p className="text-cblue text-[12px] font-normal">20%</p>
                 </div>
               </CardContent>
             </Card>

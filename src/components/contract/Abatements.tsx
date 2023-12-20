@@ -126,8 +126,8 @@ const Abatements = ({ updateStep }: StepProps) => {
   };
 
   return (
-    <div className="grid grid-cols-2 h-full">
-      <div className="flex flex-col gap-10 bg-[#060606] p-8 rounded-l-2xl">
+    <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
+      <div className="flex flex-col gap-10 bg-modal p-8 rounded-l-3xl">
         <div className="w-full flex justify-between">
           <div className="space-y-6">
             <h1 className="text-3xl font-semibold tracking-tight">
@@ -137,16 +137,24 @@ const Abatements = ({ updateStep }: StepProps) => {
               Enter the contract royalties details
             </p>
           </div>
-          <Button variant="outline" onClick={handleClickSkip}>
+          <Button
+            className="bg-cblue"
+            variant="outline"
+            onClick={handleClickSkip}
+          >
             Skip
           </Button>
         </div>
-        <Card className="border-none flex-1 bg-transparent p-5">
+        <Card className="border-none flex-1 bg-transparent">
           <CardContent className="space-y-6 p-0">
             <Tabs value={tab} onValueChange={onTabChange} className="w-full">
               <TabsList className="grid w-full grid-cols-5">
                 {TABS.map((t, index) => (
-                  <TabsTrigger key={index} value={t.value}>
+                  <TabsTrigger
+                    key={index}
+                    value={t.value}
+                    className="text-[11px]"
+                  >
                     {t.label}
                   </TabsTrigger>
                 ))}
@@ -164,7 +172,7 @@ const Abatements = ({ updateStep }: StepProps) => {
                   <div className="flex gap-6 items-center space-y-4 mt-6">
                     <div
                       className={cn(
-                        "flex items-center pl-4 rounded-md bg-[#5D9DF1] col-span-12 xl:col-span-10 2xl:col-span-6"
+                        "flex items-center bg-cblue pl-4 rounded-md col-span-12 xl:col-span-10 2xl:col-span-6"
                       )}
                     >
                       <div>
@@ -206,21 +214,29 @@ const Abatements = ({ updateStep }: StepProps) => {
           </CardContent>
         </Card>
         <div className="flex justify-between w-full mt-10">
-          <Button className="" variant="outline" onClick={handleClickBack}>
+          <Button
+            className="bg-cblue"
+            variant="outline"
+            onClick={handleClickBack}
+          >
             Back
           </Button>
           <div className="flex gap-4">
             <Button className="" variant="outline" onClick={handleClickNext}>
               Skip
             </Button>
-            <Button className="" variant="outline" onClick={handleClickNext}>
+            <Button
+              className="bg-cblue"
+              variant="outline"
+              onClick={handleClickNext}
+            >
               Next
             </Button>
           </div>
         </div>
       </div>
-      <div className="bg-[#131313] px-4 py-4 rounded-r-2xl">
-        <Card className="bg-[#060606] border-none">
+      <div className="bg-modal-foreground px-4 py-4 rounded-r-3xl">
+        <Card className="bg-modal border-muted">
           <CardHeader>
             <CardTitle>Abatements</CardTitle>
             <CardDescription>
@@ -228,7 +244,7 @@ const Abatements = ({ updateStep }: StepProps) => {
             </CardDescription>
           </CardHeader>
           <CardContent className="">
-            <Card className="bg-[#060606] border-none">
+            <Card className="bg-transparent border-none">
               <CardHeader>
                 <CardTitle>Foreign sales</CardTitle>
                 <CardDescription>
@@ -236,23 +252,53 @@ const Abatements = ({ updateStep }: StepProps) => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex justify-start items-center gap-6">
-                <div className="rounded-md bg-[#131313] px-[10px] py-2 min-w-[150px] min-h-[90px]">
-                  <p className="text-white text-[12px] font-normal">
-                    Abatement rate
-                  </p>
-                  <p className="text-[#94A3B8] text-[10px] font-normal">
+                <div className="rounded-md bg-modal-foreground px-[10px] py-2 w-[150px] min-h-[90px] space-y-1">
+                  <p className="text-[12px] font-normal">Abatement rate</p>
+                  <p className="text-[#94A3B8] text-[9px] font-normal">
                     In Canada and USA
                   </p>
-                  <p className="text-[#4EABFE] text-[12px] font-normal">20%</p>
+                  <p className="text-cblue text-[12px] font-normal">20%</p>
                 </div>
-                <div className="rounded-xl bg-[#131313] px-[10px] py-2 min-w-[150px] min-h-[90px]">
-                  <p className="text-white text-[12px] font-normal">
-                    Abatement rate
-                  </p>
-                  <p className="text-[#94A3B8] text-[10px] font-normal">
+                <div className="rounded-xl bg-modal-foreground px-[10px] py-2 w-[150px] min-h-[90px] space-y-1">
+                  <p className="text-[12px] font-normal">Abatement rate</p>
+                  <p className="text-[#94A3B8] text-[9px] font-normal">
                     In Italy, Spain and Portugal
                   </p>
-                  <p className="text-[#4EABFE] text-[12px] font-normal">10%</p>
+                  <p className="text-cblue text-[12px] font-normal">10%</p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="bg-transparent border-none">
+              <CardHeader>
+                <CardTitle>Compilations</CardTitle>
+                <CardDescription>
+                  Abatements taken for compilations
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex justify-start items-center gap-6">
+                <div className="rounded-md bg-modal-foreground px-[10px] py-2 w-[150px] min-h-[90px] space-y-1">
+                  <p className="text-[12px] font-normal">Abatement rate</p>
+                  <p className="text-[#94A3B8] text-[9px] font-normal">
+                    In Canada and USA
+                  </p>
+                  <p className="text-cblue text-[12px] font-normal">20%</p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="bg-transparent border-none">
+              <CardHeader>
+                <CardTitle>Promotions</CardTitle>
+                <CardDescription>
+                  Abatements taken for promotions
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex justify-start items-center gap-6">
+                <div className="rounded-md bg-modal-foreground px-[10px] py-2 w-[150px] min-h-[90px] space-y-1">
+                  <p className="text-[12px] font-normal">Abatement rate</p>
+                  <p className="text-[#94A3B8] text-[9px] font-normal">
+                    In Canada and USA
+                  </p>
+                  <p className="text-cblue text-[12px] font-normal">20%</p>
                 </div>
               </CardContent>
             </Card>

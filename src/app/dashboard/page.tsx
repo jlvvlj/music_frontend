@@ -27,28 +27,27 @@ const cards = [
   {
     title: "Total Revenue",
     amount: "$4236.0",
-    content: "+34% from last month"
+    content: "+34% from last month",
   },
   {
     title: "Monthly Streams Revenue",
     amount: "$436.0",
-    content: "+10% from last month"
+    content: "+10% from last month",
   },
   {
     title: "Monthly Sales Revenue",
     amount: "$236.0",
-    content: "+38% from last month"
+    content: "+38% from last month",
   },
   {
     title: "Balance",
     amount: "$52 236.0",
-    content: "+201 since last hour"
-  }
-]
+    content: "+201 since last hour",
+  },
+];
 
 
 export default function DashboardPage() {
-
   return (
     <>
       <div>{/* <Nav /> */}</div>
@@ -79,7 +78,7 @@ export default function DashboardPage() {
                   <DialogTrigger asChild>
                     <Button variant="outline">Add a new contract</Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-[95%] h-[90%] overflow-y-scroll no-scrollbar">
+                  <DialogContent className="max-w-[1200px] h-[90%] overflow-y-scroll no-scrollbar flex justify-center">
                     <NewContract />
                   </DialogContent>
                 </Dialog>

@@ -64,6 +64,7 @@
         --table3-foreground: 0, 0%, 87%;
 
         --black3: 0, 0%, 87%;
+        --main-blue: 208, 99%, 65%;
     }
 
     .dark {
@@ -124,6 +125,7 @@
         --table3-foreground: 0, 0%, 7%;
 
         --black3: 0, 0%, 2%;
+        --bg-blue: 208, 99%, 65%;
     }
 }
 

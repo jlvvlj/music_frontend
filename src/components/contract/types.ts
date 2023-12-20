@@ -148,7 +148,7 @@ export const STEPS = [
   {
     label: "Royalties Advances",
     step: StepIndex.ROYALTIES_ADVANCES,
-    title: "Royalties",
+    title: "Royalties Advances",
     subTitle:
       "Would you like to include a Royalty advance for some of your Recordings?",
     saveBtnHidden: false,

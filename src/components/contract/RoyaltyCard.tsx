@@ -21,7 +21,7 @@ const RoyaltyCard = () => {
   return (
     <div
       className={cn(
-        "flex items-center gap-8 px-4  py-3 rounded-md mb-5 w-fit bg-[#131313]"
+        "flex items-center gap-8 px-4  py-3 rounded-md mb-5 w-fit bg-modal-foreground"
       )}
     >
       <div>

@@ -27,6 +27,7 @@ module.exports = {
         foreground: "hsl(var(--foreground))",
         tile: "var(--card-tile-color)",
         line: "var(--card-line-color)",
+        cblue: "hsl(var(--main-blue))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
