@@ -57,14 +57,14 @@ const ProgressSteps = ({
                 {activeStep > step ? (
                   <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-popover group-hover:bg-indigo-800">
                     <CheckIcon
-                      className="h-5 w-5 text-white"
+                      className="h-5 w-5"
                       aria-hidden="true"
                     />
                   </span>
                 ) : (
                   <span
                     className={clsx(
-                      activeStep >= step ? "text-white" : "text-[#f3e7f3]",
+                      activeStep >= step ? "" : "text-muted-foreground",
                       activeStep === step ? "text-xl" : "text-md"
                     )}
                   >
@@ -73,7 +73,7 @@ const ProgressSteps = ({
                 )}
               </div>
               <div className="absolute top-16 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                <span className="text-sm text-white font-medium whitespace-nowrap">
+                <span className="text-sm font-medium whitespace-nowrap">
                   {label}
                 </span>
               </div>

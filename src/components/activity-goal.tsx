@@ -104,19 +104,19 @@ export function CardsActivityGoal({
   }
 
   return (
-    <Card className="bg-transparent border-none">
+    <Card className="bg-transparent border-none shadow-none">
       <CardTitle className="text-base"></CardTitle>
       <CardDescription className="flex justify-center">
         {cardTitle || ""}
       </CardDescription>
-      <CardContent className="pb-2">
+      <CardContent className="pb-1">
         <div className="flex items-center justify-center space-x-2">
           <Button
             variant="outline"
             type="button"
             size="icon"
             className={cn(
-              "bg-transparent border border-solid rounded-full w-[14px] h-[14px] flex justify-center items-center",
+              "bg-transparent border border-solid rounded-full w-[14px] h-[14px] flex justify-center items-center minus-btn",
               isOwner ? "border-[#8AC4FB]" : "border-[#0F172A]"
             )}
             onClick={() => onClick(-step)}
@@ -130,14 +130,14 @@ export function CardsActivityGoal({
               {initialValue}
               {unit || ""}
             </div>
-            <div className="text-[0.40rem] uppercase text-white">{label}</div>
+            <div className="text-[0.40rem] uppercase">{label}</div>
           </div>
           <Button
             variant="outline"
             size="icon"
             type="button"
             className={cn(
-              "bg-transparent border border-solid rounded-full w-[14px] h-[14px] flex justify-center items-center",
+              "bg-transparent border border-solid rounded-full w-[14px] h-[14px] flex justify-center items-center minus-btn",
               isOwner ? "border-[#8AC4FB]" : "border-[#0F172A]"
             )}
             onClick={() => onClick(step)}
@@ -148,7 +148,7 @@ export function CardsActivityGoal({
           </Button>
         </div>
         {chartHidden ? null : (
-          <div className={cn("my-2 h-[30px]", chartHidden ? "hidden" : "")}>
+          <div className={cn("h-[30px]", chartHidden ? "hidden" : "")}>
             <ResponsiveContainer
               width="100%"
               height="100%"
@@ -161,7 +161,7 @@ export function CardsActivityGoal({
                   style={
                     {
                       fill: isOwner ? "#fff" : "#6DB5F9",
-                      opacity: 0.2,
+                      opacity: 0.4,
                       "--theme-primary": `hsl(${
                         theme?.cssVars[mode === "dark" ? "dark" : "light"]
                           .primary
@@ -174,12 +174,12 @@ export function CardsActivityGoal({
           </div>
         )}
       </CardContent>
-      <CardFooter className={cn(buttonHidden ? "hidden" : "")}>
+      <CardFooter className={`${cn(buttonHidden ? "hidden" : "")} pb-0 mt-1`}>
         <button
           type="button"
           className={cn(
             " rounded-[20px] px-5 py-1 text-[12px] font-normal text-center",
-            isOwner ? "bg-white text-[#3B82F6]" : "bg-[#3B82F6] text-[#0F172A]"
+            isOwner ? "bg-white text-[#3B82F6]" : "bg-[#5D9DF1] text-[#0F172A]"
           )}
         >
           {buttonTitle}

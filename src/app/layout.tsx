@@ -2,7 +2,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Providers } from "./providers";
 // import './globals.css'
-import { Roboto_Mono, Inter } from "next/font/google";
+import { Roboto_Mono, Inter, Noto_Sans_Display } from "next/font/google";
 
 const roboto = Roboto_Mono({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });

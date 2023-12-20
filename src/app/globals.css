@@ -41,6 +41,9 @@
         --card-shine-gradient: conic-gradient(from 225deg at 50% 50%, rgba(16, 185, 129, 0) 0deg, #10B981 25deg, #EDFAF6 285deg, #FFFFFF 345deg, rgba(16, 185, 129, 0) 360deg);
         --card-tile-color: rgba(16, 185, 129, 0.08);
         --card-line-color: #E9E9E7;
+
+        --modal: 0 0% 100%;
+        --modal-foreground: 0, 0%, 87%;
     }
 
     .dark {
@@ -78,6 +81,9 @@
         --card-shine-gradient: conic-gradient(from 205deg at 50% 50%, rgba(16, 185, 129, 0) 0deg, #10B981 25deg, rgba(52, 211, 153, 0.18) 295deg, rgba(16, 185, 129, 0) 360deg);
         --card-tile-color: rgba(16, 185, 129, 0.05);
         --card-line-color: #2A2B2C;
+
+        --modal: 0, 0%, 2%;
+        --modal-foreground: 0, 0%, 7%;
     }
 }
 
@@ -361,4 +367,8 @@
 .dashboard-tablebody tr:last-child td:last-child,
 .dashboard-tablebody tr:last-child td:nth-child(6){
     border-radius: 0px 0px 20px 20px;
+}
+
+.right-card .minus-btn{
+    display: none;
 }

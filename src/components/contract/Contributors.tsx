@@ -23,6 +23,7 @@ import { cn, fallbackAvatar } from "@/lib/utils";
 import UploadButton from "@/components/upload-button";
 import { StepProps, TeamMember } from "./types";
 import { isOwner } from "./utils";
+import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 
 type PropsType = {
   data?: TeamMember[];
@@ -108,54 +109,61 @@ const Contributors = ({ updateStep }: StepProps) => {
   };
 
   return (
-    <div className={cn("grid grid-cols-2 h-full")}>
-      <div className="">
-        <Tabs defaultValue="team" className="w-full px-10">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="team">Team</TabsTrigger>
-            <TabsTrigger value="solo">Solo</TabsTrigger>
-          </TabsList>
-          <TabsContent value="team" className="mt-10">
-            <div className="grid gap-6 items-center justify-center">
-              {members.map((member, index) => (
-                <div
-                  className={cn(
-                    "flex items-center space-x-4 px-4 bg-accent py-3 rounded-md w-full",
-                    isOwner(member) ? "bg-[#2997FF]" : "bg-accent"
-                  )}
-                  key={index}
-                >
-                  {/* <Avatar className="bg-[#A3D3FF]">
+    <div className={cn("grid grid-cols-2 h-full shadow-lg border rounded-3xl")}>
+      <div className="flex-grow">
+        <Tabs defaultValue="team" className="w-full px-10 py-7 bg-modal rounded-s-3xl h-full flex flex-col justify-between">
+          <div>
+            <h1 className="text-3xl font-semibold tracking-tight mb-3">
+              Let’s start with the team
+            </h1>
+            <p className="text-sm text-muted-foreground mb-14">
+              Invite your team to join the project.
+            </p>
+            <TabsList className="grid w-full grid-cols-2 mx-auto max-w-[70%]">
+              <TabsTrigger value="team">Team</TabsTrigger>
+              <TabsTrigger value="solo">Solo</TabsTrigger>
+            </TabsList>
+            <TabsContent value="team" className="mt-10">
+              <div className="grid gap-6 items-center justify-center">
+                {members.map((member, index) => (
+                  <div
+                    className={cn(
+                      "flex items-center space-x-4 px-4 py-3 rounded-md w-full",
+                      isOwner(member) ? "bg-[#2997FF]" : "bg-modal-foreground"
+                    )}
+                    key={index}
+                  >
+                    {/* <Avatar className="bg-[#A3D3FF]">
                   <AvatarImage src={member.avatar} />
                   <AvatarFallback className="bg-transparent">
                     {fallbackAvatar(member.name)}
                   </AvatarFallback>
                 </Avatar> */}
-                  <UploadButton
-                    title={fallbackAvatar(member.name)}
-                    className="rounded-full"
-                    files={files}
-                    setFiles={setFiles}
-                    imageUrl={member.avatar || null}
-                    onImageChange={(url) =>
-                      handleAvatarImageChange(url, member)
-                    }
-                  />
-                  <div
-                    className={cn(
-                      isOwner(member) ? "text-white" : "text-[#3B82F6]"
-                    )}
-                  >
-                    <p className={cn("text-sm font-medium leading-none")}>
-                      {member.name}
-                    </p>
-                    <p className="text-sm">{member.role}</p>
+                    <UploadButton
+                      title={fallbackAvatar(member.name)}
+                      className="rounded-full"
+                      files={files}
+                      setFiles={setFiles}
+                      imageUrl={member.avatar || null}
+                      onImageChange={(url) =>
+                        handleAvatarImageChange(url, member)
+                      }
+                    />
+                    <div
+                      className={cn(
+                        isOwner(member) ? "text-white" : "text-[#3B82F6]"
+                      )}
+                    >
+                      <p className={cn("text-sm font-medium leading-none")}>
+                        {member.name}
+                      </p>
+                      <p className="text-sm">{member.role}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)}>
-                  {/* <FormField
+                ))}
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)}>
+                    {/* <FormField
               control={form.control}
               name="avatar"
               render={({ field }) => (
@@ -173,120 +181,147 @@ const Contributors = ({ updateStep }: StepProps) => {
                 </FormItem>
               )}
             /> */}
-                  <div className="grid grid-cols-2 gap-4">
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input
-                              placeholder="Name"
-                              className="max-w-[180px]"
-                              {...field}
-                            />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="surName"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input
-                              placeholder="Surname"
-                              className="max-w-[180px]"
-                              {...field}
-                            />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input
-                              placeholder="Email"
-                              className="max-w-[180px]"
-                              {...field}
-                            />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="role"
-                      render={({ field }) => (
-                        <FormItem>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
+                    <div className="grid grid-cols-2 gap-4">
+                      <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                          <FormItem>
                             <FormControl>
-                              <SelectTrigger className="">
-                                <SelectValue placeholder="Role" />
-                              </SelectTrigger>
+                              <Input
+                                placeholder="Name"
+                                className="max-w-[180px] bg-modal-foreground"
+                                {...field}
+                              />
                             </FormControl>
-                            <SelectContent className="">
-                              <SelectItem value="Owner">Owner</SelectItem>
-                              <SelectItem value="Manager">Manager</SelectItem>
-                              <SelectItem value="Musician">Musician</SelectItem>
-                              <SelectItem value="Singer">Singer</SelectItem>
-                              <SelectItem value="Marketer">Marketer</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </FormItem>
-                      )}
-                    />
-                    <div className="col-span-2 mt-4">
-                      <Button
-                        type="submit"
-                        className="w-full"
-                        variant="outline"
-                      >
-                        Add contributor
-                      </Button>
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="surName"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input
+                                placeholder="Surname"
+                                className="max-w-[180px] bg-modal-foreground"
+                                {...field}
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input
+                                placeholder="Email"
+                                className="max-w-[180px] bg-modal-foreground"
+                                {...field}
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="role"
+                        render={({ field }) => (
+                          <FormItem>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl className="bg-modal-foreground">
+                                <SelectTrigger className="text-[#6d7d93] font-semibold">
+                                  <SelectValue className="" placeholder="Role" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent className="">
+                                <SelectItem value="Owner">Owner</SelectItem>
+                                <SelectItem value="Manager">Manager</SelectItem>
+                                <SelectItem value="Musician">Musician</SelectItem>
+                                <SelectItem value="Singer">Singer</SelectItem>
+                                <SelectItem value="Marketer">Marketer</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </FormItem>
+                        )}
+                      />
+                      <div className="col-span-2 mt-4">
+                        <Button type="submit" className="w-full hover:bg-[#5D9DF1] bg-[#5D9DF1] text-white" variant="default">
+                          Add contributor
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                </form>
-              </Form>
-            </div>
-          </TabsContent>
-          <TabsContent value="solo" className="mt-10">
-            <div className="grid gap-6 items-center justify-center">
-              <div className="flex items-center space-x-4 px-4 bg-accent py-3 rounded-md w-full mb-5 pr-14">
-                <Avatar className="bg-[#A3D3FF]">
-                  <AvatarImage src="" />
-                  <AvatarFallback className="bg-transparent">
-                    {fallbackAvatar("Julie Depree")}
-                  </AvatarFallback>
-                </Avatar>
+                  </form>
+                </Form>
+              </div>
+            </TabsContent>
+            <TabsContent value="solo" className="mt-10">
+              <div className="grid gap-6 items-center justify-center">
+                <div className="flex items-center space-x-4 px-4 bg-[#5D9DF1] py-3 rounded-md w-full mb-5 pr-14 min-w-[300px]">
+                  <Avatar className="bg-[#A3D3FF] h-12 w-12">
+                    <AvatarImage src="" />
+                    <AvatarFallback className="bg-transparent">
+                      {fallbackAvatar("Julie Depree")}
+                    </AvatarFallback>
+                  </Avatar>
 
-                <div>
-                  <p className="text-sm font-medium leading-none">
-                    Julie Depree
-                  </p>
-                  <p className="text-sm text-muted-foreground">Master Owner</p>
+                  <div>
+                    <p className="text-sm font-medium leading-none text-white">Julie Depree</p>
+                    <p className="text-sm text-white">Master Owner</p>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+          </div>
+          <div className="flex justify-between w-full mt-8">
+            <Button className="bg-[#5D9DF1]" variant="outline" onClick={handleClickBack}>
+              <ArrowLeftIcon className="mr-1" />
+              Back
+            </Button>
+            <Button className="bg-[#5D9DF1]" variant="outline" onClick={handleClickNext}>
+              Next
+              <ArrowRightIcon className="ml-1" />
+            </Button>
+          </div>
+        </Tabs>
+      </div>
+      <div className="relative flex items-end px-4 flex-col py-7 bg-modal-foreground rounded-r-3xl">
+        <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
+          <h6 className="text-2xl	mb-3">Team & Shares</h6>
+          <p className="text-[#94A3B8] mb-7 text-sm">Artists participating in this contract.</p>
+          <div className="pl-10">
+            <h6 className="text-lg mb-3">Team members</h6>
+            <p className="text-[#94A3B8] mb-7 text-sm">Artists participating in this contract.</p>
+            <div className="pl-4 flex gap-10">
+              <div className="flex flex-col items-center">
+                <p className="text-[#94A3B8] text-sm mb-3.5">Master Owner</p>
+                <Avatar className="h-11 w-11 border border-white">
+                  <AvatarImage src="https://ui.shadcn.com/avatars/01.png" />
+                </Avatar>
+              </div>
+              <div className="flex flex-col">
+                <p className="text-[#94A3B8] text-sm mb-3.5">Artists</p>
+                <div className="flex">
+                  <Avatar className="h-11 w-11 border border-white">
+                    <AvatarImage src="https://ui.shadcn.com/avatars/02.png" />
+                  </Avatar>
+                  <Avatar className="h-11 w-11 -ml-2 border border-white">
+                    <AvatarImage src="https://ui.shadcn.com/avatars/03.png" />
+                  </Avatar>
+                  <Avatar className="h-11 w-11 -ml-2 border border-white">
+                    <AvatarImage src="https://ui.shadcn.com/avatars/04.png" />
+                  </Avatar>
                 </div>
               </div>
             </div>
-          </TabsContent>
-        </Tabs>
-      </div>
-      <div className="relative flex items-end px-4">
-        <div className="flex justify-between w-full">
-          <Button className="" variant="outline" onClick={handleClickBack}>
-            Back
-          </Button>
-          <Button className="" variant="outline" onClick={handleClickNext}>
-            Next
-          </Button>
+          </div>
         </div>
       </div>
     </div>

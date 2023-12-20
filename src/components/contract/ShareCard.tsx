@@ -12,8 +12,8 @@ const ShareCard = ({ member }: { member: TeamMember }) => {
   return (
     <div
       className={cn(
-        "flex items-start gap-8 px-4  py-3 rounded-md mb-5 w-fit mx-auto",
-        isOwner(member) ? "bg-[#2997FF]" : "bg-accent"
+        "flex items-start gap-4 px-4 py-3 rounded-md mb-5 w-fit mx-auto",
+        isOwner(member) ? "bg-[#2997FF]" : "bg-modal-foreground"
       )}
     >
       <Avatar className="bg-[#A3D3FF] mt-2">
@@ -24,7 +24,7 @@ const ShareCard = ({ member }: { member: TeamMember }) => {
       </Avatar>
       <div className="pt-3">
         <p className="text-sm font-medium leading-none">{member.name}</p>
-        <p className="text-sm text-muted-foreground">{member.role}</p>
+        <p className="text-sm">{member.role}</p>
       </div>
       <div className="">
         <CardsActivityGoal
