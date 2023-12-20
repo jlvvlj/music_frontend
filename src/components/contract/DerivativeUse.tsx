@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,99 +7,73 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CardsActivityGoal } from "@/components/activity-goal";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/lib/utils";
-import { FancyMultiSelect } from "@/components/fancy-multi-select";
-import { Abatement, StepProps } from "./types";
+import { CardsActivityGoal } from "@/components/activity-goal";
+import { Label } from "@/components/ui/label";
+import { Icons } from "@/components/icons";
+import { DerivativeUse, StepProps } from "./types";
 
-const TABS: {
+type Tab = {
   label: string;
-  value: Tab;
-}[] = [
+  value: TabName;
+  title: string;
+  description: string;
+  cardTitle: string;
+};
+
+type TabName = "merchandising" | "partnerships";
+
+const TABS: Tab[] = [
   {
-    label: "Foreign sales",
-    value: "foreignSales",
+    label: "Merchandising",
+    value: "merchandising",
+    title: "Direct merchandising",
+    description: "Lorem ipsum",
+    cardTitle: "Concession",
   },
   {
-    label: "Compilation",
-    value: "compilation",
-  },
-  {
-    label: "Promotion",
-    value: "promotion",
-  },
-  {
-    label: "Discouts",
-    value: "discouts",
-  },
-  {
-    label: "Off-Circuits",
-    value: "offCircuits",
+    label: "Partnerships",
+    value: "partnerships",
+    title: "Partnerships and Live events comission",
+    description: "Lorem ipsum",
+    cardTitle: "Share",
   },
 ];
 
-const COUNTRIES = [
-  {
-    label: "France",
-    value: "france",
-  },
-  {
-    label: "Spain",
-    value: "spain",
-  },
-  {
-    label: "England",
-    value: "england",
-  },
-];
-
-const baseAbatement = {
-  foreignSales: {
-    percentage: 0,
-    countries: [],
-  },
-  compilation: {
+const baseDerivativeUse = {
+  merchandising: {
     percentage: 0,
   },
-  promotion: {
-    percentage: 0,
-  },
-  discouts: {
-    percentage: 0,
-  },
-  offCircuits: {
+  partnerships: {
     percentage: 0,
   },
 };
 
-type Tab =
-  | "foreignSales"
-  | "compilation"
-  | "promotion"
-  | "discouts"
-  | "offCircuits";
+const DerivativeUse = ({ updateStep }: StepProps) => {
+  const [derivativeUse, setDerivativeUse] =
+    useState<DerivativeUse>(baseDerivativeUse);
 
-const Abatements = ({ updateStep }: StepProps) => {
-  const [abatement, setAbatement] = useState<Abatement>(baseAbatement);
   const [currentTabIndex, setCurrentTabIndex] = useState(0);
   const [tab, setTab] = useState(TABS[0].value);
 
   useEffect(() => {
-    if (currentTabIndex === TABS.length) {
-      updateStep(1);
+    if (currentTabIndex >= TABS.length) {
+      // updateStep(1);
     } else {
       setTab(TABS[currentTabIndex].value);
     }
   }, [currentTabIndex]);
 
+  const handleChangeRadioGroup = (v: string) => {};
+
   const handleChangeGoalValues = (
-    parent: Tab,
-    subField: "percentage" | "countries",
+    parent: TabName,
+    subField: "percentage",
     value: number
   ) => {
-    setAbatement((prev) => ({
+    setDerivativeUse((prev) => ({
       ...prev,
       [parent]: {
         ...prev[parent],
@@ -121,8 +95,7 @@ const Abatements = ({ updateStep }: StepProps) => {
   };
 
   const onTabChange = (value: string) => {
-    console.log(value);
-    setTab(value as Tab);
+    setTab(value as TabName);
   };
 
   return (
@@ -131,20 +104,23 @@ const Abatements = ({ updateStep }: StepProps) => {
         <div className="w-full flex justify-between">
           <div className="space-y-6">
             <h1 className="text-3xl font-semibold tracking-tight">
-              Abatements
+              Derivative use
             </h1>
-            <p className="text-sm text-muted-foreground">
-              Enter the contract royalties details
-            </p>
+            <p className="text-sm text-muted-foreground">Lorem Ipsum</p>
           </div>
           <Button variant="outline" onClick={handleClickSkip}>
             Skip
           </Button>
         </div>
-        <Card className="border-none flex-1 bg-transparent p-5">
-          <CardContent className="space-y-6 p-0">
-            <Tabs value={tab} onValueChange={onTabChange} className="w-full">
-              <TabsList className="grid w-full grid-cols-5">
+
+        <Card className="border-none bg-transparent flex-1">
+          <CardContent className="space-y-6">
+            <Tabs
+              value={tab}
+              onValueChange={onTabChange}
+              className="w-full px-10"
+            >
+              <TabsList className="grid w-full grid-cols-2">
                 {TABS.map((t, index) => (
                   <TabsTrigger key={index} value={t.value}>
                     {t.label}
@@ -152,13 +128,49 @@ const Abatements = ({ updateStep }: StepProps) => {
                 ))}
               </TabsList>
               {TABS.map((t, index) => (
-                <TabsContent key={index} value={t.value} className="mt-10">
+                <TabsContent
+                  key={index}
+                  value={t.value}
+                  className="mt-10  space-y-6"
+                >
+                  {index === 0 ? (
+                    <RadioGroup
+                      defaultValue="direct"
+                      onValueChange={handleChangeRadioGroup}
+                      className="flex justify-center items-center gap-4 mt-5"
+                    >
+                      <Label
+                        htmlFor="direct"
+                        className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
+                      >
+                        <RadioGroupItem
+                          value="direct"
+                          id="direct"
+                          className="sr-only"
+                        />
+                        <Icons.card className="mb-3 h-6 w-6" />
+                        Direct
+                      </Label>
+                      <Label
+                        htmlFor="licence"
+                        className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
+                      >
+                        <RadioGroupItem
+                          value="licence"
+                          id="licence"
+                          className="sr-only"
+                        />
+                        <Icons.card className="mb-3 h-6 w-6" />
+                        License
+                      </Label>
+                    </RadioGroup>
+                  ) : null}
                   <div>
                     <p className="text-[#FAFAFA] text-base font-normal">
-                      Share of base rate
+                      {t.title}
                     </p>
                     <p className="text-[#A1A1AA] text-sm font-normal">
-                      Lorem ipsum
+                      {t.description}
                     </p>
                   </div>
                   <div className="flex gap-6 items-center space-y-4 mt-6">
@@ -173,13 +185,13 @@ const Abatements = ({ updateStep }: StepProps) => {
                             "text-sm font-medium leading-none text-[#FAFAFA]"
                           )}
                         >
-                          Share of base
+                          {t.cardTitle}
                         </p>
                         <p className="text-sm text-[#B9B9BA]">Lorem ipsum</p>
                       </div>
                       <CardsActivityGoal
                         label="SHARES OF REVENUES"
-                        initialValue={abatement[t.value].percentage}
+                        initialValue={derivativeUse[t.value].percentage}
                         unit="%"
                         step={10}
                         buttonTitle="Set Share"
@@ -191,12 +203,6 @@ const Abatements = ({ updateStep }: StepProps) => {
                         setGoal={(value) =>
                           handleChangeGoalValues(t.value, "percentage", value)
                         }
-                      />
-                    </div>
-                    <div className={cn(index === 0 ? "" : "hidden")}>
-                      <FancyMultiSelect
-                        frameworks={COUNTRIES}
-                        placeholder="Select countries"
                       />
                     </div>
                   </div>
@@ -222,7 +228,7 @@ const Abatements = ({ updateStep }: StepProps) => {
       <div className="bg-[#131313] px-4 py-4 rounded-r-2xl">
         <Card className="bg-[#060606] border-none">
           <CardHeader>
-            <CardTitle>Abatements</CardTitle>
+            <CardTitle>Derivative use</CardTitle>
             <CardDescription>
               Abatements rates for foreign markets, compilation and Promotion
             </CardDescription>
@@ -230,29 +236,20 @@ const Abatements = ({ updateStep }: StepProps) => {
           <CardContent className="">
             <Card className="bg-[#060606] border-none">
               <CardHeader>
-                <CardTitle>Foreign sales</CardTitle>
+                <CardTitle>Merchandising</CardTitle>
                 <CardDescription>
-                  Abatements taken for foreign markets
+                  Royalties taken on merchandising comissions
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex justify-start items-center gap-6">
-                <div className="rounded-md bg-[#131313] px-[10px] py-2 min-w-[150px] min-h-[90px]">
+                <div className="rounded-md bg-[#131313] px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-2">
                   <p className="text-white text-[12px] font-normal">
-                    Abatement rate
+                    Commission rate
                   </p>
                   <p className="text-[#94A3B8] text-[10px] font-normal">
-                    In Canada and USA
+                    DIRECT
                   </p>
-                  <p className="text-[#4EABFE] text-[12px] font-normal">20%</p>
-                </div>
-                <div className="rounded-xl bg-[#131313] px-[10px] py-2 min-w-[150px] min-h-[90px]">
-                  <p className="text-white text-[12px] font-normal">
-                    Abatement rate
-                  </p>
-                  <p className="text-[#94A3B8] text-[10px] font-normal">
-                    In Italy, Spain and Portugal
-                  </p>
-                  <p className="text-[#4EABFE] text-[12px] font-normal">10%</p>
+                  <p className="text-[#4EABFE] text-[12px] font-normal">30%</p>
                 </div>
               </CardContent>
             </Card>
@@ -263,4 +260,4 @@ const Abatements = ({ updateStep }: StepProps) => {
   );
 };
 
-export default Abatements;
+export default DerivativeUse;

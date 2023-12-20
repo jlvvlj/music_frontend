@@ -87,8 +87,10 @@ export enum StepIndex {
   RECORDINGS,
   BUDGET,
   ROYALTIES,
+  ROYALTIES_ADVANCES,
   ABATEMENTS,
   BROADCASTING,
+  DERIVATIVE_USE,
 }
 
 export enum ContributionSubType {}
@@ -108,11 +110,13 @@ export const STEPS = [
     title: "Let’s start with the team",
     saveBtnHidden: false,
     description: "Invite your team to join the project.",
+    subTitle: "",
   },
   {
     label: "Shares",
     step: StepIndex.SHARES,
     title: "Now time to allocate shares",
+    subTitle: "",
     saveBtnHidden: false,
     description:
       "Enter the appropriate amount of shares to everyone on the team",
@@ -121,6 +125,7 @@ export const STEPS = [
     label: "Recordings",
     step: StepIndex.RECORDINGS,
     title: "Recordings",
+    subTitle: "",
     saveBtnHidden: false,
     description: "Enter firm and optional recordings details",
   },
@@ -128,6 +133,7 @@ export const STEPS = [
     label: "Budgets",
     step: StepIndex.BUDGET,
     title: "Initial Budget",
+    subTitle: "",
     saveBtnHidden: false,
     description: "Enter the budget  details",
   },
@@ -135,6 +141,16 @@ export const STEPS = [
     label: "Royalties",
     step: StepIndex.ROYALTIES,
     title: "Royalties",
+    subTitle: "",
+    saveBtnHidden: false,
+    description: "Enter the contract royalties details",
+  },
+  {
+    label: "Royalties Advances",
+    step: StepIndex.ROYALTIES_ADVANCES,
+    title: "Royalties",
+    subTitle:
+      "Would you like to include a Royalty advance for some of your Recordings?",
     saveBtnHidden: false,
     description: "Enter the contract royalties details",
   },
@@ -142,6 +158,7 @@ export const STEPS = [
     label: "Abatements",
     step: StepIndex.ABATEMENTS,
     title: "Abatements",
+    subTitle: "Would you like to include Abatements to the contract?",
     saveBtnHidden: false,
     description: "Enter the contract royalties details",
   },
@@ -149,6 +166,16 @@ export const STEPS = [
     label: "BroadCasting",
     step: StepIndex.BROADCASTING,
     title: "Broadcasting right & Secondary Use",
+    subTitle:
+      "Would you like to include Broadcasting right & Secondary Use rules?",
+    saveBtnHidden: false,
+    description: "Enter the contract secondary use details",
+  },
+  {
+    label: "Derivative use",
+    step: StepIndex.DERIVATIVE_USE,
+    title: "Broadcasting right & Secondary Use",
+    subTitle: "Would you like to include Derivative use rules?",
     saveBtnHidden: false,
     description: "Enter the contract secondary use details",
   },
@@ -170,7 +197,10 @@ export interface Abatement {
   promotion: {
     percentage: number;
   };
-  advances: {
+  discouts: {
+    percentage: number;
+  };
+  offCircuits: {
     percentage: number;
   };
 }
@@ -195,6 +225,15 @@ export interface Budget {
   };
   promotion: {
     salary: number;
+  };
+}
+
+export interface DerivativeUse {
+  merchandising: {
+    percentage: number;
+  };
+  partnerships: {
+    percentage: number;
   };
 }
 

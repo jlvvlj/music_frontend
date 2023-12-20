@@ -2,11 +2,14 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { CardsActivityGoal } from "@/components/activity-goal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BroadCasting, StepProps } from "./types";
 
 type Tab = {
@@ -20,7 +23,7 @@ type TabName = "foreignSales" | "secondaryUses";
 
 const TABS: Tab[] = [
   {
-    label: "Foreign sales",
+    label: "Broadcasting right",
     value: "foreignSales",
     description:
       "Paid concession of television broadcasting rights as a percentage of net pre-tax operating revenues received by the producer",
@@ -34,8 +37,6 @@ const TABS: Tab[] = [
   },
 ];
 
-
-
 const baseBroadCasting = {
   foreignSales: {
     percentage: 0,
@@ -48,6 +49,17 @@ const baseBroadCasting = {
 const Broadcasting = ({ updateStep }: StepProps) => {
   const [broadCasting, setBroadCasting] =
     useState<BroadCasting>(baseBroadCasting);
+  const [currentTabIndex, setCurrentTabIndex] = useState(0);
+  const [tab, setTab] = useState(TABS[0].value);
+
+  useEffect(() => {
+    if (currentTabIndex === TABS.length) {
+      updateStep(1);
+    } else {
+      setTab(TABS[currentTabIndex].value);
+    }
+  }, [currentTabIndex]);
+
   const handleChangeGoalValues = (
     parent: TabName,
     subField: "percentage",
@@ -62,24 +74,45 @@ const Broadcasting = ({ updateStep }: StepProps) => {
     }));
   };
 
-    const handleClickNext = () => {
-      updateStep(1);
-    };
+  const handleClickNext = () => {
+    setCurrentTabIndex(currentTabIndex + 1);
+  };
 
-    const handleClickBack = () => {
-      updateStep(-1);
-    };
+  const handleClickBack = () => {
+    updateStep(-1);
+  };
 
-    const handleClickSkip = () => {
-      updateStep(1);
-    };
+  const handleClickSkip = () => {
+    updateStep(1);
+  };
+
+  const onTabChange = (value: string) => {
+    setTab(value as TabName);
+  };
 
   return (
     <div className="grid grid-cols-2 h-full">
-      <div className="flex flex-col">
-        <Card className="border-none flex-1">
+      <div className="flex flex-col gap-10 bg-[#060606] p-8 rounded-l-2xl">
+        <div className="w-full flex justify-between">
+          <div className="space-y-6">
+            <h1 className="text-3xl font-semibold tracking-tight">
+              Broadcasting right &<br /> Secondary Use
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              Enter the broadcasting budget
+            </p>
+          </div>
+          <Button variant="outline" onClick={handleClickSkip}>
+            Skip
+          </Button>
+        </div>
+        <Card className="border-none bg-transparent flex-1">
           <CardContent className="space-y-6">
-            <Tabs defaultValue="foreignSales" className="w-full px-10">
+            <Tabs
+              value={tab}
+              onValueChange={onTabChange}
+              className="w-full px-10"
+            >
               <TabsList className="grid w-full grid-cols-2">
                 {TABS.map((t, index) => (
                   <TabsTrigger key={index} value={t.value}>
@@ -149,7 +182,34 @@ const Broadcasting = ({ updateStep }: StepProps) => {
           </div>
         </div>
       </div>
-      <div></div>
+      <div className="bg-[#131313] px-4 py-4 rounded-r-2xl">
+        <Card className="bg-[#060606] border-none">
+          <CardHeader>
+            <CardTitle>Broadcasting right & Secondary Use</CardTitle>
+            <CardDescription>
+              Broadcasting right & Secondary Use
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="">
+            <Card className="bg-[#060606] border-none">
+              <CardHeader>
+                <CardTitle>Broadcasting</CardTitle>
+                <CardDescription>
+                  Concession Royalties to be paid
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex justify-start items-center gap-6">
+                <div className="rounded-xl bg-[#131313] px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
+                  <p className="text-white text-[12px] font-normal">
+                    Royalty rate
+                  </p>
+                  <p className="text-[#4EABFE] text-[12px] font-normal">20%</p>
+                </div>
+              </CardContent>
+            </Card>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
