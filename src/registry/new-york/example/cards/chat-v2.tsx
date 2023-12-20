@@ -93,54 +93,52 @@ export function CardsChat() {
 
   return (
     <>
-      <Card className="flex flex-col justify-between">
-        <div>
-          <CardHeader className="flex flex-row items-center space-y-0">
-            <div className="flex items-center space-x-4">
-              <Avatar className="h-10 w-10">
-                <AvatarImage src="https://ui.shadcn.com/avatars/01.png" alt="@" />
-                <AvatarFallback>SD</AvatarFallback>
-              </Avatar>
-              <div>
-                <p className="text-sm font-medium leading-none">Sofia Davis</p>
-                <p className="text-sm text-muted-foreground">m@example.com</p>
-              </div>
+      <Card>
+        <CardHeader className="flex flex-row items-center">
+          <div className="flex items-center space-x-4">
+            <Avatar>
+              <AvatarImage src="/avatars/01.png" alt="Image" />
+              <AvatarFallback>OM</AvatarFallback>
+            </Avatar>
+            <div>
+              <p className="text-sm font-medium leading-none">Sofia Davis</p>
+              <p className="text-sm text-muted-foreground">m@example.com</p>
             </div>
-            <TooltipProvider delayDuration={0}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    size="icon"
-                    variant="outline"
-                    className="ml-auto rounded-full bg-[#4EABFE]"
-                    onClick={() => setOpen(true)}
-                  >
-                    <PlusIcon className="h-4 w-4" />
-                    <span className="sr-only">New message</span>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent sideOffset={10}>New message</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {messages.map((message, index) => (
-                <div
-                  key={index}
-                  className={cn(
-                    "flex w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm",
-                    message.role === "user"
-                      ? "ml-auto bg-[#4EABFE] text-primary-foreground"
-                      : "bg-black3 text-[#4EABFE]"
-                  )}
+          </div>
+          <TooltipProvider delayDuration={0}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  size="icon"
+                  variant="outline"
+                  className="ml-auto rounded-full"
+                  onClick={() => setOpen(true)}
                 >
-                  {message.content}
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </div>
+                  <PlusIcon className="h-4 w-4" />
+                  <span className="sr-only">New message</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent sideOffset={10}>New message</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                className={cn(
+                  "flex w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm",
+                  message.role === "user"
+                    ? "ml-auto bg-primary text-primary-foreground"
+                    : "bg-muted"
+                )}
+              >
+                {message.content}
+              </div>
+            ))}
+          </div>
+        </CardContent>
         <CardFooter>
           <form
             onSubmit={(event) => {
@@ -160,9 +158,9 @@ export function CardsChat() {
             <Input
               id="message"
               placeholder="Type your message..."
-              className="flex-1 bg-black3 rounded-3xl"
+              className="flex-1"
             />
-            <Button type="submit" size="icon" className="bg-[#4EABFE] text-foreground">
+            <Button type="submit" size="icon">
               <PaperPlaneIcon className="h-4 w-4" />
               <span className="sr-only">Send</span>
             </Button>

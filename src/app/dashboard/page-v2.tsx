@@ -11,17 +11,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-
-import MainNav from "@/components/dashboard/main-nav";
-import Search from "@/components/dashboard/search";
-import TeamSwitcher from "@/components/dashboard/team-switcher";
-import UserNav from "@/components/dashboard/user-nav";
-import ModeToggle from "@/components/ui/mode-toggle";
-import CreateTrackTabs from "@/components/track/createTrackTabs";
-import TracksTable from "./tracks_table";
-import Graph from "./graph";
-import NewContract from "@/components/contract/NewContractModal";
 
 const cards = [
   {
@@ -46,6 +35,21 @@ const cards = [
   }
 ]
 
+import { Button } from "@/components/ui/button";
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+import MainNav from "@/components/dashboard/main-nav";
+import RecentSales from "@/components/dashboard/recent-sales";
+import Search from "@/components/dashboard/search";
+import TeamSwitcher from "@/components/dashboard/team-switcher";
+import UserNav from "@/components/dashboard/user-nav";
+import ModeToggle from "@/components/ui/mode-toggle";
+import CreateTrackTabs from "@/components/track/createTrackTabs";
+import TracksTable from "./tracks_table";
+import Graph from "./graph";
+import Link from "next/link";
+import NewContract from "@/components/contract/NewContractModal";
 
 export default function DashboardPage() {
 
@@ -68,7 +72,7 @@ export default function DashboardPage() {
           </div>
           <div className="flex-1 space-y-4 p-8 pt-6">
             <div className="flex items-center justify-between space-y-2">
-              <h2 className="text-3xl font-bold tracking-tight text-white">
+              <h2 className="text-3xl font-bold tracking-tight">
                 Your Dashboard
               </h2>
               <div className="flex items-center space-x-2">
@@ -117,7 +121,7 @@ export default function DashboardPage() {
                 </Dialog>
               </div>
             </div>
-            <Graph />
+                <Graph/>
           </div>
         </div>
         <TracksTable />

@@ -101,7 +101,11 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
             className={cn("w-[200px] justify-between", className)}
           >
             <Avatar className="mr-2 h-5 w-5">
-              <AvatarFallback className="bg-border3">AD</AvatarFallback>
+              {/* <AvatarImage
+                src={`https://avatar.vercel.sh/${selectedTeam.value}.png`}
+                alt={selectedTeam.label}
+              /> */}
+              <AvatarFallback>AD</AvatarFallback>
             </Avatar>
             {selectedTeam.label}
             <CaretSortIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />

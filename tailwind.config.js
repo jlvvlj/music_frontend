@@ -58,7 +58,28 @@ module.exports = {
         modal: {
           DEFAULT: "hsl(var(--modal))",
           foreground: "hsl(var(--modal-foreground))",
-        }
+        },
+        border3: "hsl(var(--border3))",
+        input3: "hsl(var(--input3))",
+        background3: "hsl(var(--background3))",
+        foreground3: "hsl(var(--foreground3))",
+        black3: "hsl(var(--black3))",
+        muted3: {
+          DEFAULT: "hsl(var(--muted3))",
+          foreground: "hsl(var(--muted3-foreground))",
+        },
+        popover3: {
+          DEFAULT: "hsl(var(--popover3))",
+          foreground: "hsl(var(--popover3-foreground))",
+        },
+        card3: {
+          DEFAULT: "hsl(var(--card3))",
+          foreground: "hsl(var(--card3-foreground))",
+        },
+        table3: {
+          DEFAULT: "hsl(var(--table3))",
+          foreground: "hsl(var(--table3-foreground))",
+        },
       },
       opacity: {
         shine: "var(--card-shine-opacity)",

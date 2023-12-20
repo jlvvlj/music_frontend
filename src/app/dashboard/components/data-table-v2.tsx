@@ -31,7 +31,6 @@ import { DashboardDataTablePagination } from "./dashboard-data-table-pagination"
 import { DataTableToolbar } from "./data-table-toolbar"
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons"
 import { statuses } from "../data/data"
-import CountUp from 'react-countup';
 
 interface SubRow {
   album: string;
@@ -97,10 +96,10 @@ export function DataTable<TData, TValue>({
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} style={{ border: 'none' }} className="bg-table3-foreground">
+              <TableRow key={headerGroup.id} style={{border: 'none'}} className="bg-muted/50">
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="first:rounded-s-[20px] last:rounded-r-[20px] text-center border-b-[3px] border-table3">
+                    <TableHead key={header.id} className="first:rounded-s-[20px] last:rounded-r-[20px] text-center border-b-[3px] border-[#020817]">
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -132,7 +131,7 @@ export function DataTable<TData, TValue>({
                     ))}
                   </TableRow>
                   {collapsedRows[row.id] && (
-                    row?.original?.subRows?.map((subrow: SubRow) => {
+                    row?.original?.subRows?.map((subrow:SubRow) => {
                       const status: any = statuses.find(
                         (status) => status.value === subrow?.status)
 
@@ -149,7 +148,7 @@ export function DataTable<TData, TValue>({
                           </TableCell>
                           <TableCell className="px-2 py-3.5 flex gap-2 justify-center">
                             {subrow?.platforms?.map((platform: string) =>
-                              <Badge variant="outline" className="bg-[#4FABFF] justify-center px-2.5 rounded-full">{platform}</Badge>
+                              <Badge variant="outline" className="bg-[#0072F5] justify-center px-2.5 rounded-full">{platform}</Badge>
                             )}
                           </TableCell>
                           <TableCell className="px-2 py-3.5 text-center">
@@ -161,13 +160,13 @@ export function DataTable<TData, TValue>({
                             </div>
                           </TableCell>
                           <TableCell className="px-2 py-3.5 text-center">
-                            <CountUp start={0} end={parseFloat(subrow?.revenues.toString().replace(/[^\d.]/g, ''))} duration={5} formattingFn={(value) => `€${value.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}`} />
+                            {subrow?.revenues}
                           </TableCell>
                           <TableCell className="px-2 py-3.5 text-center">
-                            <CountUp start={0} end={parseFloat(subrow?.YourShare.toString().replace(/[^\d.]/g, ''))} duration={5} formattingFn={(value) => `${value.toFixed(0)}%`}  />
+                            {subrow?.YourShare}
                           </TableCell>
                           <TableCell className="px-2 py-3.5 text-center">
-                            <CountUp start={0} end={parseFloat(subrow?.YourRevenues.toString().replace(/[^\d.]/g, ''))} duration={5} formattingFn={(value) => `€${value.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}`} />
+                            {subrow?.YourRevenues}
                           </TableCell>
                         </TableRow>
                       )

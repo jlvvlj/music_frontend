@@ -5,11 +5,12 @@ import Link from "next/link"
 import { ColumnDef } from "@tanstack/react-table"
 
 import { Badge } from "@/registry/new-york/ui/badge"
-import CountUp from 'react-countup';
+import { Checkbox } from "@/registry/new-york/ui/checkbox"
 
 import { albums, priorities, statuses, titles } from "../data/data"
 import { Task } from "../data/schema"
 import { DataTableColumnHeader } from "./data-table-column-header"
+import { DataTableRowActions } from "./data-table-row-actions"
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -68,29 +69,16 @@ export const columns: ColumnDef<Task>[] = [
     },
     enableSorting: false,
   },
-
+  
   {
     accessorKey: "platforms",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Platforms" />
     ),
-    cell: ({ row }) => {
-      const platforms = (row.getValue("platforms") as string[]) || [];
-
-      return (
-        <div className="flex justify-center gap-2">
-          {platforms &&
-            platforms.map((platform: any, index: number) => (
-              <Badge
-                key={index}
-                variant="outline"
-                className="bg-[#4EABFE] justify-center px-2.5 rounded-full"
-              >
-                {platform}
-              </Badge>
-            ))}
-        </div>
-      );
+    cell:({ row }) => {
+      return(
+        <Badge variant="outline" className="bg-[#0072F5] justify-center px-2.5 rounded-full">Youtube</Badge>
+      )
     },
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
@@ -115,7 +103,7 @@ export const columns: ColumnDef<Task>[] = [
           {status.color && (
             <span className={`w-2.5 h-2.5 rounded-full ${status.color}`} />
           )}
-          <span>{status.label}</span>
+           <span>{status.label}</span>
         </div>
       )
     },
@@ -154,41 +142,25 @@ export const columns: ColumnDef<Task>[] = [
     enableSorting: false,
   },
   {
-    accessorKey: "YourShare",
+    id: "Your Share",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Your Share" />
     ),
-    cell: ({ row }) => {
-      const yourShareValue = row.getValue("YourShare") as string;
-      return (
-        <CountUp
-          start={0}
-          end={parseFloat(yourShareValue?.replace(/[^0-9.]/g, '') || '0')}
-          duration={5}
-          className='w-[100px] text-end'
-          formattingFn={(value) => `${value.toFixed(0)}%`}
-        />
+    cell:({ row }) => {
+      return(
+        <p>50%</p>
       )
     },
-    enableSorting: false,
   },
   {
-    accessorKey: "YourRevenues",
+    id: "Your Revenues",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Your Revenues" />
     ),
-    cell: ({ row }) => {
-      const yourRevenuesValue = row.getValue("YourRevenues") as string;
-      return (
-        <CountUp
-          start={0}
-          end={parseFloat(yourRevenuesValue?.replace(/[^0-9.]/g, '') || '0')}
-          duration={5}
-          className='w-[100px] text-end'
-          formattingFn={(value) => `€${value.toFixed(1)}`}
-        />
+    cell:({ row }) => {
+      return(
+        <p>€17000.0</p>
       )
     },
-    enableSorting: false,
   },
 ]
