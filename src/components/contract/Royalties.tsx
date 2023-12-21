@@ -363,7 +363,7 @@ const Royalties = ({ updateStep }: StepProps) => {
             <div className="mb-14">
               <h6 className="text-lg mb-2.5">Single Rate Royalties</h6>
               <p className="text-[#94A3B8] mb-5 text-sm">Lorem ipsum</p>
-              <div className="pl-4 flex gap-10 flex flex-wrap gap-[18px]">
+              <div className="pl-4 flex flex-wrap gap-[18px]">
                 <Card className="bg-modal-foreground border-[#1D1D1F] pt-2 pl-2.5 pr-6 pb-4 w-[132px]">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
                     <CardTitle className="text-xs font-medium pb-5">

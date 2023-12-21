@@ -411,7 +411,7 @@ const Budget = ({ updateStep }: StepProps) => {
           <p className="text-[#94A3B8] mb-7 text-sm">
             Artists participating in this contract.
           </p>
-          <div className="flex gap-10 flex flex-wrap gap-[18px]">
+          <div className="flex flex-wrap gap-[18px]">
             {budgetCard.map((card, index) => (
               <Card
                 key={index}
