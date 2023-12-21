@@ -13,7 +13,8 @@ export default authMiddleware({
     "/dashboard(.*)",
     "/settings",
     "/artist-settings",
-    "/music",
+    "/music(.*)",
+    "/contracts_settings(.*)(.*)",
   ],
 
   async afterAuth(auth, req) {
