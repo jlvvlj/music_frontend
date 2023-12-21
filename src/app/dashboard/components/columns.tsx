@@ -10,6 +10,8 @@ import CountUp from 'react-countup';
 import { albums, priorities, statuses, titles } from "../data/data"
 import { Task } from "../data/schema"
 import { DataTableColumnHeader } from "./data-table-column-header"
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/registry/new-york/ui/sheet";
+import { Button } from "@/registry/new-york/ui/button";
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -18,9 +20,27 @@ export const columns: ColumnDef<Task>[] = [
       <DataTableColumnHeader column={column} title="Contract" />
     ),
     cell: ({ row }) =>
-      <Link href={`contracts_settings/${row.getValue("id")}`}>
-        <div className="max-w-[160px]">{row.getValue("id")}</div>
-      </Link>,
+     <Sheet>
+        <SheetTrigger asChild>
+          <div className="max-w-[160px] cursor-pointer">{row.getValue("id")}</div>
+        </SheetTrigger>
+        <SheetContent className="mt-0" side="right">
+          <SheetHeader>
+            <SheetTitle>Edit profile</SheetTitle>
+            <SheetDescription>
+              Make changes to your profile here. Click save when you're done.
+            </SheetDescription>
+          </SheetHeader>
+          <SheetFooter>
+            <SheetClose asChild>
+              <Button type="submit">Save changes</Button>
+            </SheetClose>
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>, 
+      // <Link href={`contracts_settings/${row.getValue("id")}`}>
+        // <div className="max-w-[160px]">{row.getValue("id")}</div>
+    // </Link>,
     enableSorting: false,
     enableHiding: false,
   },
@@ -159,15 +179,8 @@ export const columns: ColumnDef<Task>[] = [
       <DataTableColumnHeader column={column} title="Your Share" />
     ),
     cell: ({ row }) => {
-      const yourShareValue = row.getValue("YourShare") as string;
       return (
-        <CountUp
-          start={0}
-          end={parseFloat(yourShareValue?.replace(/[^0-9.]/g, '') || '0')}
-          duration={5}
-          className='w-[100px] text-end'
-          formattingFn={(value) => `${value.toFixed(0)}%`}
-        />
+        <div className='text-center'>{row.getValue("YourShare")}</div>
       )
     },
     enableSorting: false,

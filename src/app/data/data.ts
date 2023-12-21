@@ -140,30 +140,87 @@ export const tracks = [{
 },
 {
     "id": "CTR-3",
-    "title": "We need you",
-    "status": "processing",
-    "album": "Second Album",
-    "YourShare": "60%",
-    "YourRevenues": "€3600.0",
-    "platforms": ["Spotify"],
+    "title": "",
+    "status": "",
+    "album": "",
+    "YourShare": "50%",
+    "YourRevenues": "€17000.0",
+    "subRows": [
+        {
+            "title": "Night Live",
+            "status": "processing",
+            "album": "Sub First Album - 2", 
+            "platforms": ["Deezer"],
+            "revenues":"€189.00",
+            "YourShare": "40%",
+            "YourRevenues": "€1200.0"
+        },
+        {
+            "title": "Night Live",
+            "status": "processing",
+            "album": "Sub First Album - 3", 
+            "platforms": ["Spotify"],
+            "revenues":"€222.36",
+            "YourShare": "37%",
+            "YourRevenues": "€1200.0"
+        },
+    ]
 },
 {
     "id": "CTR-4",
-    "title": "Bypass",
-    "status": "processing",
-    "album": "Second Album",
-    "YourShare": "28%",
-    "YourRevenues": "€3600.0",
-    "platforms": ["Youtube"],
+    "title": "",
+    "status": "",
+    "album": "",
+    "YourShare": "50%",
+    "YourRevenues": "€1200.0",
+    "subRows": [
+        {
+            "title": "Night Live",
+            "status": "processing",
+            "album": "Sub Second Album - 1", 
+            "platforms": ["Spotify", "Youtube", "Deezer"],
+            "revenues":"€789.00",
+            "YourShare": "28%",
+            "YourRevenues": "€3600.0"
+        },
+    ]
 },
 {
     "id": "CTR-5",
-    "title": "The source",
-    "status": "processing",
-    "album": "Second Album",
+    "title": "",
+    "status": "",
+    "album": "",
     "YourShare": "50%",
-    "YourRevenues": "€1200.0",
-    "platforms": ["Spotify", "Youtube"],
+    "YourRevenues": "€17000.0",
+    "subRows": [
+        {
+            "title": "Night Live",
+            "status": "processing",
+            "album": "Sub First Album - 1", 
+            "platforms": ["Spotify", "Youtube"],
+            "revenues":"€379.00",
+            "YourShare": "40%",
+            "YourRevenues": "€1200.0"
+        },
+        {
+            "title": "Night Live",
+            "status": "processing",
+            "album": "Sub First Album - 2", 
+            "platforms": ["Deezer"],
+            "revenues":"€189.00",
+            "YourShare": "40%",
+            "YourRevenues": "€1200.0"
+        },
+        {
+            "title": "Night Live",
+            "status": "processing",
+            "album": "Sub First Album - 3", 
+            "platforms": ["Spotify"],
+            "revenues":"€222.36",
+            "YourShare": "37%",
+            "YourRevenues": "€1200.0"
+        },
+    ]
 },
 {
     "id": "CTR-6",

@@ -65,6 +65,8 @@
 
         --black3: 0, 0%, 87%;
         --main-blue: 208, 99%, 65%;
+
+        --white3: 0, 0%, 0%;
     }
 
     .dark {
@@ -126,6 +128,8 @@
 
         --black3: 0, 0%, 2%;
         --bg-blue: 208, 99%, 65%;
+
+        --white3: 0, 0%, 100%;
     }
 }
 
@@ -396,6 +400,14 @@
   transition-delay: 0.3s;
 }
 
+.dashboard-tablebody tr td:nth-child(6),
+.dashboard-table tr th:nth-child(6),
+.dashboard-table tr th:nth-child(7),
+.dashboard-tablebody tr td:first-child,
+.dashboard-table tr th:first-child{
+    min-width: 130px;
+    width: 180px;
+}
 .dashboard-tablebody tr td:nth-child(6),
 .dashboard-tablebody tr td:first-child,
 .dashboard-tablebody tr td:last-child{

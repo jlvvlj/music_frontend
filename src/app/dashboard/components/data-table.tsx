@@ -94,13 +94,13 @@ export function DataTable<TData, TValue>({
     <div className="space-y-4">
       <DataTableToolbar table={table} />
       <div className="pt-4">
-        <Table>
+        <Table className="dashboard-table">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} style={{ border: 'none' }} className="bg-table3-foreground">
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="first:rounded-s-[20px] last:rounded-r-[20px] text-center border-b-[3px] border-table3">
+                    <TableHead key={header.id} className="first:rounded-s-[20px] text-white3 last:rounded-r-[20px] text-center border-b-[3px] border-table3">
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -164,7 +164,7 @@ export function DataTable<TData, TValue>({
                             <CountUp start={0} end={parseFloat(subrow?.revenues.toString().replace(/[^\d.]/g, ''))} duration={5} formattingFn={(value) => `€${value.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}`} />
                           </TableCell>
                           <TableCell className="px-2 py-3.5 text-center">
-                            <CountUp start={0} end={parseFloat(subrow?.YourShare.toString().replace(/[^\d.]/g, ''))} duration={5} formattingFn={(value) => `${value.toFixed(0)}%`}  />
+                              {subrow?.YourShare}
                           </TableCell>
                           <TableCell className="px-2 py-3.5 text-center">
                             <CountUp start={0} end={parseFloat(subrow?.YourRevenues.toString().replace(/[^\d.]/g, ''))} duration={5} formattingFn={(value) => `€${value.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}`} />
