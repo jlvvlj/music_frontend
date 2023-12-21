@@ -78,7 +78,7 @@ export default function DashboardPage() {
                   <DialogTrigger asChild>
                     <Button variant="outline">Add a new contract</Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-[1070px] h-[645px] overflow-y-scroll no-scrollbar p-0 !rounded-3xl">
+                  <DialogContent className="max-w-[1070px] h-[645px] overflow-y-scroll no-scrollbar p-0 !rounded-3xl border-none">
                     <NewContract />
                   </DialogContent>
                 </Dialog>

@@ -7,11 +7,12 @@ import {
   SingleRate,
   TeamMember,
   TieredRate,
+  initialMembers,
 } from "@/components/contract/types";
 import { ActionMap, ContractBuilderState } from "@/types/contract-builder";
 import React, { createContext, ReactNode, useEffect, useReducer } from "react";
 
-enum Steps {
+export enum Steps {
   CONTRIBUTORS = "CONTRIBUTORS",
   SHARES = "SHARES",
   RECORDINGS = "RECORDINGS",
@@ -42,7 +43,9 @@ type ContractBuilderPayload = {
     singleRate: SingleRate;
     tieredRates: TieredRate[];
   };
-  [Steps.SHARES]: {};
+  [Steps.SHARES]: {
+    members: TeamMember[];
+  };
 };
 
 export type ContractBuilderActions =
@@ -52,7 +55,7 @@ const initialState: ContractBuilderState = {
   abatement: null,
   broadCasting: null,
   budget: null,
-  members: [],
+  members: initialMembers,
   soloMember: null,
   recordings: [],
   singleRate: null,
@@ -109,7 +112,10 @@ const ContractBuilderReducer = (
         tieredRates: action.payload.tieredRates,
       };
     case Steps.SHARES:
-      return state;
+      return {
+        ...state,
+        members: action.payload.members,
+      };
     default:
       return state;
   }

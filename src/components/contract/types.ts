@@ -3,11 +3,13 @@ export interface StepProps extends React.PropsWithChildren  {
   updateStep: (step: number) => void;
 };
 export type TeamMember = {
+  id: number;
   name: string;
   surName: string;
   email: string;
   avatar?: string;
   role: string;
+  revenue?: number;
 };
 
 export interface Recording {
@@ -175,7 +177,7 @@ export const STEPS = [
   {
     label: "Derivative use",
     step: StepIndex.DERIVATIVE_USE,
-    title: "Broadcasting right & Secondary Use",
+    title: "Derivative use",
     subTitle: "Would you like to include Derivative use rules?",
     saveBtnHidden: false,
     description: "Enter the contract secondary use details",
@@ -246,3 +248,34 @@ export interface TieredRate extends SingleRate {
   from: number;
   to: number;
 }
+
+/* initial value */
+export const initialMembers: TeamMember[] = [
+  {
+    id: 1,
+    name: "Julie Depree",
+    surName: "",
+    email: "",
+    role: "Master Owner",
+    avatar: "/amandine.svg",
+    revenue: 50,
+  },
+  {
+    id: 2,
+    name: "Charly Jones",
+    surName: "",
+    email: "",
+    role: "Singer",
+    avatar: "/orlane.svg",
+    revenue: 50,
+  },
+  {
+    id: 3,
+    name: "Orlane Moog",
+    surName: "",
+    email: "",
+    role: "Musician",
+    avatar: "/jon.svg",
+    revenue: 30,
+  },
+];

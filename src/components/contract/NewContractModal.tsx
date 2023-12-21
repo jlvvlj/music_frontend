@@ -24,7 +24,13 @@ export default function NewContract() {
 
   return (
     <ContractBuilderProvider>
-      <div className="h-full w-[1070px] flex flex-col gap-20 border-none">
+      <div className="h-full w-[1070px] flex flex-col gap-20 relative">
+        <div className="absolute left-10 top-5 hidden lg:block w-[50%] z-10">
+          <ProgressSteps
+            step={activeStep}
+            updateStep={handleUpdateActiveStep}
+          />
+        </div>
         <div className="flex-1">
           <CreateStepCards step={activeStep} updateStep={handleClickSave} />
         </div>

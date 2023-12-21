@@ -56,19 +56,7 @@ type RecordingFormValues = z.infer<typeof recordingFormSchema>;
 const defaultValues: Partial<RecordingFormValues> = {};
 
 const ProducerRecordings = () => {
-  const [recordings, setRecordings] = useState<Recording[]>([
-    {
-      image:
-        "https://www.billboard.com/wp-content/uploads/2022/06/beyonce-Lemonade-album-art-billboard-1240.jpg?w=1024",
-      title: "Fire Emblem",
-      number: "12",
-      recordingType: "Optional",
-      programType: ["Firm"],
-      completedAt: new Date("01/22/2023"),
-      releasedAt: new Date("01/22/2023"),
-      optionRightsLimit: new Date("01/22/2023"),
-    },
-  ]);
+  const [recordings, setRecordings] = useState<Recording[]>([]);
 
   const [programTypes, setProgramTypes] = useState(ProgramTypes);
 
@@ -99,7 +87,6 @@ const ProducerRecordings = () => {
       programType: programTypes,
     };
     const _recordings = [...recordings];
-    _recordings.push(_data);
     setRecordings(_recordings);
     setTimeout(() => {
       form.reset({
@@ -117,8 +104,8 @@ const ProducerRecordings = () => {
     programType: ProgramType
   ) => {
     const _programTypes = [...programTypes];
-    const index = programTypes.findIndex((p) => p.label === programType.label);
-    _programTypes.splice(index, 1, { ...programType, checked: selected });
+    // const index = programTypes.findIndex((p) => p.label === programType.);
+    // _programTypes.splice(index, 1, { ...programType, checked: selected });
     setProgramTypes(_programTypes);
   };
 
@@ -135,7 +122,7 @@ const ProducerRecordings = () => {
           {recordings.map((recording, index) => (
             <div key={index} className="grid grid-cols-10">
               <Image
-                src={recording.image}
+                src={recording.image || ""}
                 className="col-span-1"
                 width={50}
                 height={50}

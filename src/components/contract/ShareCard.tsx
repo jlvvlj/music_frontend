@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { TeamMember } from "./types";
 import { cn, fallbackAvatar } from "@/lib/utils";
@@ -5,7 +6,16 @@ import Image from "next/image";
 import { isOwner } from "./utils";
 import { CardsActivityGoal } from "@/components/activity-goal";
 
-const ShareCard = ({ member }: { member: TeamMember }) => {
+const ShareCard = ({
+  member,
+  updateGoal,
+}: {
+  member: TeamMember;
+  updateGoal: (v: number) => void;
+}) => {
+  const handleChangeGoal = (v: number) => {
+    updateGoal(v);
+  };
   return (
     <div
       className={cn(
@@ -28,7 +38,7 @@ const ShareCard = ({ member }: { member: TeamMember }) => {
       <div className="">
         <CardsActivityGoal
           label="SHARES OF REVENUES"
-          initialValue={50}
+          initialValue={member.revenue || 30}
           unit="%"
           step={10}
           buttonTitle="Set Share"
@@ -36,7 +46,7 @@ const ShareCard = ({ member }: { member: TeamMember }) => {
           maxValue={100}
           onClickButton={() => {}}
           isOwner={isOwner(member)}
-          setGoal={(v) => {}}
+          setGoal={handleChangeGoal}
         />
       </div>
     </div>
