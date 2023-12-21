@@ -29,7 +29,7 @@ const RoyaltyCard = () => {
             <SelectValue placeholder="" />
           </SelectTrigger>
           <SelectContent className="bg-modal-foreground">
-            <SelectItem value="1" className="focus:bg-cblue">
+            <SelectItem value="1" className="focus:bg-mblue">
               <>
                 <p className="text-[#F8FAFC] text-sm font-normal">
                   At Signature
@@ -39,7 +39,7 @@ const RoyaltyCard = () => {
                 </p>
               </>
             </SelectItem>
-            <SelectItem value="2" className="focus:bg-cblue">
+            <SelectItem value="2" className="focus:bg-mblue">
               <>
                 <p className="text-[#F8FAFC] text-sm font-normal">
                   At Commercial release
@@ -49,7 +49,7 @@ const RoyaltyCard = () => {
                 </p>
               </>
             </SelectItem>
-            <SelectItem value="3" className="focus:bg-cblue">
+            <SelectItem value="3" className="focus:bg-mblue">
               <>
                 <p className="text-[#F8FAFC] text-sm font-normal">
                   At Specific Date

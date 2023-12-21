@@ -10,7 +10,7 @@ const ShareCard = ({ member }: { member: TeamMember }) => {
     <div
       className={cn(
         "flex items-start gap-4 px-4 py-3 rounded-md mb-5 w-fit mx-auto",
-        isOwner(member) ? "bg-cblue" : "bg-modal-foreground"
+        isOwner(member) ? "bg-mblue" : "bg-modal-foreground"
       )}
     >
       <Avatar className="bg-[#A3D3FF] mt-2">

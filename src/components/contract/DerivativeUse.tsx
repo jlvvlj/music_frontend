@@ -109,7 +109,7 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
             <p className="text-sm text-muted-foreground">Lorem Ipsum</p>
           </div>
           <Button
-            className="bg-cblue"
+            className="bg-mblue"
             variant="outline"
             onClick={handleClickSkip}
           >
@@ -180,7 +180,7 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
                   <div className="flex gap-6 items-center space-y-4 mt-6">
                     <div
                       className={cn(
-                        "flex items-center pl-4 rounded-md bg-[#5D9DF1] col-span-12 xl:col-span-10 2xl:col-span-6"
+                        "flex items-center pl-4 rounded-md bg-mblue col-span-12 xl:col-span-10 2xl:col-span-6"
                       )}
                     >
                       <div>
@@ -217,7 +217,7 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
         </Card>
         <div className="flex justify-between w-full mt-10">
           <Button
-            className="bg-cblue"
+            className="bg-mblue"
             variant="outline"
             onClick={handleClickBack}
           >
@@ -228,7 +228,7 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
               Skip
             </Button>
             <Button
-              className="bg-cblue"
+              className="bg-mblue"
               variant="outline"
               onClick={handleClickNext}
             >
@@ -259,14 +259,14 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
                   <p className="text-muted-foreground text-[10px] font-normal">
                     DIRECT
                   </p>
-                  <p className="text-cblue text-[12px] font-normal">30%</p>
+                  <p className="text-mblue text-[12px] font-normal">30%</p>
                 </div>
                 <div className="rounded-md bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-2">
                   <p className="text-[12px] font-normal">Commission rate</p>
                   <p className="text-muted-foreground text-[10px] font-normal">
                     DIRECT
                   </p>
-                  <p className="text-cblue text-[12px] font-normal">10%</p>
+                  <p className="text-mblue text-[12px] font-normal">10%</p>
                 </div>
               </CardContent>
             </Card>
@@ -283,7 +283,7 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
                   <p className="text-muted-foreground text-[10px] font-normal">
                     DIRECT
                   </p>
-                  <p className="text-cblue text-[12px] font-normal">30%</p>
+                  <p className="text-mblue text-[12px] font-normal">30%</p>
                 </div>
               </CardContent>
             </Card>

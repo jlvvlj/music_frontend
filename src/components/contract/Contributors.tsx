@@ -162,7 +162,7 @@ const Contributors = ({ updateStep, children }: StepProps) => {
                   <div
                     className={cn(
                       "flex items-center space-x-4 px-4 py-3 rounded-md w-full",
-                      isOwner(member) ? "bg-cblue" : "bg-modal-foreground"
+                      isOwner(member) ? "bg-mblue" : "bg-modal-foreground"
                     )}
                     key={index}
                   >
@@ -184,7 +184,7 @@ const Contributors = ({ updateStep, children }: StepProps) => {
                     />
                     <div
                       className={cn(
-                        isOwner(member) ? "text-white" : "text-cblue"
+                        isOwner(member) ? "text-white" : "text-mblue"
                       )}
                     >
                       <p className={cn("text-sm font-medium leading-none")}>
@@ -295,7 +295,7 @@ const Contributors = ({ updateStep, children }: StepProps) => {
                       <div className="col-span-2 mt-4">
                         <Button
                           type="submit"
-                          className="w-full hover:bg-[#5D9DF1] bg-cblue text-foreground"
+                          className="w-full hover:bg-[#5D9DF1] bg-mblue text-foreground"
                           variant="default"
                         >
                           Add contributor
@@ -308,7 +308,7 @@ const Contributors = ({ updateStep, children }: StepProps) => {
             </TabsContent>
             <TabsContent value="solo" className="mt-10">
               <div className="grid gap-6 items-center justify-center">
-                <div className="flex items-center space-x-4 px-4 bg-cblue py-3 rounded-md w-full mb-5 pr-14 min-w-[300px]">
+                <div className="flex items-center space-x-4 px-4 bg-mblue py-3 rounded-md w-full mb-5 pr-14 min-w-[300px]">
                   <Avatar className="bg-[#A3D3FF] h-12 w-12">
                     <AvatarImage src="" />
                     <AvatarFallback className="bg-transparent">
@@ -328,7 +328,7 @@ const Contributors = ({ updateStep, children }: StepProps) => {
           </div>
           <div className="flex justify-between w-full mt-8">
             <Button
-              className="bg-cblue"
+              className="bg-mblue"
               variant="outline"
               onClick={handleClickBack}
             >
@@ -336,7 +336,7 @@ const Contributors = ({ updateStep, children }: StepProps) => {
               Back
             </Button>
             <Button
-              className="bg-cblue"
+              className="bg-mblue"
               variant="outline"
               onClick={handleClickNext}
             >

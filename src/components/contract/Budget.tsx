@@ -100,7 +100,7 @@ const Budget = ({ updateStep }: StepProps) => {
         <div>
           <div className="absolute top-6 right-6">
             <Button
-              className="bg-cblue"
+              className="bg-mblue"
               variant="outline"
               onClick={handleClickNext}
             >
@@ -144,7 +144,7 @@ const Budget = ({ updateStep }: StepProps) => {
                             <div className="grid grid-cols-12 gap-6">
                               <div
                                 className={cn(
-                                  "flex items-center justify-between pl-4 rounded-md bg-cblue col-span-12 lg:col-span-10 2xl:col-span-8 w-full"
+                                  "flex items-center justify-between pl-4 rounded-md bg-mblue col-span-12 lg:col-span-10 2xl:col-span-8 w-full"
                                 )}
                               >
                                 <div>
@@ -183,7 +183,7 @@ const Budget = ({ updateStep }: StepProps) => {
                             <div className="grid grid-cols-12 gap-6">
                               <div
                                 className={cn(
-                                  "flex items-center justify-between pl-4 rounded-md bg-cblue col-span-12 lg:col-span-10 2xl:col-span-8 w-full"
+                                  "flex items-center justify-between pl-4 rounded-md bg-mblue col-span-12 lg:col-span-10 2xl:col-span-8 w-full"
                                 )}
                               >
                                 <div>
@@ -222,7 +222,7 @@ const Budget = ({ updateStep }: StepProps) => {
                             <div className="grid grid-cols-12 gap-6">
                               <div
                                 className={cn(
-                                  "flex items-center justify-between pl-4 rounded-md bg-cblue col-span-12 lg:col-span-10 2xl:col-span-8 w-full"
+                                  "flex items-center justify-between pl-4 rounded-md bg-mblue col-span-12 lg:col-span-10 2xl:col-span-8 w-full"
                                 )}
                               >
                                 <div>
@@ -379,7 +379,7 @@ const Budget = ({ updateStep }: StepProps) => {
         </div>
         <div className="flex justify-between w-full mt-10">
           <Button
-            className="bg-cblue"
+            className="bg-mblue"
             variant="outline"
             onClick={handleClickBack}
           >
@@ -395,7 +395,7 @@ const Budget = ({ updateStep }: StepProps) => {
               Skip
             </Button>
             <Button
-              className="bg-cblue"
+              className="bg-mblue"
               variant="outline"
               onClick={handleClickNext}
             >

@@ -103,7 +103,7 @@ const Broadcasting = ({ updateStep }: StepProps) => {
             </p>
           </div>
           <Button
-            className="bg-cblue"
+            className="bg-mblue"
             variant="outline"
             onClick={handleClickSkip}
           >
@@ -174,7 +174,7 @@ const Broadcasting = ({ updateStep }: StepProps) => {
         </Card>
         <div className="flex justify-between w-full mt-10">
           <Button
-            className="bg-cblue"
+            className="bg-mblue"
             variant="outline"
             onClick={handleClickBack}
           >
@@ -185,7 +185,7 @@ const Broadcasting = ({ updateStep }: StepProps) => {
               Skip
             </Button>
             <Button
-              className="bg-cblue"
+              className="bg-mblue"
               variant="outline"
               onClick={handleClickNext}
             >
@@ -213,7 +213,7 @@ const Broadcasting = ({ updateStep }: StepProps) => {
               <CardContent className="flex justify-start items-center gap-6">
                 <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
                   <p className="text-[12px] font-normal">Royalty rate</p>
-                  <p className="text-cblue text-[12px] font-normal">20%</p>
+                  <p className="text-mblue text-[12px] font-normal">20%</p>
                 </div>
               </CardContent>
             </Card>
@@ -227,7 +227,7 @@ const Broadcasting = ({ updateStep }: StepProps) => {
               <CardContent className="flex justify-start items-center gap-6">
                 <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
                   <p className="text-[12px] font-normal">Royalty rate</p>
-                  <p className="text-cblue text-[12px] font-normal">20%</p>
+                  <p className="text-mblue text-[12px] font-normal">20%</p>
                 </div>
               </CardContent>
             </Card>

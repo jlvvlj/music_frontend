@@ -64,7 +64,7 @@ export default function RoyaltyAdvances({
         </div>
         <div className="flex justify-between w-full mt-10 px-4">
           <Button
-            className="bg-cblue"
+            className="bg-mblue"
             variant="outline"
             onClick={handleClickBack}
           >
@@ -76,7 +76,7 @@ export default function RoyaltyAdvances({
               Skip
             </Button>
             <Button
-              className="bg-cblue"
+              className="bg-mblue"
               variant="outline"
               onClick={handleClickNext}
             >
@@ -94,11 +94,11 @@ export default function RoyaltyAdvances({
           <CardContent className="flex items-center gap-6 px-20">
             <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
               <p className="text-white text-[12px] font-normal">At Signature</p>
-              <p className="text-cblue text-[12px] font-normal">EUR 3000</p>
+              <p className="text-mblue text-[12px] font-normal">EUR 3000</p>
             </div>
             <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
               <p className="text-white text-[12px] font-normal">At Signature</p>
-              <p className="text-cblue text-[12px] font-normal">EUR 3000</p>
+              <p className="text-mblue text-[12px] font-normal">EUR 3000</p>
             </div>
           </CardContent>
         </Card>

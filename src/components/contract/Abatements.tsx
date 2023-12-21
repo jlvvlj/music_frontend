@@ -138,7 +138,7 @@ const Abatements = ({ updateStep }: StepProps) => {
             </p>
           </div>
           <Button
-            className="bg-cblue"
+            className="bg-mblue"
             variant="outline"
             onClick={handleClickSkip}
           >
@@ -172,7 +172,7 @@ const Abatements = ({ updateStep }: StepProps) => {
                   <div className="flex gap-6 items-center space-y-4 mt-6">
                     <div
                       className={cn(
-                        "flex items-center bg-cblue pl-4 rounded-md col-span-12 xl:col-span-10 2xl:col-span-6"
+                        "flex items-center bg-mblue pl-4 rounded-md col-span-12 xl:col-span-10 2xl:col-span-6"
                       )}
                     >
                       <div>
@@ -215,7 +215,7 @@ const Abatements = ({ updateStep }: StepProps) => {
         </Card>
         <div className="flex justify-between w-full mt-10">
           <Button
-            className="bg-cblue"
+            className="bg-mblue"
             variant="outline"
             onClick={handleClickBack}
           >
@@ -226,7 +226,7 @@ const Abatements = ({ updateStep }: StepProps) => {
               Skip
             </Button>
             <Button
-              className="bg-cblue"
+              className="bg-mblue"
               variant="outline"
               onClick={handleClickNext}
             >
@@ -257,14 +257,14 @@ const Abatements = ({ updateStep }: StepProps) => {
                   <p className="text-[#94A3B8] text-[9px] font-normal">
                     In Canada and USA
                   </p>
-                  <p className="text-cblue text-[12px] font-normal">20%</p>
+                  <p className="text-mblue text-[12px] font-normal">20%</p>
                 </div>
                 <div className="rounded-xl bg-modal-foreground px-[10px] py-2 w-[150px] min-h-[90px] space-y-1">
                   <p className="text-[12px] font-normal">Abatement rate</p>
                   <p className="text-[#94A3B8] text-[9px] font-normal">
                     In Italy, Spain and Portugal
                   </p>
-                  <p className="text-cblue text-[12px] font-normal">10%</p>
+                  <p className="text-mblue text-[12px] font-normal">10%</p>
                 </div>
               </CardContent>
             </Card>
@@ -281,7 +281,7 @@ const Abatements = ({ updateStep }: StepProps) => {
                   <p className="text-[#94A3B8] text-[9px] font-normal">
                     In Canada and USA
                   </p>
-                  <p className="text-cblue text-[12px] font-normal">20%</p>
+                  <p className="text-mblue text-[12px] font-normal">20%</p>
                 </div>
               </CardContent>
             </Card>
@@ -298,7 +298,7 @@ const Abatements = ({ updateStep }: StepProps) => {
                   <p className="text-[#94A3B8] text-[9px] font-normal">
                     In Canada and USA
                   </p>
-                  <p className="text-cblue text-[12px] font-normal">20%</p>
+                  <p className="text-mblue text-[12px] font-normal">20%</p>
                 </div>
               </CardContent>
             </Card>

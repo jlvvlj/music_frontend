@@ -346,7 +346,7 @@ const Recordings = ({ updateStep }: StepProps) => {
         </div>
         <div className="flex justify-between w-full mt-8">
           <Button
-            className="bg-cblue"
+            className="bg-mblue"
             variant="outline"
             onClick={handleClickBack}
           >
@@ -354,7 +354,7 @@ const Recordings = ({ updateStep }: StepProps) => {
             Back
           </Button>
           <Button
-            className="bg-cblue"
+            className="bg-mblue"
             variant="outline"
             onClick={handleClickNext}
           >

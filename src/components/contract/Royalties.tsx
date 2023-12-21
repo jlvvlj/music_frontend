@@ -1,4 +1,4 @@
-import React, { useEffect ,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import * as z from "zod";
@@ -26,7 +26,6 @@ import { CardsActivityGoal } from "@/components/activity-goal";
 import { Separator } from "@/components/ui/separator";
 import { SingleRate, StepProps, TieredRate } from "./types";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
-
 
 type Tab = {
   label: string;
@@ -89,11 +88,9 @@ const Royalties = ({ updateStep }: StepProps) => {
     });
   };
 
-
   const handleClickNextTab = () => {
     setCurrentTabIndex(currentTabIndex + 1);
   };
-
 
   const onSubmit = (data: RateFormValues) => {
     console.log(data);
@@ -130,18 +127,22 @@ const Royalties = ({ updateStep }: StepProps) => {
           </p>
           <Card className="bg-transparent border-none shadow-none">
             <CardContent className="space-y-6">
-            <Tabs
+              <Tabs
                 value={tab}
-                className="w-full px-10" onValueChange={onTabChange}>
+                className="w-full px-10"
+                onValueChange={onTabChange}
+              >
                 <TabsList className="grid w-full grid-cols-2 mb-10 mx-auto max-w-[70%]">
-                {TABS.map((t, index) => (
-                    <TabsTrigger key={index} value={t.value}>{t.label}</TabsTrigger>
+                  {TABS.map((t, index) => (
+                    <TabsTrigger key={index} value={t.value}>
+                      {t.label}
+                    </TabsTrigger>
                   ))}
                 </TabsList>
                 {TABS.map((t, index) => {
                   return (
                     <TabsContent key={index} value={t.value} className="mt-10">
-                      {index === 0 &&
+                      {index === 0 && (
                         <div
                           className={cn(
                             "flex items-center justify-between pl-4 rounded-md bg-modal-foreground col-span-12 xl:col-span-10 2xl:col-span-6 w-full"
@@ -155,7 +156,9 @@ const Royalties = ({ updateStep }: StepProps) => {
                             >
                               Royalties
                             </p>
-                            <p className="text-sm text-[#5D9DF1]">Lorem ipsum</p>
+                            <p className="text-sm text-[#5D9DF1]">
+                              Lorem ipsum
+                            </p>
                           </div>
                           <CardsActivityGoal
                             label="SHARES OF REVENUES"
@@ -166,12 +169,13 @@ const Royalties = ({ updateStep }: StepProps) => {
                             minValue={0}
                             maxValue={100}
                             buttonHidden
-                            onClickButton={() => { }}
+                            onClickButton={() => {}}
                             isOwner={true}
                             setGoal={handleChangeSingleRatePercentage}
                           />
-                        </div>}
-                      {index === 1 &&
+                        </div>
+                      )}
+                      {index === 1 && (
                         <div className="col-span-9 space-y-4 mb-5">
                           {tieredRates &&
                             !!tieredRates.length &&
@@ -190,9 +194,9 @@ const Royalties = ({ updateStep }: StepProps) => {
                                   minValue={0}
                                   maxValue={100}
                                   buttonHidden
-                                  onClickButton={() => { }}
+                                  onClickButton={() => {}}
                                   isOwner={true}
-                                  setGoal={(v) => { }}
+                                  setGoal={(v) => {}}
                                 />
                                 <CardsActivityGoal
                                   cardTitle="To"
@@ -204,9 +208,9 @@ const Royalties = ({ updateStep }: StepProps) => {
                                   minValue={0}
                                   maxValue={100}
                                   buttonHidden
-                                  onClickButton={() => { }}
+                                  onClickButton={() => {}}
                                   isOwner={true}
-                                  setGoal={(v) => { }}
+                                  setGoal={(v) => {}}
                                 />
                                 <CardsActivityGoal
                                   cardTitle="&nbsp;"
@@ -218,14 +222,17 @@ const Royalties = ({ updateStep }: StepProps) => {
                                   minValue={0}
                                   maxValue={100}
                                   buttonHidden
-                                  onClickButton={() => { }}
+                                  onClickButton={() => {}}
                                   isOwner={true}
-                                  setGoal={(v) => { }}
+                                  setGoal={(v) => {}}
                                 />
                               </div>
                             ))}
                           <Form {...form}>
-                            <form className="mt-4" onSubmit={form.handleSubmit(onSubmit)}>
+                            <form
+                              className="mt-4"
+                              onSubmit={form.handleSubmit(onSubmit)}
+                            >
                               <div className="flex justify-around rounded-md bg-modal-foreground">
                                 <FormField
                                   control={form.control}
@@ -242,7 +249,7 @@ const Royalties = ({ updateStep }: StepProps) => {
                                           minValue={0}
                                           maxValue={5000}
                                           buttonHidden
-                                          onClickButton={() => { }}
+                                          onClickButton={() => {}}
                                           cardTitle="From"
                                           isOwner={true}
                                           setGoal={field.onChange}
@@ -266,7 +273,7 @@ const Royalties = ({ updateStep }: StepProps) => {
                                           minValue={0}
                                           maxValue={5000}
                                           buttonHidden
-                                          onClickButton={() => { }}
+                                          onClickButton={() => {}}
                                           cardTitle="To"
                                           isOwner={true}
                                           setGoal={field.onChange}
@@ -291,7 +298,7 @@ const Royalties = ({ updateStep }: StepProps) => {
                                           maxValue={100}
                                           buttonHidden
                                           cardTitle="&nbsp;"
-                                          onClickButton={() => { }}
+                                          onClickButton={() => {}}
                                           isOwner={true}
                                           setGoal={field.onChange}
                                         />
@@ -301,15 +308,19 @@ const Royalties = ({ updateStep }: StepProps) => {
                                 />
                               </div>
                               <div className="flex justify-end items-center h-full !mt-7">
-                                <button type="submit" className="text-[#2997FF]">
+                                <button
+                                  type="submit"
+                                  className="text-[#2997FF]"
+                                >
                                   + Add a tier
                                 </button>
                               </div>
                             </form>
                           </Form>
-                        </div>}
+                        </div>
+                      )}
                     </TabsContent>
-                  )
+                  );
                 })}
               </Tabs>
               {/* <Button className="w-full !mt-20">Next</Button> */}
@@ -317,15 +328,27 @@ const Royalties = ({ updateStep }: StepProps) => {
           </Card>
         </div>
         <div className="flex justify-between w-full mt-10">
-          <Button className="bg-cblue" variant="outline" onClick={handleClickBack}>
+          <Button
+            className="bg-mblue"
+            variant="outline"
+            onClick={handleClickBack}
+          >
             <ArrowLeftIcon className="mr-1" />
             Back
           </Button>
           <div className="flex gap-4">
-          <Button className="bg-transparent" variant="outline" onClick={handleClickNextTab}>
+            <Button
+              className="bg-transparent"
+              variant="outline"
+              onClick={handleClickNextTab}
+            >
               Skip
             </Button>
-            <Button className="bg-cblue" variant="outline" onClick={handleClickNext}>
+            <Button
+              className="bg-mblue"
+              variant="outline"
+              onClick={handleClickNext}
+            >
               Next
               <ArrowRightIcon className="ml-1" />
             </Button>
