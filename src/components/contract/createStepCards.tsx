@@ -37,6 +37,7 @@ import Contributors from "./Contributors";
 import Recordings from "./Recordings";
 import RoyaltyAdvances from "./RoyaltyAdvances";
 import BaseFilterWrapper from "./BaseFilterWrapper";
+import ProgressSteps from "./ProgressSteps";
 
 const CreateStepCards = ({
   step,
@@ -52,10 +53,10 @@ const CreateStepCards = ({
     setIsProducerMode(b);
   };
 
-  const loadCardByStep = useCallback(() => {
+  const loadCardByStep = useCallback((stepper: JSX.Element) => {
     switch (step) {
       case StepIndex.CONTRIBUTORS:
-        return <Contributors updateStep={updateStep} />;
+        return <Contributors updateStep={updateStep}>{stepper}</Contributors>;
       case StepIndex.SHARES:
         return <Shares updateStep={updateStep} />;
       case StepIndex.RECORDINGS:
@@ -78,10 +79,16 @@ const CreateStepCards = ({
     }
   }, [step]);
 
+  const Stepper = (
+    <div className="mx-4 hidden lg:block">
+      <ProgressSteps step={step} updateStep={updateStep} />
+    </div>
+  );
+
   return (
     <>
       <div className="h-full flex flex-col">
-        <div className="flex-1">{loadCardByStep()}</div>
+        <div className="flex-1">{loadCardByStep(Stepper)}</div>
       </div>
     </>
   );

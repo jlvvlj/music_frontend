@@ -91,7 +91,7 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
   };
 
   const handleClickSkip = () => {
-    updateStep(1);
+    // updateStep(1);
   };
 
   const onTabChange = (value: string) => {

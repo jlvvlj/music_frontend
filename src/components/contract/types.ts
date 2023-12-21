@@ -1,11 +1,12 @@
-export type StepProps = {
+import React from "react";
+export interface StepProps extends React.PropsWithChildren  {
   updateStep: (step: number) => void;
 };
 export type TeamMember = {
   name: string;
   surName: string;
   email: string;
-  avatar: string;
+  avatar?: string;
   role: string;
 };
 

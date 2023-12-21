@@ -64,11 +64,11 @@ const Shares = ({ updateStep }: StepProps) => {
           ))}
         </div>
         <div className="flex justify-between w-full mt-8">
-          <Button className="bg-[#5D9DF1]" variant="outline" onClick={handleClickBack}>
+          <Button className="bg-cblue" variant="outline" onClick={handleClickBack}>
             <ArrowLeftIcon className="mr-1" />
             Back
           </Button>
-          <Button className="bg-[#5D9DF1]" variant="outline" onClick={handleClickNext}>
+          <Button className="bg-cblue" variant="outline" onClick={handleClickNext}>
             Next
             <ArrowRightIcon className="ml-1" />
           </Button>

@@ -85,8 +85,8 @@ export default function BaseFilterWrapper({
               className="grid grid-cols-1 md:grid-cols-2 gap-10 px-10 lg:px-20"
               onValueChange={handleChangeRadioButtons}
             >
-              <RadioButtonCard title="YES" />
-              <RadioButtonCard title="NO" />
+              <RadioButtonCard title="YES" className="hover:bg-cblue" />
+              <RadioButtonCard title="NO" className="hover:bg-gray-900" />
             </RadioGroup>
           </CardContent>
         </div>

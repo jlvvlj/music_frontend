@@ -77,7 +77,7 @@ const Royalties = ({ updateStep }: StepProps) => {
 
   useEffect(() => {
     if (currentTabIndex >= TABS.length) {
-      // updateStep(1);
+      updateStep(1);
     } else {
       setTab(TABS[currentTabIndex].value);
     }
@@ -107,7 +107,7 @@ const Royalties = ({ updateStep }: StepProps) => {
   };
 
   const handleClickNext = () => {
-    updateStep(1);
+    setCurrentTabIndex(currentTabIndex + 1);
   };
 
   const handleClickBack = () => {
@@ -317,7 +317,7 @@ const Royalties = ({ updateStep }: StepProps) => {
           </Card>
         </div>
         <div className="flex justify-between w-full mt-10">
-          <Button className="bg-[#5D9DF1]" variant="outline" onClick={handleClickBack}>
+          <Button className="bg-cblue" variant="outline" onClick={handleClickBack}>
             <ArrowLeftIcon className="mr-1" />
             Back
           </Button>
@@ -325,7 +325,7 @@ const Royalties = ({ updateStep }: StepProps) => {
           <Button className="bg-transparent" variant="outline" onClick={handleClickNextTab}>
               Skip
             </Button>
-            <Button className="bg-[#5D9DF1]" variant="outline" onClick={handleClickNext}>
+            <Button className="bg-cblue" variant="outline" onClick={handleClickNext}>
               Next
               <ArrowRightIcon className="ml-1" />
             </Button>

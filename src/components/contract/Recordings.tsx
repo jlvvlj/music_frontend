@@ -33,7 +33,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ProgramType, Program, ProgramTypes, Recording, StepProps } from "./types";
+import {
+  ProgramType,
+  Program,
+  ProgramTypes,
+  Recording,
+  StepProps,
+} from "./types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import DatePicker from "@/components/ui/date-picker";
@@ -42,7 +48,11 @@ import { MultiSelect } from "@/components/ui/multi-select";
 import { cn } from "@/lib/utils";
 import { CardsActivityGoal } from "@/components/activity-goal";
 import RadioTab from "@/components/contract/RadioTab";
-import { ArrowLeftIcon, ArrowRightIcon, ChevronDownIcon } from "@radix-ui/react-icons";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  ChevronDownIcon,
+} from "@radix-ui/react-icons";
 import {
   Command,
   CommandEmpty,
@@ -50,19 +60,19 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/registry/new-york/ui/command"
+} from "@/registry/new-york/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/registry/new-york/ui/popover"
+} from "@/registry/new-york/ui/popover";
 
 const recordingCard = [
-  { title: 'Quantity', cost: '2' },
-  { title: 'Completion date', cost: '30%' },
-  { title: 'Commercial release', cost: 'EUR 3000' },
-  { title: 'Option rights limit', cost: 'EUR 3000' },
-]
+  { title: "Quantity", cost: "2" },
+  { title: "Completion date", cost: "30%" },
+  { title: "Commercial release", cost: "EUR 3000" },
+  { title: "Option rights limit", cost: "EUR 3000" },
+];
 
 const recordingFormSchema = z.object({
   title: z.string().default(""),
@@ -91,11 +101,27 @@ type RecordingFormValues = z.infer<typeof recordingFormSchema>;
 
 const defaultValues: Partial<RecordingFormValues> = {};
 
+type Tab = "firm" | "optional";
+const TABS: {
+  label: string;
+  value: Tab;
+}[] = [
+  {
+    label: "Firm",
+    value: "firm",
+  },
+  {
+    label: "Optional",
+    value: "optional",
+  },
+];
+
 const Recordings = ({ updateStep }: StepProps) => {
   const [recordings, setRecordings] = useState<Recording[]>([]);
   const [programTypes, setProgramTypes] = useState(ProgramTypes);
   const [files, setFiles] = useState<any[]>([]);
-  const [tab, setTab] = useState("firm");
+  const [currentTabIndex, setCurrentTabIndex] = useState(0);
+  const [tab, setTab] = useState(TABS[0].value);
 
   // ** form
   const form = useForm<RecordingFormValues>({
@@ -115,6 +141,14 @@ const Recordings = ({ updateStep }: StepProps) => {
     return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
   }, []);
 
+  useEffect(() => {
+    if (currentTabIndex === TABS.length) {
+      updateStep(1);
+    } else {
+      setTab(TABS[currentTabIndex].value);
+    }
+  }, [currentTabIndex]);
+
   const onSubmit = (data: RecordingFormValues) => {
     console.log(data);
 
@@ -128,9 +162,13 @@ const Recordings = ({ updateStep }: StepProps) => {
       });
     }, 1000);
   };
+  const onTabChange = (value: string) => {
+    console.log(value);
+    setTab(value as Tab);
+  };
 
   const handleClickNext = () => {
-    updateStep(1);
+    setCurrentTabIndex(currentTabIndex + 1);
   };
 
   const handleClickBack = () => {
@@ -152,14 +190,14 @@ const Recordings = ({ updateStep }: StepProps) => {
             Enter firm and optional recordings details.
           </p>
           <Card className="border-none bg-transparent shadow-none">
-            <Tabs defaultValue="firm" className="w-full px-10" onValueChange={(e) => setTab(e)}>
+            <Tabs className="w-full" value={tab} onValueChange={onTabChange}>
               <TabsList className="grid w-full grid-cols-2 mb-11 mx-auto max-w-[70%]">
                 <TabsTrigger value="firm">Firm</TabsTrigger>
                 <TabsTrigger value="optional">Optional</TabsTrigger>
               </TabsList>
 
               <TabsContent value={tab} className="mt-10">
-                <CardContent className="space-y-10">
+                <CardContent className="space-y-10 p-0">
                   <Form {...form}>
                     <form
                       className="space-y-10"
@@ -182,9 +220,9 @@ const Recordings = ({ updateStep }: StepProps) => {
                                   maxValue={100}
                                   buttonHidden
                                   chartHidden
-                                  onClickButton={() => { }}
+                                  onClickButton={() => {}}
                                   isOwner={false}
-                                  setGoal={(value) => { }}
+                                  setGoal={(value) => {}}
                                 />
                               </FormControl>
                             </FormItem>
@@ -192,7 +230,10 @@ const Recordings = ({ updateStep }: StepProps) => {
                         />
                         <Popover>
                           <PopoverTrigger asChild>
-                            <Button variant="outline" className="justify-between bg-modal-foreground w-full">
+                            <Button
+                              variant="outline"
+                              className="justify-between bg-modal-foreground w-full"
+                            >
                               Type
                               <ChevronDownIcon className="ml-2 h-4 w-4 text-muted-foreground" />
                             </Button>
@@ -219,16 +260,19 @@ const Recordings = ({ updateStep }: StepProps) => {
                           </PopoverContent>
                         </Popover>
                       </div>
-                      <div className="grid grid-cols-3 gap-4 items-end w-fit mx-auto mt-4">
+                      <div className="grid grid-cols-3 gap-2 items-end mt-4">
                         <FormField
                           control={form.control}
                           name="completedAt"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Completion date</FormLabel>
+                              <FormLabel className="text-[11px]">
+                                Completion date
+                              </FormLabel>
                               <FormControl>
                                 <DatePicker
                                   className="max-w-[170px]"
+                                  buttonClassName="w-[140px] text-[11px] bg-modal-foreground"
                                   date={field.value}
                                   placeholder="Jan 20, 2023"
                                   onDateChange={(d) =>
@@ -244,10 +288,13 @@ const Recordings = ({ updateStep }: StepProps) => {
                           name="releasedAt"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Commercial release</FormLabel>
+                              <FormLabel className="text-[11px]">
+                                Commercial release
+                              </FormLabel>
                               <FormControl>
                                 <DatePicker
                                   className="max-w-[170px]"
+                                  buttonClassName="w-[140px] text-[11px] bg-modal-foreground"
                                   placeholder="Jan 20, 2023"
                                   date={field.value}
                                   onDateChange={(d) =>
@@ -263,10 +310,13 @@ const Recordings = ({ updateStep }: StepProps) => {
                           name="optionRightsLimit"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Option rights limit</FormLabel>
+                              <FormLabel className="text-[11px]">
+                                Option rights limit
+                              </FormLabel>
                               <FormControl>
                                 <DatePicker
                                   className="max-w-[170px]"
+                                  buttonClassName="w-[140px] text-[11px] bg-modal-foreground"
                                   placeholder="Jan 20, 2023"
                                   date={field.value}
                                   onDateChange={(d) =>
@@ -279,7 +329,11 @@ const Recordings = ({ updateStep }: StepProps) => {
                         />
                       </div>
                       <div className="w-full flex justify-center items-center pt-2.5">
-                        <Button type="submit" variant="outline" className="px-8 bg-modal-foreground">
+                        <Button
+                          type="submit"
+                          variant="outline"
+                          className="px-8 bg-modal-foreground"
+                        >
                           Add recording
                         </Button>
                       </div>
@@ -291,11 +345,19 @@ const Recordings = ({ updateStep }: StepProps) => {
           </Card>
         </div>
         <div className="flex justify-between w-full mt-8">
-          <Button className="bg-[#5D9DF1]" variant="outline" onClick={handleClickBack}>
+          <Button
+            className="bg-cblue"
+            variant="outline"
+            onClick={handleClickBack}
+          >
             <ArrowLeftIcon className="mr-1" />
             Back
           </Button>
-          <Button className="bg-[#5D9DF1]" variant="outline" onClick={handleClickNext}>
+          <Button
+            className="bg-cblue"
+            variant="outline"
+            onClick={handleClickNext}
+          >
             Next
             <ArrowRightIcon className="ml-1" />
           </Button>
@@ -304,42 +366,58 @@ const Recordings = ({ updateStep }: StepProps) => {
       <div className="relative flex items-end px-4 flex-col py-7 bg-modal-foreground rounded-r-3xl">
         <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
           <h6 className="text-2xl	mb-3">Recordings</h6>
-          <p className="text-[#94A3B8] mb-7 text-sm">Artists participating in this contract.</p>
+          <p className="text-[#94A3B8] mb-7 text-sm">
+            Artists participating in this contract.
+          </p>
           <div className="pl-10">
             <div className="mb-14">
               <h6 className="text-lg mb-2.5">Albums ( LPs ) - Firm</h6>
-              <p className="text-[#94A3B8] mb-5 text-sm">Artists participating in this contract.</p>
-              <div className="pl-4 flex gap-10 flex flex-wrap gap-[18px]">
-                {recordingCard.map((card, index) =>
-                  <Card key={index} className="bg-modal-foreground border-[#1D1D1F] pt-2 pl-2.5 pr-6 pb-4 w-[132px]">
+              <p className="text-[#94A3B8] mb-5 text-sm">
+                Artists participating in this contract.
+              </p>
+              <div className="pl-4 flex flex-wrap gap-[18px]">
+                {recordingCard.map((card, index) => (
+                  <Card
+                    key={index}
+                    className="bg-modal-foreground border-[#1D1D1F] pt-2 pl-2.5 pr-6 pb-4 w-[132px]"
+                  >
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
                       <CardTitle className="text-xs font-medium pb-5">
                         {card.title}
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="p-0">
-                      <div className="text-xs font-bold text-[#4EABFE]">{card.cost}</div>
+                      <div className="text-xs font-bold text-[#4EABFE]">
+                        {card.cost}
+                      </div>
                     </CardContent>
                   </Card>
-                )}
+                ))}
               </div>
             </div>
             <div className="mb-14">
               <h6 className="text-lg mb-2.5">Singles ( LPs ) - Firm</h6>
-              <p className="text-[#94A3B8] mb-5 text-sm">Artists participating in this contract.</p>
-              <div className="pl-4 flex gap-10 flex flex-wrap gap-[18px]">
-                {recordingCard.map((card, index) =>
-                  <Card key={index} className="bg-modal-foreground border-[#1D1D1F] pt-2 pl-2.5 pr-6 pb-4 w-[132px]">
+              <p className="text-[#94A3B8] mb-5 text-sm">
+                Artists participating in this contract.
+              </p>
+              <div className="pl-4 flex flex-wrap gap-[18px]">
+                {recordingCard.map((card, index) => (
+                  <Card
+                    key={index}
+                    className="bg-modal-foreground border-[#1D1D1F] pt-2 pl-2.5 pr-6 pb-4 w-[132px]"
+                  >
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
                       <CardTitle className="text-xs font-medium pb-5">
                         {card.title}
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="p-0">
-                      <div className="text-xs font-bold text-[#4EABFE]">{card.cost}</div>
+                      <div className="text-xs font-bold text-[#4EABFE]">
+                        {card.cost}
+                      </div>
                     </CardContent>
                   </Card>
-                )}
+                ))}
               </div>
             </div>
           </div>

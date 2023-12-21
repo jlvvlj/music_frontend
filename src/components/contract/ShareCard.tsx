@@ -2,9 +2,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { TeamMember } from "./types";
 import { cn, fallbackAvatar } from "@/lib/utils";
 import Image from "next/image";
-import MinusIcon from "@/components/contract/MinusIcon";
-import PlusIcon from "@/components/contract/PlusIcon";
-import ChartBarIcon from "@/components/contract/ChartBarIcon";
 import { isOwner } from "./utils";
 import { CardsActivityGoal } from "@/components/activity-goal";
 
@@ -13,11 +10,16 @@ const ShareCard = ({ member }: { member: TeamMember }) => {
     <div
       className={cn(
         "flex items-start gap-4 px-4 py-3 rounded-md mb-5 w-fit mx-auto",
-        isOwner(member) ? "bg-[#2997FF]" : "bg-modal-foreground"
+        isOwner(member) ? "bg-cblue" : "bg-modal-foreground"
       )}
     >
       <Avatar className="bg-[#A3D3FF] mt-2">
-        <Image src={member.avatar} width={100} height={100} alt="avatar" />
+        <Image
+          src={member.avatar || "https://ui.shadcn.com/avatars/01.png"}
+          width={100}
+          height={100}
+          alt="avatar"
+        />
       </Avatar>
       <div className="pt-3">
         <p className="text-sm font-medium leading-none">{member.name}</p>

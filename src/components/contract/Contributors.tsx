@@ -26,6 +26,21 @@ import { StepProps, TeamMember } from "./types";
 import { isOwner } from "./utils";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 
+type Tab = "team" | "solo";
+const TABS: {
+  label: string;
+  value: Tab;
+}[] = [
+  {
+    label: "Team",
+    value: "team",
+  },
+  {
+    label: "Solo",
+    value: "solo",
+  },
+];
+
 type PropsType = {
   data?: TeamMember[];
 };
@@ -42,11 +57,12 @@ type ContributorFormValues = z.infer<typeof contributorFormSchema>;
 
 const defaultValues: Partial<ContributorFormValues> = {};
 
-const Contributors = ({ updateStep }: StepProps) => {
+const Contributors = ({ updateStep, children }: StepProps) => {
   const [members, setMembers] = useState<TeamMember[]>([]);
   const [soloMembers, setSoloMembers] = useState<TeamMember[]>([]);
   const [files, setFiles] = useState<any[]>([]);
-
+  const [currentTabIndex, setCurrentTabIndex] = useState(0);
+  const [tab, setTab] = useState(TABS[0].value);
   // ** form
   const form = useForm<ContributorFormValues>({
     resolver: zodResolver(contributorFormSchema),
@@ -59,6 +75,14 @@ const Contributors = ({ updateStep }: StepProps) => {
     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
     return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
   }, []);
+
+  useEffect(() => {
+    if (currentTabIndex === TABS.length) {
+      updateStep(1);
+    } else {
+      setTab(TABS[currentTabIndex].value);
+    }
+  }, [currentTabIndex]);
 
   const onSubmit = (data: ContributorFormValues) => {
     console.log(data);
@@ -97,8 +121,7 @@ const Contributors = ({ updateStep }: StepProps) => {
   };
 
   const handleClickNext = () => {
-    console.log("next");
-    updateStep(1);
+    setCurrentTabIndex(currentTabIndex + 1);
   };
 
   const handleClickBack = () => {
@@ -109,10 +132,19 @@ const Contributors = ({ updateStep }: StepProps) => {
     updateStep(1);
   };
 
+  const onTabChange = (value: string) => {
+    console.log(value);
+    setTab(value as Tab);
+  };
+
   return (
     <div className={cn("grid grid-cols-2 h-full shadow-lg border rounded-3xl")}>
       <div className="flex-grow">
-        <Tabs defaultValue="team" className="w-full px-10 py-7 bg-modal rounded-s-3xl h-full flex flex-col justify-between">
+        <Tabs
+          value={tab}
+          onValueChange={onTabChange}
+          className="w-full px-10 py-7 bg-modal rounded-s-3xl h-full flex flex-col justify-between"
+        >
           <div>
             <h1 className="text-3xl font-semibold tracking-tight mb-3">
               Let’s start with the team
@@ -130,7 +162,7 @@ const Contributors = ({ updateStep }: StepProps) => {
                   <div
                     className={cn(
                       "flex items-center space-x-4 px-4 py-3 rounded-md w-full",
-                      isOwner(member) ? "bg-[#2997FF]" : "bg-modal-foreground"
+                      isOwner(member) ? "bg-cblue" : "bg-modal-foreground"
                     )}
                     key={index}
                   >
@@ -152,7 +184,7 @@ const Contributors = ({ updateStep }: StepProps) => {
                     />
                     <div
                       className={cn(
-                        isOwner(member) ? "text-white" : "text-[#3B82F6]"
+                        isOwner(member) ? "text-white" : "text-cblue"
                       )}
                     >
                       <p className={cn("text-sm font-medium leading-none")}>
@@ -239,22 +271,33 @@ const Contributors = ({ updateStep }: StepProps) => {
                             >
                               <FormControl className="bg-modal-foreground">
                                 <SelectTrigger className="text-[#6d7d93] font-semibold">
-                                  <SelectValue className="" placeholder="Role" />
+                                  <SelectValue
+                                    className=""
+                                    placeholder="Role"
+                                  />
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent className="">
                                 <SelectItem value="Owner">Owner</SelectItem>
                                 <SelectItem value="Manager">Manager</SelectItem>
-                                <SelectItem value="Musician">Musician</SelectItem>
+                                <SelectItem value="Musician">
+                                  Musician
+                                </SelectItem>
                                 <SelectItem value="Singer">Singer</SelectItem>
-                                <SelectItem value="Marketer">Marketer</SelectItem>
+                                <SelectItem value="Marketer">
+                                  Marketer
+                                </SelectItem>
                               </SelectContent>
                             </Select>
                           </FormItem>
                         )}
                       />
                       <div className="col-span-2 mt-4">
-                        <Button type="submit" className="w-full hover:bg-[#5D9DF1] bg-[#5D9DF1] text-foreground" variant="default">
+                        <Button
+                          type="submit"
+                          className="w-full hover:bg-[#5D9DF1] bg-cblue text-foreground"
+                          variant="default"
+                        >
                           Add contributor
                         </Button>
                       </div>
@@ -265,7 +308,7 @@ const Contributors = ({ updateStep }: StepProps) => {
             </TabsContent>
             <TabsContent value="solo" className="mt-10">
               <div className="grid gap-6 items-center justify-center">
-                <div className="flex items-center space-x-4 px-4 bg-[#5D9DF1] py-3 rounded-md w-full mb-5 pr-14 min-w-[300px]">
+                <div className="flex items-center space-x-4 px-4 bg-cblue py-3 rounded-md w-full mb-5 pr-14 min-w-[300px]">
                   <Avatar className="bg-[#A3D3FF] h-12 w-12">
                     <AvatarImage src="" />
                     <AvatarFallback className="bg-transparent">
@@ -274,7 +317,9 @@ const Contributors = ({ updateStep }: StepProps) => {
                   </Avatar>
 
                   <div>
-                    <p className="text-sm font-medium leading-none text-white">Julie Depree</p>
+                    <p className="text-sm font-medium leading-none text-white">
+                      Julie Depree
+                    </p>
                     <p className="text-sm text-white">Master Owner</p>
                   </div>
                 </div>
@@ -282,11 +327,19 @@ const Contributors = ({ updateStep }: StepProps) => {
             </TabsContent>
           </div>
           <div className="flex justify-between w-full mt-8">
-            <Button className="bg-[#5D9DF1]" variant="outline" onClick={handleClickBack}>
+            <Button
+              className="bg-cblue"
+              variant="outline"
+              onClick={handleClickBack}
+            >
               <ArrowLeftIcon className="mr-1" />
               Back
             </Button>
-            <Button className="bg-[#5D9DF1]" variant="outline" onClick={handleClickNext}>
+            <Button
+              className="bg-cblue"
+              variant="outline"
+              onClick={handleClickNext}
+            >
               Next
               <ArrowRightIcon className="ml-1" />
             </Button>
@@ -296,28 +349,52 @@ const Contributors = ({ updateStep }: StepProps) => {
       <div className="relative flex items-end px-4 flex-col py-7 bg-modal-foreground rounded-r-3xl">
         <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
           <h6 className="text-2xl	mb-3">Team & Shares</h6>
-          <p className="text-[#94A3B8] mb-7 text-sm">Artists participating in this contract.</p>
+          <p className="text-[#94A3B8] mb-7 text-sm">
+            Artists participating in this contract.
+          </p>
           <div className="pl-10">
             <h6 className="text-lg mb-3">Team members</h6>
-            <p className="text-[#94A3B8] mb-7 text-sm">Artists participating in this contract.</p>
+            <p className="text-[#94A3B8] mb-7 text-sm">
+              Artists participating in this contract.
+            </p>
             <div className="pl-4 flex gap-10">
               <div className="flex flex-col items-center">
                 <p className="text-[#94A3B8] text-sm mb-3.5">Master Owner</p>
                 <Avatar className="h-11 w-11 border border-white">
-                  <Image src="/julie.svg" width={100} height={100} alt="avatar" />
+                  <Image
+                    src="/julie.svg"
+                    width={100}
+                    height={100}
+                    alt="avatar"
+                  />
                 </Avatar>
               </div>
               <div className="flex flex-col">
                 <p className="text-[#94A3B8] text-sm mb-3.5">Artists</p>
                 <div className="flex">
                   <Avatar className="h-11 w-11 border border-white">
-                    <Image src="/amandine.svg" width={100} height={100} alt="avatar" />
+                    <Image
+                      src="/amandine.svg"
+                      width={100}
+                      height={100}
+                      alt="avatar"
+                    />
                   </Avatar>
                   <Avatar className="h-11 w-11 -ml-2 border border-white">
-                    <Image src="/orlane.svg" width={100} height={100} alt="avatar" />
+                    <Image
+                      src="/orlane.svg"
+                      width={100}
+                      height={100}
+                      alt="avatar"
+                    />
                   </Avatar>
                   <Avatar className="h-11 w-11 -ml-2 border border-white">
-                    <Image src="/jon.svg" width={100} height={100} alt="avatar" />
+                    <Image
+                      src="/jon.svg"
+                      width={100}
+                      height={100}
+                      alt="avatar"
+                    />
                   </Avatar>
                 </div>
               </div>
