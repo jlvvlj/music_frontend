@@ -71,7 +71,7 @@ export function CardsActivityGoal() {
   }
 
   return (
-    <Card className="flex flex-col justify-between">
+    <Card>
       <CardHeader className="pb-4">
         <CardTitle>Move Goal</CardTitle>
         <CardDescription>Set your daily activity goal.</CardDescription>
@@ -81,7 +81,7 @@ export function CardsActivityGoal() {
           <Button
             variant="outline"
             size="icon"
-            className="h-8 w-8 shrink-0 rounded-full bg-popover"
+            className="h-8 w-8 shrink-0 rounded-full"
             onClick={() => onClick(-10)}
             disabled={goal <= 200}
           >
@@ -97,7 +97,7 @@ export function CardsActivityGoal() {
           <Button
             variant="outline"
             size="icon"
-            className="h-8 w-8 shrink-0 rounded-full bg-popover"
+            className="h-8 w-8 shrink-0 rounded-full"
             onClick={() => onClick(10)}
             disabled={goal >= 400}
           >
@@ -105,14 +105,14 @@ export function CardsActivityGoal() {
             <span className="sr-only">Increase</span>
           </Button>
         </div>
-        <div className="my-3 h-[70px]">
+        <div className="my-3 h-[60px]">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data}>
               <Bar
                 dataKey="goal"
                 style={
                   {
-                    fill: "#4FABFF",
+                    fill: "var(--theme-primary)",
                     opacity: 0.2,
                     "--theme-primary": `hsl(${
                       theme?.cssVars[mode === "dark" ? "dark" : "light"].primary
@@ -125,7 +125,7 @@ export function CardsActivityGoal() {
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full hover:bg-[#4EABFE] bg-[#4EABFE] rounded-3xl">Set Goal</Button>
+        <Button className="w-full">Set Goal</Button>
       </CardFooter>
     </Card>
   )
