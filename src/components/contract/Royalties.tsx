@@ -117,7 +117,7 @@ const Royalties = ({ updateStep }: StepProps) => {
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
-      <div className="w-full px-10 py-7 bg-modal rounded-s-3xl h-full flex flex-col justify-between">
+      <div className="w-full px-10 pb-7 pt-16 bg-modal rounded-s-3xl h-full flex flex-col justify-between">
         <div>
           <h1 className="text-3xl font-semibold tracking-tight mb-3">
             Royalties
@@ -126,10 +126,10 @@ const Royalties = ({ updateStep }: StepProps) => {
             Enter the contract royalties details
           </p>
           <Card className="bg-transparent border-none shadow-none">
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-6 p-0">
               <Tabs
                 value={tab}
-                className="w-full px-10"
+                className="w-full"
                 onValueChange={onTabChange}
               >
                 <TabsList className="grid w-full grid-cols-2 mb-10 mx-auto max-w-[70%]">
@@ -182,13 +182,13 @@ const Royalties = ({ updateStep }: StepProps) => {
                             tieredRates.map((rate, index) => (
                               <div
                                 key={index}
-                                className="flex rounded-md bg-modal-foreground w-full"
+                                className="flex justify-around rounded-md bg-modal-foreground w-full"
                               >
                                 <CardsActivityGoal
                                   cardTitle="From"
                                   label="copies"
                                   initialValue={rate.from}
-                                  unit="%"
+                                  unit=""
                                   step={10}
                                   buttonTitle="Set Share"
                                   minValue={0}
@@ -202,7 +202,7 @@ const Royalties = ({ updateStep }: StepProps) => {
                                   cardTitle="To"
                                   label="copies"
                                   initialValue={rate.to}
-                                  unit="%"
+                                  unit=""
                                   step={10}
                                   buttonTitle="Set Share"
                                   minValue={0}

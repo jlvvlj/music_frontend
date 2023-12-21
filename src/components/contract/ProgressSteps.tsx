@@ -1,16 +1,16 @@
 "use client";
 import { useState, useEffect } from "react";
-import { CheckIcon } from "@heroicons/react/20/solid";
+import { Check } from "lucide-react";
 import clsx from "clsx";
 import { STEPS, StepIndex } from "./types";
+import { cn } from "@/lib/utils";
 
-const ProgressSteps = ({
-  step: activeStep,
-  updateStep,
-}: {
+interface Props extends React.HTMLAttributes<HTMLElement> {
   step: StepIndex;
   updateStep?: (step: number) => void;
-}) => {
+}
+
+const ProgressSteps = ({ className, step: activeStep, updateStep }: Props) => {
   const totalSteps = STEPS.length;
 
   const afterWidth = () => {
@@ -20,7 +20,7 @@ const ProgressSteps = ({
       : activeStep === StepIndex.RECORDINGS
       ? "after:w-[25%]"
       : activeStep === StepIndex.BUDGET
-      ? "after:w-[37.5%]"
+      ? "after:w-[38%]"
       : activeStep === StepIndex.ROYALTIES
       ? "after:w-[50%]"
       : activeStep === StepIndex.ROYALTIES_ADVANCES
@@ -36,10 +36,10 @@ const ProgressSteps = ({
 
   return (
     <>
-      <div className="w-full max-w-[1200px] my-0 mx-auto py-0 px-4">
+      <div className={cn("w-full max-w-[400px] my-0 py-0", className)}>
         <div
           className={clsx(
-            "flex justify-between relative before:absolute before:bg-[#f3e7f3] before:h-1 before:w-[99%] before:top-[50%] before:-translate-y-1/2 before:left-0 after:absolute after:bg-accent after:h-[5px] after:top-[50%] after:-translate-y-1/2 after:transition-all after:duration-500 after:ease-in-out after:-translae-y-1/2 after:left-0",
+            "flex justify-between relative before:absolute before:bg-[#f3e7f3] before:h-[1px] before:w-[99%] before:top-[50%] before:-translate-y-1/2 before:left-0 after:absolute after:bg-mblue after:h-[2px] after:top-[50%] after:-translate-y-1/2 after:transition-all after:duration-500 after:ease-in-out after:-translae-y-1/2 after:left-0",
             afterWidth()
           )}
         >
@@ -47,25 +47,24 @@ const ProgressSteps = ({
             <div key={step} className="relative z-[1] w-fit">
               <div
                 className={clsx(
-                  "w-9 h-9 rounded-full border-2 border-muted  duration-300 ease-in flex justify-center items-center cursor-pointer",
-                  activeStep >= step ? "bg-popover" : " bg-accent"
+                  "w-3 h-3 rounded-full border-2 border-mblue border-solid  duration-300 ease-in flex justify-center items-center cursor-pointer",
+                  activeStep > step ? "bg-mblue" : " bg-modal"
                 )}
                 onClick={() => {
                   if (updateStep) updateStep(step);
                 }}
               >
                 {activeStep > step ? (
-                  <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-popover group-hover:bg-indigo-800">
-                    <CheckIcon
-                      className="h-5 w-5"
-                      aria-hidden="true"
-                    />
+                  <span className="relative z-10 flex h-[10px] w-[10px] items-center justify-center rounded-full bg-mblue">
+                    <Check className="h-2 w-2" aria-hidden="true" />
                   </span>
+                ) : activeStep === step ? (
+                  <div className="rounded-full h-1 w-1 bg-mblue"></div>
                 ) : (
                   <span
                     className={clsx(
-                      activeStep >= step ? "" : "text-muted-foreground",
-                      activeStep === step ? "text-xl" : "text-md"
+                      "text-[5px]",
+                      activeStep >= step ? "" : "text-mblue"
                     )}
                   >
                     {step}

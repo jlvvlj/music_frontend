@@ -181,7 +181,7 @@ const Recordings = ({ updateStep }: StepProps) => {
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
-      <div className="w-full px-10 py-7 bg-modal rounded-s-3xl h-full flex flex-col justify-between">
+      <div className="w-full px-10 pb-7 pt-16 bg-modal rounded-s-3xl h-full flex flex-col justify-between">
         <div>
           <h1 className="text-3xl font-semibold tracking-tight mb-3">
             Now some recordings

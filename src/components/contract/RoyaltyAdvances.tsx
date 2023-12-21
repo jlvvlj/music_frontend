@@ -44,7 +44,7 @@ export default function RoyaltyAdvances({
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
-      <div className="flex flex-col gap-10 bg-modal p-8 rounded-l-3xl">
+      <div className="flex flex-col gap-10 bg-modal p-8 rounded-l-3xl pt-16">
         <div className="space-y-6 w-full">
           <h1 className="text-3xl font-semibold tracking-tight">
             Royalties Advances

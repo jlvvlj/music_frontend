@@ -6,7 +6,6 @@ import { type UserRole } from "@/types";
 // See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your Middleware
 export default authMiddleware({
   publicRoutes: [
-    "/",
     "/login(.*)",
     "/sso-callback(.*)(.*)",
     "/signout",

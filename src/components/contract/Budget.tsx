@@ -96,9 +96,9 @@ const Budget = ({ updateStep }: StepProps) => {
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
-      <div className="w-full px-10 py-7 bg-modal rounded-s-3xl h-full flex flex-col justify-between relative">
+      <div className="w-full px-10 pb-7 pt-16 bg-modal rounded-s-3xl h-full flex flex-col justify-between relative">
         <div>
-          <div className="absolute top-6 right-6">
+          <div className="absolute top-12 right-6">
             <Button
               className="bg-mblue"
               variant="outline"
@@ -277,7 +277,7 @@ const Budget = ({ updateStep }: StepProps) => {
                             <div className="grid grid-cols-12 gap-6">
                               <div
                                 className={cn(
-                                  "flex items-center justify-between pl-4 rounded-md bg-[#5D9DF1] col-span-12 xl:col-span-10 2xl:col-span-6 w-full"
+                                  "flex items-center justify-between pl-4 rounded-md bg-mblue col-span-12 xl:col-span-10 2xl:col-span-8 w-full"
                                 )}
                               >
                                 <div>
@@ -331,7 +331,7 @@ const Budget = ({ updateStep }: StepProps) => {
                             <div className="grid grid-cols-12 gap-6">
                               <div
                                 className={cn(
-                                  "flex items-center justify-between pl-4 rounded-md bg-[#5D9DF1] col-span-12 xl:col-span-10 2xl:col-span-6 w-full"
+                                  "flex items-center justify-between pl-4 rounded-md bg-mblue col-span-12 xl:col-span-10 2xl:col-span-8 w-full"
                                 )}
                               >
                                 <div>

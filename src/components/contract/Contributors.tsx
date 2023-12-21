@@ -86,8 +86,9 @@ const Contributors = ({ updateStep, children }: StepProps) => {
 
   const onSubmit = (data: ContributorFormValues) => {
     console.log(data);
+    
     const _members = [...members];
-    _members.push(data);
+    _members.push({...data, id: Date.now()});
     setMembers(_members);
     setTimeout(() => {
       form.reset({
@@ -139,11 +140,11 @@ const Contributors = ({ updateStep, children }: StepProps) => {
 
   return (
     <div className={cn("grid grid-cols-2 h-full shadow-lg border rounded-3xl")}>
-      <div className="flex-grow">
+      <div className="flex-grow bg-modal pt-8">
         <Tabs
           value={tab}
           onValueChange={onTabChange}
-          className="w-full px-10 py-7 bg-modal rounded-s-3xl h-full flex flex-col justify-between"
+          className="w-full px-10 py-7 rounded-s-3xl h-full flex flex-col justify-between"
         >
           <div>
             <h1 className="text-3xl font-semibold tracking-tight mb-3">

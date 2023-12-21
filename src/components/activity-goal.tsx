@@ -59,7 +59,7 @@ const data = [
   },
 ];
 
-interface Props extends React.HtmlHTMLAttributes<HTMLElement> {
+interface Props extends React.HTMLAttributes<HTMLElement> {
   unit?: string;
   initialValue: number;
   step: number;
