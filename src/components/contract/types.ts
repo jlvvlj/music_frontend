@@ -1,11 +1,12 @@
-export type StepProps = {
+import React from "react";
+export interface StepProps extends React.PropsWithChildren  {
   updateStep: (step: number) => void;
 };
 export type TeamMember = {
   name: string;
   surName: string;
   email: string;
-  avatar: string;
+  avatar?: string;
   role: string;
 };
 
@@ -148,7 +149,7 @@ export const STEPS = [
   {
     label: "Royalties Advances",
     step: StepIndex.ROYALTIES_ADVANCES,
-    title: "Royalties",
+    title: "Royalties Advances",
     subTitle:
       "Would you like to include a Royalty advance for some of your Recordings?",
     saveBtnHidden: false,

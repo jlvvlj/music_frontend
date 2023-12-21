@@ -12,7 +12,6 @@ import { useState } from "react";
 
 const step = 100;
 const RoyaltyCard = () => {
-
   const [value, setValue] = useState(3000);
   const handleChangeGoal = (v: number) => {
     setValue(v);
@@ -21,7 +20,7 @@ const RoyaltyCard = () => {
   return (
     <div
       className={cn(
-        "flex items-center gap-8 px-4  py-3 rounded-md mb-5 w-fit bg-[#131313]"
+        "flex items-center gap-8 px-4  py-3 rounded-md mb-5 w-fit bg-modal-foreground"
       )}
     >
       <div>
@@ -29,8 +28,8 @@ const RoyaltyCard = () => {
           <SelectTrigger id="signature">
             <SelectValue placeholder="" />
           </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="1">
+          <SelectContent className="bg-modal-foreground">
+            <SelectItem value="1" className="focus:bg-mblue">
               <>
                 <p className="text-[#F8FAFC] text-sm font-normal">
                   At Signature
@@ -40,7 +39,7 @@ const RoyaltyCard = () => {
                 </p>
               </>
             </SelectItem>
-            <SelectItem value="2">
+            <SelectItem value="2" className="focus:bg-mblue">
               <>
                 <p className="text-[#F8FAFC] text-sm font-normal">
                   At Commercial release
@@ -50,7 +49,7 @@ const RoyaltyCard = () => {
                 </p>
               </>
             </SelectItem>
-            <SelectItem value="3">
+            <SelectItem value="3" className="focus:bg-mblue">
               <>
                 <p className="text-[#F8FAFC] text-sm font-normal">
                   At Specific Date

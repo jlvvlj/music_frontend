@@ -1,14 +1,17 @@
 import { cn } from "@/lib/utils";
 import { Label } from "../ui/label";
 import { RadioGroupItem } from "../ui/radio-group";
-
-export function RadioButtonCard(props: { title: string; icon?: JSX.Element }) {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
+  title: string;
+  icon?: JSX.Element;
+}
+export function RadioButtonCard(props: Props) {
   return (
     <Label
       htmlFor={props.title}
       className={cn(
         "flex flex-col items-center rounded-md border-2 border-muted bg-[#131313] p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary h-56",
-        props.icon ? " justify-between" : "justify-center"
+        props.icon ? " justify-between" : "justify-center", props.className
       )}
     >
       <RadioGroupItem

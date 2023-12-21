@@ -27,6 +27,7 @@ module.exports = {
         foreground: "hsl(var(--foreground))",
         tile: "var(--card-tile-color)",
         line: "var(--card-line-color)",
+        mblue: "hsl(var(--main-blue))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -83,7 +84,7 @@ module.exports = {
       },
       opacity: {
         shine: "var(--card-shine-opacity)",
-        background: "var(--card-background-opacity)"
+        background: "var(--card-background-opacity)",
       },
       backgroundImage: {
         shine: "var(--card-shine-gradient)",
@@ -148,6 +149,3 @@ module.exports = {
 //   },
 //   plugins: [],
 // };
-
-
-

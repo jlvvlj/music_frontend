@@ -34,10 +34,10 @@ const TABS: Tab[] = [
 ];
 
 const budgetCard = [
-  { title: 'Minimum Budget', cost: 'EUR 5000' },
-  { title: 'Maximum Budget', cost: 'EUR 9000' },
-  { title: 'External Royalties', cost: '50%' }
-]
+  { title: "Minimum Budget", cost: "EUR 5000" },
+  { title: "Maximum Budget", cost: "EUR 9000" },
+  { title: "External Royalties", cost: "50%" },
+];
 
 const Budget = ({ updateStep }: StepProps) => {
   const [currentTabIndex, setCurrentTabIndex] = useState(0);
@@ -72,14 +72,14 @@ const Budget = ({ updateStep }: StepProps) => {
 
   useEffect(() => {
     if (currentTabIndex >= TABS.length) {
-      // updateStep(1);
+      updateStep(1);
     } else {
       setTab(TABS[currentTabIndex].value);
     }
   }, [currentTabIndex]);
 
   const handleClickNext = () => {
-    updateStep(1);
+    setCurrentTabIndex(currentTabIndex + 1);
   };
 
   const handleClickNextTab = () => {
@@ -99,7 +99,11 @@ const Budget = ({ updateStep }: StepProps) => {
       <div className="w-full px-10 py-7 bg-modal rounded-s-3xl h-full flex flex-col justify-between relative">
         <div>
           <div className="absolute top-6 right-6">
-            <Button className="bg-[#5D9DF1]" variant="outline" onClick={handleClickNext}>
+            <Button
+              className="bg-mblue"
+              variant="outline"
+              onClick={handleClickNext}
+            >
               Skip
             </Button>
           </div>
@@ -107,23 +111,26 @@ const Budget = ({ updateStep }: StepProps) => {
             Initial Budget
           </h1>
           <p className="text-sm text-muted-foreground mb-12">
-            Enter the budget  details
+            Enter the budget details
           </p>
           <Card className="bg-transparent border-none shadow-none">
             <CardContent className="space-y-6 p-0">
-            <Tabs
+              <Tabs
                 value={tab}
-                className="w-full px-10" onValueChange={onTabChange}>
+                className="w-full px-10"
+                onValueChange={onTabChange}
+              >
                 <TabsList className="grid w-full grid-cols-3 mb-11">
                   {TABS.map((t, index) => (
-                    <TabsTrigger key={index} value={t.value}>{t.label}</TabsTrigger>
+                    <TabsTrigger key={index} value={t.value}>
+                      {t.label}
+                    </TabsTrigger>
                   ))}
                 </TabsList>
                 {TABS.map((t, index) => {
                   return (
-                    <TabsContent key={index}
-                      value={t.value} className="mt-10">
-                      {index === 0 &&
+                    <TabsContent key={index} value={t.value} className="mt-10">
+                      {index === 0 && (
                         <>
                           <div>
                             <p className="text-base font-normal mb-2">
@@ -137,7 +144,7 @@ const Budget = ({ updateStep }: StepProps) => {
                             <div className="grid grid-cols-12 gap-6">
                               <div
                                 className={cn(
-                                  "flex items-center justify-between pl-4 rounded-md bg-[#5D9DF1] col-span-12 lg:col-span-10 2xl:col-span-6 w-full"
+                                  "flex items-center justify-between pl-4 rounded-md bg-mblue col-span-12 lg:col-span-10 2xl:col-span-8 w-full"
                                 )}
                               >
                                 <div>
@@ -148,7 +155,9 @@ const Budget = ({ updateStep }: StepProps) => {
                                   >
                                     Minimum
                                   </p>
-                                  <p className="text-sm text-[#B9B9BA]">Lorem ipsum</p>
+                                  <p className="text-sm text-[#B9B9BA]">
+                                    Lorem ipsum
+                                  </p>
                                 </div>
                                 <CardsActivityGoal
                                   label="EUR"
@@ -159,7 +168,7 @@ const Budget = ({ updateStep }: StepProps) => {
                                   minValue={3000}
                                   maxValue={5000}
                                   buttonHidden
-                                  onClickButton={() => { }}
+                                  onClickButton={() => {}}
                                   isOwner={true}
                                   setGoal={(value) =>
                                     handleChangeGoalValues(
@@ -174,7 +183,7 @@ const Budget = ({ updateStep }: StepProps) => {
                             <div className="grid grid-cols-12 gap-6">
                               <div
                                 className={cn(
-                                  "flex items-center justify-between pl-4 rounded-md bg-[#5D9DF1] col-span-12 lg:col-span-10 2xl:col-span-6 w-full"
+                                  "flex items-center justify-between pl-4 rounded-md bg-mblue col-span-12 lg:col-span-10 2xl:col-span-8 w-full"
                                 )}
                               >
                                 <div>
@@ -185,7 +194,9 @@ const Budget = ({ updateStep }: StepProps) => {
                                   >
                                     Maximum
                                   </p>
-                                  <p className="text-sm text-[#B9B9BA]">Lorem ipsum</p>
+                                  <p className="text-sm text-[#B9B9BA]">
+                                    Lorem ipsum
+                                  </p>
                                 </div>
                                 <CardsActivityGoal
                                   label="EUR"
@@ -196,7 +207,7 @@ const Budget = ({ updateStep }: StepProps) => {
                                   minValue={3000}
                                   maxValue={5000}
                                   buttonHidden
-                                  onClickButton={() => { }}
+                                  onClickButton={() => {}}
                                   isOwner={true}
                                   setGoal={(value) =>
                                     handleChangeGoalValues(
@@ -211,7 +222,7 @@ const Budget = ({ updateStep }: StepProps) => {
                             <div className="grid grid-cols-12 gap-6">
                               <div
                                 className={cn(
-                                  "flex items-center justify-between pl-4 rounded-md bg-[#5D9DF1] col-span-12 lg:col-span-10 2xl:col-span-6 w-full"
+                                  "flex items-center justify-between pl-4 rounded-md bg-mblue col-span-12 lg:col-span-10 2xl:col-span-8 w-full"
                                 )}
                               >
                                 <div>
@@ -222,7 +233,9 @@ const Budget = ({ updateStep }: StepProps) => {
                                   >
                                     Royalties
                                   </p>
-                                  <p className="text-sm text-[#B9B9BA]">Lorem ipsum</p>
+                                  <p className="text-sm text-[#B9B9BA]">
+                                    Lorem ipsum
+                                  </p>
                                 </div>
                                 <CardsActivityGoal
                                   label="SHARES OF REVENUES"
@@ -233,7 +246,7 @@ const Budget = ({ updateStep }: StepProps) => {
                                   minValue={0}
                                   maxValue={100}
                                   buttonHidden
-                                  onClickButton={() => { }}
+                                  onClickButton={() => {}}
                                   isOwner={true}
                                   setGoal={(value) =>
                                     handleChangeGoalValues(
@@ -247,15 +260,17 @@ const Budget = ({ updateStep }: StepProps) => {
                             </div>
                           </div>
                         </>
-                      }
-                      {index === 1 &&
+                      )}
+                      {index === 1 && (
                         <>
                           <div>
                             <p className="text-[#FAFAFA] text-base font-normal">
                               Multimedia Recordings
                             </p>
                             <p className="text-[#A1A1AA] text-sm font-normal">
-                              Select if a salary for video recording is specifically provided for in the collective agreement
+                              Select if a salary for video recording is
+                              specifically provided for in the collective
+                              agreement
                             </p>
                           </div>
                           <div className="space-y-8 mt-10">
@@ -273,7 +288,9 @@ const Budget = ({ updateStep }: StepProps) => {
                                   >
                                     Salary
                                   </p>
-                                  <p className="text-sm text-[#B9B9BA]">Lorem ipsum</p>
+                                  <p className="text-sm text-[#B9B9BA]">
+                                    Lorem ipsum
+                                  </p>
                                 </div>
                                 <CardsActivityGoal
                                   label="EUR"
@@ -284,26 +301,30 @@ const Budget = ({ updateStep }: StepProps) => {
                                   minValue={3000}
                                   maxValue={5000}
                                   buttonHidden
-                                  onClickButton={() => { }}
+                                  onClickButton={() => {}}
                                   isOwner={true}
                                   setGoal={(value) =>
-                                    handleChangeGoalValues("multimedia", "salary", value)
+                                    handleChangeGoalValues(
+                                      "multimedia",
+                                      "salary",
+                                      value
+                                    )
                                   }
                                 />
                               </div>
                             </div>
                           </div>
                         </>
-                      }
-                      {index === 2 &&
+                      )}
+                      {index === 2 && (
                         <>
                           <div>
                             <p className="text-[#FAFAFA] text-base font-normal">
                               Promotion
                             </p>
                             <p className="text-[#A1A1AA] text-sm font-normal">
-                              Select if a budget for image / promotion / marketing will be
-                              commited
+                              Select if a budget for image / promotion /
+                              marketing will be commited
                             </p>
                           </div>
                           <div className="space-y-8 mt-10">
@@ -321,7 +342,9 @@ const Budget = ({ updateStep }: StepProps) => {
                                   >
                                     Budget
                                   </p>
-                                  <p className="text-sm text-[#B9B9BA]">Lorem ipsum</p>
+                                  <p className="text-sm text-[#B9B9BA]">
+                                    Lorem ipsum
+                                  </p>
                                 </div>
                                 <CardsActivityGoal
                                   label="EUR"
@@ -332,35 +355,50 @@ const Budget = ({ updateStep }: StepProps) => {
                                   minValue={3000}
                                   maxValue={5000}
                                   buttonHidden
-                                  onClickButton={() => { }}
+                                  onClickButton={() => {}}
                                   isOwner={true}
                                   setGoal={(value) =>
-                                    handleChangeGoalValues("promotion", "salary", value)
+                                    handleChangeGoalValues(
+                                      "promotion",
+                                      "salary",
+                                      value
+                                    )
                                   }
                                 />
                               </div>
                             </div>
                           </div>
                         </>
-                      }
+                      )}
                     </TabsContent>
-                  )
+                  );
                 })}
-
               </Tabs>
             </CardContent>
           </Card>
         </div>
         <div className="flex justify-between w-full mt-10">
-          <Button className="bg-[#5D9DF1]" variant="outline" onClick={handleClickBack}>
+          <Button
+            className="bg-mblue"
+            variant="outline"
+            onClick={handleClickBack}
+          >
             <ArrowLeftIcon className="mr-1" />
             Back
           </Button>
           <div className="flex gap-4">
-            <Button className="bg-transparent" variant="outline" onClick={handleClickNextTab}>
+            <Button
+              className="bg-transparent"
+              variant="outline"
+              onClick={handleClickNextTab}
+            >
               Skip
             </Button>
-            <Button className="bg-[#5D9DF1]" variant="outline" onClick={handleClickNext}>
+            <Button
+              className="bg-mblue"
+              variant="outline"
+              onClick={handleClickNext}
+            >
               Next
               <ArrowRightIcon className="ml-1" />
             </Button>
@@ -370,20 +408,27 @@ const Budget = ({ updateStep }: StepProps) => {
       <div className="relative flex items-end px-4 flex-col py-7 bg-modal-foreground rounded-r-3xl">
         <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
           <h6 className="text-2xl	mb-3">Initial Budget</h6>
-          <p className="text-[#94A3B8] mb-7 text-sm">Artists participating in this contract.</p>
-          <div className="flex gap-10 flex flex-wrap gap-[18px]">
-            {budgetCard.map((card, index) =>
-              <Card key={index} className="bg-modal-foreground border-[#1D1D1F] pt-2 pl-2.5 pr-6 pb-4 w-[132px]">
+          <p className="text-[#94A3B8] mb-7 text-sm">
+            Artists participating in this contract.
+          </p>
+          <div className="flex flex-wrap gap-[18px]">
+            {budgetCard.map((card, index) => (
+              <Card
+                key={index}
+                className="bg-modal-foreground border-[#1D1D1F] pt-2 pl-2.5 pr-6 pb-4 w-[132px]"
+              >
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
                   <CardTitle className="text-xs font-medium pb-5">
                     {card.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <div className="text-xs font-bold text-[#4EABFE]">{card.cost}</div>
+                  <div className="text-xs font-bold text-[#4EABFE]">
+                    {card.cost}
+                  </div>
                 </CardContent>
               </Card>
-            )}
+            ))}
           </div>
         </div>
       </div>

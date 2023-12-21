@@ -1,4 +1,5 @@
 import React from "react";
+import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import {
   Card,
   CardContent,
@@ -42,8 +43,8 @@ export default function RoyaltyAdvances({
   };
 
   return (
-    <div className="grid grid-cols-2 h-full">
-      <div className="flex flex-col gap-10 bg-[#060606] p-8 rounded-l-2xl">
+    <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
+      <div className="flex flex-col gap-10 bg-modal p-8 rounded-l-3xl">
         <div className="space-y-6 w-full">
           <h1 className="text-3xl font-semibold tracking-tight">
             Royalties Advances
@@ -62,33 +63,42 @@ export default function RoyaltyAdvances({
           <RoyaltyCard />
         </div>
         <div className="flex justify-between w-full mt-10 px-4">
-          <Button className="" variant="outline" onClick={handleClickBack}>
+          <Button
+            className="bg-mblue"
+            variant="outline"
+            onClick={handleClickBack}
+          >
+            <ArrowLeftIcon className="mr-1" />
             Back
           </Button>
           <div className="flex gap-4">
             <Button className="" variant="outline" onClick={handleClickNext}>
               Skip
             </Button>
-            <Button className="" variant="outline" onClick={handleClickNext}>
+            <Button
+              className="bg-mblue"
+              variant="outline"
+              onClick={handleClickNext}
+            >
               Next
             </Button>
           </div>
         </div>
       </div>
-      <div className="bg-[#131313] px-4 py-4 rounded-r-2xl">
-        <Card className="bg-[#060606] border-none">
+      <div className="bg-modal-foreground px-4 py-4 rounded-r-3xl">
+        <Card className="bg-modal border-muted">
           <CardHeader>
             <CardTitle>Royalties Advances</CardTitle>
             <CardDescription>Royalties Advances for Artists</CardDescription>
           </CardHeader>
-          <CardContent className="flex justify-center items-center gap-6">
-            <div className="rounded-xl bg-[#131313] px-[10px] py-2 max-w-[150px] min-h-[90px]">
+          <CardContent className="flex items-center gap-6 px-20">
+            <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
               <p className="text-white text-[12px] font-normal">At Signature</p>
-              <p className="text-[#4EABFE] text-[12px] font-normal">EUR 3000</p>
+              <p className="text-mblue text-[12px] font-normal">EUR 3000</p>
             </div>
-            <div className="rounded-xl bg-[#131313] px-[10px] py-2 max-w-[150px] min-h-[90px]">
+            <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
               <p className="text-white text-[12px] font-normal">At Signature</p>
-              <p className="text-[#4EABFE] text-[12px] font-normal">EUR 3000</p>
+              <p className="text-mblue text-[12px] font-normal">EUR 3000</p>
             </div>
           </CardContent>
         </Card>
