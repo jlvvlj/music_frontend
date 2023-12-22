@@ -112,17 +112,17 @@ export function CardsActivityGoal({
       <CardContent className="pb-1">
         <div className="flex items-center justify-center space-x-2">
           <Button
-            variant="outline"
+            variant="default"
             type="button"
             size="icon"
             className={cn(
-              "bg-transparent border border-solid rounded-full w-[14px] h-[14px] flex justify-center items-center minus-btn",
+              "bg-transparent border border-solid rounded-full w-[14px] h-[14px] flex justify-center items-center minus-btn text-white hover:text-black",
               isOwner ? "border-[#8AC4FB]" : "border-[#0F172A]"
             )}
             onClick={() => onClick(-step)}
             disabled={initialValue <= minValue}
           >
-            <Minus className="h-[10px] w-[10px]" />
+            <Minus className="h-[10px] w-[10px] " />
             <span className="sr-only">Decrease</span>
           </Button>
           <div className="flex-1 text-center">
@@ -133,11 +133,11 @@ export function CardsActivityGoal({
             <div className="text-[0.40rem] uppercase">{label}</div>
           </div>
           <Button
-            variant="outline"
+            variant="default"
             size="icon"
             type="button"
             className={cn(
-              "bg-transparent border border-solid rounded-full w-[14px] h-[14px] flex justify-center items-center minus-btn",
+              "bg-transparent border border-solid rounded-full w-[14px] h-[14px] flex justify-center items-center minus-btn  text-white hover:text-black",
               isOwner ? "border-[#8AC4FB]" : "border-[#0F172A]"
             )}
             onClick={() => onClick(step)}

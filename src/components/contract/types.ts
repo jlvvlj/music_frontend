@@ -1,7 +1,7 @@
 import React from "react";
-export interface StepProps extends React.PropsWithChildren  {
+export interface StepProps extends React.PropsWithChildren {
   updateStep: (step: number) => void;
-};
+}
 export type TeamMember = {
   id: number;
   name: string;
@@ -13,9 +13,7 @@ export type TeamMember = {
 };
 
 export interface Recording {
-  image?: string;
-  title: string;
-  number: string;
+  number: number;
   recordingType: RecordingType;
   programType: ProgramType;
   completedAt: Date;
@@ -30,12 +28,7 @@ export interface ArtistRecording {
 }
 
 export type RecordingType = "firm" | "optional";
-export type ProgramType =
-  | "album"
-  | "single"
-  | "mini-album"
-  | "maxi-single"
-  | "other";
+export type ProgramType = "album" | "single";
 
 export type Program = {
   label: string;

@@ -137,7 +137,7 @@ const Broadcasting = ({ updateStep }: StepProps) => {
                   <div className="flex gap-6 items-center space-y-4 mt-8">
                     <div
                       className={cn(
-                        "flex items-center pl-4 rounded-md bg-[#5D9DF1] col-span-12 xl:col-span-10 2xl:col-span-6"
+                        "flex items-center pl-4 rounded-md bg-mblue col-span-12 xl:col-span-10 2xl:col-span-6"
                       )}
                     >
                       <div>

@@ -13,6 +13,7 @@ import { CardsActivityGoal } from "@/components/activity-goal";
 import { cn } from "@/lib/utils";
 import { FancyMultiSelect } from "@/components/fancy-multi-select";
 import { Abatement, StepProps } from "./types";
+import { CountryMultiSelect } from "../country-multi-select";
 
 const TABS: {
   label: string;
@@ -44,14 +45,17 @@ const COUNTRIES = [
   {
     label: "France",
     value: "france",
+    code: "FR",
   },
   {
     label: "Spain",
     value: "spain",
+    code: "ES",
   },
   {
     label: "England",
     value: "england",
+    code: "GB",
   },
 ];
 
@@ -202,7 +206,7 @@ const Abatements = ({ updateStep }: StepProps) => {
                       />
                     </div>
                     <div className={cn(index === 0 ? "" : "hidden")}>
-                      <FancyMultiSelect
+                      <CountryMultiSelect
                         frameworks={COUNTRIES}
                         placeholder="Select countries"
                       />
