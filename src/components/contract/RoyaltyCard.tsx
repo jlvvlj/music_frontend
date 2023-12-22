@@ -10,7 +10,7 @@ import {
 import DatePicker from "../ui/date-picker";
 import { useState } from "react";
 
-const step = 100;
+const step = 1;
 const RoyaltyCard = () => {
   const [value, setValue] = useState(3000);
   const handleChangeGoal = (v: number) => {

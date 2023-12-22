@@ -97,7 +97,9 @@ export default function RoyaltyAdvances({
               <p className="text-mblue text-[12px] font-normal">EUR 3000</p>
             </div>
             <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
-              <p className="text-white text-[12px] font-normal">At Signature</p>
+              <p className="text-white text-[12px] font-normal">
+                At commercial release
+              </p>
               <p className="text-mblue text-[12px] font-normal">EUR 3000</p>
             </div>
           </CardContent>

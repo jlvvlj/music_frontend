@@ -52,18 +52,10 @@ const recordingCard = [
 ];
 
 const recordingFormSchema = z.object({
-  title: z.string().default(""),
-  number: z.string().default("10"),
-  recordingType: z.enum(["firm", "optional"], {
-    required_error: "Select recording type",
+  number: z.number().default(10),
+  programType: z.enum(["album", "single"], {
+    required_error: "Select program type",
   }),
-  programType: z.enum([
-    "album",
-    "single",
-    "mini-album",
-    "maxi-single",
-    "other",
-  ]),
   completedAt: z.date().default(new Date()),
   releasedAt: z.date().default(new Date()),
   optionRightsLimit: z.date().default(new Date()),
@@ -95,7 +87,6 @@ const TABS: {
 
 const Recordings = ({ updateStep }: StepProps) => {
   const [recordings, setRecordings] = useState<Recording[]>([]);
-  const [programTypes, setProgramTypes] = useState(ProgramTypes);
   const [files, setFiles] = useState<any[]>([]);
   const [currentTabIndex, setCurrentTabIndex] = useState(0);
   const [tab, setTab] = useState(TABS[0].value);
@@ -129,18 +120,21 @@ const Recordings = ({ updateStep }: StepProps) => {
   const onSubmit = (data: RecordingFormValues) => {
     console.log(data);
 
+    const recording = {
+      ...data,
+      recordingType: tab,
+    };
+
     const _recordings = [...recordings];
-    _recordings.push(data);
+    _recordings.push(recording);
     setRecordings(_recordings);
     setTimeout(() => {
       form.reset({
-        title: "",
-        number: "",
+        number: 0,
       });
     }, 1000);
   };
   const onTabChange = (value: string) => {
-    console.log(value);
     setTab(value as Tab);
   };
 
@@ -189,9 +183,9 @@ const Recordings = ({ updateStep }: StepProps) => {
                               <FormControl>
                                 <CardsActivityGoal
                                   label="ReCordings"
-                                  initialValue={50}
+                                  initialValue={field.value}
                                   unit=""
-                                  step={10}
+                                  step={1}
                                   buttonTitle="Set Share"
                                   minValue={0}
                                   maxValue={100}
@@ -199,43 +193,49 @@ const Recordings = ({ updateStep }: StepProps) => {
                                   chartHidden
                                   onClickButton={() => {}}
                                   isOwner={false}
-                                  setGoal={(value) => {}}
+                                  setGoal={field.onChange}
                                 />
                               </FormControl>
                             </FormItem>
                           )}
                         />
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant="outline"
-                              className="justify-between bg-modal-foreground w-full"
-                            >
-                              Type
-                              <ChevronDownIcon className="ml-2 h-4 w-4 text-muted-foreground" />
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="p-0 w-[180px]" align="end">
-                            <Command>
-                              <CommandList>
-                                <CommandGroup className="p-1.5 bg-modal-foreground">
-                                  <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2 aria-selected:bg-modal">
+                        <FormField
+                          control={form.control}
+                          name="programType"
+                          render={({ field }) => (
+                            <FormItem>
+                              <Select
+                                onValueChange={(v) =>
+                                  field.onChange(v as ProgramType)
+                                }
+                                value={field.value}
+                              >
+                                <FormControl className="bg-modal-foreground">
+                                  <SelectTrigger className="text-[#6d7d93] font-semibold">
+                                    <SelectValue
+                                      className=""
+                                      placeholder="Type"
+                                    />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent className="bg-modal-foreground">
+                                  <SelectItem
+                                    value="album"
+                                    className="focus:bg-mblue"
+                                  >
                                     <p>Albums ( LPs )</p>
-                                    <p className="text-sm text-muted-foreground">
-                                      Lorem ipsum
-                                    </p>
-                                  </CommandItem>
-                                  <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2 aria-selected:bg-modal">
+                                  </SelectItem>
+                                  <SelectItem
+                                    value="single"
+                                    className="focus:bg-mblue"
+                                  >
                                     <p>Singles ( SPs )</p>
-                                    <p className="text-sm text-muted-foreground">
-                                      Lorem ipsum
-                                    </p>
-                                  </CommandItem>
-                                </CommandGroup>
-                              </CommandList>
-                            </Command>
-                          </PopoverContent>
-                        </Popover>
+                                  </SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </FormItem>
+                          )}
+                        />
                       </div>
                       <div className="grid grid-cols-3 gap-2 items-end mt-4">
                         <FormField
