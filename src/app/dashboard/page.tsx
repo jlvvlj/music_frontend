@@ -120,7 +120,7 @@ export default function DashboardPage() {
           </div>
         </div>
         <TracksTable />
-        <SheetSide />
+        {/* <SheetSide /> */}
       </ThemeProvider>
     </>
   );

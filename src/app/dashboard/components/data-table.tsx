@@ -93,14 +93,14 @@ export function DataTable<TData, TValue>({
   return (
     <div className="space-y-4">
       <DataTableToolbar table={table} />
-      <div className="pt-4">
+      <div className="py-4">
         <Table className="dashboard-table">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} style={{ border: 'none' }} className="bg-table3-foreground">
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="first:rounded-s-[20px] text-white3 last:rounded-r-[20px] text-center border-b-[3px] border-table3">
+                    <TableHead key={header.id} className="h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] text-center">
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -113,6 +113,7 @@ export function DataTable<TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
+          <TableHeader className="w-full h-[11px] bg-table3" />
           <TableBody className="dashboard-tablebody">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
