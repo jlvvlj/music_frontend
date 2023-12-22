@@ -408,22 +408,22 @@ const Budget = ({ updateStep }: StepProps) => {
       <div className="relative flex items-end px-4 flex-col py-7 bg-modal-foreground rounded-r-3xl">
         <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
           <h6 className="text-2xl	mb-3">Initial Budget</h6>
-          <p className="text-[#94A3B8] mb-7 text-sm">
+          <p className="mb-7 text-sm text-muted-foreground">
             Artists participating in this contract.
           </p>
           <div className="flex flex-wrap gap-[18px]">
             {budgetCard.map((card, index) => (
               <Card
                 key={index}
-                className="bg-modal-foreground border-[#1D1D1F] pt-2 pl-2.5 pr-6 pb-4 w-[132px]"
+                className="bg-modal-foreground border-[#1D1D1F] pt-2 px-2.5 pb-6 w-[132px] h-[102px]"
               >
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
-                  <CardTitle className="text-xs font-medium pb-5">
+                  <CardTitle className="text-xs font-normal pb-5">
                     {card.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <div className="text-xs font-bold text-[#4EABFE]">
+                  <div className="text-xs font-normal text-[#4EABFE]">
                     {card.cost}
                   </div>
                 </CardContent>

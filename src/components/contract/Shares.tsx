@@ -52,7 +52,7 @@ const Shares = ({ updateStep }: StepProps) => {
       <div className="w-full px-10 pb-7 pt-16 bg-modal rounded-s-3xl h-full flex flex-col justify-between">
         <div>
           <h6 className="text-2xl	mb-3">Now time to allocate shares</h6>
-          <p className="text-[#94A3B8] mb-12 text-sm">
+          <p className="text-muted-foreground mb-12 text-sm">
             Enter the appropriate amount of shares to everyone on the team
           </p>
           {members.map((member, index) => (
@@ -85,12 +85,12 @@ const Shares = ({ updateStep }: StepProps) => {
       <div className="relative flex items-end px-4 flex-col py-7 bg-modal-foreground rounded-r-3xl">
         <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
           <h6 className="text-2xl	mb-3">Team & Shares</h6>
-          <p className="text-[#94A3B8] mb-7 text-sm">
+          <p className="text-muted-foreground mb-7 text-sm">
             Artists participating in this contract.
           </p>
           <div className="pl-10">
             <h6 className="text-lg mb-3">Team Shares</h6>
-            <p className="text-[#94A3B8] mb-7 text-sm">
+            <p className="text-muted-foreground mb-7 text-sm">
               Artists participating in this contract.
             </p>
             <div className="pl-4 gap-10">

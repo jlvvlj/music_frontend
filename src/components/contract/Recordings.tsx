@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from "react";
 // ** Next
-import Image from "next/image";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { format } from "date-fns";
 // ** Components
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { Icons } from "@/components/icons";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 import {
   Card,
@@ -27,27 +20,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  ProgramType,
-  Program,
   ProgramTypes,
   Recording,
   StepProps,
 } from "./types";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import DatePicker from "@/components/ui/date-picker";
-import UploadButton from "@/components/upload-button";
-import { MultiSelect } from "@/components/ui/multi-select";
-import { cn } from "@/lib/utils";
 import { CardsActivityGoal } from "@/components/activity-goal";
-import RadioTab from "@/components/contract/RadioTab";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -55,9 +34,7 @@ import {
 } from "@radix-ui/react-icons";
 import {
   Command,
-  CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from "@/registry/new-york/ui/command";
@@ -106,15 +83,15 @@ const TABS: {
   label: string;
   value: Tab;
 }[] = [
-  {
-    label: "Firm",
-    value: "firm",
-  },
-  {
-    label: "Optional",
-    value: "optional",
-  },
-];
+    {
+      label: "Firm",
+      value: "firm",
+    },
+    {
+      label: "Optional",
+      value: "optional",
+    },
+  ];
 
 const Recordings = ({ updateStep }: StepProps) => {
   const [recordings, setRecordings] = useState<Recording[]>([]);
@@ -366,13 +343,13 @@ const Recordings = ({ updateStep }: StepProps) => {
       <div className="relative flex items-end px-4 flex-col py-7 bg-modal-foreground rounded-r-3xl">
         <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
           <h6 className="text-2xl	mb-3">Recordings</h6>
-          <p className="text-[#94A3B8] mb-7 text-sm">
+          <p className="text-muted-foreground mb-7 text-sm">
             Artists participating in this contract.
           </p>
           <div className="pl-10">
             <div className="mb-14">
               <h6 className="text-lg mb-2.5">Albums ( LPs ) - Firm</h6>
-              <p className="text-[#94A3B8] mb-5 text-sm">
+              <p className="text-muted-foreground mb-5 text-sm">
                 Artists participating in this contract.
               </p>
               <div className="pl-4 flex flex-wrap gap-[18px]">
@@ -382,12 +359,12 @@ const Recordings = ({ updateStep }: StepProps) => {
                     className="bg-modal-foreground border-[#1D1D1F] pt-2 pl-2.5 pr-6 pb-4 w-[132px]"
                   >
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
-                      <CardTitle className="text-xs font-medium pb-5">
+                      <CardTitle className="text-xs font-normal pb-5">
                         {card.title}
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="p-0">
-                      <div className="text-xs font-bold text-[#4EABFE]">
+                      <div className="text-xs font-normal text-[#4EABFE]">
                         {card.cost}
                       </div>
                     </CardContent>
@@ -397,7 +374,7 @@ const Recordings = ({ updateStep }: StepProps) => {
             </div>
             <div className="mb-14">
               <h6 className="text-lg mb-2.5">Singles ( LPs ) - Firm</h6>
-              <p className="text-[#94A3B8] mb-5 text-sm">
+              <p className="text-muted-foreground mb-5 text-sm">
                 Artists participating in this contract.
               </p>
               <div className="pl-4 flex flex-wrap gap-[18px]">
@@ -407,12 +384,12 @@ const Recordings = ({ updateStep }: StepProps) => {
                     className="bg-modal-foreground border-[#1D1D1F] pt-2 pl-2.5 pr-6 pb-4 w-[132px]"
                   >
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
-                      <CardTitle className="text-xs font-medium pb-5">
+                      <CardTitle className="text-xs font-normal pb-5">
                         {card.title}
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="p-0">
-                      <div className="text-xs font-bold text-[#4EABFE]">
+                      <div className="text-xs font-normal text-[#4EABFE]">
                         {card.cost}
                       </div>
                     </CardContent>

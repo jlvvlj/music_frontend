@@ -95,9 +95,7 @@ export default function RecentSales() {
           </Avatar>
           <div className="ml-4 space-y-1">
             <p className="text-sm font-medium leading-none">{sales.title}</p>
-            <p className="text-sm text-muted-foreground">
-              <p className="text-sm text-muted-foreground">View Contract</p>
-            </p>
+            <p className="text-sm text-muted-foreground">View Contract</p>
           </div>
           <div className="ml-auto flex gap-10">
             <CountUp start={0} end={parseFloat(sales.streams.toString().replace(/[^\d.]/g, ''))} duration={5} className='w-[100px] text-end' />

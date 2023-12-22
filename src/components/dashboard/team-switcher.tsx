@@ -108,7 +108,7 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[200px] p-0">
-          <Command>
+          <Command className="bg-card3">
             <CommandList>
               <CommandInput placeholder="Search team..." />
               <CommandEmpty>No team found.</CommandEmpty>

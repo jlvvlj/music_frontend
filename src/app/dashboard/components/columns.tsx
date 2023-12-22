@@ -1,7 +1,5 @@
 "use client"
 
-import Link from "next/link"
-
 import { ColumnDef } from "@tanstack/react-table"
 
 import { Badge } from "@/registry/new-york/ui/badge"
@@ -10,8 +8,8 @@ import CountUp from 'react-countup';
 import { albums, priorities, statuses, titles } from "../data/data"
 import { Task } from "../data/schema"
 import { DataTableColumnHeader } from "./data-table-column-header"
-import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/registry/new-york/ui/sheet";
-import { Button } from "@/registry/new-york/ui/button";
+import { Sheet, SheetTrigger } from "@/registry/new-york/ui/sheet";
+import TableDrawer from "./table-drawer";
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -20,27 +18,12 @@ export const columns: ColumnDef<Task>[] = [
       <DataTableColumnHeader column={column} title="Contract" />
     ),
     cell: ({ row }) =>
-     <Sheet>
+      <Sheet>
         <SheetTrigger asChild>
           <div className="max-w-[160px] cursor-pointer">{row.getValue("id")}</div>
         </SheetTrigger>
-        <SheetContent className="mt-0" side="right">
-          <SheetHeader>
-            <SheetTitle>Edit profile</SheetTitle>
-            <SheetDescription>
-              Make changes to your profile here. Click save when you're done.
-            </SheetDescription>
-          </SheetHeader>
-          <SheetFooter>
-            <SheetClose asChild>
-              <Button type="submit">Save changes</Button>
-            </SheetClose>
-          </SheetFooter>
-        </SheetContent>
-      </Sheet>, 
-      // <Link href={`contracts_settings/${row.getValue("id")}`}>
-        // <div className="max-w-[160px]">{row.getValue("id")}</div>
-    // </Link>,
+        <TableDrawer  name={row.getValue("id")}/>
+      </Sheet>,
     enableSorting: false,
     enableHiding: false,
   },

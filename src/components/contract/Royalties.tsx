@@ -358,20 +358,20 @@ const Royalties = ({ updateStep }: StepProps) => {
       <div className="relative flex items-end px-4 flex-col py-7 bg-modal-foreground rounded-r-3xl">
         <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
           <h6 className="text-2xl	mb-3">Royalties</h6>
-          <p className="text-[#94A3B8] mb-7 text-sm">Lorem Ipsum</p>
+          <p className="text-muted-foreground mb-7 text-sm">Lorem Ipsum</p>
           <div className="pl-10">
             <div className="mb-14">
               <h6 className="text-lg mb-2.5">Single Rate Royalties</h6>
-              <p className="text-[#94A3B8] mb-5 text-sm">Lorem ipsum</p>
+              <p className="text-muted-foreground mb-5 text-sm">Lorem ipsum</p>
               <div className="pl-4 flex flex-wrap gap-[18px]">
                 <Card className="bg-modal-foreground border-[#1D1D1F] pt-2 pl-2.5 pr-6 pb-4 w-[132px]">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
-                    <CardTitle className="text-xs font-medium pb-5">
+                    <CardTitle className="text-xs font-normal pb-5">
                       Royalties
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="p-0">
-                    <div className="text-xs font-bold text-[#4EABFE]">50%</div>
+                    <div className="text-xs font-normal text-[#4EABFE]">50%</div>
                   </CardContent>
                 </Card>
               </div>
