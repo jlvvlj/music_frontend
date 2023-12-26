@@ -7,7 +7,7 @@ const royaltiesCard = [
     { title: "From 1000 to 20000 Copies." },
 ];
 
-export default function RoyaltiesCard() {
+export default function RoyaltiesCard({ color }: { color: string }) {
     return (
         <div>
             <h6 className="text-2xl	mb-3">Royalties</h6>
@@ -19,7 +19,7 @@ export default function RoyaltiesCard() {
                     <h6 className="text-lg mb-2.5">Single Rate Royalties</h6>
                     <p className="mb-5 text-sm text-muted-foreground">Lorem ipsum</p>
                     <div className="flex flex-wrap gap-[18px]">
-                        <Card className="bg-modal-foreground border-[#1D1D1F] pt-2 px-2.5 pb-4 w-[132px] h-[102px]">
+                        <Card className={`${color} border-[#1D1D1F] pt-2 px-2.5 pb-4 w-[132px] h-[102px]`}>
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
                                 <CardTitle className="text-xs font-normal pb-5">
                                     Royalties
@@ -40,7 +40,7 @@ export default function RoyaltiesCard() {
                         {royaltiesCard.map((card, index) => (
                             <Card
                                 key={index}
-                                className="bg-modal-foreground border-[#1D1D1F] pt-2 px-2.5 pb-4 w-[132px] h-[102px]"
+                                className={`${color} border-[#1D1D1F] pt-2 px-2.5 pb-4 w-[132px] h-[102px]`}
                             >
                                 <CardHeader className="flex flex-col space-y-0 p-0">
                                     <CardTitle className="text-xs font-normal pb-1">

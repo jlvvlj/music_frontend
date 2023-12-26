@@ -34,9 +34,9 @@ export default function CongratulationModal({ open, setOpen }: Props) {
               Congratulations, your contract is ready!
             </h1>
             <p className="text-base text-gray-400">Lorem Ipsum ipsum ipsum</p>
-            <AnimatedLink href="/contracts_settings/CR-1">
+            <AnimatedLink href="/summary">
               <Button type="button" className="bg-mblue" variant="outline">
-                Go to contract
+                Go to contract 
               </Button>
             </AnimatedLink>
           </div>

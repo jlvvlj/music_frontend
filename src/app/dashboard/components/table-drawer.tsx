@@ -32,28 +32,28 @@ export default function TableDrawer({ name }: { name: string }) {
                 </SheetHeader>
                 <TopTracksCard />
                 <Card className="px-4 pt-6 pb-14 mb-4 bg-black3">
-                    <TeamShareCard />
+                    <TeamShareCard color="bg-background3" />
                 </Card>
                 <Card className="px-4 pt-6 pb-8 mb-4 bg-black3">
-                    <BudgetCard />
+                    <BudgetCard color="bg-modal-foreground" />
                 </Card>
                 <Card className="px-4 pt-6 mb-4 bg-black3 pb-0">
-                    <RecordingsCard />
+                    <RecordingsCard style="bg-modal-foreground w-[132px]"/>
                 </Card>
                 <Card className="px-4 pt-6 mb-4 bg-black3 pb-0">
-                    <RoyaltiesCard />
+                    <RoyaltiesCard color="bg-modal-foreground"/>
                 </Card>
                 <Card className="px-4 pt-6 mb-4 bg-black3 pb-0">
-                    <AdvanceRoyaltiesCard />
+                    <AdvanceRoyaltiesCard color="bg-modal-foreground"/>
                 </Card>
                 <Card className="px-4 pt-6 mb-4 bg-black3 pb-0">
-                    <AbatementsCard />
+                    <AbatementsCard color="bg-modal-foreground"/>
                 </Card>
                 <Card className="px-4 pt-6 mb-4 bg-black3 pb-0">
-                    <BroadcastingCard />
+                    <BroadcastingCard color="bg-modal-foreground"/>
                 </Card>
                 <Card className="px-4 pt-6 bg-black3 pb-0">
-                    <DerivativeCard />
+                    <DerivativeCard color="bg-modal-foreground"/>
                 </Card>
             </ScrollArea>
         </SheetContent>

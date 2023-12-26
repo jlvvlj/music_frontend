@@ -27,7 +27,7 @@ const members = [
     },
 ];
 
-export default function TeamShareCard() {
+export default function TeamShareCard({ color }: { color: string }) {
     return (
         <div>
             <h6 className="text-2xl	mb-3">Team & Shares</h6>
@@ -89,7 +89,7 @@ export default function TeamShareCard() {
                 </p>
                 <div className="pl-4 flex flex-col gap-3.5">
                     {members.map((member, index) =>
-                        <div key={index} className="flex items-start justify-between pl-4 pt-1.5 rounded-md w-fit bg-background3 right-card">
+                        <div key={index} className={`${color} flex items-start justify-between pl-4 pt-1.5 rounded-md w-fit right-card`}>
                             <div className="flex gap-4">
                                 <Avatar className="bg-[#A3D3FF] mt-2 h-11 w-11">
                                     <Image

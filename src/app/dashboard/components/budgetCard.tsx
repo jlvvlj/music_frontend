@@ -10,7 +10,7 @@ const budgetCard = [
     { title: "Promotion", cost: "EUR 7000" }
 ];
 
-export default function BudgetCard() {
+export default function BudgetCard({ color }: { color: string }) {
     return (
         <div>
             <h6 className="text-2xl	mb-3">Initial Budget</h6>
@@ -21,7 +21,7 @@ export default function BudgetCard() {
                 {budgetCard.map((card, index) => (
                     <Card
                         key={index}
-                        className="bg-modal-foreground border-[#1D1D1F] pt-2 px-2.5 pb-6 w-[132px] h-[102px]"
+                        className={`${color} border-[#1D1D1F] pt-2 px-2.5 pb-6 w-[132px] h-[102px]`}
                     >
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
                             <CardTitle className="text-xs font-normal pb-5">

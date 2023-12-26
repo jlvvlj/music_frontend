@@ -20,10 +20,19 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
+  ProgramType,
+  Program,
   ProgramTypes,
   Recording,
   StepProps,
 } from "./types";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import DatePicker from "@/components/ui/date-picker";
 import { CardsActivityGoal } from "@/components/activity-goal";

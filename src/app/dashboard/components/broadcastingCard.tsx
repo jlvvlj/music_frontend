@@ -7,7 +7,7 @@ const broadcastingCard = [
     { title: "Secondary Use", desc: "Royalties to be paid for secondary use" }
 ];
 
-export default function BroadcastingCard() {
+export default function BroadcastingCard({ color }: { color: string }) {
     return (
         <div>
             <h6 className="text-2xl	mb-3">Broadcasting right & Secondary Use</h6>
@@ -22,7 +22,7 @@ export default function BroadcastingCard() {
                             {card.desc}
                         </p>
                         <div className="flex flex-wrap gap-[18px]">
-                            <Card className="bg-modal-foreground border-[#1D1D1F] pt-2 px-2.5 pb-4 w-[132px] h-[102px]">
+                            <Card className={`${color} border-[#1D1D1F] pt-2 px-2.5 pb-4 w-[132px] h-[102px]`}>
                                 <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
                                     <CardTitle className="text-xs font-normal pb-5">
                                         Royalty rate

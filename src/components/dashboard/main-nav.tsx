@@ -12,7 +12,7 @@ export default function MainNav({
     >
       <Link
         href="/dashboard"
-        className="text-sm font-medium transition-colors text-white hover:text-primary"
+        className="text-sm font-medium transition-colors text-white hover:text-white"
       >
         Dashboard
       </Link>
