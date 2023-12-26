@@ -12,36 +12,32 @@ import { cn } from "@/lib/utils";
 import { CardsActivityGoal } from "@/components/activity-goal";
 import { Budget, StepProps } from "./types";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
+import { Badge } from "@/registry/new-york/ui/badge";
+import { Switch } from "@/registry/default/ui/switch";
 
-type Tab = {
-  label: string;
-  value: string;
-};
-
-const TABS: Tab[] = [
-  {
-    label: "Registration",
-    value: "registration",
-  },
-  {
-    label: "Multimedia",
-    value: "multimedia",
-  },
-  {
-    label: "Promotion",
-    value: "promotion",
-  },
-];
+const budgetCards = [
+  { id: 1, title: 'Registration', activityTitle: 'Budget' },
+  { id: 2, title: 'Multimedia', activityTitle: 'Salary' },
+  { id: 3, title: 'Promotion', activityTitle: 'Budget' }
+]
 
 const budgetCard = [
   { title: "Minimum Budget", cost: "EUR 5000" },
   { title: "Maximum Budget", cost: "EUR 9000" },
   { title: "External Royalties", cost: "50%" },
+  { title: "Multimedia", cost: "EUR 3000" },
+  { title: "Promotion", cost: "EUR 7000" }
 ];
 
 const Budget = ({ updateStep }: StepProps) => {
-  const [currentTabIndex, setCurrentTabIndex] = useState(0);
-  const [tab, setTab] = useState(TABS[0].value);
+  const [enabled, setEnabled] = useState<number[]>([])
+  const handleClickNext = () => {
+    updateStep(1);
+  };
+
+  const handleClickBack = () => {
+    updateStep(-1);
+  };
   const [budget, setBudget] = useState<Budget>({
     registration: {
       minimum: 3000,
@@ -52,7 +48,7 @@ const Budget = ({ updateStep }: StepProps) => {
       salary: 3000,
     },
     promotion: {
-      salary: 7000,
+      salary: 3000,
     },
   });
 
@@ -70,43 +66,20 @@ const Budget = ({ updateStep }: StepProps) => {
     }));
   };
 
-  useEffect(() => {
-    if (currentTabIndex >= TABS.length) {
-      updateStep(1);
+  const onCheckHandle = (id: number) => {
+    const checkExist = enabled?.includes(id);
+
+    if (checkExist) {
+      setEnabled((prev) => prev?.filter((item) => item !== id));
     } else {
-      setTab(TABS[currentTabIndex].value);
+      setEnabled((prev) => [...prev, id]);
     }
-  }, [currentTabIndex]);
-
-  const handleClickNext = () => {
-    setCurrentTabIndex(currentTabIndex + 1);
-  };
-
-  const handleClickNextTab = () => {
-    setCurrentTabIndex(currentTabIndex + 1);
-  };
-
-  const handleClickBack = () => {
-    updateStep(-1);
-  };
-
-  const onTabChange = (value: string) => {
-    setTab(value as string);
   };
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
       <div className="w-full px-10 pb-7 pt-16 bg-modal rounded-s-3xl h-full flex flex-col justify-between relative">
         <div>
-          <div className="absolute top-12 right-6">
-            <Button
-              className="bg-mblue"
-              variant="outline"
-              onClick={handleClickNext}
-            >
-              Skip
-            </Button>
-          </div>
           <h1 className="text-3xl font-semibold tracking-tight mb-3 mt-2.5">
             Initial Budget
           </h1>
@@ -115,265 +88,59 @@ const Budget = ({ updateStep }: StepProps) => {
           </p>
           <Card className="bg-transparent border-none shadow-none">
             <CardContent className="space-y-6 p-0">
-              <Tabs
-                value={tab}
-                className="w-full px-10"
-                onValueChange={onTabChange}
-              >
-                <TabsList className="grid w-full grid-cols-3 mb-11">
-                  {TABS.map((t, index) => (
-                    <TabsTrigger key={index} value={t.value}>
-                      {t.label}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-                {TABS.map((t, index) => {
-                  return (
-                    <TabsContent key={index} value={t.value} className="mt-10">
-                      {index === 0 && (
-                        <>
-                          <div>
-                            <p className="text-base font-normal mb-2">
-                              Registration budget
-                            </p>
-                            <p className="text-[#A1A1AA] text-sm font-normal">
-                              Select if a production budget has been contracted
-                            </p>
-                          </div>
-                          <div className="space-y-8 mt-10">
-                            <div className="grid grid-cols-12 gap-6">
-                              <div
+              <div className="pl-2.5">
+                {budgetCards.map((card, index) =>
+                  <Card key={index} className="border-none bg-modal-foreground mb-8 rounded-3xl	">
+                    <CardHeader className="py-5 pb-0">
+                      <CardTitle className="text-[17px] font-normal flex justify-between">
+                        <div>
+                          <h6>{card.title}</h6>
+                          <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">Budget</Badge>
+                        </div>
+                        <Switch className="mt-2.5" checked={enabled.includes(card.id)} onCheckedChange={() => onCheckHandle(card.id)} />
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="pb-8">
+                      <p className="text-sm	mt-2.5 text-muted-foreground">A budget for  registration will be committed</p>
+                      {enabled.includes(card.id) && <div className="space-y-8 mt-10">
+                        <div className="grid grid-cols-12 gap-6">
+                          <div
+                            className={cn(
+                              "flex items-center justify-between pl-4 rounded-md bg-mblue col-span-12 xl:col-span-10 2xl:col-span-8 w-full"
+                            )}
+                          >
+                            <div>
+                              <p
                                 className={cn(
-                                  "flex items-center justify-between pl-4 rounded-md bg-mblue col-span-12 lg:col-span-10 2xl:col-span-8 w-full"
+                                  "text-sm font-medium leading-none text-[#FAFAFA]"
                                 )}
                               >
-                                <div>
-                                  <p
-                                    className={cn(
-                                      "text-sm font-medium leading-none text-[#FAFAFA]"
-                                    )}
-                                  >
-                                    Minimum
-                                  </p>
-                                  <p className="text-sm text-[#B9B9BA]">
-                                    Lorem ipsum
-                                  </p>
-                                </div>
-                                <CardsActivityGoal
-                                  label="EUR"
-                                  initialValue={budget.registration.minimum}
-                                  unit=""
-                                  step={10}
-                                  buttonTitle="Set Share"
-                                  minValue={3000}
-                                  maxValue={5000}
-                                  buttonHidden
-                                  onClickButton={() => {}}
-                                  isOwner={true}
-                                  setGoal={(value) =>
-                                    handleChangeGoalValues(
-                                      "registration",
-                                      "minimum",
-                                      value
-                                    )
-                                  }
-                                />
-                              </div>
+                                {card.activityTitle}
+                              </p>
+                              <p className="text-sm text-[#B9B9BA]">
+                                Lorem ipsum
+                              </p>
                             </div>
-                            <div className="grid grid-cols-12 gap-6">
-                              <div
-                                className={cn(
-                                  "flex items-center justify-between pl-4 rounded-md bg-mblue col-span-12 lg:col-span-10 2xl:col-span-8 w-full"
-                                )}
-                              >
-                                <div>
-                                  <p
-                                    className={cn(
-                                      "text-sm font-medium leading-none text-[#FAFAFA]"
-                                    )}
-                                  >
-                                    Maximum
-                                  </p>
-                                  <p className="text-sm text-[#B9B9BA]">
-                                    Lorem ipsum
-                                  </p>
-                                </div>
-                                <CardsActivityGoal
-                                  label="EUR"
-                                  initialValue={budget.registration.maximum}
-                                  unit=""
-                                  step={10}
-                                  buttonTitle="Set Share"
-                                  minValue={3000}
-                                  maxValue={5000}
-                                  buttonHidden
-                                  onClickButton={() => {}}
-                                  isOwner={true}
-                                  setGoal={(value) =>
-                                    handleChangeGoalValues(
-                                      "registration",
-                                      "maximum",
-                                      value
-                                    )
-                                  }
-                                />
-                              </div>
-                            </div>
-                            <div className="grid grid-cols-12 gap-6">
-                              <div
-                                className={cn(
-                                  "flex items-center justify-between pl-4 rounded-md bg-mblue col-span-12 lg:col-span-10 2xl:col-span-8 w-full"
-                                )}
-                              >
-                                <div>
-                                  <p
-                                    className={cn(
-                                      "text-sm font-medium leading-none text-[#FAFAFA]"
-                                    )}
-                                  >
-                                    Royalties
-                                  </p>
-                                  <p className="text-sm text-[#B9B9BA]">
-                                    Lorem ipsum
-                                  </p>
-                                </div>
-                                <CardsActivityGoal
-                                  label="SHARES OF REVENUES"
-                                  initialValue={budget.registration.royalties}
-                                  unit="%"
-                                  step={10}
-                                  buttonTitle="Set Share"
-                                  minValue={0}
-                                  maxValue={100}
-                                  buttonHidden
-                                  onClickButton={() => {}}
-                                  isOwner={true}
-                                  setGoal={(value) =>
-                                    handleChangeGoalValues(
-                                      "registration",
-                                      "royalties",
-                                      value
-                                    )
-                                  }
-                                />
-                              </div>
-                            </div>
+                            <CardsActivityGoal
+                              label="EUR"
+                              initialValue={3000}
+                              unit=""
+                              step={10}
+                              buttonTitle="Set Share"
+                              minValue={3000}
+                              maxValue={5000}
+                              buttonHidden
+                              onClickButton={() => { }}
+                              isOwner={true}
+                              setGoal={() => { }}
+                            />
                           </div>
-                        </>
-                      )}
-                      {index === 1 && (
-                        <>
-                          <div>
-                            <p className="text-[#FAFAFA] text-base font-normal">
-                              Multimedia Recordings
-                            </p>
-                            <p className="text-[#A1A1AA] text-sm font-normal">
-                              Select if a salary for video recording is
-                              specifically provided for in the collective
-                              agreement
-                            </p>
-                          </div>
-                          <div className="space-y-8 mt-10">
-                            <div className="grid grid-cols-12 gap-6">
-                              <div
-                                className={cn(
-                                  "flex items-center justify-between pl-4 rounded-md bg-mblue col-span-12 xl:col-span-10 2xl:col-span-8 w-full"
-                                )}
-                              >
-                                <div>
-                                  <p
-                                    className={cn(
-                                      "text-sm font-medium leading-none text-[#FAFAFA]"
-                                    )}
-                                  >
-                                    Salary
-                                  </p>
-                                  <p className="text-sm text-[#B9B9BA]">
-                                    Lorem ipsum
-                                  </p>
-                                </div>
-                                <CardsActivityGoal
-                                  label="EUR"
-                                  initialValue={budget.multimedia.salary}
-                                  unit=""
-                                  step={10}
-                                  buttonTitle="Set Share"
-                                  minValue={3000}
-                                  maxValue={5000}
-                                  buttonHidden
-                                  onClickButton={() => {}}
-                                  isOwner={true}
-                                  setGoal={(value) =>
-                                    handleChangeGoalValues(
-                                      "multimedia",
-                                      "salary",
-                                      value
-                                    )
-                                  }
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </>
-                      )}
-                      {index === 2 && (
-                        <>
-                          <div>
-                            <p className="text-[#FAFAFA] text-base font-normal">
-                              Promotion
-                            </p>
-                            <p className="text-[#A1A1AA] text-sm font-normal">
-                              Select if a budget for image / promotion /
-                              marketing will be commited
-                            </p>
-                          </div>
-                          <div className="space-y-8 mt-10">
-                            <div className="grid grid-cols-12 gap-6">
-                              <div
-                                className={cn(
-                                  "flex items-center justify-between pl-4 rounded-md bg-mblue col-span-12 xl:col-span-10 2xl:col-span-8 w-full"
-                                )}
-                              >
-                                <div>
-                                  <p
-                                    className={cn(
-                                      "text-sm font-medium leading-none text-[#FAFAFA]"
-                                    )}
-                                  >
-                                    Budget
-                                  </p>
-                                  <p className="text-sm text-[#B9B9BA]">
-                                    Lorem ipsum
-                                  </p>
-                                </div>
-                                <CardsActivityGoal
-                                  label="EUR"
-                                  initialValue={budget.promotion.salary}
-                                  unit=""
-                                  step={10}
-                                  buttonTitle="Set Share"
-                                  minValue={3000}
-                                  maxValue={5000}
-                                  buttonHidden
-                                  onClickButton={() => {}}
-                                  isOwner={true}
-                                  setGoal={(value) =>
-                                    handleChangeGoalValues(
-                                      "promotion",
-                                      "salary",
-                                      value
-                                    )
-                                  }
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </>
-                      )}
-                    </TabsContent>
-                  );
-                })}
-              </Tabs>
+                        </div>
+                      </div>}
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
             </CardContent>
           </Card>
         </div>
@@ -390,7 +157,7 @@ const Budget = ({ updateStep }: StepProps) => {
             <Button
               className="bg-transparent"
               variant="outline"
-              onClick={handleClickNextTab}
+              onClick={handleClickNext}
             >
               Skip
             </Button>
