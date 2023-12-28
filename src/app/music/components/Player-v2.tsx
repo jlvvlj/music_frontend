@@ -108,7 +108,7 @@ export default function Player({ album, title, position, artist, imageUrl, isPla
       <div className="flex-1 bg-gray-200 h-1.5 dark:bg-gray-700">
         <div className="bg-pink-500 h-1.5" style={{ width: `${progress}%` }}></div>
       </div>
-      <div className="container mx-auto max-w-screen-xl px-3 py-2 sm:px-6 sm:py-4 flex items-center gap-5">
+      <div className="container mx-auto max-w-screen-lg px-3 py-2 sm:px-6 sm:py-4 flex items-center gap-5">
         <img src={imageUrl} width="60" height="60" className="block rounded-md" />
         <div className="flex-1 min-w-0">
           <p className="text-xl font-medium overflow-hidden text-ellipsis whitespace-nowrap">

@@ -66,77 +66,88 @@
                     "title": "Jenny Was a Friend of Mine",
                     "length": "4:05",
                     "lengthMs": 244520,
-                    "position": 1
+                    "position": 1,
+                    "status": "live"
                 },
                 {
                     "id": "2948fd54-0602-32c2-8c45-2d6cf7a56881",
                     "title": "Mr. Brightside",
                     "length": "3:43",
                     "lengthMs": 222586,
-                    "position": 2
+                    "position": 2,
+                    "status": "live"
                 },
                 {
                     "id": "86171d77-7dd3-3df5-b14f-cc3e52c03590",
                     "title": "Smile Like You Mean It",
                     "length": "3:55",
                     "lengthMs": 234613,
-                    "position": 3
+                    "position": 3,
+                    "status": "processing"
                 },
                 {
                     "id": "9f245c84-111a-3a35-99cf-a35eb6648bae",
                     "title": "Somebody Told Me",
                     "length": "3:17",
                     "lengthMs": 197160,
-                    "position": 4
+                    "position": 4,
+                    "status": "cancelled"
                 },
                 {
                     "id": "74a1b94f-115f-35b0-9e28-f8d91a5c8327",
                     "title": "All These Things That I’ve Done",
                     "length": "5:02",
                     "lengthMs": 301960,
-                    "position": 5
+                    "position": 5,
+                    "status": "cancelled"
                 },
                 {
                     "id": "0109d23a-ddfe-3274-ad1c-54943eb78437",
                     "title": "Andy, You’re a Star",
                     "length": "3:14",
                     "lengthMs": 194080,
-                    "position": 6
+                    "position": 6,
+                    "status": "live"
                 },
                 {
                     "id": "382c217b-7b11-3b4d-8ed6-de48a4704f3a",
                     "title": "On Top",
                     "length": "4:19",
                     "lengthMs": 258986,
-                    "position": 7
+                    "position": 7,
+                    "status": "live"
                 },
                 {
                     "id": "492036d9-0221-35ab-b155-9216108db2a1",
                     "title": "Change Your Mind",
                     "length": "3:11",
                     "lengthMs": 190840,
-                    "position": 8
+                    "position": 8,
+                    "status": "live"
                 },
                 {
                     "id": "d514345b-340d-34e8-8040-4b8d211d71da",
                     "title": "Believe Me Natalie",
                     "length": "5:07",
                     "lengthMs": 306666,
-                    "position": 9
+                    "position": 9,
+                    "status": "live"
                 },
                 {
                     "id": "492ecf40-a838-3558-be62-5b77540923ad",
                     "title": "Midnight Show",
                     "length": "4:03",
                     "lengthMs": 242973,
-                    "position": 10
+                    "position": 10,
+                    "status": "live"
                 },
                 {
                     "id": "ef0ecc70-bee6-3ba7-86be-21fe46615ace",
                     "title": "Everything Will Be Alright",
                     "length": "5:45",
                     "lengthMs": 345253,
-                    "position": 11
+                    "position": 11,
+                    "status": "live"
                 }
             ]
         },

@@ -21,7 +21,7 @@ export default function Record({
   // const style = { viewTransitionName: `photo-${albumId}` }
 
   return (
-    <div className="pageContent relative shadow-xl mr-32 sm:w-72 md:w-auto"
+    <div className="pageContent relative shadow-xl mr-32 w-72 md:w-auto"
 
     >
       <img
@@ -29,8 +29,15 @@ export default function Record({
         alt={title}
         width="400"
         height="400"
-        className="block rounded-md tag-album-cover relative bg-white"
+        className="block rounded-md tag-album-cover relative z-10 bg-white"
         style={{ viewTransitionName: `photo-${albumId}` }}
+      />
+      <img
+        src="/vynil-lp.webp"
+        width="400"
+        height="400"
+        className={className}
+      // style={{ cssText: `view-transition-name: vinyl-${albumId}` } as any}
       />
     </div>
   )

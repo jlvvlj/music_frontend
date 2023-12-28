@@ -5,7 +5,7 @@ export const Header = () => (
   // transition:persist="header"
   >
     <div
-      className="w-full container mx-auto max-w-screen-xl px-6 lg:px-0 flex flex-wrap items-center mt-0 py-6"
+      className="w-full container mx-auto max-w-screen-lg px-6 lg:px-0 flex flex-wrap items-center mt-0 py-6"
     >
       <div>
         <a

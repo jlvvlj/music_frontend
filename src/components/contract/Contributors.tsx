@@ -25,6 +25,7 @@ import UploadButton from "@/components/upload-button";
 import { StepProps, TeamMember } from "./types";
 import { isOwner } from "./utils";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
+import TeamShare from "./TeamShare";
 
 type Tab = "team" | "solo";
 const TABS: {
@@ -348,60 +349,7 @@ const Contributors = ({ updateStep, children }: StepProps) => {
         </Tabs>
       </div>
       <div className="relative flex items-end px-4 flex-col py-7 bg-modal-foreground rounded-r-3xl">
-        <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
-          <h6 className="text-2xl	mb-3">Team & Shares</h6>
-          <p className="mb-7 text-sm text-muted-foreground">
-            Artists participating in this contract.
-          </p>
-          <div className="pl-10">
-            <h6 className="text-lg mb-3">Team members</h6>
-            <p className="mb-7 text-sm text-muted-foreground">
-              Artists participating in this contract.
-            </p>
-            <div className="pl-4 flex gap-10">
-              <div className="flex flex-col items-center">
-                <p className="text-sm mb-3.5 text-muted-foreground">Master Owner</p>
-                <Avatar className="h-11 w-11 border border-white">
-                  <Image
-                    src="/julie.svg"
-                    width={100}
-                    height={100}
-                    alt="avatar"
-                  />
-                </Avatar>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-sm mb-3.5 text-muted-foreground">Artists</p>
-                <div className="flex">
-                  <Avatar className="h-11 w-11 border border-white">
-                    <Image
-                      src="/amandine.svg"
-                      width={100}
-                      height={100}
-                      alt="avatar"
-                    />
-                  </Avatar>
-                  <Avatar className="h-11 w-11 -ml-2 border border-white">
-                    <Image
-                      src="/orlane.svg"
-                      width={100}
-                      height={100}
-                      alt="avatar"
-                    />
-                  </Avatar>
-                  <Avatar className="h-11 w-11 -ml-2 border border-white">
-                    <Image
-                      src="/jon.svg"
-                      width={100}
-                      height={100}
-                      alt="avatar"
-                    />
-                  </Avatar>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <TeamShare />
       </div>
     </div>
   );

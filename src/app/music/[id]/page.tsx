@@ -21,6 +21,8 @@ import {
 } from "react";
 // import '../../styles/transitions.css'
 import { useRouter } from "next/navigation";
+import { PlayCircle, RefreshCcw } from "lucide-react";
+import { MusicDataTable } from "../components/MusicDataTable";
 
 interface Props {
   id: string;
@@ -118,7 +120,7 @@ export default function Album() {
         const titleStyle = { viewTransitionName: `title-${album.idAlbum}` };
         return (
           <Layout key={album.idAlbum}>
-            <div className="container mx-auto max-w-screen-lg px-6 lg:px-0 flex flex-col items-start md:items-end md:flex-row pt-8 pb-12 overflow-hidden">
+            <div className="container mx-auto max-w-screen-xl 2xl:px-0 px-4 flex flex-col items-start md:flex-row pt-8 pb-12 overflow-hidden">
               <Record
                 albumId={album.idAlbum}
                 title={album.strAlbum}
@@ -126,110 +128,40 @@ export default function Album() {
                 isPlaying={isPlaying}
                 currentTrackPosition={currentTrackPosition}
               />
-              <div className="flex-1 flex flex-col justify-end pt-8">
+              <div className="flex-1 flex flex-col justify-end pt-4">
                 <h1
-                  className="text-5xl font-bold tracking-tight text-gray-900"
+                  className="text-5xl font-bold tracking-tight text-white"
                   style={titleStyle}
                 >
                   {album.strAlbum}
                 </h1>
-                <p className="mt-3 text-3xl">{album.strArtist}</p>
-                <p className="mt-2 text-lg">
+                <p className="mt-4 text-3xl text-white">{album.strArtist}</p>
+                <p className="mt-2 text-lg  text-white">
                   {album.strGenre} — {album.intYearReleased}
                 </p>
-                <div className="mt-3 flex">
+                <div className="mt-[26px] flex flex-wrap gap-4">
                   <button
                     type="button"
-                    className="text-pink-600 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-lg px-10 py-3 text-center inline-flex items-center dark:focus:ring-gray-500 mr-4"
+                    className="text-pink-600 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-normal rounded-lg text-lg px-10 py-3 text-center inline-flex items-center dark:focus:ring-gray-500"
                     onClick={() => {
                       setIsPlaying(true);
-                      // setCurrentTrackPosition(album.tracks[0].position)
                     }}
                   >
-                    <svg
-                      aria-hidden="true"
-                      className="w-6 h-6 mr-2 -ml-1 text-pink-600"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                        clipRule="evenodd"
-                      ></path>
-                    </svg>
+                    <PlayCircle className="h-5 w-5 mr-2" />
                     Play
                   </button>
-                  {/* <PlayButton
-                                        tracks={album.tracks}
-                                        albumId={album.idAlbum}
-                                        artist={album.strArtist}
-                                        imageUrl={album.strAlbumThumb}
-                                    /> */}
                   <button
                     type="button"
-                    className="text-pink-600 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-lg px-10 py-3 text-center inline-flex items-center dark:focus:ring-gray-500 mr-4"
+                    className="text-pink-600 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-normal rounded-lg text-lg px-10 py-3 text-center inline-flex items-center dark:focus:ring-gray-500"
                   >
-                    <svg
-                      className="w-6 h-6 mr-2 -ml-1 text-pink-600"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
-                        clipRule="evenodd"
-                      ></path>
-                    </svg>
+                    <RefreshCcw className="h-5 w-5 mr-2" />
                     Shuffle
                   </button>
                 </div>
               </div>
             </div>
-            <div className="container mx-auto max-w-screen-lg mb-10">
-              <ul className="text-xl">
-                {album.tracks.map((track: any) => {
-                  const isCurrentTrack = track.position == currentTrackPosition;
-                  // console.log(isCurrentTrack)
-                  return (
-                    <li
-                      key={track.id}
-                      className="hover:bg-gray-50 cursor-pointer px-6 py-4 flex border-b first:border-t items-center"
-                      onClick={() => {
-                        setCurrentTrackPosition(track.position);
-                        setTitle(track.title);
-                        console.log(currentTrackPosition);
-                        console.log(isPlaying);
-                        if (isCurrentTrack && isPlaying === true)
-                          setIsPlaying(false);
-                        else setIsPlaying(true);
-                      }}
-                    >
-                      <span className="text-gray-500 w-8 mr-2">
-                        {/* {console.log("track.position:"+track.position + " current track:" + currentTrackPosition)} */}
-                        {/* {console.log("current track:" + isCurrentTrack, "is playing:" + isPlaying)} */}
-                        {isCurrentTrack && !isPlaying
-                          ? playIcon
-                          : isCurrentTrack && isPlaying
-                          ? pauseIcon
-                          : track.position}
-                      </span>
-                      <span className="font-medium">{track.title}</span>
-                      <span className="text-gray-500 ml-auto">
-                        {track.length}
-                      </span>
-                    </li>
-                  );
-                })}
-              </ul>
-              {/* <TrackList
-                                tracks={album.tracks}
-                                albumId={album.idAlbum}
-                                artist={album.strArtist}
-                                imageUrl={album.strAlbumThumb}
-                            /> */}
+            <div className="container mx-auto max-w-screen-xl mb-10 2xl:px-0 px-4">
+              <MusicDataTable album={album} />
             </div>
             {album.tracks.map((track: any) => {
               return (
