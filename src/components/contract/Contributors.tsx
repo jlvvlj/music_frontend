@@ -26,8 +26,6 @@ import { StepProps, TeamMember } from "./types";
 import { isOwner } from "./utils";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import TeamShare from "./TeamShare";
-import UploadTracks from "./UploadTracks";
-import UploadTrackTable from "./UploadTrackTable";
 
 type Tab = "team" | "solo";
 const TABS: {
@@ -143,7 +141,6 @@ const Contributors = ({ updateStep, children }: StepProps) => {
 
   return (
     <div className={cn("grid grid-cols-2 h-full shadow-lg border rounded-3xl")}>
-      {/* <UploadTracks /> */}
       <div className="flex-grow bg-modal pt-8">
         <Tabs
           value={tab}
