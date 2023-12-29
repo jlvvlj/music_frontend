@@ -439,3 +439,7 @@
 .right-card .minus-btn{
     display: none;
 }
+
+audio::-webkit-media-controls-panel {
+    background-color:  hsl(var(--modal));
+}

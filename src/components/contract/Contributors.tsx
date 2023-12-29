@@ -26,6 +26,8 @@ import { StepProps, TeamMember } from "./types";
 import { isOwner } from "./utils";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import TeamShare from "./TeamShare";
+import UploadTracks from "./UploadTracks";
+import UploadTrackTable from "./UploadTrackTable";
 
 type Tab = "team" | "solo";
 const TABS: {
@@ -141,6 +143,7 @@ const Contributors = ({ updateStep, children }: StepProps) => {
 
   return (
     <div className={cn("grid grid-cols-2 h-full shadow-lg border rounded-3xl")}>
+      {/* <UploadTracks /> */}
       <div className="flex-grow bg-modal pt-8">
         <Tabs
           value={tab}
@@ -168,12 +171,6 @@ const Contributors = ({ updateStep, children }: StepProps) => {
                     )}
                     key={index}
                   >
-                    {/* <Avatar className="bg-[#A3D3FF]">
-                  <AvatarImage src={member.avatar} />
-                  <AvatarFallback className="bg-transparent">
-                    {fallbackAvatar(member.name)}
-                  </AvatarFallback>
-                </Avatar> */}
                     <UploadButton
                       title={fallbackAvatar(member.name)}
                       className="rounded-full"
@@ -198,24 +195,6 @@ const Contributors = ({ updateStep, children }: StepProps) => {
                 ))}
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)}>
-                    {/* <FormField
-              control={form.control}
-              name="avatar"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <UploadButton
-                      title="OM"
-                      className="rounded-full"
-                      files={files}
-                      setFiles={setFiles}
-                      imageUrl={field.value || null}
-                      onImageChange={field.onChange}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            /> */}
                     <div className="grid grid-cols-2 gap-4">
                       <FormField
                         control={form.control}
@@ -348,6 +327,7 @@ const Contributors = ({ updateStep, children }: StepProps) => {
           </div>
         </Tabs>
       </div>
+      {/* <UploadTrackTable /> */}
       <div className="relative flex items-end px-4 flex-col py-7 bg-modal-foreground rounded-r-3xl">
         <TeamShare />
       </div>

@@ -294,3 +294,42 @@ export const tracks = [{
     "YourRevenues": "€3600.0",
     "platforms": ["Spotify", "Youtube"],
 }]
+
+export const modalTracks = [
+    {
+        "id": "1",
+        "title": "Jenny Was",
+        "status": "/jenny_was.mp3",
+        "album": "Edit track"
+    },
+    {
+        "id": "2",
+        "title": "Brightside",
+        "status": "/brightside.mp3",
+        "album": "Edit track"
+    },
+    {
+        "id": "3",
+        "title": "Like You",
+        "status": "/like_you.mp3",
+        "album": "Edit track"
+    },
+    {
+        "id": "4",
+        "title": "Somebody",
+        "status": "/somebody.mp3",
+        "album": "Edit track"
+    },
+    {
+        "id": "5",
+        "title": "These Things",
+        "status": "/these_things.mp3",
+        "album": "Edit track"
+    },
+    {
+        "id": "6",
+        "title": "Andy",
+        "status": "/andy.mp3",
+        "album": "Edit track"
+    }
+]
