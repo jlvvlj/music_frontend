@@ -28,7 +28,7 @@ export default function UploadTracks() {
     }
 
     const handleRemoveAudio = () => {
-        setSelectedFile("")
+        setSelectedAudio("")
     }
 
 
