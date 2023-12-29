@@ -104,7 +104,7 @@ export default function Player({ album, title, position, artist, imageUrl, isPla
   }, [progress])
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-gray-100">
+    <div className="fixed bottom-0 lg:left-[250px] left-[72px] right-0 bg-gray-100">
       <div className="flex-1 bg-gray-200 h-1.5 dark:bg-gray-700">
         <div className="bg-pink-500 h-1.5" style={{ width: `${progress}%` }}></div>
       </div>

@@ -124,7 +124,7 @@ const Graph = () => {
                     <TabsTrigger value="viewone" onClick={handleTabClick}>View One</TabsTrigger>
                 </TabsList>
                 <TabsContent value="overview" className="space-y-4">
-                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mt-4">
+                    <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-4 mt-4">
                         <Card className='flex flex-col justify-between'>
                             <CardHeader className="flex flex-col justify-between space-y-0 pb-2">
                                 <CardTitle className="pb-2">Monthly Streams Revenue</CardTitle>
@@ -273,7 +273,7 @@ const Graph = () => {
                             </CardContent>
                         </Card>
                     </div>
-                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+                    <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-7">
                         <Card className="col-span-3">
                             <CardHeader>
                                 <CardTitle>Top Tracks</CardTitle>
@@ -372,10 +372,10 @@ const Graph = () => {
                             </CardContent>
                         </Card>
                     </div>
-                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+                    <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-7">
                         <Card className="col-span-4">
                             <CardHeader>
-                                <CardTitle>Streaming  Data</CardTitle>
+                                <CardTitle>Streaming Data</CardTitle>
                             </CardHeader>
                             <CardContent className="pl-2">
                                 <Overview />

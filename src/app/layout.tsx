@@ -1,8 +1,9 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Providers } from "./providers";
-// import './globals.css'
 import { Roboto_Mono, Inter, Noto_Sans_Display } from "next/font/google";
+import Sidebar from "./Sidebar";
+import SidebarLayout from "./SidebarLayout";
 
 const roboto = Roboto_Mono({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
@@ -20,12 +21,8 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={roboto.className}>
-          <Providers>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              {children}
-            </ThemeProvider>
-          </Providers>
+        <body className={`${roboto.className} flex`}>
+          <SidebarLayout children={children} />
         </body>
       </html>
     </ClerkProvider>

@@ -22,6 +22,8 @@ import CreateTrackTabs from "@/components/track/createTrackTabs";
 import TracksTable from "./tracks_table";
 import Graph from "./graph";
 import NewContract from "@/components/contract/NewContractModal";
+import { Menu } from "lucide-react";
+import Header from "../Header";
 
 const cards = [
   {
@@ -54,17 +56,6 @@ export default function DashboardPage() {
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <div className="md:hidden"></div>
         <div className="hidden flex-col md:flex">
-          <div className="border-b">
-            <div className="flex h-16 items-center px-4">
-              <TeamSwitcher />
-              <MainNav className="mx-6" />
-              <div className="ml-auto flex items-center space-x-4">
-                <Search />
-                <ModeToggle />
-                <UserNav />
-              </div>
-            </div>
-          </div>
           <div className="flex-1 space-y-4 p-8 pt-6">
             <div className="flex items-center justify-between space-y-2">
               <h2 className="text-3xl font-bold tracking-tight text-white">

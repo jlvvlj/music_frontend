@@ -33,8 +33,8 @@ export default function UploadTracks() {
 
 
     return (
-        <div className="p-8 rounded-2xl bg-modal border border-muted w-full flex flex-col justify-between">
-            <div>
+        <div className="py-8 rounded-2xl bg-modal border border-muted w-full flex flex-col justify-between h-[645px]">
+            <div className="h-[calc(100%-40px)] no-scrollbar overflow-y-scroll px-8">
                 <h1 className="text-3xl font-semibold tracking-tight mb-[60px]">
                     Let’s upload your tracks
                 </h1>
@@ -46,6 +46,7 @@ export default function UploadTracks() {
                     <CardHeader className="flex-row gap-3 space-y-0 items-center py-2.5">
                         <UploadCloud className="h-5 w-5" />
                         <div>
+                            <h6 className="text-base">Upload your files</h6>
                             <p className="text-xs">Drag and drop your Cover and Tracks Folder.</p>
                         </div>
                     </CardHeader>
@@ -55,9 +56,9 @@ export default function UploadTracks() {
                             <div>
                                 <UploadCloud className="h-5 w-5 mb-4 mx-auto" />
                                 <h6 className="text-[13px]">Choose a file or drag & drop it here</h6>
-                                <p className="text-[#737373] text-[13px] mx-3">Only jpg or png. Up to 50 MB.</p>
+                                <p className="text-[#737373] text-[13px] mx-4">Only jpg or png. Up to 50 MB.</p>
                                 <div className="text-center mt-2">
-                                    <label className="text-[11px] bg-modal p-1 h-[34px] border border-border3 rounded py-2 cursor-pointer">
+                                    <label className="text-[11px] bg-modal p-1 h-[34px] border border-border3 rounded-xl py-2 cursor-pointer">
                                         Select Cover
                                         <input type="file" hidden onChange={handleFileUpload} />
                                     </label>
@@ -76,9 +77,9 @@ export default function UploadTracks() {
                             <div>
                                 <UploadCloud className="h-5 w-5 mb-4 mx-auto" />
                                 <h6 className="text-[13px]">Choose a file or drag & drop it here</h6>
-                                <p className="text-[#737373] text-[13px] mx-3">Only mp3 or aac. Up to 50 MB.</p>
+                                <p className="text-[#737373] text-[13px] mx-4">Only mp3 or aac. Up to 50 MB.</p>
                                 <div className="text-center mt-2">
-                                    <label className="text-[11px] bg-modal p-1 h-[34px] border border-border3 rounded py-2 cursor-pointer">
+                                    <label className="text-[11px] bg-modal p-1 h-[34px] border border-border3 rounded-xl py-2 cursor-pointer">
                                         Select Audio
                                         <input type="file" hidden onChange={handleAudioUpload} />
                                     </label>
@@ -99,7 +100,7 @@ export default function UploadTracks() {
                     </CardContent>
                 </Card>
             </div>
-            <div className="flex justify-between w-full mt-8">
+            <div className="flex justify-between w-full mt-8 px-8">
                 <Button
                     className="bg-mblue"
                     variant="outline"

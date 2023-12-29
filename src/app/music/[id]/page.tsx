@@ -120,7 +120,7 @@ export default function Album() {
         const titleStyle = { viewTransitionName: `title-${album.idAlbum}` };
         return (
           <Layout key={album.idAlbum}>
-            <div className="container mx-auto max-w-screen-xl 2xl:px-0 px-4 flex flex-col items-start md:flex-row pt-8 pb-12 overflow-hidden">
+            <div className="container mx-auto max-w-screen-xl 2xl:px-0 px-4 flex flex-col items-start lg:flex-row pt-8 pb-12 overflow-hidden">
               <Record
                 albumId={album.idAlbum}
                 title={album.strAlbum}
