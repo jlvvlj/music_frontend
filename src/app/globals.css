@@ -67,6 +67,8 @@
         --main-blue: 208, 99%, 65%;
 
         --white3: 0, 0%, 0%;
+
+        --blueForeground: 208, 100%, 82%;
     }
 
     .dark {
@@ -130,6 +132,8 @@
         --bg-blue: 208, 99%, 65%;
 
         --white3: 0, 0%, 100%;
+
+        --blueForeground: 212, 78%, 23%;
     }
 }
 

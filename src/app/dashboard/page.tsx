@@ -13,17 +13,10 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-import MainNav from "@/components/dashboard/main-nav";
-import Search from "@/components/dashboard/search";
-import TeamSwitcher from "@/components/dashboard/team-switcher";
-import UserNav from "@/components/dashboard/user-nav";
-import ModeToggle from "@/components/ui/mode-toggle";
 import CreateTrackTabs from "@/components/track/createTrackTabs";
 import TracksTable from "./tracks_table";
 import Graph from "./graph";
 import NewContract from "@/components/contract/NewContractModal";
-import { Menu } from "lucide-react";
-import Header from "../Header";
 
 const cards = [
   {

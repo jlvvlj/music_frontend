@@ -28,13 +28,6 @@ import { Sidebar } from "./components/sidebar"
 import { listenNowAlbums, madeForYouAlbums } from "./data/albums"
 import { playlists } from "./data/playlists"
 
-import MainNav from "@/components/dashboard/main-nav"
-import TeamSwitcher from "@/components/dashboard/team-switcher"
-import Search from "@/components/dashboard/search"
-import ModeToggle from "@/components/ui/mode-toggle"
-import UserNav from "@/components/dashboard/user-nav"
-
-
 export const metadata: Metadata = {
   title: "Music App",
   description: "Example music app using the components.",

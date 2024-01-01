@@ -8,12 +8,6 @@
 import Image from "next/image"
 import { SidebarNav } from "@/app/settings/components/sidebar-nav"
 import { Separator } from "@/components/ui/separator"
-import TeamSwitcher from "@/components/dashboard/team-switcher"
-import MainNav from "@/components/dashboard/main-nav"
-import Search from "@/components/dashboard/search"
-import ModeToggle from "@/components/ui/mode-toggle"
-import UserNav from "@/components/dashboard/user-nav"
-
 
 const sidebarNavItems = [
   {
