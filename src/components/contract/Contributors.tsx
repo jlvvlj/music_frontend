@@ -8,7 +8,6 @@ import * as z from "zod";
 // ** Component
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
@@ -26,8 +25,6 @@ import { StepProps, TeamMember } from "./types";
 import { isOwner } from "./utils";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import TeamShare from "./TeamShare";
-import UploadTrackTable from "./UploadTrackTable";
-import UploadTracks from "./UploadTracks";
 
 type Tab = "team" | "solo";
 const TABS: {
@@ -143,8 +140,7 @@ const Contributors = ({ updateStep, children }: StepProps) => {
 
   return (
     <div className={cn("grid grid-cols-2 h-full shadow-lg border rounded-3xl")}>
-      <UploadTracks />
-      {/* <div className="flex-grow bg-modal pt-8">
+      <div className="flex-grow bg-modal pt-8">
         <Tabs
           value={tab}
           onValueChange={onTabChange}
@@ -326,11 +322,10 @@ const Contributors = ({ updateStep, children }: StepProps) => {
             </Button>
           </div>
         </Tabs>
-      </div> */}
-      <UploadTrackTable />
-      {/* <div className="relative flex items-end px-4 flex-col py-7 bg-modal-foreground rounded-r-3xl">
+      </div>
+      <div className="relative flex items-end px-4 flex-col py-7 bg-modal-foreground rounded-r-3xl">
         <TeamShare />
-      </div> */}
+      </div>
     </div>
   );
 };
