@@ -88,7 +88,7 @@ const CreateStepCards = ({
   return (
     <>
       <div className="h-full flex flex-col">
-        <div className="flex-1">{loadCardByStep(Stepper)}</div>
+        <div className="flex-1 h-full">{loadCardByStep(Stepper)}</div>
       </div>
     </>
   );

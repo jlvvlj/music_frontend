@@ -402,7 +402,7 @@
 .dashboard-tablebody tr td:nth-child(5),
 .dashboard-table tr th:nth-child(5){
     min-width: 160px;
-    width: 220px;
+    width: 180px;
 }
 .dashboard-tablebody tr td:nth-child(6),
 .dashboard-table tr th:nth-child(6),
@@ -412,7 +412,7 @@
 .dashboard-tablebody tr td:last-child,
 .dashboard-table tr th:last-child{
     min-width: 130px;
-    width: 180px;
+    width: 150px;
 }
 .dashboard-tablebody tr td:nth-child(6),
 .dashboard-tablebody tr td:first-child,

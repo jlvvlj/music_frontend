@@ -8,7 +8,6 @@ import * as z from "zod";
 // ** Component
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
@@ -324,7 +323,6 @@ const Contributors = ({ updateStep, children }: StepProps) => {
           </div>
         </Tabs>
       </div>
-      {/* <UploadTrackTable /> */}
       <div className="relative flex items-end px-4 flex-col py-7 bg-modal-foreground rounded-r-3xl">
         <TeamShare />
       </div>
