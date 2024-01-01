@@ -1,13 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/registry/new-york/ui/accordion";
 import { Home, Menu } from "lucide-react";
 import { Music, Settings } from "lucide-react";
 import Link from "next/link";
-
-const menuSection = [
-    { title: "Dashboard", icon: <Home className="h-5 w-5 mr-3" /> },
-    { title: "Music", icon: <Music className="h-5 w-5 mr-3" /> },
-    { title: "Settings", icon: <Settings className="h-5 w-5 mr-3" /> }
-]
 
 interface ISidebar {
     open: boolean;
@@ -31,12 +26,32 @@ const Sidebar: React.FC<ISidebar> = ({ open, setOpen }) => {
                     </button>
                 </div>
                 <div className="p-3">
-                    {menuSection.map((menu, index) =>
-                        <Button key={index} variant="ghost" className="w-full justify-start items-center text-white mb-1">
-                            {menu.icon}
-                            <span>{menu.title}</span>
-                        </Button>
-                    )}
+                    <Button variant="ghost" className="w-full justify-start items-center text-white mb-1">
+                        <Home className="h-5 w-5 mr-3" />
+                        <span>Dashboard</span>
+                    </Button>
+                    <Accordion type="single" collapsible>
+                        <AccordionItem value="item-1" className="border-0">
+                            <AccordionTrigger className="p-0 w-full justify-between items-center text-white mb-1 px-4 py-2.5 rounded-md hover:no-underline hover:bg-accent">
+                                <div className="flex">
+                                    <Settings className="h-5 w-5 mr-3" />
+                                    <span>Settings</span>
+                                </div>
+                            </AccordionTrigger>
+                            <AccordionContent>
+                                <Button variant="ghost" className="pl-12 w-full justify-start items-center text-white mb-1">
+                                    Owner settings
+                                </Button>
+                                <Button variant="ghost" className="pl-12 w-full justify-start items-center text-white mb-1">
+                                    Artist settings
+                                </Button>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                    <Button variant="ghost" className="w-full justify-start items-center text-white mb-1">
+                        <Music className="h-5 w-5 mr-3" />
+                        <span>Music</span>
+                    </Button>
                 </div>
             </div>
         </div>
