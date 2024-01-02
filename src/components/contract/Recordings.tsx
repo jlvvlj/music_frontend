@@ -161,8 +161,8 @@ const Recordings = ({ updateStep }: StepProps) => {
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
-      <div className="w-full px-10 pb-7 pt-16 bg-modal rounded-s-3xl h-full flex flex-col justify-between">
-        <div>
+      <div className="w-full pb-7 pt-16 bg-modal rounded-s-3xl h-[645px] flex flex-col justify-between">
+        <div className="h-[calc(100%-40px)] no-scrollbar overflow-y-scroll px-10">
           <h1 className="text-3xl font-semibold tracking-tight mb-3">
             Now some recordings
           </h1>
@@ -330,7 +330,7 @@ const Recordings = ({ updateStep }: StepProps) => {
             </Tabs>
           </Card>
         </div>
-        <div className="flex justify-between w-full mt-8">
+        <div className="flex justify-between w-full mt-8 px-10">
           <Button
             className="bg-mblue"
             variant="outline"
@@ -349,61 +349,63 @@ const Recordings = ({ updateStep }: StepProps) => {
           </Button>
         </div>
       </div>
-      <div className="relative flex items-end px-4 flex-col py-7 bg-modal-foreground rounded-r-3xl">
-        <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
-          <h6 className="text-2xl	mb-3">Recordings</h6>
-          <p className="text-muted-foreground mb-7 text-sm">
-            Artists participating in this contract.
-          </p>
-          <div className="pl-10">
-            <div className="mb-14">
-              <h6 className="text-lg mb-2.5">Albums ( LPs ) - Firm</h6>
-              <p className="text-muted-foreground mb-5 text-sm">
-                Artists participating in this contract.
-              </p>
-              <div className="pl-4 flex flex-wrap gap-[18px]">
-                {recordingCard.map((card, index) => (
-                  <Card
-                    key={index}
-                    className="bg-modal-foreground border-[#1D1D1F] pt-2 pl-2.5 pr-6 pb-4 w-[132px]"
-                  >
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
-                      <CardTitle className="text-xs font-normal pb-5">
-                        {card.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-0">
-                      <div className="text-xs font-normal text-[#4EABFE]">
-                        {card.cost}
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+      <div className="relative flex items-end px-4 flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
+        <div className="no-scrollbar overflow-y-scroll">
+          <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
+            <h6 className="text-2xl	mb-3">Recordings</h6>
+            <p className="text-muted-foreground mb-7 text-sm">
+              Artists participating in this contract.
+            </p>
+            <div className="pl-10">
+              <div className="mb-14">
+                <h6 className="text-lg mb-2.5">Albums ( LPs ) - Firm</h6>
+                <p className="text-muted-foreground mb-5 text-sm">
+                  Artists participating in this contract.
+                </p>
+                <div className="pl-4 flex flex-wrap gap-[18px]">
+                  {recordingCard.map((card, index) => (
+                    <Card
+                      key={index}
+                      className="bg-modal-foreground border-[#1D1D1F] pt-2 pl-2.5 pr-6 pb-4 w-[132px]"
+                    >
+                      <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
+                        <CardTitle className="text-xs font-normal pb-5">
+                          {card.title}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-0">
+                        <div className="text-xs font-normal text-[#4EABFE]">
+                          {card.cost}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
               </div>
-            </div>
-            <div className="mb-14">
-              <h6 className="text-lg mb-2.5">Singles ( LPs ) - Firm</h6>
-              <p className="text-muted-foreground mb-5 text-sm">
-                Artists participating in this contract.
-              </p>
-              <div className="pl-4 flex flex-wrap gap-[18px]">
-                {recordingCard.map((card, index) => (
-                  <Card
-                    key={index}
-                    className="bg-modal-foreground border-[#1D1D1F] pt-2 pl-2.5 pr-6 pb-4 w-[132px]"
-                  >
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
-                      <CardTitle className="text-xs font-normal pb-5">
-                        {card.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-0">
-                      <div className="text-xs font-normal text-[#4EABFE]">
-                        {card.cost}
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+              <div className="mb-14">
+                <h6 className="text-lg mb-2.5">Singles ( LPs ) - Firm</h6>
+                <p className="text-muted-foreground mb-5 text-sm">
+                  Artists participating in this contract.
+                </p>
+                <div className="pl-4 flex flex-wrap gap-[18px]">
+                  {recordingCard.map((card, index) => (
+                    <Card
+                      key={index}
+                      className="bg-modal-foreground border-[#1D1D1F] pt-2 pl-2.5 pr-6 pb-4 w-[132px]"
+                    >
+                      <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
+                        <CardTitle className="text-xs font-normal pb-5">
+                          {card.title}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-0">
+                        <div className="text-xs font-normal text-[#4EABFE]">
+                          {card.cost}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

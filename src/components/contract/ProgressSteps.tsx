@@ -47,7 +47,7 @@ const ProgressSteps = ({ className, step: activeStep, updateStep }: Props) => {
             <div key={step} className="relative z-[1] w-fit">
               <div
                 className={clsx(
-                  "w-3 h-3 rounded-full border-2 border-mblue border-solid  duration-300 ease-in flex justify-center items-center cursor-pointer",
+                  "w-5 h-5 rounded-full border-2 border-mblue border-solid  duration-300 ease-in flex justify-center items-center cursor-pointer",
                   activeStep > step ? "bg-mblue" : " bg-modal"
                 )}
                 onClick={() => {
@@ -56,14 +56,14 @@ const ProgressSteps = ({ className, step: activeStep, updateStep }: Props) => {
               >
                 {activeStep > step ? (
                   <span className="relative z-10 flex h-[10px] w-[10px] items-center justify-center rounded-full bg-mblue">
-                    <Check className="h-2 w-2" aria-hidden="true" />
+                    <Check className="h-3 w-3" aria-hidden="true" />
                   </span>
                 ) : activeStep === step ? (
-                  <div className="rounded-full h-1 w-1 bg-mblue"></div>
+                  <div className="rounded-full h-2 w-2 bg-mblue"></div>
                 ) : (
                   <span
                     className={clsx(
-                      "text-[5px]",
+                      "text-[10px]",
                       activeStep >= step ? "" : "text-mblue"
                     )}
                   >

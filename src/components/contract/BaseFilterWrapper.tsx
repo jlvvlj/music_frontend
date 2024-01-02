@@ -59,7 +59,7 @@ export default function BaseFilterWrapper({
       {showDetails ? (
         <>{loadCardByStep()}</>
       ) : (
-        <div className="bg-modal px-[55px] pt-16 pb-24 rounded-3xl">
+        <div className="bg-modal px-[55px] pt-16 pb-24 rounded-3xl h-[645px] no-scrollbar overflow-y-scroll">
           <div className="w-full flex justify-between">
             <div className="space-y-6">
               <h1 className="text-3xl font-semibold tracking-tight">
@@ -73,7 +73,7 @@ export default function BaseFilterWrapper({
           <div className="hidden space-y-6 pb-16 md:block mt-14">
             <div className="mt-4 mx-auto flex w-full flex-col justify-center space-y-6">
               <div className="flex flex-col space-y-2 text-center">
-                <p className="text-sm text-white lg:text-2xl leading-5 font-normal">
+                <p className="text-sm lg:text-2xl leading-5 font-normal">
                   {STEPS[currentStep - 1].subTitle}
                 </p>
               </div>

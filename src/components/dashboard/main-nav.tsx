@@ -12,31 +12,31 @@ export default function MainNav({
     >
       <Link
         href="/dashboard"
-        className="text-sm font-medium transition-colors text-white hover:text-white"
+        className="text-sm font-medium transition-colors text-white3"
       >
         Dashboard
       </Link>
       <Link
         href="/contracts"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-white"
+        className="text-sm font-medium text-muted-foreground transition-colors hover:text-white3"
       >
         Create Track
       </Link>
       <Link
         href="/music/"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-white"
+        className="text-sm font-medium text-muted-foreground transition-colors hover:text-white3"
       >
         Your Tracks
       </Link>
       <Link
         href="/settings"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-white"
+        className="text-sm font-medium text-muted-foreground transition-colors hover:text-white3"
       >
         Owner Settings
       </Link>
       <Link
         href="/artist-settings"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-white"
+        className="text-sm font-medium text-muted-foreground transition-colors hover:text-white3"
       >
         Artist Settings
       </Link>

@@ -15,8 +15,8 @@ const Header: React.FC<ISidebar> = ({ open, setOpen }) => {
   return (
     <div className="border-b">
       <div className="flex h-16 items-center px-4">
-        <Button onClick={() => setOpen(true)} className={`${open ? "hidden" : "flex"} h-9 w-9 rounded-full justify-center items-center p-0 bg-transparent hover:bg-[rgba(255,255,255,0.06)] mr-3`}>
-          <Menu className={`h-5 w-5 text-white`} />
+        <Button onClick={() => setOpen(true)} className={`${open ? "hidden" : "flex"} h-9 w-9 rounded-full justify-center items-center p-0 bg-transparent hover:bg-lightWhite3 mr-3 text-white3`}>
+          <Menu className={`h-5 w-5`} />
         </Button>
         <TeamSwitcher />
         <MainNav className="mx-6" />

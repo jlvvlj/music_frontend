@@ -46,7 +46,7 @@
         --modal-foreground: 0, 0%, 87%;
 
         --background3: 0 0% 100%;
-        --foreground3: 0, 0%, 7%;
+        --foreground3: 0, 0%, 100%;
 
         --muted3: 210 40% 96.1%;
         --muted-foreground3: 215.4 16.3% 46.9%;
@@ -67,6 +67,7 @@
         --main-blue: 208, 99%, 65%;
 
         --white3: 0, 0%, 0%;
+        --lightWhite3: 0, 0%, 0%, 0.06;
 
         --blueForeground: 208, 100%, 82%;
     }
@@ -114,7 +115,7 @@
         --muted3-foreground: 215 20.2% 65.1%;
 
         --background3: 0, 0%, 7%;
-        --foreground3: 210 40% 98%;
+        --foreground3: 0, 0%, 2%;
 
         --popover3: 0, 0%, 7%;
         --popover3-foreground: 210 40% 98%;
@@ -132,6 +133,7 @@
         --bg-blue: 208, 99%, 65%;
 
         --white3: 0, 0%, 100%;
+        --lightWhite3: 0, 0%, 100%, 0.06;
 
         --blueForeground: 212, 78%, 23%;
     }
@@ -144,7 +146,7 @@
 
     body {
         /* background-color: #020817; */
-        background-color: #060606;
+        background-color: hsl(var(--foreground3));
         color: var(--background);
         font-family: '__Roboto_Mono_ef9641_400', 'Roboto Mono', monospace;
     }

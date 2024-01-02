@@ -67,6 +67,7 @@ module.exports = {
         foreground3: "hsl(var(--foreground3))",
         black3: "hsl(var(--black3))",
         white3: "hsl(var(--white3))",
+        lightWhite3: "hsl(var(--lightWhite3))",
         muted3: {
           DEFAULT: "hsl(var(--muted3))",
           foreground: "hsl(var(--muted3-foreground))",

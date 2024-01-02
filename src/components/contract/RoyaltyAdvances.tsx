@@ -52,7 +52,7 @@ export default function RoyaltyAdvances({
           <p className="text-sm text-muted-foreground">Lorem Ipsum</p>
         </div>
         <div className="p-5">
-          <p className="text-[#FAFAFA] text-base font-normal">
+          <p className="text-base font-normal">
             Advances on Artist Royalties
           </p>
           <p className="text-[#A1A1AA] text-sm font-normal">
@@ -85,25 +85,27 @@ export default function RoyaltyAdvances({
           </div>
         </div>
       </div>
-      <div className="bg-modal-foreground px-4 py-4 rounded-r-3xl">
-        <Card className="bg-modal border-muted">
-          <CardHeader>
-            <CardTitle>Royalties Advances</CardTitle>
-            <CardDescription>Royalties Advances for Artists</CardDescription>
-          </CardHeader>
-          <CardContent className="flex items-center gap-6 px-20">
-            <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
-              <p className="text-white text-[12px] font-normal">At Signature</p>
-              <p className="text-mblue text-[12px] font-normal">EUR 3000</p>
-            </div>
-            <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
-              <p className="text-white text-[12px] font-normal">
-                At commercial release
-              </p>
-              <p className="text-mblue text-[12px] font-normal">EUR 3000</p>
-            </div>
-          </CardContent>
-        </Card>
+      <div className="relative flex items-end px-4 flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
+        <div className="w-full no-scrollbar overflow-y-scroll">
+          <Card className="bg-modal border-muted">
+            <CardHeader>
+              <CardTitle>Royalties Advances</CardTitle>
+              <CardDescription>Royalties Advances for Artists</CardDescription>
+            </CardHeader>
+            <CardContent className="flex items-center gap-6 px-20">
+              <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
+                <p className="text-white text-[12px] font-normal">At Signature</p>
+                <p className="text-mblue text-[12px] font-normal">EUR 3000</p>
+              </div>
+              <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
+                <p className="text-white text-[12px] font-normal">
+                  At commercial release
+                </p>
+                <p className="text-mblue text-[12px] font-normal">EUR 3000</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );

@@ -140,13 +140,13 @@ const Contributors = ({ updateStep, children }: StepProps) => {
 
   return (
     <div className={cn("grid grid-cols-2 h-full shadow-lg border rounded-3xl")}>
-      <div className="flex-grow bg-modal pt-8">
+      <div className="flex-grow bg-modal pt-8 h-[645px] rounded-s-3xl">
         <Tabs
           value={tab}
           onValueChange={onTabChange}
-          className="w-full px-10 py-7 rounded-s-3xl h-full flex flex-col justify-between"
+          className="w-full py-7 rounded-s-3xl h-full flex flex-col justify-between"
         >
-          <div>
+          <div className="h-[calc(100%-40px)] no-scrollbar overflow-y-scroll px-10">
             <h1 className="text-3xl font-semibold tracking-tight mb-3">
               Let’s start with the team
             </h1>
@@ -303,7 +303,7 @@ const Contributors = ({ updateStep, children }: StepProps) => {
               </div>
             </TabsContent>
           </div>
-          <div className="flex justify-between w-full mt-8">
+          <div className="flex justify-between w-full mt-8 px-10">
             <Button
               className="bg-mblue"
               variant="outline"
@@ -323,8 +323,10 @@ const Contributors = ({ updateStep, children }: StepProps) => {
           </div>
         </Tabs>
       </div>
-      <div className="relative flex items-end px-4 flex-col py-7 bg-modal-foreground rounded-r-3xl">
-        <TeamShare />
+      <div className="relative flex items-end px-4 flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
+        <div className="no-scrollbar overflow-y-scroll w-full">
+          <TeamShare />
+        </div>
       </div>
     </div>
   );

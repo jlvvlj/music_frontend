@@ -51,7 +51,7 @@ export default function DashboardPage() {
         <div className="hidden flex-col md:flex">
           <div className="flex-1 space-y-4 p-8 pt-6">
             <div className="flex items-center justify-between space-y-2">
-              <h2 className="text-3xl font-bold tracking-tight text-white">
+              <h2 className="text-3xl font-bold tracking-tight">
                 Your Dashboard
               </h2>
               <div className="flex items-center space-x-2">
@@ -62,7 +62,7 @@ export default function DashboardPage() {
                   <DialogTrigger asChild>
                     <Button variant="outline">Add a new contract</Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-[1070px] h-[645px] overflow-y-scroll no-scrollbar p-0 !rounded-3xl border-none">
+                  <DialogContent className="max-w-[1070px] h-[645px] p-0 !rounded-3xl border-none">
                     <NewContract />
                   </DialogContent>
                 </Dialog>
