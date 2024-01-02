@@ -25,21 +25,22 @@ import { StepProps, TeamMember } from "./types";
 import { isOwner } from "./utils";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import TeamShare from "./TeamShare";
+import { ScrollArea } from "@/registry/new-york/ui/scroll-area";
 
 type Tab = "team" | "solo";
 const TABS: {
   label: string;
   value: Tab;
 }[] = [
-  {
-    label: "Team",
-    value: "team",
-  },
-  {
-    label: "Solo",
-    value: "solo",
-  },
-];
+    {
+      label: "Team",
+      value: "team",
+    },
+    {
+      label: "Solo",
+      value: "solo",
+    },
+  ];
 
 type PropsType = {
   data?: TeamMember[];
@@ -86,9 +87,9 @@ const Contributors = ({ updateStep, children }: StepProps) => {
 
   const onSubmit = (data: ContributorFormValues) => {
     console.log(data);
-    
+
     const _members = [...members];
-    _members.push({...data, id: Date.now()});
+    _members.push({ ...data, id: Date.now() });
     setMembers(_members);
     setTimeout(() => {
       form.reset({
@@ -146,163 +147,165 @@ const Contributors = ({ updateStep, children }: StepProps) => {
           onValueChange={onTabChange}
           className="w-full py-7 rounded-s-3xl h-full flex flex-col justify-between"
         >
-          <div className="h-[calc(100%-40px)] no-scrollbar overflow-y-scroll px-10">
-            <h1 className="text-3xl font-semibold tracking-tight mb-3">
-              Let’s start with the team
-            </h1>
-            <p className="text-sm text-muted-foreground mb-14">
-              Invite your team to join the project.
-            </p>
-            <TabsList className="grid w-full grid-cols-2 mx-auto max-w-[70%]">
-              <TabsTrigger value="team">Team</TabsTrigger>
-              <TabsTrigger value="solo">Solo</TabsTrigger>
-            </TabsList>
-            <TabsContent value="team" className="mt-10">
-              <div className="grid gap-6 items-center justify-center">
-                {members.map((member, index) => (
-                  <div
-                    className={cn(
-                      "flex items-center space-x-4 px-4 py-3 rounded-md w-full",
-                      isOwner(member) ? "bg-mblue" : "bg-modal-foreground"
-                    )}
-                    key={index}
-                  >
-                    <UploadButton
-                      title={fallbackAvatar(member.name)}
-                      className="rounded-full"
-                      files={files}
-                      setFiles={setFiles}
-                      imageUrl={member.avatar || null}
-                      onImageChange={(url) =>
-                        handleAvatarImageChange(url, member)
-                      }
-                    />
+          <ScrollArea className="h-full">
+            <div className="h-[calc(100%-40px)] px-10">
+              <h1 className="text-3xl font-semibold tracking-tight mb-3">
+                Let’s start with the team
+              </h1>
+              <p className="text-sm text-muted-foreground mb-14">
+                Invite your team to join the project.
+              </p>
+              <TabsList className="grid w-full grid-cols-2 mx-auto max-w-[70%]">
+                <TabsTrigger value="team">Team</TabsTrigger>
+                <TabsTrigger value="solo">Solo</TabsTrigger>
+              </TabsList>
+              <TabsContent value="team" className="mt-10">
+                <div className="grid gap-6 items-center justify-center">
+                  {members.map((member, index) => (
                     <div
                       className={cn(
-                        isOwner(member) ? "text-white" : "text-mblue"
+                        "flex items-center space-x-4 px-4 py-3 rounded-md w-full",
+                        isOwner(member) ? "bg-mblue" : "bg-modal-foreground"
                       )}
+                      key={index}
                     >
-                      <p className={cn("text-sm font-medium leading-none")}>
-                        {member.name}
-                      </p>
-                      <p className="text-sm">{member.role}</p>
-                    </div>
-                  </div>
-                ))}
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)}>
-                    <div className="grid grid-cols-2 gap-4">
-                      <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input
-                                placeholder="Name"
-                                className="max-w-[180px] bg-modal-foreground"
-                                {...field}
-                              />
-                            </FormControl>
-                          </FormItem>
-                        )}
+                      <UploadButton
+                        title={fallbackAvatar(member.name)}
+                        className="rounded-full"
+                        files={files}
+                        setFiles={setFiles}
+                        imageUrl={member.avatar || null}
+                        onImageChange={(url) =>
+                          handleAvatarImageChange(url, member)
+                        }
                       />
-                      <FormField
-                        control={form.control}
-                        name="surName"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input
-                                placeholder="Surname"
-                                className="max-w-[180px] bg-modal-foreground"
-                                {...field}
-                              />
-                            </FormControl>
-                          </FormItem>
+                      <div
+                        className={cn(
+                          isOwner(member) ? "text-white" : "text-mblue"
                         )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input
-                                placeholder="Email"
-                                className="max-w-[180px] bg-modal-foreground"
-                                {...field}
-                              />
-                            </FormControl>
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="role"
-                        render={({ field }) => (
-                          <FormItem>
-                            <Select
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                            >
-                              <FormControl className="bg-modal-foreground">
-                                <SelectTrigger className="text-[#6d7d93] font-semibold">
-                                  <SelectValue
-                                    className=""
-                                    placeholder="Role"
-                                  />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent className="">
-                                <SelectItem value="Owner">Owner</SelectItem>
-                                <SelectItem value="Manager">Manager</SelectItem>
-                                <SelectItem value="Musician">
-                                  Musician
-                                </SelectItem>
-                                <SelectItem value="Singer">Singer</SelectItem>
-                                <SelectItem value="Marketer">
-                                  Marketer
-                                </SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </FormItem>
-                        )}
-                      />
-                      <div className="col-span-2 mt-4">
-                        <Button
-                          type="submit"
-                          className="w-full hover:bg-[#5D9DF1] bg-mblue text-foreground"
-                          variant="default"
-                        >
-                          Add contributor
-                        </Button>
+                      >
+                        <p className={cn("text-sm font-medium leading-none")}>
+                          {member.name}
+                        </p>
+                        <p className="text-sm">{member.role}</p>
                       </div>
                     </div>
-                  </form>
-                </Form>
-              </div>
-            </TabsContent>
-            <TabsContent value="solo" className="mt-10">
-              <div className="grid gap-6 items-center justify-center">
-                <div className="flex items-center space-x-4 px-4 bg-mblue py-3 rounded-md w-full mb-5 pr-14 min-w-[300px]">
-                  <Avatar className="bg-[#A3D3FF] h-12 w-12">
-                    <AvatarImage src="" />
-                    <AvatarFallback className="bg-transparent">
-                      {fallbackAvatar("Julie Depree")}
-                    </AvatarFallback>
-                  </Avatar>
+                  ))}
+                  <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)}>
+                      <div className="grid grid-cols-2 gap-4">
+                        <FormField
+                          control={form.control}
+                          name="name"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input
+                                  placeholder="Name"
+                                  className="max-w-[180px] bg-modal-foreground"
+                                  {...field}
+                                />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="surName"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input
+                                  placeholder="Surname"
+                                  className="max-w-[180px] bg-modal-foreground"
+                                  {...field}
+                                />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="email"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input
+                                  placeholder="Email"
+                                  className="max-w-[180px] bg-modal-foreground"
+                                  {...field}
+                                />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="role"
+                          render={({ field }) => (
+                            <FormItem>
+                              <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                              >
+                                <FormControl className="bg-modal-foreground">
+                                  <SelectTrigger className="text-[#6d7d93] font-semibold">
+                                    <SelectValue
+                                      className=""
+                                      placeholder="Role"
+                                    />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent className="">
+                                  <SelectItem value="Owner">Owner</SelectItem>
+                                  <SelectItem value="Manager">Manager</SelectItem>
+                                  <SelectItem value="Musician">
+                                    Musician
+                                  </SelectItem>
+                                  <SelectItem value="Singer">Singer</SelectItem>
+                                  <SelectItem value="Marketer">
+                                    Marketer
+                                  </SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </FormItem>
+                          )}
+                        />
+                        <div className="col-span-2 mt-4">
+                          <Button
+                            type="submit"
+                            className="w-full hover:bg-[#5D9DF1] bg-mblue text-foreground"
+                            variant="default"
+                          >
+                            Add contributor
+                          </Button>
+                        </div>
+                      </div>
+                    </form>
+                  </Form>
+                </div>
+              </TabsContent>
+              <TabsContent value="solo" className="mt-10">
+                <div className="grid gap-6 items-center justify-center">
+                  <div className="flex items-center space-x-4 px-4 bg-mblue py-3 rounded-md w-full mb-5 pr-14 min-w-[300px]">
+                    <Avatar className="bg-[#A3D3FF] h-12 w-12">
+                      <AvatarImage src="" />
+                      <AvatarFallback className="bg-transparent">
+                        {fallbackAvatar("Julie Depree")}
+                      </AvatarFallback>
+                    </Avatar>
 
-                  <div>
-                    <p className="text-sm font-medium leading-none text-white">
-                      Julie Depree
-                    </p>
-                    <p className="text-sm text-white">Master Owner</p>
+                    <div>
+                      <p className="text-sm font-medium leading-none text-white">
+                        Julie Depree
+                      </p>
+                      <p className="text-sm text-white">Master Owner</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </TabsContent>
-          </div>
+              </TabsContent>
+            </div>
+          </ScrollArea>
           <div className="flex justify-between w-full mt-8 px-10">
             <Button
               className="bg-mblue"
@@ -323,10 +326,10 @@ const Contributors = ({ updateStep, children }: StepProps) => {
           </div>
         </Tabs>
       </div>
-      <div className="relative flex items-end px-4 flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
-        <div className="no-scrollbar overflow-y-scroll w-full">
+      <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
+        <ScrollArea className="h-full w-full px-4">
           <TeamShare />
-        </div>
+        </ScrollArea>
       </div>
     </div>
   );

@@ -52,6 +52,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/registry/new-york/ui/popover";
+import { ScrollArea } from "@/registry/new-york/ui/scroll-area";
 
 const recordingCard = [
   { title: "Quantity", cost: "2" },
@@ -162,174 +163,176 @@ const Recordings = ({ updateStep }: StepProps) => {
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
       <div className="w-full pb-7 pt-16 bg-modal rounded-s-3xl h-[645px] flex flex-col justify-between">
-        <div className="h-[calc(100%-40px)] no-scrollbar overflow-y-scroll px-10">
-          <h1 className="text-3xl font-semibold tracking-tight mb-3">
-            Now some recordings
-          </h1>
-          <p className="text-sm text-muted-foreground mb-14">
-            Enter firm and optional recordings details.
-          </p>
-          <Card className="border-none bg-transparent shadow-none">
-            <Tabs className="w-full" value={tab} onValueChange={onTabChange}>
-              <TabsList className="grid w-full grid-cols-2 mb-11 mx-auto max-w-[70%]">
-                <TabsTrigger value="firm">Firm</TabsTrigger>
-                <TabsTrigger value="optional">Optional</TabsTrigger>
-              </TabsList>
+        <ScrollArea className="h-full">
+          <div className="h-[calc(100%-40px)] px-10">
+            <h1 className="text-3xl font-semibold tracking-tight mb-3">
+              Now some recordings
+            </h1>
+            <p className="text-sm text-muted-foreground mb-14">
+              Enter firm and optional recordings details.
+            </p>
+            <Card className="border-none bg-transparent shadow-none">
+              <Tabs className="w-full" value={tab} onValueChange={onTabChange}>
+                <TabsList className="grid w-full grid-cols-2 mb-11 mx-auto max-w-[70%]">
+                  <TabsTrigger value="firm">Firm</TabsTrigger>
+                  <TabsTrigger value="optional">Optional</TabsTrigger>
+                </TabsList>
 
-              <TabsContent value={tab} className="mt-10">
-                <CardContent className="space-y-10 p-0">
-                  <Form {...form}>
-                    <form
-                      className="space-y-10"
-                      onSubmit={form.handleSubmit(onSubmit)}
-                    >
-                      <div className="grid grid-cols-2 gap-4 items-end w-fit mx-auto mt-4">
-                        <FormField
-                          control={form.control}
-                          name="number"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <CardsActivityGoal
-                                  label="ReCordings"
-                                  initialValue={field.value}
-                                  unit=""
-                                  step={1}
-                                  buttonTitle="Set Share"
-                                  minValue={0}
-                                  maxValue={100}
-                                  buttonHidden
-                                  chartHidden
-                                  onClickButton={() => {}}
-                                  isOwner={false}
-                                  setGoal={field.onChange}
-                                />
-                              </FormControl>
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="programType"
-                          render={({ field }) => (
-                            <FormItem>
-                              <Select
-                                onValueChange={(v) =>
-                                  field.onChange(v as ProgramType)
-                                }
-                                value={field.value}
-                              >
-                                <FormControl className="bg-modal-foreground">
-                                  <SelectTrigger className="text-[#6d7d93] font-semibold">
-                                    <SelectValue
-                                      className=""
-                                      placeholder="Type"
-                                    />
-                                  </SelectTrigger>
+                <TabsContent value={tab} className="mt-10">
+                  <CardContent className="space-y-10 p-0">
+                    <Form {...form}>
+                      <form
+                        className="space-y-10"
+                        onSubmit={form.handleSubmit(onSubmit)}
+                      >
+                        <div className="grid grid-cols-2 gap-4 items-end w-fit mx-auto mt-4">
+                          <FormField
+                            control={form.control}
+                            name="number"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <CardsActivityGoal
+                                    label="ReCordings"
+                                    initialValue={field.value}
+                                    unit=""
+                                    step={1}
+                                    buttonTitle="Set Share"
+                                    minValue={0}
+                                    maxValue={100}
+                                    buttonHidden
+                                    chartHidden
+                                    onClickButton={() => { }}
+                                    isOwner={false}
+                                    setGoal={field.onChange}
+                                  />
                                 </FormControl>
-                                <SelectContent className="bg-modal-foreground">
-                                  <SelectItem
-                                    value="album"
-                                    className="focus:bg-mblue"
-                                  >
-                                    <p>Albums ( LPs )</p>
-                                  </SelectItem>
-                                  <SelectItem
-                                    value="single"
-                                    className="focus:bg-mblue"
-                                  >
-                                    <p>Singles ( SPs )</p>
-                                  </SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="grid grid-cols-3 gap-2 items-end mt-4">
-                        <FormField
-                          control={form.control}
-                          name="completedAt"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-[11px]">
-                                Completion date
-                              </FormLabel>
-                              <FormControl>
-                                <DatePicker
-                                  className="max-w-[170px]"
-                                  buttonClassName="w-[140px] text-[11px] bg-modal-foreground"
-                                  date={field.value}
-                                  placeholder="Jan 20, 2023"
-                                  onDateChange={(d) =>
-                                    field.onChange(d || new Date())
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control}
+                            name="programType"
+                            render={({ field }) => (
+                              <FormItem>
+                                <Select
+                                  onValueChange={(v) =>
+                                    field.onChange(v as ProgramType)
                                   }
-                                />
-                              </FormControl>
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="releasedAt"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-[11px]">
-                                Commercial release
-                              </FormLabel>
-                              <FormControl>
-                                <DatePicker
-                                  className="max-w-[170px]"
-                                  buttonClassName="w-[140px] text-[11px] bg-modal-foreground"
-                                  placeholder="Jan 20, 2023"
-                                  date={field.value}
-                                  onDateChange={(d) =>
-                                    field.onChange(d || new Date())
-                                  }
-                                />
-                              </FormControl>
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="optionRightsLimit"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-[11px]">
-                                Option rights limit
-                              </FormLabel>
-                              <FormControl>
-                                <DatePicker
-                                  className="max-w-[170px]"
-                                  buttonClassName="w-[140px] text-[11px] bg-modal-foreground"
-                                  placeholder="Jan 20, 2023"
-                                  date={field.value}
-                                  onDateChange={(d) =>
-                                    field.onChange(d || new Date())
-                                  }
-                                />
-                              </FormControl>
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="w-full flex justify-center items-center pt-2.5">
-                        <Button
-                          type="submit"
-                          variant="outline"
-                          className="px-8 bg-modal-foreground"
-                        >
-                          Add recording
-                        </Button>
-                      </div>
-                    </form>
-                  </Form>
-                </CardContent>
-              </TabsContent>
-            </Tabs>
-          </Card>
-        </div>
+                                  value={field.value}
+                                >
+                                  <FormControl className="bg-modal-foreground">
+                                    <SelectTrigger className="text-[#6d7d93] font-semibold">
+                                      <SelectValue
+                                        className=""
+                                        placeholder="Type"
+                                      />
+                                    </SelectTrigger>
+                                  </FormControl>
+                                  <SelectContent className="bg-modal-foreground">
+                                    <SelectItem
+                                      value="album"
+                                      className="focus:bg-mblue"
+                                    >
+                                      <p>Albums ( LPs )</p>
+                                    </SelectItem>
+                                    <SelectItem
+                                      value="single"
+                                      className="focus:bg-mblue"
+                                    >
+                                      <p>Singles ( SPs )</p>
+                                    </SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                        <div className="grid grid-cols-3 gap-2 items-end mt-4">
+                          <FormField
+                            control={form.control}
+                            name="completedAt"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel className="text-[11px]">
+                                  Completion date
+                                </FormLabel>
+                                <FormControl>
+                                  <DatePicker
+                                    className="max-w-[170px]"
+                                    buttonClassName="w-[140px] text-[11px] bg-modal-foreground"
+                                    date={field.value}
+                                    placeholder="Jan 20, 2023"
+                                    onDateChange={(d) =>
+                                      field.onChange(d || new Date())
+                                    }
+                                  />
+                                </FormControl>
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control}
+                            name="releasedAt"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel className="text-[11px]">
+                                  Commercial release
+                                </FormLabel>
+                                <FormControl>
+                                  <DatePicker
+                                    className="max-w-[170px]"
+                                    buttonClassName="w-[140px] text-[11px] bg-modal-foreground"
+                                    placeholder="Jan 20, 2023"
+                                    date={field.value}
+                                    onDateChange={(d) =>
+                                      field.onChange(d || new Date())
+                                    }
+                                  />
+                                </FormControl>
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control}
+                            name="optionRightsLimit"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel className="text-[11px]">
+                                  Option rights limit
+                                </FormLabel>
+                                <FormControl>
+                                  <DatePicker
+                                    className="max-w-[170px]"
+                                    buttonClassName="w-[140px] text-[11px] bg-modal-foreground"
+                                    placeholder="Jan 20, 2023"
+                                    date={field.value}
+                                    onDateChange={(d) =>
+                                      field.onChange(d || new Date())
+                                    }
+                                  />
+                                </FormControl>
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                        <div className="w-full flex justify-center items-center pt-2.5">
+                          <Button
+                            type="submit"
+                            variant="outline"
+                            className="px-8 bg-modal-foreground"
+                          >
+                            Add recording
+                          </Button>
+                        </div>
+                      </form>
+                    </Form>
+                  </CardContent>
+                </TabsContent>
+              </Tabs>
+            </Card>
+          </div>
+        </ScrollArea>
         <div className="flex justify-between w-full mt-8 px-10">
           <Button
             className="bg-mblue"
@@ -349,8 +352,8 @@ const Recordings = ({ updateStep }: StepProps) => {
           </Button>
         </div>
       </div>
-      <div className="relative flex items-end px-4 flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
-        <div className="no-scrollbar overflow-y-scroll">
+      <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
+        <ScrollArea className="h-full w-full px-4">
           <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
             <h6 className="text-2xl	mb-3">Recordings</h6>
             <p className="text-muted-foreground mb-7 text-sm">
@@ -409,7 +412,7 @@ const Recordings = ({ updateStep }: StepProps) => {
               </div>
             </div>
           </div>
-        </div>
+        </ScrollArea>
       </div>
     </div>
   );

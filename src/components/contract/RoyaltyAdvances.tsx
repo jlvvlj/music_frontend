@@ -12,6 +12,7 @@ import { RadioButtonCard } from "../cards/RadioButtonCard";
 import RoyaltyCard from "./RoyaltyCard";
 import { Button } from "../ui/button";
 import { STEPS } from "./types";
+import { ScrollArea } from "@/registry/new-york/ui/scroll-area";
 
 interface Props extends React.PropsWithChildren {
   currentStep?: number;
@@ -44,24 +45,28 @@ export default function RoyaltyAdvances({
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
-      <div className="flex flex-col gap-10 bg-modal p-8 rounded-l-3xl pt-16">
-        <div className="space-y-6 w-full">
-          <h1 className="text-3xl font-semibold tracking-tight">
-            Royalties Advances
-          </h1>
-          <p className="text-sm text-muted-foreground">Lorem Ipsum</p>
-        </div>
-        <div className="p-5">
-          <p className="text-base font-normal">
-            Advances on Artist Royalties
-          </p>
-          <p className="text-[#A1A1AA] text-sm font-normal">
-            Select if a Royalties Advance will be paid
-          </p>
-        </div>
-        <div className="flex-1 px-5">
-          <RoyaltyCard />
-        </div>
+      <div className="w-full pb-7 pt-16 bg-modal rounded-s-3xl h-[645px] flex flex-col justify-between">
+        <ScrollArea className="h-full">
+          <div className="h-[calc(100%-40px)] px-10">
+            <div className="space-y-6 w-full">
+              <h1 className="text-3xl font-semibold tracking-tight">
+                Royalties Advances
+              </h1>
+              <p className="text-sm text-muted-foreground">Lorem Ipsum</p>
+            </div>
+            <div className="p-5">
+              <p className="text-base font-normal">
+                Advances on Artist Royalties
+              </p>
+              <p className="text-[#A1A1AA] text-sm font-normal">
+                Select if a Royalties Advance will be paid
+              </p>
+            </div>
+            <div className="flex-1 px-5">
+              <RoyaltyCard />
+            </div>
+          </div>
+        </ScrollArea>
         <div className="flex justify-between w-full mt-10 px-4">
           <Button
             className="bg-mblue"
@@ -85,8 +90,8 @@ export default function RoyaltyAdvances({
           </div>
         </div>
       </div>
-      <div className="relative flex items-end px-4 flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
-        <div className="w-full no-scrollbar overflow-y-scroll">
+      <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
+        <ScrollArea className="h-full w-full px-4">
           <Card className="bg-modal border-muted">
             <CardHeader>
               <CardTitle>Royalties Advances</CardTitle>
@@ -105,7 +110,7 @@ export default function RoyaltyAdvances({
               </div>
             </CardContent>
           </Card>
-        </div>
+        </ScrollArea>
       </div>
     </div>
   );

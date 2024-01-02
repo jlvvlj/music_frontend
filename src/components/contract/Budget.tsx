@@ -14,6 +14,7 @@ import { Budget, StepProps } from "./types";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import { Badge } from "@/registry/new-york/ui/badge";
 import { Switch } from "@/registry/default/ui/switch";
+import { ScrollArea } from "@/registry/new-york/ui/scroll-area";
 
 const budgetCards = [
   { id: 1, title: 'Registration', activityTitle: 'Budget' },
@@ -79,71 +80,73 @@ const Budget = ({ updateStep }: StepProps) => {
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
       <div className="w-full pb-7 pt-16 bg-modal rounded-s-3xl h-[645px] flex flex-col justify-between relative">
-        <div className="h-[calc(100%-40px)] no-scrollbar overflow-y-scroll px-10">
-          <h1 className="text-3xl font-semibold tracking-tight mb-3 mt-2.5">
-            Initial Budget
-          </h1>
-          <p className="text-sm text-muted-foreground mb-12">
-            Enter the budget details
-          </p>
-          <Card className="bg-transparent border-none shadow-none">
-            <CardContent className="space-y-6 p-0">
-              <div className="pl-2.5">
-                {budgetCards.map((card, index) =>
-                  <Card key={index} className="border-none bg-modal-foreground mb-8 rounded-3xl	">
-                    <CardHeader className="py-5 pb-0">
-                      <CardTitle className="text-[17px] font-normal flex justify-between">
-                        <div>
-                          <h6>{card.title}</h6>
-                          <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">Budget</Badge>
-                        </div>
-                        <Switch className="mt-2.5" checked={enabled.includes(card.id)} onCheckedChange={() => onCheckHandle(card.id)} />
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="pb-8">
-                      <p className="text-sm	mt-2.5 text-muted-foreground">A budget for  registration will be committed</p>
-                      {enabled.includes(card.id) && <div className="space-y-8 mt-10">
-                        <div className="grid grid-cols-12 gap-6">
-                          <div
-                            className={cn(
-                              "flex items-center justify-between pl-4 rounded-md bg-mblue col-span-12 xl:col-span-10 2xl:col-span-8 w-full"
-                            )}
-                          >
-                            <div>
-                              <p
-                                className={cn(
-                                  "text-sm font-medium leading-none text-[#FAFAFA]"
-                                )}
-                              >
-                                {card.activityTitle}
-                              </p>
-                              <p className="text-sm text-[#B9B9BA]">
-                                Lorem ipsum
-                              </p>
-                            </div>
-                            <CardsActivityGoal
-                              label="EUR"
-                              initialValue={3000}
-                              unit=""
-                              step={10}
-                              buttonTitle="Set Share"
-                              minValue={3000}
-                              maxValue={5000}
-                              buttonHidden
-                              onClickButton={() => { }}
-                              isOwner={true}
-                              setGoal={() => { }}
-                            />
+        <ScrollArea className="h-full">
+          <div className="h-[calc(100%-40px)] px-10">
+            <h1 className="text-3xl font-semibold tracking-tight mb-3 mt-2.5">
+              Initial Budget
+            </h1>
+            <p className="text-sm text-muted-foreground mb-12">
+              Enter the budget details
+            </p>
+            <Card className="bg-transparent border-none shadow-none">
+              <CardContent className="space-y-6 p-0">
+                <div className="pl-2.5">
+                  {budgetCards.map((card, index) =>
+                    <Card key={index} className="border-none bg-modal-foreground mb-8 rounded-3xl	">
+                      <CardHeader className="py-5 pb-0">
+                        <CardTitle className="text-[17px] font-normal flex justify-between">
+                          <div>
+                            <h6>{card.title}</h6>
+                            <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">Budget</Badge>
                           </div>
-                        </div>
-                      </div>}
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+                          <Switch className="mt-2.5" checked={enabled.includes(card.id)} onCheckedChange={() => onCheckHandle(card.id)} />
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="pb-8">
+                        <p className="text-sm	mt-2.5 text-muted-foreground">A budget for  registration will be committed</p>
+                        {enabled.includes(card.id) && <div className="space-y-8 mt-10">
+                          <div className="grid grid-cols-12 gap-6">
+                            <div
+                              className={cn(
+                                "flex items-center justify-between pl-4 rounded-md bg-mblue col-span-12 xl:col-span-10 2xl:col-span-8 w-full"
+                              )}
+                            >
+                              <div>
+                                <p
+                                  className={cn(
+                                    "text-sm font-medium leading-none text-[#FAFAFA]"
+                                  )}
+                                >
+                                  {card.activityTitle}
+                                </p>
+                                <p className="text-sm text-[#B9B9BA]">
+                                  Lorem ipsum
+                                </p>
+                              </div>
+                              <CardsActivityGoal
+                                label="EUR"
+                                initialValue={3000}
+                                unit=""
+                                step={10}
+                                buttonTitle="Set Share"
+                                minValue={3000}
+                                maxValue={5000}
+                                buttonHidden
+                                onClickButton={() => { }}
+                                isOwner={true}
+                                setGoal={() => { }}
+                              />
+                            </div>
+                          </div>
+                        </div>}
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </ScrollArea>
         <div className="flex justify-between w-full mt-10 px-10">
           <Button
             className="bg-mblue"
@@ -172,8 +175,8 @@ const Budget = ({ updateStep }: StepProps) => {
           </div>
         </div>
       </div>
-      <div className="relative flex items-end px-4 flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
-        <div className="w-full no-scrollbar overflow-y-scroll">
+      <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
+        <ScrollArea className="h-full w-full px-4">
           <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
             <h6 className="text-2xl	mb-3">Initial Budget</h6>
             <p className="mb-7 text-sm text-muted-foreground">
@@ -199,7 +202,7 @@ const Budget = ({ updateStep }: StepProps) => {
               ))}
             </div>
           </div>
-        </div>
+        </ScrollArea>
       </div>
     </div>
   );

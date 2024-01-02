@@ -26,6 +26,7 @@ import { CardsActivityGoal } from "@/components/activity-goal";
 import { Separator } from "@/components/ui/separator";
 import { SingleRate, StepProps, TieredRate } from "./types";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
+import { ScrollArea } from "@/registry/new-york/ui/scroll-area";
 
 type Tab = {
   label: string;
@@ -118,215 +119,217 @@ const Royalties = ({ updateStep }: StepProps) => {
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
       <div className="w-full pb-7 pt-16 bg-modal rounded-s-3xl h-[645px] flex flex-col justify-between">
-        <div className="h-[calc(100%-40px)] no-scrollbar overflow-y-scroll px-10">
-          <h1 className="text-3xl font-semibold tracking-tight mb-3">
-            Royalties
-          </h1>
-          <p className="text-sm text-muted-foreground mb-14">
-            Enter the contract royalties details
-          </p>
-          <Card className="bg-transparent border-none shadow-none">
-            <CardContent className="space-y-6 p-0">
-              <Tabs
-                value={tab}
-                className="w-full"
-                onValueChange={onTabChange}
-              >
-                <TabsList className="grid w-full grid-cols-2 mb-10 mx-auto max-w-[70%]">
-                  {TABS.map((t, index) => (
-                    <TabsTrigger key={index} value={t.value}>
-                      {t.label}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-                {TABS.map((t, index) => {
-                  return (
-                    <TabsContent key={index} value={t.value} className="mt-10">
-                      {index === 0 && (
-                        <div
-                          className={cn(
-                            "flex items-center justify-between pl-4 rounded-md bg-modal-foreground col-span-12 xl:col-span-10 2xl:col-span-6 w-full"
-                          )}
-                        >
-                          <div>
-                            <p
-                              className={cn(
-                                "text-sm font-medium leading-none text-[#5D9DF1]"
-                              )}
-                            >
-                              Royalties
-                            </p>
-                            <p className="text-sm text-[#5D9DF1]">
-                              Lorem ipsum
-                            </p>
-                          </div>
-                          <CardsActivityGoal
-                            label="SHARES OF REVENUES"
-                            initialValue={singleRate.percentage}
-                            unit="%"
-                            step={10}
-                            buttonTitle="Set Share"
-                            minValue={0}
-                            maxValue={100}
-                            buttonHidden
-                            onClickButton={() => {}}
-                            isOwner={true}
-                            setGoal={handleChangeSingleRatePercentage}
-                          />
-                        </div>
-                      )}
-                      {index === 1 && (
-                        <div className="col-span-9 space-y-4 mb-5">
-                          {tieredRates &&
-                            !!tieredRates.length &&
-                            tieredRates.map((rate, index) => (
-                              <div
-                                key={index}
-                                className="flex justify-around rounded-md bg-modal-foreground w-full"
+        <ScrollArea className="h-full">
+          <div className="h-[calc(100%-40px)] px-10">
+            <h1 className="text-3xl font-semibold tracking-tight mb-3">
+              Royalties
+            </h1>
+            <p className="text-sm text-muted-foreground mb-14">
+              Enter the contract royalties details
+            </p>
+            <Card className="bg-transparent border-none shadow-none">
+              <CardContent className="space-y-6 p-0">
+                <Tabs
+                  value={tab}
+                  className="w-full"
+                  onValueChange={onTabChange}
+                >
+                  <TabsList className="grid w-full grid-cols-2 mb-10 mx-auto max-w-[70%]">
+                    {TABS.map((t, index) => (
+                      <TabsTrigger key={index} value={t.value}>
+                        {t.label}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+                  {TABS.map((t, index) => {
+                    return (
+                      <TabsContent key={index} value={t.value} className="mt-10">
+                        {index === 0 && (
+                          <div
+                            className={cn(
+                              "flex items-center justify-between pl-4 rounded-md bg-modal-foreground col-span-12 xl:col-span-10 2xl:col-span-6 w-full"
+                            )}
+                          >
+                            <div>
+                              <p
+                                className={cn(
+                                  "text-sm font-medium leading-none text-[#5D9DF1]"
+                                )}
                               >
-                                <CardsActivityGoal
-                                  cardTitle="From"
-                                  label="copies"
-                                  initialValue={rate.from}
-                                  unit=""
-                                  step={10}
-                                  buttonTitle="Set Share"
-                                  minValue={0}
-                                  maxValue={100}
-                                  buttonHidden
-                                  onClickButton={() => {}}
-                                  isOwner={true}
-                                  setGoal={(v) => {}}
-                                />
-                                <CardsActivityGoal
-                                  cardTitle="To"
-                                  label="copies"
-                                  initialValue={rate.to}
-                                  unit=""
-                                  step={10}
-                                  buttonTitle="Set Share"
-                                  minValue={0}
-                                  maxValue={100}
-                                  buttonHidden
-                                  onClickButton={() => {}}
-                                  isOwner={true}
-                                  setGoal={(v) => {}}
-                                />
-                                <CardsActivityGoal
-                                  cardTitle="&nbsp;"
-                                  label="SHARES OF REVENUES"
-                                  initialValue={rate.percentage}
-                                  unit="%"
-                                  step={10}
-                                  buttonTitle="Set Share"
-                                  minValue={0}
-                                  maxValue={100}
-                                  buttonHidden
-                                  onClickButton={() => {}}
-                                  isOwner={true}
-                                  setGoal={(v) => {}}
-                                />
-                              </div>
-                            ))}
-                          <Form {...form}>
-                            <form
-                              className="mt-4"
-                              onSubmit={form.handleSubmit(onSubmit)}
-                            >
-                              <div className="flex justify-around rounded-md bg-modal-foreground">
-                                <FormField
-                                  control={form.control}
-                                  name="from"
-                                  render={({ field }) => (
-                                    <FormItem>
-                                      <FormControl>
-                                        <CardsActivityGoal
-                                          label="COPIES"
-                                          initialValue={field.value}
-                                          unit=""
-                                          step={1}
-                                          buttonTitle="Set Share"
-                                          minValue={0}
-                                          maxValue={5000}
-                                          buttonHidden
-                                          onClickButton={() => {}}
-                                          cardTitle="From"
-                                          isOwner={true}
-                                          setGoal={field.onChange}
-                                        />
-                                      </FormControl>
-                                    </FormItem>
-                                  )}
-                                />
-                                <FormField
-                                  control={form.control}
-                                  name="to"
-                                  render={({ field }) => (
-                                    <FormItem>
-                                      <FormControl>
-                                        <CardsActivityGoal
-                                          label="COPIES"
-                                          initialValue={field.value}
-                                          unit=""
-                                          step={1}
-                                          buttonTitle="Set Share"
-                                          minValue={0}
-                                          maxValue={5000}
-                                          buttonHidden
-                                          onClickButton={() => {}}
-                                          cardTitle="To"
-                                          isOwner={true}
-                                          setGoal={field.onChange}
-                                        />
-                                      </FormControl>
-                                    </FormItem>
-                                  )}
-                                />
-                                <FormField
-                                  control={form.control}
-                                  name="percentage"
-                                  render={({ field }) => (
-                                    <FormItem>
-                                      <FormControl>
-                                        <CardsActivityGoal
-                                          label="SHARES OF REVENUES"
-                                          initialValue={field.value}
-                                          unit="%"
-                                          step={10}
-                                          buttonTitle="Set Share"
-                                          minValue={0}
-                                          maxValue={100}
-                                          buttonHidden
-                                          cardTitle="&nbsp;"
-                                          onClickButton={() => {}}
-                                          isOwner={true}
-                                          setGoal={field.onChange}
-                                        />
-                                      </FormControl>
-                                    </FormItem>
-                                  )}
-                                />
-                              </div>
-                              <div className="flex justify-end items-center h-full !mt-7">
-                                <button
-                                  type="submit"
-                                  className="text-[#2997FF]"
+                                Royalties
+                              </p>
+                              <p className="text-sm text-[#5D9DF1]">
+                                Lorem ipsum
+                              </p>
+                            </div>
+                            <CardsActivityGoal
+                              label="SHARES OF REVENUES"
+                              initialValue={singleRate.percentage}
+                              unit="%"
+                              step={10}
+                              buttonTitle="Set Share"
+                              minValue={0}
+                              maxValue={100}
+                              buttonHidden
+                              onClickButton={() => { }}
+                              isOwner={true}
+                              setGoal={handleChangeSingleRatePercentage}
+                            />
+                          </div>
+                        )}
+                        {index === 1 && (
+                          <div className="col-span-9 space-y-4 mb-5">
+                            {tieredRates &&
+                              !!tieredRates.length &&
+                              tieredRates.map((rate, index) => (
+                                <div
+                                  key={index}
+                                  className="flex justify-around rounded-md bg-modal-foreground w-full"
                                 >
-                                  + Add a tier
-                                </button>
-                              </div>
-                            </form>
-                          </Form>
-                        </div>
-                      )}
-                    </TabsContent>
-                  );
-                })}
-              </Tabs>
-              {/* <Button className="w-full !mt-20">Next</Button> */}
-            </CardContent>
-          </Card>
-        </div>
+                                  <CardsActivityGoal
+                                    cardTitle="From"
+                                    label="copies"
+                                    initialValue={rate.from}
+                                    unit=""
+                                    step={10}
+                                    buttonTitle="Set Share"
+                                    minValue={0}
+                                    maxValue={100}
+                                    buttonHidden
+                                    onClickButton={() => { }}
+                                    isOwner={true}
+                                    setGoal={(v) => { }}
+                                  />
+                                  <CardsActivityGoal
+                                    cardTitle="To"
+                                    label="copies"
+                                    initialValue={rate.to}
+                                    unit=""
+                                    step={10}
+                                    buttonTitle="Set Share"
+                                    minValue={0}
+                                    maxValue={100}
+                                    buttonHidden
+                                    onClickButton={() => { }}
+                                    isOwner={true}
+                                    setGoal={(v) => { }}
+                                  />
+                                  <CardsActivityGoal
+                                    cardTitle="&nbsp;"
+                                    label="SHARES OF REVENUES"
+                                    initialValue={rate.percentage}
+                                    unit="%"
+                                    step={10}
+                                    buttonTitle="Set Share"
+                                    minValue={0}
+                                    maxValue={100}
+                                    buttonHidden
+                                    onClickButton={() => { }}
+                                    isOwner={true}
+                                    setGoal={(v) => { }}
+                                  />
+                                </div>
+                              ))}
+                            <Form {...form}>
+                              <form
+                                className="mt-4"
+                                onSubmit={form.handleSubmit(onSubmit)}
+                              >
+                                <div className="flex justify-around rounded-md bg-modal-foreground">
+                                  <FormField
+                                    control={form.control}
+                                    name="from"
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormControl>
+                                          <CardsActivityGoal
+                                            label="COPIES"
+                                            initialValue={field.value}
+                                            unit=""
+                                            step={1}
+                                            buttonTitle="Set Share"
+                                            minValue={0}
+                                            maxValue={5000}
+                                            buttonHidden
+                                            onClickButton={() => { }}
+                                            cardTitle="From"
+                                            isOwner={true}
+                                            setGoal={field.onChange}
+                                          />
+                                        </FormControl>
+                                      </FormItem>
+                                    )}
+                                  />
+                                  <FormField
+                                    control={form.control}
+                                    name="to"
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormControl>
+                                          <CardsActivityGoal
+                                            label="COPIES"
+                                            initialValue={field.value}
+                                            unit=""
+                                            step={1}
+                                            buttonTitle="Set Share"
+                                            minValue={0}
+                                            maxValue={5000}
+                                            buttonHidden
+                                            onClickButton={() => { }}
+                                            cardTitle="To"
+                                            isOwner={true}
+                                            setGoal={field.onChange}
+                                          />
+                                        </FormControl>
+                                      </FormItem>
+                                    )}
+                                  />
+                                  <FormField
+                                    control={form.control}
+                                    name="percentage"
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormControl>
+                                          <CardsActivityGoal
+                                            label="SHARES OF REVENUES"
+                                            initialValue={field.value}
+                                            unit="%"
+                                            step={10}
+                                            buttonTitle="Set Share"
+                                            minValue={0}
+                                            maxValue={100}
+                                            buttonHidden
+                                            cardTitle="&nbsp;"
+                                            onClickButton={() => { }}
+                                            isOwner={true}
+                                            setGoal={field.onChange}
+                                          />
+                                        </FormControl>
+                                      </FormItem>
+                                    )}
+                                  />
+                                </div>
+                                <div className="flex justify-end items-center h-full !mt-7">
+                                  <button
+                                    type="submit"
+                                    className="text-[#2997FF]"
+                                  >
+                                    + Add a tier
+                                  </button>
+                                </div>
+                              </form>
+                            </Form>
+                          </div>
+                        )}
+                      </TabsContent>
+                    );
+                  })}
+                </Tabs>
+                {/* <Button className="w-full !mt-20">Next</Button> */}
+              </CardContent>
+            </Card>
+          </div>
+        </ScrollArea>
         <div className="flex justify-between w-full mt-10 px-10">
           <Button
             className="bg-mblue"
@@ -355,8 +358,8 @@ const Royalties = ({ updateStep }: StepProps) => {
           </div>
         </div>
       </div>
-      <div className="relative flex items-end px-4 flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
-        <div className="w-full no-scrollbar overflow-y-scroll">
+      <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
+        <ScrollArea className="h-full w-full px-4">
           <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
             <h6 className="text-2xl	mb-3">Royalties</h6>
             <p className="text-muted-foreground mb-7 text-sm">Lorem Ipsum</p>
@@ -379,7 +382,7 @@ const Royalties = ({ updateStep }: StepProps) => {
               </div>
             </div>
           </div>
-        </div>
+        </ScrollArea>
       </div>
     </div>
   );
