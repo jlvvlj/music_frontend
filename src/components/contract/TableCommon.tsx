@@ -67,7 +67,7 @@ export function TableCommon<TData, TValue>({
                 {table.getRowModel().rows.map((row) => (
                     <TableRow
                         key={row.id}
-                        className="hover:bg-transparent"
+                        className="hover:bg-transparent border-none"
                     >
                         {row.getVisibleCells().map((cell) => (
                             <TableCell

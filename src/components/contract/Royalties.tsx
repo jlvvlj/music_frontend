@@ -27,6 +27,7 @@ import { Separator } from "@/components/ui/separator";
 import { SingleRate, StepProps, TieredRate } from "./types";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import { ScrollArea } from "@/registry/new-york/ui/scroll-area";
+import ToasterDemo from "./ToasterDemo";
 
 type Tab = {
   label: string;
@@ -347,14 +348,15 @@ const Royalties = ({ updateStep }: StepProps) => {
             >
               Skip
             </Button>
-            <Button
+            {/* <Button
               className="bg-mblue"
               variant="outline"
               onClick={handleClickNext}
             >
               Next
               <ArrowRightIcon className="ml-1" />
-            </Button>
+            </Button> */}
+            <ToasterDemo toastTitle="Royalties selected successfully!" />
           </div>
         </div>
       </div>

@@ -5,8 +5,14 @@ import {
     PopoverContent,
 } from "@/registry/new-york/ui/popover"
 import { UploadCloud } from "lucide-react"
+import { ArtistMultiSelect } from "./ArtistMultiSelect"
 
-export default function UploadtrackPopover() {
+type Props = {
+    artists?: boolean;
+    placeholder?: string;
+};
+
+export default function UploadtrackPopover({ artists, placeholder }: Props) {
     return (
         <PopoverContent className="w-96 bg-modal py-6 px-5">
             <div className="grid gap-8">
@@ -21,11 +27,15 @@ export default function UploadtrackPopover() {
                         <div className="col-span-3">
                             <Label className="text-sm">Track 1</Label>
                             <Input
-                                className=" h-8 bg-modal border-input3 text-[#666666] mt-2"
+                                className=" h-[38px] bg-modal border-input3 text-[#666666] mt-2"
                             />
                         </div>
                         <div className="text-center col-span-2">
-                            <Button variant={"outline"} className="text-[11px] bg-modal py-1 px-2 h-[34px]"><UploadCloud className="h-5 w-5 mr-1" />Select Audio</Button>
+                            {artists ?
+                                <Button variant={"outline"} className="text-[11px] bg-modal py-1 px-2 h-[38px]"><UploadCloud className="h-5 w-5 mr-1" />Select Audio</Button> :
+                                <ArtistMultiSelect
+                                    placeholder={placeholder} />
+                            }
                         </div>
                     </div>
                 </div>

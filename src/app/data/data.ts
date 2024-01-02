@@ -333,3 +333,135 @@ export const modalTracks = [
         "album": "Edit track"
     }
 ]
+
+export const budgetTracks = [
+    {
+        "id": "1",
+        "title": "Jenny Was",
+        "min": "3000",
+        "max": "4000",
+        "multimedia": "4000",
+        "external": "4000",
+        "promotion": "4000",
+        "status": "",
+        "album": "Edit budget"
+    },
+    {
+        "id": "2",
+        "title": "Brightside",
+        "min": "3000",
+        "max": "4000",
+        "multimedia": "4000",
+        "external": "4000",
+        "promotion": "4000",
+        "status": "",
+        "album": "Edit budget"
+    },
+    {
+        "id": "3",
+        "title": "Like You",
+        "min": "3000",
+        "max": "4000",
+        "multimedia": "4000",
+        "external": "4000",
+        "promotion": "4000",
+        "status": "",
+        "album": "Edit budget"
+    },
+    {
+        "id": "4",
+        "title": "Somebody",
+        "min": "3000",
+        "max": "4000",
+        "multimedia": "4000",
+        "external": "4000",
+        "promotion": "4000",
+        "status": "",
+        "album": "Edit budget"
+    },
+    {
+        "id": "5",
+        "title": "These Things",
+        "min": "3000",
+        "max": "4000",
+        "multimedia": "4000",
+        "external": "4000",
+        "promotion": "4000",
+        "status": "",
+        "album": "Edit budget"
+    },
+    {
+        "id": "6",
+        "title": "Andy",
+        "min": "3000",
+        "max": "4000",
+        "multimedia": "4000",
+        "external": "4000",
+        "promotion": "4000",
+        "status": "",
+        "album": "Edit budget"
+    }
+]
+
+export const royaltiesTracks = [
+    {
+        "id": "1",
+        "title": "Jenny Was",
+        "artist": "/jon.svg",
+        "share": "15%",
+        "artist1": "/orlane.svg",
+        "share1": "8%",
+        "status": "",
+        "album": "Edit shares"
+    },
+    {
+        "id": "2",
+        "title": "Brightside",
+        "artist": "/jon.svg",
+        "share": "15%",
+        "artist1": "/orlane.svg",
+        "share1": "8%",
+        "status": "",
+        "album": "Edit shares"
+    },
+    {
+        "id": "3",
+        "title": "Like You",
+        "artist": "/jon.svg",
+        "share": "15%",
+        "artist1": "/orlane.svg",
+        "share1": "8%",
+        "status": "",
+        "album": "Edit shares"
+    },
+    {
+        "id": "4",
+        "title": "Somebody",
+        "artist": "/jon.svg",
+        "share": "15%",
+        "artist1": "/orlane.svg",
+        "share1": "8%",
+        "status": "",
+        "album": "Edit shares"
+    },
+    {
+        "id": "5",
+        "title": "These Things",
+        "artist": "/jon.svg",
+        "share": "15%",
+        "artist1": "/orlane.svg",
+        "share1": "8%",
+        "status": "",
+        "album": "Edit shares"
+    },
+    {
+        "id": "6",
+        "title": "Andy",
+        "artist": "/jon.svg",
+        "share": "15%",
+        "artist1": "/orlane.svg",
+        "share1": "8%",
+        "status": "",
+        "album": "Edit shares"
+    }
+]

@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import { CardsActivityGoal } from "@/components/activity-goal";
 import { useEffect, useState } from "react";
 import { BroadCasting, StepProps } from "./types";
+import ToasterDemo from "./ToasterDemo";
 
 type Tab = {
   label: string;
@@ -186,13 +187,14 @@ const Broadcasting = ({ updateStep }: StepProps) => {
             <Button className="" variant="outline" onClick={handleClickNext}>
               Skip
             </Button>
-            <Button
+            {/* <Button
               className="bg-mblue"
               variant="outline"
               onClick={handleClickNext}
             >
               Next
-            </Button>
+            </Button> */}
+            <ToasterDemo toastTitle="Broadcasting created successfully!" />
           </div>
         </div>
       </div>

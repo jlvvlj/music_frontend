@@ -22,7 +22,7 @@ import DerivativeCard from "./derivativeCard";
 
 export default function TableDrawer({ name }: { name: string }) {
     return (
-        <SheetContent className="mt-0 p-0" side="right">
+        <SheetContent className="mt-0 p-0 sm:max-w-[503px]" side="right">
             <ScrollArea className="h-full py-6 px-4">
                 <SheetHeader className="flex-row space-y-0 justify-between pt-4 mb-8">
                     <SheetTitle className="text-2xl">{ name }</SheetTitle>

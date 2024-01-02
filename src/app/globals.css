@@ -449,3 +449,16 @@
 audio::-webkit-media-controls-panel {
     background-color:  hsl(var(--modal));
 }
+
+.scroll-content .scroll-content-inner > div{
+    display: block !important;
+}
+
+[data-sonner-toast]{
+    background-color: hsl(var(--black3)) !important;
+    color: hsl(var(--white3)) !important;
+    border-color: hsl(var(--border3)) !important;
+    position: fixed !important;
+    right: 0% !important;
+    bottom: 0 !important;
+}

@@ -1,13 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { CardsActivityGoal } from "@/components/activity-goal";
 import { Budget, StepProps } from "./types";
@@ -15,11 +13,29 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import { Badge } from "@/registry/new-york/ui/badge";
 import { Switch } from "@/registry/default/ui/switch";
 import { ScrollArea } from "@/registry/new-york/ui/scroll-area";
+import { budgetTracks } from "@/app/data/data"
+import { TableCommon } from "./TableCommon"
+import { BudgetTrackColumn } from "./BudgetTrackColumn"
+import ToasterDemo from "./ToasterDemo";
 
 const budgetCards = [
-  { id: 1, title: 'Registration', activityTitle: 'Budget' },
-  { id: 2, title: 'Multimedia', activityTitle: 'Salary' },
-  { id: 3, title: 'Promotion', activityTitle: 'Budget' }
+  {
+    id: 1, title: 'Registration', activityCards: [
+      { id: 1, title: 'Minimum Budget', budget: 3000, subTitle: false },
+      { id: 2, title: 'Maximum Budget', budget: 4000, subTitle: false },
+      { id: 3, title: 'External Royalties', budget: 2000, subTitle: false }
+    ]
+  },
+  {
+    id: 2, title: 'Multimedia', activityCards: [
+      { id: 1, title: 'Salary', budget: 3000, subTitle: true }
+    ]
+  },
+  {
+    id: 3, title: 'Promotion', activityCards: [
+      { id: 1, title: 'Budget', budget: 3000, subTitle: true }
+    ]
+  }
 ]
 
 const budgetCard = [
@@ -91,8 +107,8 @@ const Budget = ({ updateStep }: StepProps) => {
             <Card className="bg-transparent border-none shadow-none">
               <CardContent className="space-y-6 p-0">
                 <div className="pl-2.5">
-                  {budgetCards.map((card, index) =>
-                    <Card key={index} className="border-none bg-modal-foreground mb-8 rounded-3xl	">
+                  {budgetCards.map((card) =>
+                    <Card key={card.id} className="border-none bg-modal-foreground mb-8 rounded-3xl	">
                       <CardHeader className="py-5 pb-0">
                         <CardTitle className="text-[17px] font-normal flex justify-between">
                           <div>
@@ -106,37 +122,41 @@ const Budget = ({ updateStep }: StepProps) => {
                         <p className="text-sm	mt-2.5 text-muted-foreground">A budget for  registration will be committed</p>
                         {enabled.includes(card.id) && <div className="space-y-8 mt-10">
                           <div className="grid grid-cols-12 gap-6">
-                            <div
-                              className={cn(
-                                "flex items-center justify-between pl-4 rounded-md bg-mblue col-span-12 xl:col-span-10 2xl:col-span-8 w-full"
-                              )}
-                            >
-                              <div>
-                                <p
-                                  className={cn(
-                                    "text-sm font-medium leading-none text-[#FAFAFA]"
-                                  )}
-                                >
-                                  {card.activityTitle}
-                                </p>
-                                <p className="text-sm text-[#B9B9BA]">
-                                  Lorem ipsum
-                                </p>
+                            {card?.activityCards.map((activityCard) =>
+                              <div key={activityCard.id}
+                                className={cn(
+                                  "flex items-center justify-between pl-4 rounded-md bg-mblue col-span-12 xl:col-span-10 2xl:col-span-8 w-full"
+                                )}
+                              >
+                                <div>
+                                  <p
+                                    className={cn(
+                                      "text-sm font-medium leading-none text-[#FAFAFA]"
+                                    )}
+                                  >
+                                    {activityCard.title}
+                                  </p>
+                                  {activityCard.subTitle &&
+                                    <p className="text-[10px] text-[#B9B9BA] mt-1">
+                                      Lorem ipsum
+                                    </p>
+                                  }
+                                </div>
+                                <CardsActivityGoal
+                                  label="EUR"
+                                  initialValue={activityCard.budget}
+                                  unit=""
+                                  step={10}
+                                  buttonTitle="Set Share"
+                                  minValue={3000}
+                                  maxValue={5000}
+                                  buttonHidden
+                                  onClickButton={() => { }}
+                                  isOwner={true}
+                                  setGoal={() => { }}
+                                />
                               </div>
-                              <CardsActivityGoal
-                                label="EUR"
-                                initialValue={3000}
-                                unit=""
-                                step={10}
-                                buttonTitle="Set Share"
-                                minValue={3000}
-                                maxValue={5000}
-                                buttonHidden
-                                onClickButton={() => { }}
-                                isOwner={true}
-                                setGoal={() => { }}
-                              />
-                            </div>
+                            )}
                           </div>
                         </div>}
                       </CardContent>
@@ -164,23 +184,24 @@ const Budget = ({ updateStep }: StepProps) => {
             >
               Skip
             </Button>
-            <Button
+            {/* <Button
               className="bg-mblue"
               variant="outline"
               onClick={handleClickNext}
             >
               Next
               <ArrowRightIcon className="ml-1" />
-            </Button>
+            </Button> */}
+            <ToasterDemo toastTitle="Budget selected successfully!" />
           </div>
         </div>
       </div>
       <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
-        <ScrollArea className="h-full w-full px-4">
-          <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
+        <ScrollArea className="h-full w-full px-4 scroll-content">
+          <div className="p-8 rounded-2xl bg-modal border border-muted w-full mb-[76px]">
             <h6 className="text-2xl	mb-3">Initial Budget</h6>
             <p className="mb-7 text-sm text-muted-foreground">
-              Artists participating in this contract.
+              Budget details
             </p>
             <div className="flex flex-wrap gap-[18px]">
               {budgetCard.map((card, index) => (
@@ -201,6 +222,9 @@ const Budget = ({ updateStep }: StepProps) => {
                 </Card>
               ))}
             </div>
+          </div>
+          <div className="rounded-2xl bg-modal border border-muted w-full p-4">
+            <TableCommon data={budgetTracks} columns={BudgetTrackColumn} />
           </div>
         </ScrollArea>
       </div>

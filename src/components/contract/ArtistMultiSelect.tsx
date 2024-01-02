@@ -8,34 +8,39 @@ import { Command as CommandPrimitive } from "cmdk";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { Avatar } from "../ui/avatar";
 import Image from "next/image";
+import { CardsActivityGoal } from "../activity-goal";
 
-type Framework = Record<"id" | "value" | "label" | "code" | "avatar", string>;
+type Framework = Record<"id" | "value" | "label" | "code" | "avatar" | "rate", string>;
 
 type Props = {
     artists?: Framework[];
+    placeholder?: string;
 };
 
-export function ArtistMultiSelect({ artists = [
+export function ArtistMultiSelect({ placeholder, artists = [
     {
-        id:"1",
+        id: "1",
         label: "Julie Depree",
         value: "julieDepree",
         avatar: "/julie.svg",
         code: "JD",
+        rate: '50'
     },
     {
-        id:"2",
+        id: "2",
         label: "Jeff Scott",
         value: "jeffScott",
         avatar: "/amandine.svg",
         code: "JS",
+        rate: '50'
     },
     {
-        id:"3",
+        id: "3",
         label: "Orlane Song",
         value: "orlaneSong",
         avatar: "/orlane.svg",
         code: "OS",
+        rate: '50'
     },
 ] }: Props) {
     const inputRef = React.useRef<HTMLInputElement>(null);
@@ -122,16 +127,16 @@ export function ArtistMultiSelect({ artists = [
                             onValueChange={setInputValue}
                             onBlur={() => setOpen(false)}
                             onFocus={() => setOpen(true)}
-                            placeholder="Artist"
+                            placeholder={placeholder}
                             className="ml-2 bg-transparent outline-none placeholder:text-white3 w-full"
                         />
                         <ChevronDownIcon className="absolute right-0 top-0.5" />
                     </div>
                 </div>
             </div>
-            <div className="relative mt-2">
+            <div className="relative">
                 {open ? (
-                    <div className="absolute w-full z-10 top-0 rounded-md border bg-modal text-popover-foreground shadow-md outline-none animate-in">
+                    <div className="mt-2 absolute w-max z-10 top-0 rounded-md border bg-modal text-popover-foreground shadow-md outline-none animate-in">
                         <CommandGroup className="h-full overflow-auto">
                             {!artists?.filter(item => !selectedArtists.some(itemToBeRemoved => itemToBeRemoved.id === item.id))?.length && <h3>No Artist</h3>}
                             {artists?.filter(item => !selectedArtists.some(itemToBeRemoved => itemToBeRemoved.id === item.id)).map((artist) => {
@@ -146,20 +151,38 @@ export function ArtistMultiSelect({ artists = [
                                             setInputValue("");
                                             setSelectedArtists((prev) => [...prev, artist]);
                                         }}
-                                        className={"cursor-pointer aria-selected:bg-mblue aria-selected:text-white text-[#4EABFE]"}
+                                        className={"cursor-pointer justify-between aria-selected:bg-mblue aria-selected:text-white text-[#4EABFE]"}
                                     >
-                                        <Avatar className="h-11 w-11 border border-white">
-                                            <Image
-                                                src={artist.avatar}
-                                                width={100}
-                                                height={100}
-                                                alt="avatar"
-                                            />
-                                        </Avatar>
-                                        <div className="flex flex-col">
-                                            <span className="ml-4 text-sm">{artist.label}</span>
-                                            <span className="ml-4 text-[11px] ">Master Owner</span>
+                                        <div className="flex items-center">
+                                            <Avatar className="h-11 w-11 border border-white">
+                                                <Image
+                                                    src={artist.avatar}
+                                                    width={100}
+                                                    height={100}
+                                                    alt="avatar"
+                                                />
+                                            </Avatar>
+                                            <div className="flex flex-col">
+                                                <span className="ml-4 text-sm">{artist.label}</span>
+                                                <span className="ml-4 text-[11px] ">Master Owner</span>
+                                            </div>
                                         </div>
+                                        {artist.rate &&
+                                            <CardsActivityGoal
+                                                label=""
+                                                initialValue={artist.rate}
+                                                unit="%"
+                                                step={10}
+                                                buttonTitle="Set Share"
+                                                minValue={0}
+                                                maxValue={100}
+                                                buttonHidden
+                                                onClickButton={() => { }}
+                                                setGoal={() => { }}
+                                                chartHidden
+                                                padding="pr-0"
+                                            />
+                                        }
                                     </CommandItem>
                                 );
                             })}

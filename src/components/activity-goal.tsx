@@ -72,6 +72,7 @@ interface Props extends React.HTMLAttributes<HTMLElement> {
   buttonHidden?: boolean;
   chartHidden?: boolean;
   onClickButton: VoidFunction;
+  padding?: string;
   setGoal: (value: number) => void;
 }
 
@@ -89,6 +90,7 @@ export function CardsActivityGoal({
   buttonHidden = false,
   chartHidden = false,
   isOwner,
+  padding,
   setGoal,
 }: Props) {
   const { theme: mode } = useTheme();
@@ -109,7 +111,7 @@ export function CardsActivityGoal({
       <CardDescription className="flex justify-center">
         {cardTitle || ""}
       </CardDescription>
-      <CardContent className="pb-1">
+      <CardContent className={`pb-1 ${padding}`}>
         <div className="flex items-center justify-center space-x-2">
           <Button
             variant="default"

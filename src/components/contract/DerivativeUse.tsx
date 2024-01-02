@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Icons } from "@/components/icons";
 import { DerivativeUse, StepProps } from "./types";
 import CongratulationModal from "./CongratulationModal";
+import ToasterDemo from "./ToasterDemo";
 
 type Tab = {
   label: string;
@@ -232,13 +233,14 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
               <Button className="" variant="outline" onClick={handleClickNext}>
                 Skip
               </Button>
-              <Button
+              {/* <Button
                 className="bg-mblue"
                 variant="outline"
                 onClick={handleClickNext}
               >
                 {currentTabIndex === TABS.length - 1 ? "Finish" : "Next"}
-              </Button>
+              </Button> */}
+            <ToasterDemo toastTitle="Derivative used successfully!" />
             </div>
           </div>
         </div>

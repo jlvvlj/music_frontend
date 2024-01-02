@@ -20,6 +20,10 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import useContractBuilder from "@/hooks/useContractBuilder";
 import { Steps } from "@/contexts/ContractBuilderContext";
 import { ScrollArea } from "@/registry/new-york/ui/scroll-area";
+import { Sheet, SheetTrigger } from "@/registry/new-york/ui/sheet";
+import { AlertCircle } from "lucide-react";
+import ContractDrawer from "@/app/dashboard/components/contract-drawer";
+import ToasterDemo from "./ToasterDemo";
 
 const Shares = ({ updateStep }: StepProps) => {
   const { members, dispatch } = useContractBuilder();
@@ -53,7 +57,17 @@ const Shares = ({ updateStep }: StepProps) => {
       <div className="w-full pb-7 pt-16 bg-modal rounded-s-3xl h-[645px] flex flex-col justify-between">
         <ScrollArea className="h-full">
           <div className="h-[calc(100%-40px)] px-10">
-            <h6 className="text-2xl font-semibold	mb-3">Now time to allocate shares</h6>
+            <div className="flex items-center gap-2 mb-3">
+              <h1 className="text-3xl font-semibold tracking-tight">
+                Now time to allocate shares
+              </h1>
+              <Sheet>
+                <SheetTrigger asChild>
+                  <AlertCircle className="cursor-pointer" />
+                </SheetTrigger>
+                <ContractDrawer title="Now time to allocate shares" />
+              </Sheet>
+            </div>
             <p className="text-muted-foreground mb-12 text-sm">
               Enter the appropriate amount of shares to everyone on the team
             </p>
@@ -75,14 +89,15 @@ const Shares = ({ updateStep }: StepProps) => {
             <ArrowLeftIcon className="mr-1" />
             Back
           </Button>
-          <Button
+          {/* <Button
             className="bg-mblue"
             variant="outline"
             onClick={handleClickNext}
           >
             Next
             <ArrowRightIcon className="ml-1" />
-          </Button>
+          </Button> */}
+          <ToasterDemo toastTitle="Shares added successfully!" /> 
         </div>
       </div>
       <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">

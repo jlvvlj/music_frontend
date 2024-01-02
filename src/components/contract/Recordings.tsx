@@ -53,6 +53,7 @@ import {
   PopoverTrigger,
 } from "@/registry/new-york/ui/popover";
 import { ScrollArea } from "@/registry/new-york/ui/scroll-area";
+import ToasterDemo from "./ToasterDemo";
 
 const recordingCard = [
   { title: "Quantity", cost: "2" },
@@ -342,14 +343,15 @@ const Recordings = ({ updateStep }: StepProps) => {
             <ArrowLeftIcon className="mr-1" />
             Back
           </Button>
-          <Button
+          {/* <Button
             className="bg-mblue"
             variant="outline"
             onClick={handleClickNext}
           >
             Next
             <ArrowRightIcon className="ml-1" />
-          </Button>
+          </Button> */}
+          <ToasterDemo toastTitle="Recordings added successfully!" />
         </div>
       </div>
       <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">

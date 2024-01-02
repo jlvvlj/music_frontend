@@ -15,6 +15,7 @@ import { FancyMultiSelect } from "@/components/fancy-multi-select";
 import { Abatement, StepProps } from "./types";
 import { CountryMultiSelect } from "../country-multi-select";
 import { ScrollArea } from "@/registry/new-york/ui/scroll-area";
+import ToasterDemo from "./ToasterDemo";
 
 const TABS: {
   label: string;
@@ -222,7 +223,7 @@ const Abatements = ({ updateStep }: StepProps) => {
             </Card>
           </div>
         </ScrollArea>
-        <div className="flex justify-between w-full mt-10">
+        <div className="flex justify-between w-full mt-10 px-10">
           <Button
             className="bg-mblue"
             variant="outline"
@@ -234,13 +235,14 @@ const Abatements = ({ updateStep }: StepProps) => {
             <Button className="" variant="outline" onClick={handleClickNext}>
               Skip
             </Button>
-            <Button
+            {/* <Button
               className="bg-mblue"
               variant="outline"
               onClick={handleClickNext}
             >
               Next
-            </Button>
+            </Button> */}
+            <ToasterDemo toastTitle="Abatements added successfully!" />
           </div>
         </div>
       </div>
