@@ -8,9 +8,11 @@ import {
   Popover,
   PopoverTrigger,
 } from "@/registry/new-york/ui/popover"
+import Image from "next/image";
+import { Avatar } from "../ui/avatar";
 import UploadtrackPopover from "./UploadtrackPopover";
 
-export const BudgetTrackColumn: ColumnDef<Task>[] = [
+export const RecordingsColumn: ColumnDef<Task>[] = [
   {
     accessorKey: "id",
     header: ({ column }) => (
@@ -32,52 +34,56 @@ export const BudgetTrackColumn: ColumnDef<Task>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "min",
+    accessorKey: "artist",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Min" />
+      <DataTableColumnHeader column={column} title="Artist" />
     ),
     cell: ({ row }) =>
-      <div>{row.getValue("min")}</div>,
+      <Avatar className="bg-[#A3D3FF] h-9 w-9" >
+        <Image
+          src={row.getValue("artist")}
+          width={100}
+          height={100}
+          alt="avatar"
+        />
+      </Avatar >,
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: "max",
+    accessorKey: "share",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Max" />
+      <DataTableColumnHeader column={column} title="Share" />
     ),
     cell: ({ row }) =>
-      <div>{row.getValue("max")}</div>,
+      <div className="text-center">{row.getValue("share")}</div>,
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: "multimedia",
+    accessorKey: "artist1",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Multimedia" />
+      <DataTableColumnHeader column={column} title="Artist" />
     ),
     cell: ({ row }) =>
-      <div className="text-center">{row.getValue("multimedia")}</div>,
+      < Avatar className="bg-[#A3D3FF] h-9 w-9" >
+        <Image
+          src={row.getValue("artist1")}
+          width={100}
+          height={100}
+          alt="avatar"
+        />
+      </Avatar >,
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: "external",
+    accessorKey: "share1",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="External" />
+      <DataTableColumnHeader column={column} title="Share" />
     ),
     cell: ({ row }) =>
-      <div className="text-center">{row.getValue("external")}</div>,
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "promotion",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Promotion" />
-    ),
-    cell: ({ row }) =>
-      <div className="text-center">{row.getValue("promotion")}</div>,
+      <div className="text-center">{row.getValue("share1")}</div>,
     enableSorting: false,
     enableHiding: false,
   },
@@ -87,7 +93,12 @@ export const BudgetTrackColumn: ColumnDef<Task>[] = [
       <DataTableColumnHeader column={column} className="text-[#4FABFF] text-center" title="Edit" />
     ),
     cell: ({ row }) =>
-      <div className="text-[#4FABFE] text-xs text-center cursor-pointer">{row.getValue("album")}</div>,
+      <Popover>
+        <PopoverTrigger asChild>
+          <div className="text-[#4FABFE] text-center cursor-pointer text-xs">{row.getValue("album")}</div>
+        </PopoverTrigger>
+        <UploadtrackPopover artistRate={true} artists={true} placeholder="Shares" name={row.getValue("title")} />
+      </Popover>,
     enableSorting: false,
     enableHiding: false,
   },

@@ -1,19 +1,29 @@
 // ** Components
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "../ui/button";
+import { cn, fallbackAvatar } from "@/lib/utils";
+import { isOwner } from "./utils";
+import { CardsActivityGoal } from "@/components/activity-goal";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Input } from "@/components/ui/input";
+import { Slider } from "@/components/ui/slider";
+import ShareCard from "./ShareCard";
+import ShareCardRight from "./ShareCardRight";
 import { StepProps, TeamMember } from "./types";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import useContractBuilder from "@/hooks/useContractBuilder";
 import { Steps } from "@/contexts/ContractBuilderContext";
+import { ScrollArea } from "@/registry/new-york/ui/scroll-area";
 import { Sheet, SheetTrigger } from "@/registry/new-york/ui/sheet";
 import { AlertCircle } from "lucide-react";
 import ContractDrawer from "@/app/dashboard/components/contract-drawer";
 import ToasterDemo from "./ToasterDemo";
-import { ArtistMultiSelect } from "./ArtistMultiSelect";
-import InvitationPopover from "./InvitationPopover";
-import TeamShare from "./TeamShare";
-import { TableCommon } from "./TableCommon";
-import { shareTracks } from "@/app/data/data";
-import { ShareTrackColumn } from "./ShareTrackColumn";
 
 const Shares = ({ updateStep }: StepProps) => {
   const { members, dispatch } = useContractBuilder();
@@ -49,22 +59,25 @@ const Shares = ({ updateStep }: StepProps) => {
           <div className="h-[calc(100%-40px)] px-10">
             <div className="flex items-center gap-2 mb-3">
               <h1 className="text-3xl font-semibold tracking-tight">
-                Who’s in the team?
+                Now time to allocate shares
               </h1>
               <Sheet>
                 <SheetTrigger asChild>
                   <AlertCircle className="cursor-pointer" />
                 </SheetTrigger>
-                <ContractDrawer title="Who’s in the team?" />
+                <ContractDrawer title="Now time to allocate shares" />
               </Sheet>
             </div>
-            <p className="text-muted-foreground mb-[68px] text-sm">
-              Invite your team to join the project.
+            <p className="text-muted-foreground mb-12 text-sm">
+              Enter the appropriate amount of shares to everyone on the team
             </p>
-            <div className="flex justify-center flex-col items-center space-y-12">
-              <ArtistMultiSelect artistRate={false} placeholder="Participants" />
-              <InvitationPopover />
-            </div>
+            {members.map((member, index) => (
+              <ShareCard
+                key={index}
+                member={member}
+                updateGoal={(v) => handleUpdateGoal(member, v)}
+              />
+            ))}
           </div>
         </div>
         <div className="flex justify-between w-full mt-8 px-10">
@@ -89,9 +102,26 @@ const Shares = ({ updateStep }: StepProps) => {
       </div>
       <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
         <div className="scrollbox overflow-auto px-4 w-full h-full">
-          <TeamShare />
-          <div className="rounded-2xl bg-modal border border-muted w-full p-4 mt-8">
-            <TableCommon data={shareTracks} columns={ShareTrackColumn} />
+          <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
+            <h6 className="text-2xl	mb-3">Team & Shares</h6>
+            <p className="text-muted-foreground mb-7 text-sm">
+              Artists participating in this contract.
+            </p>
+            <div className="pl-10">
+              <h6 className="text-lg mb-3">Team Shares</h6>
+              <p className="text-muted-foreground mb-7 text-sm">
+                Artists participating in this contract.
+              </p>
+              <div className="pl-4 gap-10">
+                {members.map((member, index) => (
+                  <ShareCardRight
+                    key={index}
+                    member={member}
+                    updateGoal={(v) => handleUpdateGoal(member, v)}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

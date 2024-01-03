@@ -3,6 +3,12 @@
 import { Avatar } from "@/components/ui/avatar";
 import Image from "next/image"
 
+const initialMembers = [
+    { id: 1, member: '/amandine.svg' },
+    { id: 2, member: '/orlane.svg' },
+    { id: 3, member: '/jon.svg' },
+]
+
 export default function TeamShare() {
     return (
         <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
@@ -30,30 +36,16 @@ export default function TeamShare() {
                     <div className="flex flex-col">
                         <p className="text-sm mb-3.5 text-muted-foreground">Artists</p>
                         <div className="flex">
-                            <Avatar className="h-11 w-11 border border-white">
-                                <Image
-                                    src="/amandine.svg"
-                                    width={100}
-                                    height={100}
-                                    alt="avatar"
-                                />
-                            </Avatar>
-                            <Avatar className="h-11 w-11 -ml-2 border border-white">
-                                <Image
-                                    src="/orlane.svg"
-                                    width={100}
-                                    height={100}
-                                    alt="avatar"
-                                />
-                            </Avatar>
-                            <Avatar className="h-11 w-11 -ml-2 border border-white">
-                                <Image
-                                    src="/jon.svg"
-                                    width={100}
-                                    height={100}
-                                    alt="avatar"
-                                />
-                            </Avatar>
+                            {initialMembers.map((member) =>
+                                <Avatar key={member.id} className="h-11 w-11 -ml-2 first:ml-0 border border-white">
+                                    <Image
+                                        src={member.member}
+                                        width={100}
+                                        height={100}
+                                        alt="avatar"
+                                    />
+                                </Avatar>
+                            )}
                         </div>
                     </div>
                 </div>

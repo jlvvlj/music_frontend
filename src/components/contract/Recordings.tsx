@@ -54,6 +54,13 @@ import {
 } from "@/registry/new-york/ui/popover";
 import { ScrollArea } from "@/registry/new-york/ui/scroll-area";
 import ToasterDemo from "./ToasterDemo";
+import { cn } from "../drag/utils";
+import { Avatar } from "../ui/avatar";
+import Image from "next/image";
+import ShareCardRight from "./ShareCardRight";
+import { TableCommon } from "./TableCommon";
+import { recordingTracks, royaltiesTracks } from "@/app/data/data";
+import { RecordingsColumn } from "./RecordingsColumn";
 
 const recordingCard = [
   { title: "Quantity", cost: "2" },
@@ -61,6 +68,11 @@ const recordingCard = [
   { title: "Commercial release", cost: "EUR 3000" },
   { title: "Option rights limit", cost: "EUR 3000" },
 ];
+
+const teamMembers = [
+  { id: 1, avatar: '/amandine.svg', name: 'Charly Jones', role: 'Singer', revenue: 15, label: '' },
+  { id: 2, avatar: '/orlane.svg', name: 'Orlane Moog', role: 'Musician', revenue: 8, label: 'base rate on sales' },
+]
 
 const recordingFormSchema = z.object({
   number: z.number().default(10),
@@ -164,176 +176,46 @@ const Recordings = ({ updateStep }: StepProps) => {
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
       <div className="w-full pb-7 pt-16 bg-modal rounded-s-3xl h-[645px] flex flex-col justify-between">
-        <ScrollArea className="h-full">
+        <div className="scrollbox overflow-auto px-4 w-full h-full">
           <div className="h-[calc(100%-40px)] px-10">
             <h1 className="text-3xl font-semibold tracking-tight mb-3">
-              Now some recordings
+              Now time to allocate <span className="text-[#EE3758]">rates</span>
             </h1>
-            <p className="text-sm text-muted-foreground mb-14">
-              Enter firm and optional recordings details.
+            <p className="text-sm text-muted-foreground mb-[98px]">
+              Enter the appropriate base rate to everyone on the team
             </p>
-            <Card className="border-none bg-transparent shadow-none">
-              <Tabs className="w-full" value={tab} onValueChange={onTabChange}>
-                <TabsList className="grid w-full grid-cols-2 mb-11 mx-auto max-w-[70%]">
-                  <TabsTrigger value="firm">Firm</TabsTrigger>
-                  <TabsTrigger value="optional">Optional</TabsTrigger>
-                </TabsList>
-
-                <TabsContent value={tab} className="mt-10">
-                  <CardContent className="space-y-10 p-0">
-                    <Form {...form}>
-                      <form
-                        className="space-y-10"
-                        onSubmit={form.handleSubmit(onSubmit)}
-                      >
-                        <div className="grid grid-cols-2 gap-4 items-end w-fit mx-auto mt-4">
-                          <FormField
-                            control={form.control}
-                            name="number"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormControl>
-                                  <CardsActivityGoal
-                                    label="ReCordings"
-                                    initialValue={field.value}
-                                    unit=""
-                                    step={1}
-                                    buttonTitle="Set Share"
-                                    minValue={0}
-                                    maxValue={100}
-                                    buttonHidden
-                                    chartHidden
-                                    onClickButton={() => { }}
-                                    isOwner={false}
-                                    setGoal={field.onChange}
-                                  />
-                                </FormControl>
-                              </FormItem>
-                            )}
-                          />
-                          <FormField
-                            control={form.control}
-                            name="programType"
-                            render={({ field }) => (
-                              <FormItem>
-                                <Select
-                                  onValueChange={(v) =>
-                                    field.onChange(v as ProgramType)
-                                  }
-                                  value={field.value}
-                                >
-                                  <FormControl className="bg-modal-foreground">
-                                    <SelectTrigger className="text-[#6d7d93] font-semibold">
-                                      <SelectValue
-                                        className=""
-                                        placeholder="Type"
-                                      />
-                                    </SelectTrigger>
-                                  </FormControl>
-                                  <SelectContent className="bg-modal-foreground">
-                                    <SelectItem
-                                      value="album"
-                                      className="focus:bg-mblue"
-                                    >
-                                      <p>Albums ( LPs )</p>
-                                    </SelectItem>
-                                    <SelectItem
-                                      value="single"
-                                      className="focus:bg-mblue"
-                                    >
-                                      <p>Singles ( SPs )</p>
-                                    </SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              </FormItem>
-                            )}
-                          />
-                        </div>
-                        <div className="grid grid-cols-3 gap-2 items-end mt-4">
-                          <FormField
-                            control={form.control}
-                            name="completedAt"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel className="text-[11px]">
-                                  Completion date
-                                </FormLabel>
-                                <FormControl>
-                                  <DatePicker
-                                    className="max-w-[170px]"
-                                    buttonClassName="w-[140px] text-[11px] bg-modal-foreground"
-                                    date={field.value}
-                                    placeholder="Jan 20, 2023"
-                                    onDateChange={(d) =>
-                                      field.onChange(d || new Date())
-                                    }
-                                  />
-                                </FormControl>
-                              </FormItem>
-                            )}
-                          />
-                          <FormField
-                            control={form.control}
-                            name="releasedAt"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel className="text-[11px]">
-                                  Commercial release
-                                </FormLabel>
-                                <FormControl>
-                                  <DatePicker
-                                    className="max-w-[170px]"
-                                    buttonClassName="w-[140px] text-[11px] bg-modal-foreground"
-                                    placeholder="Jan 20, 2023"
-                                    date={field.value}
-                                    onDateChange={(d) =>
-                                      field.onChange(d || new Date())
-                                    }
-                                  />
-                                </FormControl>
-                              </FormItem>
-                            )}
-                          />
-                          <FormField
-                            control={form.control}
-                            name="optionRightsLimit"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel className="text-[11px]">
-                                  Option rights limit
-                                </FormLabel>
-                                <FormControl>
-                                  <DatePicker
-                                    className="max-w-[170px]"
-                                    buttonClassName="w-[140px] text-[11px] bg-modal-foreground"
-                                    placeholder="Jan 20, 2023"
-                                    date={field.value}
-                                    onDateChange={(d) =>
-                                      field.onChange(d || new Date())
-                                    }
-                                  />
-                                </FormControl>
-                              </FormItem>
-                            )}
-                          />
-                        </div>
-                        <div className="w-full flex justify-center items-center pt-2.5">
-                          <Button
-                            type="submit"
-                            variant="outline"
-                            className="px-8 bg-modal-foreground"
-                          >
-                            Add recording
-                          </Button>
-                        </div>
-                      </form>
-                    </Form>
-                  </CardContent>
-                </TabsContent>
-              </Tabs>
-            </Card>
+            {teamMembers.map((member) =>
+              <div className="flex items-start justify-between gap-4 pl-4 py-3 rounded-md mb-5 w-[81%] mx-auto bg-modal-foreground">
+                <Avatar className="bg-[#A3D3FF] mt-2">
+                  <Image
+                    src={member.avatar || "https://ui.shadcn.com/avatars/01.png"}
+                    width={100}
+                    height={100}
+                    alt="avatar"
+                  />
+                </Avatar>
+                <div className="pt-3">
+                  <p className="text-sm font-medium leading-none">{member.name}</p>
+                  <p className="text-sm">{member.role}</p>
+                </div>
+                <div className="">
+                  <CardsActivityGoal
+                    label={member.label}
+                    initialValue={member.revenue || 30}
+                    unit="%"
+                    step={10}
+                    buttonTitle=""
+                    minValue={0}
+                    maxValue={100}
+                    buttonHidden
+                    onClickButton={() => { }}
+                    setGoal={() => { }}
+                  />
+                </div>
+              </div>
+            )}
           </div>
-        </ScrollArea>
+        </div>
         <div className="flex justify-between w-full mt-8 px-10">
           <Button
             className="bg-mblue"
@@ -355,66 +237,57 @@ const Recordings = ({ updateStep }: StepProps) => {
         </div>
       </div>
       <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
-        <ScrollArea className="h-full w-full px-4">
+        <div className="scrollbox overflow-auto px-4 w-full h-full">
           <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
-            <h6 className="text-2xl	mb-3">Recordings</h6>
+            <h6 className="text-2xl	mb-3">Team & Shares</h6>
             <p className="text-muted-foreground mb-7 text-sm">
-              Artists participating in this contract.
+              Shares fo artists participating in this contract.
             </p>
             <div className="pl-10">
-              <div className="mb-14">
-                <h6 className="text-lg mb-2.5">Albums ( LPs ) - Firm</h6>
-                <p className="text-muted-foreground mb-5 text-sm">
-                  Artists participating in this contract.
-                </p>
-                <div className="pl-4 flex flex-wrap gap-[18px]">
-                  {recordingCard.map((card, index) => (
-                    <Card
-                      key={index}
-                      className="bg-modal-foreground border-[#1D1D1F] pt-2 pl-2.5 pr-6 pb-4 w-[132px]"
-                    >
-                      <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
-                        <CardTitle className="text-xs font-normal pb-5">
-                          {card.title}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="p-0">
-                        <div className="text-xs font-normal text-[#4EABFE]">
-                          {card.cost}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </div>
-              <div className="mb-14">
-                <h6 className="text-lg mb-2.5">Singles ( LPs ) - Firm</h6>
-                <p className="text-muted-foreground mb-5 text-sm">
-                  Artists participating in this contract.
-                </p>
-                <div className="pl-4 flex flex-wrap gap-[18px]">
-                  {recordingCard.map((card, index) => (
-                    <Card
-                      key={index}
-                      className="bg-modal-foreground border-[#1D1D1F] pt-2 pl-2.5 pr-6 pb-4 w-[132px]"
-                    >
-                      <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
-                        <CardTitle className="text-xs font-normal pb-5">
-                          {card.title}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="p-0">
-                        <div className="text-xs font-normal text-[#4EABFE]">
-                          {card.cost}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
+              <h6 className="text-lg mb-3">Album level base rates</h6>
+              <p className="text-muted-foreground mb-7 text-sm">
+                Edit the rates on each track for a specific allocation
+              </p>
+              <div className="pl-4 gap-10">
+                {teamMembers.map((member) => (
+                  <div key={member.id} className="flex items-start justify-between gap-4 pl-4 pt-1.5 rounded-md mb-5 w-[85%] bg-modal-foreground right-card">
+                    <Avatar className="bg-[#A3D3FF] mt-2 h-11 w-11">
+                      <Image
+                        src={member.avatar || "https://ui.shadcn.com/avatars/01.png"}
+                        width={100}
+                        height={100}
+                        alt="avatar"
+                      />
+                    </Avatar>
+                    <div className="pt-3">
+                      <p className="text-sm font-medium leading-none text-[#4EABFE]">
+                        {member.name}
+                      </p>
+                      <p className="text-sm text-[#6DB5F9]">{member.role}</p>
+                    </div>
+                    <div className="">
+                      <CardsActivityGoal
+                        label="SHARES OF REVENUES"
+                        initialValue={member.revenue || 30}
+                        unit="%"
+                        step={10}
+                        buttonTitle="Set Share"
+                        minValue={0}
+                        maxValue={100}
+                        buttonHidden
+                        onClickButton={() => { }}
+                        setGoal={() => {}}
+                      />
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-        </ScrollArea>
+          <div className="rounded-2xl bg-modal border border-muted w-full p-4 mt-8">
+            <TableCommon data={recordingTracks} columns={RecordingsColumn} />
+          </div>
+        </div>
       </div>
     </div>
   );

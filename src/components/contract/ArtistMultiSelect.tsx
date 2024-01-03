@@ -15,9 +15,10 @@ type Framework = Record<"id" | "value" | "label" | "code" | "avatar" | "rate", s
 type Props = {
     artists?: Framework[];
     placeholder?: string;
+    artistRate?: boolean;
 };
 
-export function ArtistMultiSelect({ placeholder, artists = [
+export function ArtistMultiSelect({ placeholder, artistRate, artists = [
     {
         id: "1",
         label: "Julie Depree",
@@ -80,13 +81,13 @@ export function ArtistMultiSelect({ placeholder, artists = [
     return (
         <Command
             onKeyDown={handleKeyDown}
-            className="overflow-visible bg-transparent max-w-[230px]"
+            className="overflow-visible bg-transparent max-w-[230px] h-auto"
         >
-            <div className="group border border-input px-3 py-2 text-sm ring-offset-background rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
+            <div className="group border border-input px-3 py-2 text-sm ring-offset-background rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 bg-card3">
                 <div className="flex gap-1 flex-wrap">
                     {selectedArtists.map((artist) => {
                         return (
-                            <Badge key={artist.value} variant="secondary" className="bg-mblue flex items-center justify-between w-full text-white hover:bg-mblue">
+                            <Badge key={artist.value} variant="secondary" className="bg-mblue flex items-center justify-between w-full text-white hover:bg-mblue scrollbox overflow-x-auto">
                                 <div className="flex">
 
                                     <Avatar className="h-11 w-11 border border-white">
@@ -102,6 +103,22 @@ export function ArtistMultiSelect({ placeholder, artists = [
                                         <span className="ml-4 text-[11px]">Master Owner</span>
                                     </div>
                                 </div>
+                                {artistRate &&
+                                    <CardsActivityGoal
+                                        label=""
+                                        initialValue={artist.rate}
+                                        unit="%"
+                                        step={10}
+                                        buttonTitle="Set Share"
+                                        minValue={0}
+                                        maxValue={100}
+                                        buttonHidden
+                                        onClickButton={() => { }}
+                                        setGoal={() => { }}
+                                        chartHidden
+                                        padding="pr-0"
+                                    />
+                                }
                                 <button
                                     className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                                     onKeyDown={(e) => {
@@ -134,7 +151,7 @@ export function ArtistMultiSelect({ placeholder, artists = [
                     </div>
                 </div>
             </div>
-            <div className="relative">
+            <div className="relative flex justify-center">
                 {open ? (
                     <div className="mt-2 absolute w-max z-10 top-0 rounded-md border bg-modal text-popover-foreground shadow-md outline-none animate-in">
                         <CommandGroup className="h-full overflow-auto">
@@ -167,7 +184,7 @@ export function ArtistMultiSelect({ placeholder, artists = [
                                                 <span className="ml-4 text-[11px] ">Master Owner</span>
                                             </div>
                                         </div>
-                                        {artist.rate &&
+                                        {artistRate &&
                                             <CardsActivityGoal
                                                 label=""
                                                 initialValue={artist.rate}

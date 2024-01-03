@@ -295,7 +295,7 @@ export const tracks = [{
     "platforms": ["Spotify", "Youtube"],
 }]
 
-export const modalTracks = [
+export const teamTracks = [
     {
         "id": "1",
         "title": "Jenny Was",
@@ -331,6 +331,108 @@ export const modalTracks = [
         "title": "Andy",
         "status": "/andy.mp3",
         "album": "Edit track"
+    }
+]
+
+export const shareTracks = [
+    {
+        "id": "1",
+        "title": "Jenny Was",
+        "status": "",
+        "album": "Edit team"
+    },
+    {
+        "id": "2",
+        "title": "Brightside",
+        "status": "",
+        "album": "Edit team"
+    },
+    {
+        "id": "3",
+        "title": "Like You",
+        "status": "",
+        "album": "Edit team"
+    },
+    {
+        "id": "4",
+        "title": "Somebody",
+        "status": "",
+        "album": "Edit team"
+    },
+    {
+        "id": "5",
+        "title": "These Things",
+        "status": "",
+        "album": "Edit team"
+    },
+    {
+        "id": "6",
+        "title": "Andy",
+        "status": "",
+        "album": "Edit team"
+    }
+]
+
+export const recordingTracks = [
+    {
+        "id": "1",
+        "title": "Jenny Was",
+        "artist": "/jon.svg",
+        "share": "15%",
+        "artist1": "/orlane.svg",
+        "share1": "8%",
+        "status": "",
+        "album": "Edit shares"
+    },
+    {
+        "id": "2",
+        "title": "Brightside",
+        "artist": "/jon.svg",
+        "share": "15%",
+        "artist1": "/orlane.svg",
+        "share1": "8%",
+        "status": "",
+        "album": "Edit shares"
+    },
+    {
+        "id": "3",
+        "title": "Like You",
+        "artist": "/jon.svg",
+        "share": "15%",
+        "artist1": "/orlane.svg",
+        "share1": "8%",
+        "status": "",
+        "album": "Edit shares"
+    },
+    {
+        "id": "4",
+        "title": "Somebody",
+        "artist": "/jon.svg",
+        "share": "15%",
+        "artist1": "/orlane.svg",
+        "share1": "8%",
+        "status": "",
+        "album": "Edit shares"
+    },
+    {
+        "id": "5",
+        "title": "These Things",
+        "artist": "/jon.svg",
+        "share": "15%",
+        "artist1": "/orlane.svg",
+        "share1": "8%",
+        "status": "",
+        "album": "Edit shares"
+    },
+    {
+        "id": "6",
+        "title": "Andy",
+        "artist": "/jon.svg",
+        "share": "15%",
+        "artist1": "/orlane.svg",
+        "share1": "8%",
+        "status": "",
+        "album": "Edit shares"
     }
 ]
 

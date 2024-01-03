@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 import UploadtrackPopover from "./UploadtrackPopover";
 
-export const trackColumn: ColumnDef<Task>[] = [
+export const TeamTrackColumn: ColumnDef<Task>[] = [
   {
     accessorKey: "id",
     header: ({ column }) => (
@@ -52,7 +52,7 @@ export const trackColumn: ColumnDef<Task>[] = [
         <PopoverTrigger asChild>
           <div className="text-[#4FABFE] text-center cursor-pointer">{row.getValue("album")}</div>
         </PopoverTrigger>
-        <UploadtrackPopover />
+        <UploadtrackPopover artists={false} name={row.getValue("title")}/>
       </Popover>,
     enableSorting: false,
     enableHiding: false,
