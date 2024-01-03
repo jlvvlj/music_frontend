@@ -97,7 +97,7 @@ export const RecordingsColumn: ColumnDef<Task>[] = [
         <PopoverTrigger asChild>
           <div className="text-[#4FABFE] text-center cursor-pointer text-xs">{row.getValue("album")}</div>
         </PopoverTrigger>
-        <UploadtrackPopover artistRate={true} artists={true} placeholder="Shares" name={row.getValue("title")} />
+        <UploadtrackPopover width="max-w-auto ml-1" column='grid-cols-1' artistRate={true} artists={true} placeholder="Shares" name={row.getValue("title")} />
       </Popover>,
     enableSorting: false,
     enableHiding: false,

@@ -38,36 +38,14 @@ import DatePicker from "@/components/ui/date-picker";
 import { CardsActivityGoal } from "@/components/activity-goal";
 import {
   ArrowLeftIcon,
-  ArrowRightIcon,
-  ChevronDownIcon,
 } from "@radix-ui/react-icons";
-import {
-  Command,
-  CommandGroup,
-  CommandItem,
-  CommandList,
-} from "@/registry/new-york/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/registry/new-york/ui/popover";
-import { ScrollArea } from "@/registry/new-york/ui/scroll-area";
 import ToasterDemo from "./ToasterDemo";
-import { cn } from "../drag/utils";
 import { Avatar } from "../ui/avatar";
 import Image from "next/image";
-import ShareCardRight from "./ShareCardRight";
 import { TableCommon } from "./TableCommon";
-import { recordingTracks, royaltiesTracks } from "@/app/data/data";
+import { recordingTracks } from "@/app/data/data";
 import { RecordingsColumn } from "./RecordingsColumn";
 
-const recordingCard = [
-  { title: "Quantity", cost: "2" },
-  { title: "Completion date", cost: "30%" },
-  { title: "Commercial release", cost: "EUR 3000" },
-  { title: "Option rights limit", cost: "EUR 3000" },
-];
 
 const teamMembers = [
   { id: 1, avatar: '/amandine.svg', name: 'Charly Jones', role: 'Singer', revenue: 15, label: '' },
@@ -176,7 +154,7 @@ const Recordings = ({ updateStep }: StepProps) => {
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
       <div className="w-full pb-7 pt-16 bg-modal rounded-s-3xl h-[645px] flex flex-col justify-between">
-        <div className="scrollbox overflow-auto px-4 w-full h-full">
+        <div className="scrollbox overflow-auto w-full h-full">
           <div className="h-[calc(100%-40px)] px-10">
             <h1 className="text-3xl font-semibold tracking-tight mb-3">
               Now time to allocate <span className="text-[#EE3758]">rates</span>

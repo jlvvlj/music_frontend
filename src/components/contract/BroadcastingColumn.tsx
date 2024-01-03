@@ -4,14 +4,8 @@ import { ColumnDef } from "@tanstack/react-table"
 
 import { DataTableColumnHeader } from "@/app/dashboard/components/data-table-column-header";
 import { Task } from "@/app/dashboard/data/schema";
-import {
-  Popover,
-  PopoverTrigger,
-} from "@/registry/new-york/ui/popover"
-import Link from "next/link";
-import UploadtrackPopover from "./UploadtrackPopover";
 
-export const TeamTrackColumn: ColumnDef<Task>[] = [
+export const BroadcastingColumn: ColumnDef<Task>[] = [
   {
     accessorKey: "id",
     header: ({ column }) => (
@@ -33,12 +27,22 @@ export const TeamTrackColumn: ColumnDef<Task>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "status",
+    accessorKey: "broadcasting",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Audio" />
+      <DataTableColumnHeader column={column} title="Broadcasting right" className="text-center" />
     ),
     cell: ({ row }) =>
-      <Link href="#" className="text-[#6B7280]">{row.getValue("status")}</Link>,
+      <div className="text-center">{row.getValue("broadcasting")}</div>,
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: "secondary",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Secondary uses" className="text-center" />
+    ),
+    cell: ({ row }) =>
+      <div className="text-center">{row.getValue("secondary")}</div>,
     enableSorting: false,
     enableHiding: false,
   },
@@ -48,19 +52,8 @@ export const TeamTrackColumn: ColumnDef<Task>[] = [
       <DataTableColumnHeader column={column} className="text-[#4FABFF] text-center" title="Edit" />
     ),
     cell: ({ row }) =>
-      <Popover>
-        <PopoverTrigger asChild>
-          <div className="text-[#4FABFE] text-center cursor-pointer">{row.getValue("album")}</div>
-        </PopoverTrigger>
-        <UploadtrackPopover column='grid-cols-5' artists={false} name={row.getValue("title")}/>
-      </Popover>,
+      <div className="text-[#4FABFE] text-xs text-center cursor-pointer">{row.getValue("album")}</div>,
     enableSorting: false,
     enableHiding: false,
   },
 ]
-
-
-
-
-
-

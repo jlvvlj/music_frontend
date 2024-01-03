@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,40 +8,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CardsActivityGoal } from "@/components/activity-goal";
 import { cn } from "@/lib/utils";
-import { FancyMultiSelect } from "@/components/fancy-multi-select";
-import { Abatement, StepProps } from "./types";
+import {  StepProps } from "./types";
 import { CountryMultiSelect } from "../country-multi-select";
-import { ScrollArea } from "@/registry/new-york/ui/scroll-area";
 import ToasterDemo from "./ToasterDemo";
-
-const TABS: {
-  label: string;
-  value: Tab;
-}[] = [
-    {
-      label: "Foreign sales",
-      value: "foreignSales",
-    },
-    {
-      label: "Compilation",
-      value: "compilation",
-    },
-    {
-      label: "Promotion",
-      value: "promotion",
-    },
-    {
-      label: "Discouts",
-      value: "discouts",
-    },
-    {
-      label: "Off-Circuits",
-      value: "offCircuits",
-    },
-  ];
+import { Badge } from "@/registry/new-york/ui/badge";
+import { Switch } from "@/registry/default/ui/switch";
+import { TableCommon } from "./TableCommon";
+import { abatementTracks } from "@/app/data/data";
+import { AbatementColumn } from "./AbatementColumn";
 
 const COUNTRIES = [
   {
@@ -61,58 +37,65 @@ const COUNTRIES = [
   },
 ];
 
-const baseAbatement = {
-  foreignSales: {
-    percentage: 0,
-    countries: [],
+const abatementsCards = [
+  {
+    id: 1, title: 'Foreign sales', activityCards: [
+      { id: 1, button: false }
+    ]
   },
-  compilation: {
-    percentage: 0,
+  {
+    id: 2, title: 'Compilation', activityCards: [
+      { id: 1, button: true }
+    ]
   },
-  promotion: {
-    percentage: 0,
+  {
+    id: 3, title: 'Promotion', activityCards: [
+      { id: 1, button: true }
+    ]
   },
-  discouts: {
-    percentage: 0,
+  {
+    id: 4, title: 'Discount sales', activityCards: [
+      { id: 1, button: true }
+    ]
   },
-  offCircuits: {
-    percentage: 0,
-  },
-};
+  {
+    id: 5, title: 'Off-Circuit sales', activityCards: [
+      { id: 1, button: true }
+    ]
+  }
+]
 
-type Tab =
-  | "foreignSales"
-  | "compilation"
-  | "promotion"
-  | "discouts"
-  | "offCircuits";
+const cards = [
+  {
+    id: 1, title: 'Foreign sales', desc: 'Abatements taken for foreign markets', subCards: [
+      { id: 1, title: ' Abatement rate', desc: 'In Canada and USA', rate: '20%' },
+      { id: 2, title: 'Abatement rate ', desc: 'In Italy, Spain and Portugal', rate: '10%' },
+    ]
+  },
+  {
+    id: 2, title: 'Compilations', desc: 'Abatements taken for compilations', subCards: [
+      { id: 1, title: 'Share of Base', desc: '', rate: '20%' }
+    ]
+  },
+  {
+    id: 3, title: 'Promotions', desc: 'Abatements taken for promotions', subCards: [
+      { id: 1, title: 'Share of Base', desc: '', rate: '20%' }
+    ]
+  },
+  {
+    id: 4, title: 'Discounted Sales', desc: 'Abatements taken for discounted sales', subCards: [
+      { id: 1, title: 'Share of Base', desc: '', rate: '20%' }
+    ]
+  },
+  {
+    id: 5, title: 'Off Traditional Circuits Sales', desc: 'Abatements for sales outside the traditional circuit', subCards: [
+      { id: 1, title: 'Share of Base', desc: '', rate: '20%' }
+    ]
+  }
+]
 
 const Abatements = ({ updateStep }: StepProps) => {
-  const [abatement, setAbatement] = useState<Abatement>(baseAbatement);
   const [currentTabIndex, setCurrentTabIndex] = useState(0);
-  const [tab, setTab] = useState(TABS[0].value);
-
-  useEffect(() => {
-    if (currentTabIndex === TABS.length) {
-      updateStep(1);
-    } else {
-      setTab(TABS[currentTabIndex].value);
-    }
-  }, [currentTabIndex]);
-
-  const handleChangeGoalValues = (
-    parent: Tab,
-    subField: "percentage" | "countries",
-    value: number
-  ) => {
-    setAbatement((prev) => ({
-      ...prev,
-      [parent]: {
-        ...prev[parent],
-        [subField]: value,
-      },
-    }));
-  };
 
   const handleClickNext = () => {
     setCurrentTabIndex(currentTabIndex + 1);
@@ -126,18 +109,25 @@ const Abatements = ({ updateStep }: StepProps) => {
     updateStep(1);
   };
 
-  const onTabChange = (value: string) => {
-    console.log(value);
-    setTab(value as Tab);
+  const [enabled, setEnabled] = useState<number[]>([])
+
+  const onCheckHandle = (id: number) => {
+    const checkExist = enabled?.includes(id);
+
+    if (checkExist) {
+      setEnabled((prev) => prev?.filter((item) => item !== id));
+    } else {
+      setEnabled((prev) => [...prev, id]);
+    }
   };
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
       <div className="w-full pb-7 pt-16 bg-modal rounded-s-3xl h-[645px] flex flex-col justify-between">
-        <ScrollArea className="h-full">
+        <div className="scrollbox overflow-auto w-full h-full">
           <div className="h-[calc(100%-40px)] px-10">
-            <div className="w-full flex justify-between">
-              <div className="space-y-6">
+            <div className="w-full flex justify-between mb-12">
+              <div className="space-y-1">
                 <h1 className="text-3xl font-semibold tracking-tight">
                   Abatements
                 </h1>
@@ -153,76 +143,64 @@ const Abatements = ({ updateStep }: StepProps) => {
                 Skip
               </Button>
             </div>
-            <Card className="border-none flex-1 bg-transparent shadow-none">
+            <Card className="bg-transparent border-none shadow-none">
               <CardContent className="space-y-6 p-0">
-                <Tabs value={tab} onValueChange={onTabChange} className="w-full">
-                  <TabsList className="grid w-full grid-cols-5">
-                    {TABS.map((t, index) => (
-                      <TabsTrigger
-                        key={index}
-                        value={t.value}
-                        className="text-[11px]"
-                      >
-                        {t.label}
-                      </TabsTrigger>
-                    ))}
-                  </TabsList>
-                  {TABS.map((t, index) => (
-                    <TabsContent key={index} value={t.value} className="mt-10">
-                      <div>
-                        <p className="text-base font-normal">
-                          Share of base rate
-                        </p>
-                        <p className="text-[#A1A1AA] text-sm font-normal">
-                          Lorem ipsum
-                        </p>
-                      </div>
-                      <div className="flex gap-6 items-center space-y-4 mt-6">
-                        <div
-                          className={cn(
-                            "flex items-center bg-mblue pl-4 rounded-md col-span-12 xl:col-span-10 2xl:col-span-6"
-                          )}
-                        >
+                <div className="pl-2.5">
+                  {abatementsCards.map((card) =>
+                    <Card key={card.id} className="border-none bg-modal-foreground mb-8 rounded-3xl	">
+                      <CardHeader className="py-5 pb-0">
+                        <CardTitle className="text-[17px] font-normal flex justify-between">
                           <div>
-                            <p
-                              className={cn(
-                                "text-sm font-medium leading-none text-[#FAFAFA]"
-                              )}
-                            >
-                              Share of base
-                            </p>
-                            <p className="text-sm text-[#B9B9BA]">Lorem ipsum</p>
+                            <h6>{card.title}</h6>
+                            <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">Abatements</Badge>
                           </div>
-                          <CardsActivityGoal
-                            label="SHARES OF REVENUES"
-                            initialValue={abatement[t.value].percentage}
-                            unit="%"
-                            step={10}
-                            buttonTitle="Set Share"
-                            minValue={0}
-                            maxValue={100}
-                            buttonHidden
-                            onClickButton={() => { }}
-                            isOwner={true}
-                            setGoal={(value) =>
-                              handleChangeGoalValues(t.value, "percentage", value)
-                            }
-                          />
-                        </div>
-                        <div className={cn(index === 0 ? "" : "hidden")}>
-                          <CountryMultiSelect
-                            frameworks={COUNTRIES}
-                            placeholder="Select countries"
-                          />
-                        </div>
-                      </div>
-                    </TabsContent>
-                  ))}
-                </Tabs>
+                          <Switch className="mt-2.5" checked={enabled.includes(card.id)} onCheckedChange={() => onCheckHandle(card.id)} />
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="pb-8">
+                        <p className="text-sm	mt-2.5 text-muted-foreground">An abatement for foreign sales will be applied</p>
+                        {enabled.includes(card.id) && <div className="space-y-8 mt-10">
+                          <div className="pl-4 gap-7 flex flex-col justify-center items-center">
+                            {card?.activityCards.map((activityCard) => (
+                              <div className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md w-fit bg-modal pb-1.5">
+                                <div className="pt-3">
+                                  <p className="text-sm font-normal leading-none mb-1">
+                                    Abatement rate
+                                  </p>
+                                  <p className="text-sm">Lorem ipsum</p>
+                                </div>
+                                <div className="">
+                                  <CardsActivityGoal
+                                    label="SHARES OF REVENUES"
+                                    initialValue={0}
+                                    unit="%"
+                                    step={10}
+                                    buttonTitle="Set Rate"
+                                    minValue={0}
+                                    maxValue={100}
+                                    buttonHidden={activityCard.button}
+                                    onClickButton={() => { }}
+                                    setGoal={() => { }}
+                                  />
+                                </div>
+                              </div>
+                            ))}
+                            <div className={cn(card.id === 1 ? "" : "hidden")}>
+                              <CountryMultiSelect
+                                frameworks={COUNTRIES}
+                                placeholder="Countries"
+                              />
+                            </div>
+                          </div>
+                        </div>}
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
               </CardContent>
             </Card>
           </div>
-        </ScrollArea>
+        </div>
         <div className="flex justify-between w-full mt-10 px-10">
           <Button
             className="bg-mblue"
@@ -247,7 +225,7 @@ const Abatements = ({ updateStep }: StepProps) => {
         </div>
       </div>
       <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
-        <ScrollArea className="h-full w-full px-4">
+        <div className="scrollbox overflow-auto px-4 w-full h-full">
           <Card className="bg-modal border-muted">
             <CardHeader>
               <CardTitle>Abatements</CardTitle>
@@ -256,67 +234,33 @@ const Abatements = ({ updateStep }: StepProps) => {
               </CardDescription>
             </CardHeader>
             <CardContent className="">
-              <Card className="bg-transparent border-none shadow-none">
-                <CardHeader>
-                  <CardTitle>Foreign sales</CardTitle>
-                  <CardDescription>
-                    Abatements taken for foreign markets
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="flex justify-start items-center gap-6">
-                  <div className="rounded-md bg-modal-foreground px-[10px] py-2 w-[150px] min-h-[90px] space-y-1">
-                    <p className="text-[12px] font-normal">Abatement rate</p>
-                    <p className="text-[#94A3B8] text-[9px] font-normal">
-                      In Canada and USA
-                    </p>
-                    <p className="text-mblue text-[12px] font-normal">20%</p>
-                  </div>
-                  <div className="rounded-xl bg-modal-foreground px-[10px] py-2 w-[150px] min-h-[90px] space-y-1">
-                    <p className="text-[12px] font-normal">Abatement rate</p>
-                    <p className="text-[#94A3B8] text-[9px] font-normal">
-                      In Italy, Spain and Portugal
-                    </p>
-                    <p className="text-mblue text-[12px] font-normal">10%</p>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card className="bg-transparent border-none shadow-none">
-                <CardHeader>
-                  <CardTitle>Compilations</CardTitle>
-                  <CardDescription>
-                    Abatements taken for compilations
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="flex justify-start items-center gap-6">
-                  <div className="rounded-md bg-modal-foreground px-[10px] py-2 w-[150px] min-h-[90px] space-y-1">
-                    <p className="text-[12px] font-normal">Abatement rate</p>
-                    <p className="text-[#94A3B8] text-[9px] font-normal">
-                      In Canada and USA
-                    </p>
-                    <p className="text-mblue text-[12px] font-normal">20%</p>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card className="bg-transparent border-none shadow-none">
-                <CardHeader>
-                  <CardTitle>Promotions</CardTitle>
-                  <CardDescription>
-                    Abatements taken for promotions
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="flex justify-start items-center gap-6">
-                  <div className="rounded-md bg-modal-foreground px-[10px] py-2 w-[150px] min-h-[90px] space-y-1">
-                    <p className="text-[12px] font-normal">Abatement rate</p>
-                    <p className="text-[#94A3B8] text-[9px] font-normal">
-                      In Canada and USA
-                    </p>
-                    <p className="text-mblue text-[12px] font-normal">20%</p>
-                  </div>
-                </CardContent>
-              </Card>
+              {cards.map((card) =>
+                <Card key={card.id} className="bg-transparent border-none shadow-none">
+                  <CardHeader>
+                    <CardTitle className="text-lg font-normal">{card.title}</CardTitle>
+                    <CardDescription>
+                      {card.desc}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="flex justify-start items-center gap-6">
+                    {card?.subCards.map((innercard) => (
+                      <div className="rounded-md bg-modal-foreground px-[10px] py-2 w-[150px] min-h-[90px] space-y-1">
+                        <p className="text-[12px] font-normal">{innercard.title}</p>
+                        <p className="text-[#94A3B8] text-[9px] font-normal">
+                          {innercard.desc}
+                        </p>
+                        <p className="text-mblue text-[12px] font-normal">{innercard.rate}</p>
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+              )}
             </CardContent>
           </Card>
-        </ScrollArea>
+          <div className="rounded-2xl bg-modal border border-muted w-full p-4 mt-[76px]">
+            <TableCommon data={abatementTracks} columns={AbatementColumn} />
+          </div>
+        </div>
       </div>
     </div>
   );

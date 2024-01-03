@@ -14,9 +14,11 @@ type Props = {
     placeholder?: string;
     name?: string;
     artistRate?: boolean;
+    column?: string;
+    width?: string;
 };
 
-export default function UploadtrackPopover({ artists, placeholder, name, artistRate }: Props) {
+export default function UploadtrackPopover({ artists, placeholder, name, width, artistRate, column }: Props) {
     const [selectedAudio, setSelectedAudio] = useState("");
 
     const handleAudioUpload = (event: any) => {
@@ -38,7 +40,7 @@ export default function UploadtrackPopover({ artists, placeholder, name, artistR
                     </p>
                 </div>
                 <div className="grid gap-3">
-                    <div className="grid grid-cols-5 items-end gap-3">
+                    <div className={`grid items-end justify-center gap-3 ${column}`}>
                         <div className="col-span-3">
                             <Label className="text-sm">Track 1</Label>
                             <Input
@@ -49,7 +51,7 @@ export default function UploadtrackPopover({ artists, placeholder, name, artistR
                         <div className="text-center col-span-2">
                             {artists ?
                                 <ArtistMultiSelect
-                                    placeholder={placeholder} artistRate={artistRate}/> :
+                                    placeholder={placeholder} artistRate={artistRate} width={width}/> :
                                 <div className="relative">
                                     <Button variant={"outline"} className="text-[11px] bg-modal py-1 px-2 h-[38px]">
                                         <label className="flex items-center">

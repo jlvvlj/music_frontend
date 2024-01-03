@@ -7,14 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { RadioGroup } from "@/components/ui/radio-group";
-import { RadioButtonCard } from "../cards/RadioButtonCard";
-import RoyaltyCard from "./RoyaltyCard";
 import { Button } from "../ui/button";
 import { Badge } from "@/registry/new-york/ui/badge";
 import { Switch } from "@/registry/default/ui/switch";
 import { STEPS } from "./types";
-import { ScrollArea } from "@/registry/new-york/ui/scroll-area";
 import { CardsActivityGoal } from "../activity-goal";
 import { Avatar } from "../ui/avatar";
 import Image from "next/image";
@@ -65,15 +61,6 @@ export default function RoyaltyAdvances({
     }
   };
 
-
-  const handleChangeRadioButtons = (value: string) => {
-    console.log(value);
-    if (value.toLowerCase() === "yes") {
-      return true;
-    }
-    return false;
-  };
-
   const handleClickNext = () => {
     updateStep(1);
   };
@@ -82,14 +69,10 @@ export default function RoyaltyAdvances({
     updateStep(-1);
   };
 
-  const handleClickSkip = () => {
-    updateStep(1);
-  };
-
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
       <div className="w-full pb-7 pt-16 bg-modal rounded-s-3xl h-[645px] flex flex-col justify-between">
-        <ScrollArea className="h-full">
+        <div className="scrollbox overflow-auto w-full h-full">
           <div className="h-[calc(100%-40px)] px-10">
             <div className="w-full">
               <h1 className="text-3xl font-semibold tracking-tight mb-1">
@@ -116,7 +99,7 @@ export default function RoyaltyAdvances({
                         {enabled.includes(card.id) && <div className="space-y-8 mt-10">
                           <div className="pl-4 gap-10">
                             {card?.activityCards.map((activityCard) => (
-                              <div className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md mb-5 w-fit bg-black3">
+                              <div className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md mb-5 w-fit bg-modal">
                                 <Avatar className="bg-[#A3D3FF] mt-2 h-11 w-11">
                                   <Image
                                     src={activityCard.avatar}
@@ -156,7 +139,7 @@ export default function RoyaltyAdvances({
               </CardContent>
             </Card>
           </div>
-        </ScrollArea>
+        </div>
         <div className="flex justify-between w-full mt-10 px-10">
           <Button
             className="bg-mblue"
@@ -182,7 +165,7 @@ export default function RoyaltyAdvances({
         </div>
       </div>
       <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
-        <ScrollArea className="h-full w-full px-4 scroll-content">
+        <div className="scrollbox overflow-auto px-4 w-full h-full">
           <Card className="bg-modal border-muted mb-[76px]">
             <CardHeader>
               <CardTitle>Royalties Advances</CardTitle>
@@ -221,11 +204,11 @@ export default function RoyaltyAdvances({
               </div>
               <div className="flex items-center gap-6 px-20 mb-12">
                 <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
-                  <p className="text-white text-[12px] font-normal">At Signature</p>
+                  <p className="text-[12px] font-normal">At Signature</p>
                   <p className="text-mblue text-[12px] font-normal">€ 3000</p>
                 </div>
                 <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
-                  <p className="text-white text-[12px] font-normal">
+                  <p className="text-[12px] font-normal">
                     At release
                   </p>
                   <p className="text-mblue text-[12px] font-normal">€ 5000</p>
@@ -263,7 +246,7 @@ export default function RoyaltyAdvances({
               </div>
               <div className="flex items-center gap-6 px-20">
                 <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
-                  <p className="text-white text-[12px] font-normal">At Specific Date</p>
+                  <p className="text-[12px] font-normal">At Specific Date</p>
                   <p className="text-mblue text-[12px] font-normal">€ 3000</p>
                 </div>
               </div>
@@ -272,7 +255,7 @@ export default function RoyaltyAdvances({
           <div className="rounded-2xl bg-modal border border-muted w-full p-4">
             <TableCommon data={royaltiesTracks} columns={RoyaltiesColumn} />
           </div>
-        </ScrollArea>
+        </div>
       </div>
     </div>
   );

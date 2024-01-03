@@ -567,3 +567,123 @@ export const royaltiesTracks = [
         "album": "Edit shares"
     }
 ]
+
+export const abatementTracks = [
+    {
+        "id": "1",
+        "title": "Jenny Was",
+        "foreignsales": "15%",
+        "compilation": "15%",
+        "promotion": "15%",
+        "discounted": "15%",
+        "offcircuit": "15%",
+        "status": "",
+        "album": "Edit abatements"
+    },
+    {
+        "id": "2",
+        "title": "Brightside",
+        "foreignsales": "15%",
+        "compilation": "15%",
+        "promotion": "15%",
+        "discounted": "15%",
+        "offcircuit": "15%",
+        "status": "",
+        "album": "Edit abatements"
+    },
+    {
+        "id": "3",
+        "title": "Like You",
+        "foreignsales": "15%",
+        "compilation": "15%",
+        "promotion": "15%",
+        "discounted": "15%",
+        "offcircuit": "15%",
+        "status": "",
+        "album": "Edit abatements"
+    },
+    {
+        "id": "4",
+        "title": "Somebody",
+        "foreignsales": "15%",
+        "compilation": "15%",
+        "promotion": "15%",
+        "discounted": "15%",
+        "offcircuit": "15%",
+        "status": "",
+        "album": "Edit abatements"
+    },
+    {
+        "id": "5",
+        "title": "These Things",
+        "foreignsales": "15%",
+        "compilation": "15%",
+        "promotion": "15%",
+        "discounted": "15%",
+        "offcircuit": "15%",
+        "status": "",
+        "album": "Edit abatements"
+    },
+    {
+        "id": "6",
+        "title": "Andy",
+        "foreignsales": "15%",
+        "compilation": "15%",
+        "promotion": "15%",
+        "discounted": "15%",
+        "offcircuit": "15%",
+        "status": "",
+        "album": "Edit abatements"
+    }
+]
+
+export const broadcastingTracks = [
+    {
+        "id": "1",
+        "title": "Jenny Was",
+        "broadcasting": "15%",
+        "secondary": "15%",
+        "status": "",
+        "album": "Edit rights"
+    },
+    {
+        "id": "2",
+        "title": "Brightside",
+        "broadcasting": "15%",
+        "secondary": "15%",
+        "status": "",
+        "album": "Edit rights"
+    },
+    {
+        "id": "3",
+        "title": "Like You",
+        "broadcasting": "15%",
+        "secondary": "15%",
+        "status": "",
+        "album": "Edit rights"
+    },
+    {
+        "id": "4",
+        "title": "Somebody",
+        "broadcasting": "15%",
+        "secondary": "15%",
+        "status": "",
+        "album": "Edit rights"
+    },
+    {
+        "id": "5",
+        "title": "These Things",
+        "broadcasting": "15%",
+        "secondary": "15%",
+        "status": "",
+        "album": "Edit rights"
+    },
+    {
+        "id": "6",
+        "title": "Andy",
+        "broadcasting": "15%",
+        "secondary": "15%",
+        "status": "",
+        "album": "Edit rights"
+    }
+]

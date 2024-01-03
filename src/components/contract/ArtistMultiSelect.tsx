@@ -16,9 +16,10 @@ type Props = {
     artists?: Framework[];
     placeholder?: string;
     artistRate?: boolean;
+    width?: string;
 };
 
-export function ArtistMultiSelect({ placeholder, artistRate, artists = [
+export function ArtistMultiSelect({ placeholder,width, artistRate, artists = [
     {
         id: "1",
         label: "Julie Depree",
@@ -81,13 +82,13 @@ export function ArtistMultiSelect({ placeholder, artistRate, artists = [
     return (
         <Command
             onKeyDown={handleKeyDown}
-            className="overflow-visible bg-transparent max-w-[230px] h-auto"
+            className={`overflow-visible bg-transparent h-auto ${width}`}
         >
             <div className="group border border-input px-3 py-2 text-sm ring-offset-background rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 bg-card3">
                 <div className="flex gap-1 flex-wrap">
                     {selectedArtists.map((artist) => {
                         return (
-                            <Badge key={artist.value} variant="secondary" className="bg-mblue flex items-center justify-between w-full text-white hover:bg-mblue scrollbox overflow-x-auto">
+                            <Badge key={artist.value} variant="secondary" className="bg-mblue flex items-center justify-between w-full text-white hover:bg-mblue">
                                 <div className="flex">
 
                                     <Avatar className="h-11 w-11 border border-white">

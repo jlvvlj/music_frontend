@@ -7,19 +7,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "../ui/button";
-import { cn, fallbackAvatar } from "@/lib/utils";
-import { isOwner } from "./utils";
-import { CardsActivityGoal } from "@/components/activity-goal";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Input } from "@/components/ui/input";
-import { Slider } from "@/components/ui/slider";
 import ShareCard from "./ShareCard";
 import ShareCardRight from "./ShareCardRight";
 import { StepProps, TeamMember } from "./types";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import useContractBuilder from "@/hooks/useContractBuilder";
 import { Steps } from "@/contexts/ContractBuilderContext";
-import { ScrollArea } from "@/registry/new-york/ui/scroll-area";
 import { Sheet, SheetTrigger } from "@/registry/new-york/ui/sheet";
 import { AlertCircle } from "lucide-react";
 import ContractDrawer from "@/app/dashboard/components/contract-drawer";
@@ -55,7 +48,7 @@ const Shares = ({ updateStep }: StepProps) => {
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
       <div className="w-full pb-7 pt-16 bg-modal rounded-s-3xl h-[645px] flex flex-col justify-between">
-        <div className="scrollbox overflow-auto px-4 w-full h-full">
+        <div className="scrollbox overflow-auto w-full h-full">
           <div className="h-[calc(100%-40px)] px-10">
             <div className="flex items-center gap-2 mb-3">
               <h1 className="text-3xl font-semibold tracking-tight">

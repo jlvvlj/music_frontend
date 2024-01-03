@@ -45,7 +45,7 @@ const Shares = ({ updateStep }: StepProps) => {
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
       <div className="w-full pb-7 pt-16 bg-modal rounded-s-3xl h-[645px] flex flex-col justify-between">
-        <div className="scrollbox overflow-auto px-4 w-full h-full">
+        <div className="scrollbox overflow-auto w-full h-full">
           <div className="h-[calc(100%-40px)] px-10">
             <div className="flex items-center gap-2 mb-3">
               <h1 className="text-3xl font-semibold tracking-tight">
@@ -62,7 +62,7 @@ const Shares = ({ updateStep }: StepProps) => {
               Invite your team to join the project.
             </p>
             <div className="flex justify-center flex-col items-center space-y-12">
-              <ArtistMultiSelect artistRate={false} placeholder="Participants" />
+              <ArtistMultiSelect width="max-w-[230px]" artistRate={false} placeholder="Participants" />
               <InvitationPopover />
             </div>
           </div>

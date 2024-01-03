@@ -43,7 +43,7 @@ export default function UploadTracks({ updateStep }: StepProps) {
 
     return (
         <div className="w-full py-7 rounded-s-3xl h-full flex flex-col justify-between">
-            <div className="scrollbox overflow-auto px-4 w-full h-full">
+            <div className="scrollbox overflow-auto w-full h-full">
                 <div className="h-[calc(100%-40px)] px-8">
                     {/* <h1 className="text-3xl font-semibold tracking-tight mb-[60px]">
                         Let’s upload your tracks
