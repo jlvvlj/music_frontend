@@ -687,3 +687,60 @@ export const broadcastingTracks = [
         "album": "Edit rights"
     }
 ]
+
+export const derivativeTracks = [
+    {
+        "id": "1",
+        "title": "Jenny Was",
+        "direct": "15%",
+        "license": "15%",
+        "events": "15%",
+        "status": "",
+        "album": "Edit rates"
+    },
+    {
+        "id": "2",
+        "title": "Brightside",
+        "direct": "15%",
+        "license": "15%",
+        "events": "15%",
+        "status": "",
+        "album": "Edit rates"
+    },
+    {
+        "id": "3",
+        "title": "Like You",
+        "direct": "15%",
+        "license": "15%",
+        "events": "15%",
+        "status": "",
+        "album": "Edit rates"
+    },
+    {
+        "id": "4",
+        "title": "Somebody",
+        "direct": "15%",
+        "license": "15%",
+        "events": "15%",
+        "status": "",
+        "album": "Edit rates"
+    },
+    {
+        "id": "5",
+        "title": "These Things",
+        "direct": "15%",
+        "license": "15%",
+        "events": "15%",
+        "status": "",
+        "album": "Edit rates"
+    },
+    {
+        "id": "6",
+        "title": "Andy",
+        "direct": "15%",
+        "license": "15%",
+        "events": "15%",
+        "status": "",
+        "album": "Edit rates"
+    }
+]
