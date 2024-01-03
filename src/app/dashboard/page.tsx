@@ -1,7 +1,9 @@
+"use client"
 import "../globals.css";
 import SheetSide from "./sheet-side";
 import { ThemeProvider } from "@/components/theme-provider";
 import Image from "next/image";
+import * as DialogPrimitive from "@radix-ui/react-dialog"
 import {
   Dialog,
   DialogContent,
@@ -17,6 +19,7 @@ import CreateTrackTabs from "@/components/track/createTrackTabs";
 import TracksTable from "./tracks_table";
 import Graph from "./graph";
 import NewContract from "@/components/contract/NewContractModal";
+import { X } from "lucide-react";
 
 const cards = [
   {
@@ -62,8 +65,14 @@ export default function DashboardPage() {
                   <DialogTrigger asChild>
                     <Button variant="outline">Add a new contract</Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-[1070px] h-[645px] p-0 !rounded-3xl border-none">
-                    <NewContract />
+                  <DialogContent className="top-0 left-0 max-w-[100vw] h-screen translate-x-0 translate-y-0 bg-background3/80 backdrop-blur-sm flex justify-center items-center data-[state=closed]:slide-out-to-left-[initial] data-[state=closed]:slide-out-to-top-[initial] data-[state=open]:slide-in-from-left-[initial] data-[state=open]:slide-in-from-top-[initial] rounded-none border-none new-contract-modal">
+                    <div className="max-w-[1070px] p-0 !rounded-3xl border-none relative">
+                      <NewContract />
+                      <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+                        <X className="h-4 w-4" />
+                        <span className="sr-only">Close</span>
+                      </DialogPrimitive.Close>
+                    </div>
                   </DialogContent>
                 </Dialog>
                 <Dialog>
