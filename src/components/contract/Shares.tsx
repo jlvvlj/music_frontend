@@ -1,5 +1,5 @@
 // ** Components
-import { Button } from "../ui/button";
+import { toast } from "sonner";
 import { StepProps, TeamMember } from "./types";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import useContractBuilder from "@/hooks/useContractBuilder";
@@ -7,19 +7,17 @@ import { Steps } from "@/contexts/ContractBuilderContext";
 import { Sheet, SheetTrigger } from "@/registry/new-york/ui/sheet";
 import { AlertCircle } from "lucide-react";
 import ContractDrawer from "@/app/dashboard/components/contract-drawer";
-import ToasterDemo from "./ToasterDemo";
-import { ArtistMultiSelect } from "./ArtistMultiSelect";
+import { shareTracks } from "@/app/data/data";
+
 import InvitationPopover from "./InvitationPopover";
+import { ArtistMultiSelect } from "./ArtistMultiSelect";
 import TeamShare from "./TeamShare";
 import { TableCommon } from "./TableCommon";
-import { shareTracks } from "@/app/data/data";
 import { ShareTrackColumn } from "./ShareTrackColumn";
+import { Button } from "../ui/button";
 
 const Shares = ({ updateStep }: StepProps) => {
   const { members, dispatch } = useContractBuilder();
-  const handleClickNext = () => {
-    updateStep(1);
-  };
 
   const handleClickBack = () => {
     updateStep(-1);
@@ -40,6 +38,17 @@ const Shares = ({ updateStep }: StepProps) => {
         members: _members,
       },
     });
+  };
+
+  const handleClickNext = () => {
+    toast("Artists added successfully!", {
+      description: "Artists",
+      action: {
+        label: "X",
+        onClick: () => { },
+      },
+    });
+    updateStep(1);
   };
 
   return (
@@ -76,7 +85,14 @@ const Shares = ({ updateStep }: StepProps) => {
             <ArrowLeftIcon className="mr-1" />
             Back
           </Button>
-          <ToasterDemo toastTitle="Shares added successfully!" updateStep={updateStep}/>
+          <Button
+            className="bg-mblue"
+            variant="outline"
+            onClick={handleClickNext}
+          >
+            Next
+            <ArrowRightIcon className="ml-1" />
+          </Button>
         </div>
       </div>
       <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">

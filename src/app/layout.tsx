@@ -4,6 +4,7 @@ import { Providers } from "./providers";
 import { Roboto_Mono, Inter, Noto_Sans_Display } from "next/font/google";
 import Sidebar from "./Sidebar";
 import SidebarLayout from "./SidebarLayout";
+import { Toaster } from "sonner";
 
 const roboto = Roboto_Mono({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
@@ -24,6 +25,7 @@ export default function RootLayout({
         <body className={`${roboto.className} flex`}>
           <SidebarLayout children={children} />
         </body>
+        <Toaster />
       </html>
     </ClerkProvider>
   );

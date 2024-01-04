@@ -8,10 +8,10 @@ import {
   Popover,
   PopoverTrigger,
 } from "@/registry/new-york/ui/popover"
-import Link from "next/link";
-import UploadtrackPopover from "./UploadtrackPopover";
-import { Avatar } from "../ui/avatar";
 import Image from "next/image";
+
+import UploadTrackPopover from "./UploadTrackPopover";
+import { Avatar } from "../ui/avatar";
 
 const initialMembers = [
   { id: 1, member: '/amandine.svg' },
@@ -89,7 +89,7 @@ export const ShareTrackColumn: ColumnDef<Task>[] = [
         <PopoverTrigger asChild>
           <div className="text-[#4FABFE] text-center cursor-pointer">{row.getValue("album")}</div>
         </PopoverTrigger>
-        <UploadtrackPopover width="max-w-[230px] mx-auto" column='grid-cols-1' artists={true} placeholder="Artists" name={row.getValue("title")} />
+        <UploadTrackPopover artists={true} placeholder="Artists" name={row.getValue("title")} />
       </Popover>,
     enableSorting: false,
     enableHiding: false,

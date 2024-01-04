@@ -7,17 +7,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "../ui/button";
+import { toast } from "sonner";
 import { Badge } from "@/registry/new-york/ui/badge";
 import { Switch } from "@/registry/default/ui/switch";
-import { STEPS } from "./types";
+import Image from "next/image";
+
 import { CardsActivityGoal } from "../activity-goal";
 import { Avatar } from "../ui/avatar";
-import Image from "next/image";
+import { Button } from "../ui/button";
 import { TableCommon } from "./TableCommon";
 import { royaltiesTracks } from "@/app/data/data";
 import { RoyaltiesColumn } from "./RoyaltiesColumn";
-import ToasterDemo from "./ToasterDemo";
 
 interface Props extends React.PropsWithChildren {
   currentStep?: number;
@@ -61,13 +61,21 @@ export default function RoyaltyAdvances({
     }
   };
 
-  const handleClickNext = () => {
-    updateStep(1);
-  };
-
   const handleClickBack = () => {
     updateStep(-1);
   };
+
+  const handleClickNext = () => {
+    toast("Royalties Advances updated successfully!", {
+      description:"Royalties Advances",
+      action: {
+          label: "X",
+          onClick: () => {},
+      },
+    });
+    updateStep(1);
+  };
+
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
@@ -117,7 +125,7 @@ export default function RoyaltyAdvances({
                                 <div className="">
                                   <CardsActivityGoal
                                     label={activityCard.label}
-                                    initialValue={activityCard.revenue || 30}
+                                    initialValue={parseInt(activityCard.revenue) || 30}
                                     unit=""
                                     step={10}
                                     buttonTitle="Set Share"
@@ -150,10 +158,14 @@ export default function RoyaltyAdvances({
             Back
           </Button>
           <div className="flex gap-4">
-            <Button className="" variant="outline" onClick={handleClickNext}>
-              Skip
+            <Button
+              className="bg-mblue"
+              variant="outline"
+              onClick={handleClickNext}
+            >
+              Next
+              <ArrowRightIcon className="ml-1" />
             </Button>
-            <ToasterDemo toastTitle="Royalties Advances updated successfully!" updateStep={updateStep}/>
           </div>
         </div>
       </div>
@@ -183,7 +195,7 @@ export default function RoyaltyAdvances({
                 <div className="">
                   <CardsActivityGoal
                     label={''}
-                    initialValue={'€8000 ' || 30}
+                    initialValue={parseInt('€8000') || 30}
                     unit=""
                     step={10}
                     buttonTitle="Set Share"
@@ -225,7 +237,7 @@ export default function RoyaltyAdvances({
                 <div className="">
                   <CardsActivityGoal
                     label={'base rate on sales'}
-                    initialValue={'€3000 ' || 30}
+                    initialValue={parseInt('€3000') || 30}
                     unit=""
                     step={10}
                     buttonTitle="Set Share"

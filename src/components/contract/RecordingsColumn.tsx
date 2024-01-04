@@ -1,16 +1,16 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-
 import { DataTableColumnHeader } from "@/app/dashboard/components/data-table-column-header";
+import Image from "next/image";
 import { Task } from "@/app/dashboard/data/schema";
 import {
   Popover,
   PopoverTrigger,
 } from "@/registry/new-york/ui/popover"
-import Image from "next/image";
+
 import { Avatar } from "../ui/avatar";
-import UploadtrackPopover from "./UploadtrackPopover";
+import UploadTrackPopover from "./UploadTrackPopover";
 
 export const RecordingsColumn: ColumnDef<Task>[] = [
   {
@@ -97,7 +97,7 @@ export const RecordingsColumn: ColumnDef<Task>[] = [
         <PopoverTrigger asChild>
           <div className="text-[#4FABFE] text-center cursor-pointer text-xs">{row.getValue("album")}</div>
         </PopoverTrigger>
-        <UploadtrackPopover width="max-w-auto ml-1" column='grid-cols-1' artistRate={true} artists={true} placeholder="Shares" name={row.getValue("title")} />
+        <UploadTrackPopover width="max-w-auto ml-1" column='grid-cols-1' artistRate={true} artists={true} placeholder="Shares" name={row.getValue("title")} />
       </Popover>,
     enableSorting: false,
     enableHiding: false,

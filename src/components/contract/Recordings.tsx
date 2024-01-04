@@ -1,49 +1,23 @@
 import React, { useState, useEffect } from "react";
-// ** Next
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import Image from "next/image";
+import { toast } from "sonner";
 import * as z from "zod";
-// ** Components
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form";
+  ArrowLeftIcon,
+  ArrowRightIcon
+} from "@radix-ui/react-icons";
+
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  ProgramType,
-  Program,
-  ProgramTypes,
   Recording,
   StepProps,
 } from "./types";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import DatePicker from "@/components/ui/date-picker";
 import { CardsActivityGoal } from "@/components/activity-goal";
-import {
-  ArrowLeftIcon,
-} from "@radix-ui/react-icons";
-import ToasterDemo from "./ToasterDemo";
 import { Avatar } from "../ui/avatar";
-import Image from "next/image";
-import { TableCommon } from "./TableCommon";
 import { recordingTracks } from "@/app/data/data";
+import { TableCommon } from "./TableCommon";
 import { RecordingsColumn } from "./RecordingsColumn";
 
 
@@ -139,15 +113,18 @@ const Recordings = ({ updateStep }: StepProps) => {
     setTab(value as Tab);
   };
 
-  const handleClickNext = () => {
-    setCurrentTabIndex(currentTabIndex + 1);
-  };
-
   const handleClickBack = () => {
     updateStep(-1);
   };
 
-  const handleClickSkip = () => {
+  const handleClickNext = () => {
+    toast("Rates updated successfully!", {
+      description: "Rates",
+      action: {
+        label: "X",
+        onClick: () => { },
+      },
+    });
     updateStep(1);
   };
 
@@ -203,7 +180,14 @@ const Recordings = ({ updateStep }: StepProps) => {
             <ArrowLeftIcon className="mr-1" />
             Back
           </Button>
-          <ToasterDemo toastTitle="Recordings added successfully!" updateStep={updateStep}/>
+          <Button
+            className="bg-mblue"
+            variant="outline"
+            onClick={handleClickNext}
+          >
+            Next
+            <ArrowRightIcon className="ml-1" />
+          </Button>
         </div>
       </div>
       <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
@@ -246,7 +230,7 @@ const Recordings = ({ updateStep }: StepProps) => {
                         maxValue={100}
                         buttonHidden
                         onClickButton={() => { }}
-                        setGoal={() => {}}
+                        setGoal={() => { }}
                       />
                     </div>
                   </div>

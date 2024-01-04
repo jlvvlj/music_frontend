@@ -1,11 +1,4 @@
 // ** Components
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Button } from "../ui/button";
 import ShareCard from "./ShareCard";
 import ShareCardRight from "./ShareCardRight";
@@ -16,7 +9,6 @@ import { Steps } from "@/contexts/ContractBuilderContext";
 import { Sheet, SheetTrigger } from "@/registry/new-york/ui/sheet";
 import { AlertCircle } from "lucide-react";
 import ContractDrawer from "@/app/dashboard/components/contract-drawer";
-import ToasterDemo from "./ToasterDemo";
 
 const Shares = ({ updateStep }: StepProps) => {
   const { members, dispatch } = useContractBuilder();
@@ -82,7 +74,14 @@ const Shares = ({ updateStep }: StepProps) => {
             <ArrowLeftIcon className="mr-1" />
             Back
           </Button>
-          <ToasterDemo toastTitle="Shares added successfully!" updateStep={updateStep}/>
+          <Button
+            className="bg-mblue"
+            variant="outline"
+            onClick={handleClickNext}
+          >
+            Next
+            <ArrowRightIcon className="ml-1" />
+          </Button>
         </div>
       </div>
       <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">

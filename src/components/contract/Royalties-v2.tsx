@@ -24,7 +24,6 @@ import { cn } from "@/lib/utils";
 import { CardsActivityGoal } from "@/components/activity-goal";
 import { SingleRate, StepProps, TieredRate } from "./types";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
-import ToasterDemo from "./ToasterDemo";
 
 type Tab = {
   label: string;
@@ -345,7 +344,14 @@ const Royalties = ({ updateStep }: StepProps) => {
             >
               Skip
             </Button>
-            <ToasterDemo toastTitle="Royalties selected successfully!" updateStep={updateStep}/>
+            <Button
+                className="bg-mblue"
+                variant="outline"
+                onClick={handleClickNext}
+            >
+                Next
+                <ArrowRightIcon className="ml-1" />
+            </Button>
           </div>
         </div>
       </div>

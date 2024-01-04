@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,12 +16,12 @@ import { Label } from "@/components/ui/label";
 import { Icons } from "@/components/icons";
 import { DerivativeUse, StepProps } from "./types";
 import CongratulationModal from "./CongratulationModal";
-import ToasterDemo from "./ToasterDemo";
 import { Badge } from "@/registry/new-york/ui/badge";
 import { Switch } from "@/registry/default/ui/switch";
 import { TableCommon } from "./TableCommon";
 import { derivativeTracks } from "@/app/data/data";
 import { DerivativeColumn } from "./DerivativeColumn";
+import { ArrowRightIcon } from "lucide-react";
 
 type Tab = {
   label: string;
@@ -107,45 +108,19 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
     }
   };
 
-  useEffect(() => {
-    if (currentTabIndex >= TABS.length) {
-      // updateStep(1);
-      setModalOpen(true);
-    } else {
-      setTab(TABS[currentTabIndex].value);
-    }
-  }, [currentTabIndex]);
-
-  const handleChangeRadioGroup = (v: string) => { };
-
-  const handleChangeGoalValues = (
-    parent: TabName,
-    subField: "percentage",
-    value: number
-  ) => {
-    setDerivativeUse((prev) => ({
-      ...prev,
-      [parent]: {
-        ...prev[parent],
-        [subField]: value,
-      },
-    }));
-  };
-
-  const handleClickNext = () => {
-    setCurrentTabIndex(currentTabIndex + 1);
-  };
-
   const handleClickBack = () => {
     updateStep(-1);
   };
 
-  const handleClickSkip = () => {
-    // updateStep(1);
-  };
-
-  const onTabChange = (value: string) => {
-    setTab(value as TabName);
+  const handleClickNext = () => {
+    toast("Derivative used successfully", {
+      description:"Derivative",
+      action: {
+          label: "X",
+          onClick: () => {},
+      },
+    });
+    setModalOpen(true)
   };
 
   return (
@@ -161,13 +136,6 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
                   </h1>
                   <p className="text-sm text-muted-foreground">Lorem Ipsum</p>
                 </div>
-                <Button
-                  className="bg-mblue"
-                  variant="outline"
-                  onClick={handleClickSkip}
-                >
-                  Skip
-                </Button>
               </div>
               <Card className="bg-transparent border-none shadow-none">
                 <CardContent className="space-y-6 p-0">
@@ -230,17 +198,14 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
               Back
             </Button>
             <div className="flex gap-4">
-              <Button className="" variant="outline" onClick={handleClickNext}>
-                Skip
-              </Button>
-              {/* <Button
+              <Button
                 className="bg-mblue"
                 variant="outline"
                 onClick={handleClickNext}
-              >
-                {currentTabIndex === TABS.length - 1 ? "Finish" : "Next"}
-              </Button> */}
-              <ToasterDemo toastTitle="Derivative used successfully!" updateStep={updateStep}/>
+            >
+                Next
+                <ArrowRightIcon className="ml-1" />
+            </Button>
             </div>
           </div>
         </div>

@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 import { FancyMultiSelect } from "@/components/fancy-multi-select";
 import { Abatement, StepProps } from "./types";
 import { CountryMultiSelect } from "../country-multi-select";
-import ToasterDemo from "./ToasterDemo";
+import { ArrowRightIcon } from "lucide-react";
 
 const TABS: {
   label: string;
@@ -234,7 +234,14 @@ const Abatements = ({ updateStep }: StepProps) => {
             <Button className="" variant="outline" onClick={handleClickNext}>
               Skip
             </Button>
-            <ToasterDemo toastTitle="Abatements added successfully!" updateStep={updateStep}/>
+            <Button
+                className="bg-mblue"
+                variant="outline"
+                onClick={handleClickNext}
+            >
+                Next
+                <ArrowRightIcon className="ml-1" />
+            </Button>
           </div>
         </div>
       </div>

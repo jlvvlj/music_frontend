@@ -7,16 +7,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { toast } from "sonner";
+import { ArrowRightIcon } from "lucide-react";
+import { Switch } from "@/registry/default/ui/switch";
+import { Badge } from "@/registry/new-york/ui/badge";
 
 import { CardsActivityGoal } from "@/components/activity-goal";
 import { cn } from "@/lib/utils";
 import {  StepProps } from "./types";
 import { CountryMultiSelect } from "../country-multi-select";
-import ToasterDemo from "./ToasterDemo";
-import { Badge } from "@/registry/new-york/ui/badge";
-import { Switch } from "@/registry/default/ui/switch";
-import { TableCommon } from "./TableCommon";
 import { abatementTracks } from "@/app/data/data";
+import { TableCommon } from "./TableCommon";
 import { AbatementColumn } from "./AbatementColumn";
 
 const COUNTRIES = [
@@ -95,18 +96,9 @@ const cards = [
 ]
 
 const Abatements = ({ updateStep }: StepProps) => {
-  const [currentTabIndex, setCurrentTabIndex] = useState(0);
-
-  const handleClickNext = () => {
-    setCurrentTabIndex(currentTabIndex + 1);
-  };
 
   const handleClickBack = () => {
     updateStep(-1);
-  };
-
-  const handleClickSkip = () => {
-    updateStep(1);
   };
 
   const [enabled, setEnabled] = useState<number[]>([])
@@ -120,6 +112,18 @@ const Abatements = ({ updateStep }: StepProps) => {
       setEnabled((prev) => [...prev, id]);
     }
   };
+
+  const handleClickNext = () => {
+    toast("Abatements added successfully!", {
+      description:"Abatements",
+      action: {
+          label: "X",
+          onClick: () => {},
+      },
+    });
+    updateStep(1);
+  };
+
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
@@ -135,13 +139,6 @@ const Abatements = ({ updateStep }: StepProps) => {
                   Enter the contract royalties details
                 </p>
               </div>
-              <Button
-                className="bg-mblue"
-                variant="outline"
-                onClick={handleClickSkip}
-              >
-                Skip
-              </Button>
             </div>
             <Card className="bg-transparent border-none shadow-none">
               <CardContent className="space-y-6 p-0">
@@ -210,10 +207,14 @@ const Abatements = ({ updateStep }: StepProps) => {
             Back
           </Button>
           <div className="flex gap-4">
-            <Button className="" variant="outline" onClick={handleClickNext}>
-              Skip
+            <Button
+                className="bg-mblue"
+                variant="outline"
+                onClick={handleClickNext}
+            >
+                Next
+                <ArrowRightIcon className="ml-1" />
             </Button>
-            <ToasterDemo toastTitle="Abatements added successfully!" updateStep={updateStep}/>
           </div>
         </div>
       </div>

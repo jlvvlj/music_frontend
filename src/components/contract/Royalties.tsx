@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { toast } from "sonner";
+import Image from "next/image";
+import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 
 import { Button } from "@/components/ui/button";
 import { CardsActivityGoal } from "@/components/activity-goal";
 import { SingleRate, StepProps, TieredRate } from "./types";
-import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
-import ToasterDemo from "./ToasterDemo";
 import { Avatar } from "../ui/avatar";
-import Image from "next/image";
 import { TableCommon } from "./TableCommon";
 import { recordingTracks } from "@/app/data/data";
 import { RecordingsColumn } from "./RecordingsColumn";
@@ -95,9 +95,6 @@ const Royalties = ({ updateStep }: StepProps) => {
     }, 500);
   };
 
-  const handleClickNext = () => {
-    setCurrentTabIndex(currentTabIndex + 1);
-  };
 
   const handleClickBack = () => {
     updateStep(-1);
@@ -105,6 +102,17 @@ const Royalties = ({ updateStep }: StepProps) => {
 
   const onTabChange = (value: string) => {
     setTab(value as string);
+  };
+
+  const handleClickNext = () => {
+    toast("Shares added successfully!", {
+      description:"Shares",
+      action: {
+          label: "X",
+          onClick: () => {},
+      },
+    });
+    updateStep(1);
   };
 
   return (
@@ -159,7 +167,14 @@ const Royalties = ({ updateStep }: StepProps) => {
             <ArrowLeftIcon className="mr-1" />
             Back
           </Button>
-          <ToasterDemo toastTitle="Recordings added successfully!" updateStep={updateStep}/>
+          <Button
+            className="bg-mblue"
+            variant="outline"
+            onClick={handleClickNext}
+          >
+            Next
+            <ArrowRightIcon className="ml-1" />
+          </Button>
         </div>
       </div>
       <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">

@@ -1,14 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
-// ** Form
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { AlertCircle } from "lucide-react";
+import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
+import { Sheet, SheetTrigger } from "@/registry/new-york/ui/sheet";
 
-// ** Component
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import {
@@ -23,12 +23,8 @@ import { cn, fallbackAvatar } from "@/lib/utils";
 import UploadButton from "@/components/upload-button";
 import { StepProps, TeamMember } from "./types";
 import { isOwner } from "./utils";
-import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import TeamShare from "./TeamShare";
-import { Sheet, SheetTrigger } from "@/registry/new-york/ui/sheet";
 import ContractDrawer from "@/app/dashboard/components/contract-drawer";
-import { AlertCircle } from "lucide-react";
-import ToasterDemo from "./ToasterDemo";
 
 type Tab = "team" | "solo";
 const TABS: {
@@ -326,7 +322,14 @@ const Contributors = ({ updateStep, children }: StepProps) => {
               <ArrowLeftIcon className="mr-1" />
               Back
             </Button>
-            <ToasterDemo toastTitle="Contibutors created successfully!" updateStep={updateStep}/>
+            <Button
+              className="bg-mblue"
+              variant="outline"
+              onClick={handleClickNext}
+            >
+              Next
+              <ArrowRightIcon className="ml-1" />
+            </Button>
           </div>
         </Tabs>
       </div>

@@ -7,6 +7,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+
 import { CardsActivityGoal } from "@/components/activity-goal";
 import { Budget, StepProps } from "./types";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
@@ -15,7 +17,6 @@ import { Switch } from "@/registry/default/ui/switch";
 import { budgetTracks } from "@/app/data/data"
 import { TableCommon } from "./TableCommon"
 import { BudgetTrackColumn } from "./BudgetTrackColumn"
-import ToasterDemo from "./ToasterDemo";
 
 const budgetCards = [
   {
@@ -47,9 +48,6 @@ const budgetCard = [
 
 const Budget = ({ updateStep }: StepProps) => {
   const [enabled, setEnabled] = useState<number[]>([])
-  const handleClickNext = () => {
-    updateStep(1);
-  };
 
   const handleClickBack = () => {
     updateStep(-1);
@@ -77,6 +75,18 @@ const Budget = ({ updateStep }: StepProps) => {
       setEnabled((prev) => [...prev, id]);
     }
   };
+
+  const handleClickNext = () => {
+    toast("Budget selected successfully!", {
+      description:"Initial Budget",
+      action: {
+          label: "X",
+          onClick: () => {},
+      },
+    });
+    updateStep(1);
+  };
+
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
@@ -163,13 +173,13 @@ const Budget = ({ updateStep }: StepProps) => {
           </Button>
           <div className="flex gap-4">
             <Button
-              className="bg-transparent"
+              className="bg-mblue"
               variant="outline"
               onClick={handleClickNext}
             >
-              Skip
+              Next
+              <ArrowRightIcon className="ml-1" />
             </Button>
-            <ToasterDemo toastTitle="Budget selected successfully!" updateStep={updateStep}/>
           </div>
         </div>
       </div>

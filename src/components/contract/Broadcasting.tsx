@@ -9,12 +9,13 @@ import {
 import { CardsActivityGoal } from "@/components/activity-goal";
 import { useEffect, useState } from "react";
 import { BroadCasting, StepProps } from "./types";
-import ToasterDemo from "./ToasterDemo";
 import { Badge } from "@/registry/new-york/ui/badge";
 import { Switch } from "@/registry/default/ui/switch";
 import { TableCommon } from "./TableCommon";
 import { broadcastingTracks } from "@/app/data/data";
 import { BroadcastingColumn } from "./BroadcastingColumn";
+import { toast } from "sonner";
+import { ArrowRightIcon } from "lucide-react";
 
 type Tab = {
   label: string;
@@ -108,21 +109,21 @@ const Broadcasting = ({ updateStep }: StepProps) => {
     }));
   };
 
-  const handleClickNext = () => {
-    setCurrentTabIndex(currentTabIndex + 1);
-  };
-
   const handleClickBack = () => {
     updateStep(-1);
   };
 
-  const handleClickSkip = () => {
+  const handleClickNext = () => {
+    toast("Broadcasting created successfully!", {
+      description:"Broadcasting",
+      action: {
+          label: "X",
+          onClick: () => {},
+      },
+    });
     updateStep(1);
   };
 
-  const onTabChange = (value: string) => {
-    setTab(value as TabName);
-  };
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
@@ -138,13 +139,6 @@ const Broadcasting = ({ updateStep }: StepProps) => {
                   Enter the broadcasting budget
                 </p>
               </div>
-              <Button
-                className="bg-mblue"
-                variant="outline"
-                onClick={handleClickSkip}
-              >
-                Skip
-              </Button>
             </div>
             <Card className="bg-transparent border-none shadow-none">
               <CardContent className="space-y-6 p-0">
@@ -207,10 +201,14 @@ const Broadcasting = ({ updateStep }: StepProps) => {
             Back
           </Button>
           <div className="flex gap-4">
-            <Button className="" variant="outline" onClick={handleClickNext}>
-              Skip
+          <Button
+                className="bg-mblue"
+                variant="outline"
+                onClick={handleClickNext}
+            >
+                Next
+                <ArrowRightIcon className="ml-1" />
             </Button>
-            <ToasterDemo toastTitle="Broadcasting created successfully!" updateStep={updateStep}/>
           </div>
         </div>
       </div>

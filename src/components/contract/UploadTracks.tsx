@@ -8,11 +8,11 @@ import { Button } from "../ui/button"
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons"
 import { useState } from "react"
 import { XMarkIcon } from "@heroicons/react/20/solid"
-import ToasterDemo from "./ToasterDemo"
 import { StepProps } from "./types"
 import { Sheet, SheetTrigger } from "@/registry/new-york/ui/sheet"
 import { AlertCircle } from "lucide-react"
 import ContractDrawer from "@/app/dashboard/components/contract-drawer"
+import { toast } from "sonner"
 
 export default function UploadTracks({ updateStep }: StepProps) {
     const [selectedFile, setSelectedFile] = useState("");
@@ -36,10 +36,17 @@ export default function UploadTracks({ updateStep }: StepProps) {
         setSelectedAudio("")
     }
 
-    const handleClickNext = () => {
-        updateStep(1);
-    };
 
+    const handleClickNext = () => {
+        toast("Tracks updated successfully!", {
+            description:"Tracks",
+            action: {
+                label: "X",
+                onClick: () => {},
+            },
+        });
+        updateStep(1)
+    };
 
     return (
         <div className="w-full py-7 rounded-s-3xl h-full flex flex-col justify-between">
@@ -78,7 +85,7 @@ export default function UploadTracks({ updateStep }: StepProps) {
                                     <div className="text-center mt-2">
                                         <label className="text-[11px] bg-modal p-1 h-[34px] border border-border3 rounded-xl py-2 cursor-pointer">
                                             Select Cover
-                                            <input type="file" hidden onChange={handleFileUpload} />
+                                            <input type="file" hidden onChange={handleFileUpload} value={""} />
                                         </label>
                                     </div>
                                 </div>
@@ -99,7 +106,7 @@ export default function UploadTracks({ updateStep }: StepProps) {
                                     <div className="text-center mt-2">
                                         <label className="text-[11px] bg-modal p-1 h-[34px] border border-border3 rounded-xl py-2 cursor-pointer">
                                             Select Audio
-                                            <input type="file" hidden onChange={handleAudioUpload} />
+                                            <input type="file" hidden onChange={handleAudioUpload} value={""} />
                                         </label>
                                     </div>
                                 </div>
@@ -127,7 +134,14 @@ export default function UploadTracks({ updateStep }: StepProps) {
                     <ArrowLeftIcon className="mr-1" />
                     Back
                 </Button>
-                <ToasterDemo toastTitle="Contibutors created successfully!" updateStep={updateStep} />
+                <Button
+                    className="bg-mblue"
+                    variant="outline"
+                    onClick={handleClickNext}
+                >
+                    Next
+                    <ArrowRightIcon className="ml-1" />
+                </Button>
             </div>
         </div>
     )

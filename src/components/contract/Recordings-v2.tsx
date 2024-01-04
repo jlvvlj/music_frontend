@@ -39,7 +39,7 @@ import { CardsActivityGoal } from "@/components/activity-goal";
 import {
   ArrowLeftIcon,
 } from "@radix-ui/react-icons";
-import ToasterDemo from "./ToasterDemo";
+import { ArrowRightIcon } from "lucide-react";
 
 const recordingCard = [
   { title: "Quantity", cost: "2" },
@@ -56,11 +56,6 @@ const recordingFormSchema = z.object({
   completedAt: z.date().default(new Date()),
   releasedAt: z.date().default(new Date()),
   optionRightsLimit: z.date().default(new Date()),
-  // programType: z.array(
-  //   z.object({
-  //     value: z.string(),
-  //   })
-  // ),
 });
 
 type RecordingFormValues = z.infer<typeof recordingFormSchema>;
@@ -329,7 +324,14 @@ const Recordings = ({ updateStep }: StepProps) => {
             <ArrowLeftIcon className="mr-1" />
             Back
           </Button>
-          <ToasterDemo toastTitle="Recordings added successfully!" updateStep={updateStep}/>
+          <Button
+            className="bg-mblue"
+            variant="outline"
+            onClick={handleClickNext}
+          >
+            Next
+            <ArrowRightIcon className="ml-1" />
+          </Button>
         </div>
       </div>
       <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
