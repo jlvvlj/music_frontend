@@ -38,6 +38,7 @@ import Recordings from "./Recordings";
 import RoyaltyAdvances from "./RoyaltyAdvances";
 import BaseFilterWrapper from "./BaseFilterWrapper";
 import ProgressSteps from "./ProgressSteps";
+import DerivativeUse from "./DerivativeUse";
 
 const CreateStepCards = ({
   step,
@@ -66,16 +67,16 @@ const CreateStepCards = ({
         return <Budget updateStep={updateStep} />;
       case StepIndex.ROYALTIES:
         return <Royalties updateStep={updateStep} />;
-      // case StepIndex.ROYALTIES_ADVANCES:
-      //   return <RoyaltyAdvances updateStep={updateStep} />;
-      // case StepIndex.ABATEMENTS:
-      //   return <Abatements updateStep={updateStep} />;
-      // case StepIndex.BROADCASTING:
-      //   return <Broadcasting updateStep={updateStep} />;
-      // case StepIndex.DERIVATIVE_USE:
-      //   return <Broadcasting updateStep={updateStep} />;
+      case StepIndex.ROYALTIES_ADVANCES:
+        return <RoyaltyAdvances updateStep={updateStep} />;
+      case StepIndex.ABATEMENTS:
+        return <Abatements updateStep={updateStep} />;
+      case StepIndex.BROADCASTING:
+        return <Broadcasting updateStep={updateStep} />;
+      case StepIndex.DERIVATIVE_USE:
+        return <DerivativeUse updateStep={updateStep} />;
       default:
-        return <BaseFilterWrapper currentStep={step} updateStep={updateStep} />;
+        return ;
     }
   }, [step]);
 

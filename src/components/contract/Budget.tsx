@@ -7,16 +7,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+
 import { CardsActivityGoal } from "@/components/activity-goal";
 import { Budget, StepProps } from "./types";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import { Badge } from "@/registry/new-york/ui/badge";
 import { Switch } from "@/registry/default/ui/switch";
-import { ScrollArea } from "@/registry/new-york/ui/scroll-area";
 import { budgetTracks } from "@/app/data/data"
 import { TableCommon } from "./TableCommon"
 import { BudgetTrackColumn } from "./BudgetTrackColumn"
-import ToasterDemo from "./ToasterDemo";
 
 const budgetCards = [
   {
@@ -48,9 +48,6 @@ const budgetCard = [
 
 const Budget = ({ updateStep }: StepProps) => {
   const [enabled, setEnabled] = useState<number[]>([])
-  const handleClickNext = () => {
-    updateStep(1);
-  };
 
   const handleClickBack = () => {
     updateStep(-1);
@@ -69,20 +66,6 @@ const Budget = ({ updateStep }: StepProps) => {
     },
   });
 
-  const handleChangeGoalValues = (
-    parent: "registration" | "multimedia" | "promotion",
-    subField: "minimum" | "maximum" | "royalties" | "salary",
-    value: number
-  ) => {
-    setBudget((prev) => ({
-      ...prev,
-      [parent]: {
-        ...prev[parent],
-        [subField]: value,
-      },
-    }));
-  };
-
   const onCheckHandle = (id: number) => {
     const checkExist = enabled?.includes(id);
 
@@ -93,10 +76,22 @@ const Budget = ({ updateStep }: StepProps) => {
     }
   };
 
+  const handleClickNext = () => {
+    toast("Budget selected successfully!", {
+      description:"Initial Budget",
+      action: {
+          label: "X",
+          onClick: () => {},
+      },
+    });
+    updateStep(1);
+  };
+
+
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
       <div className="w-full pb-7 pt-16 bg-modal rounded-s-3xl h-[645px] flex flex-col justify-between relative">
-        <ScrollArea className="h-full">
+        <div className="scrollbox overflow-auto w-full h-full">
           <div className="h-[calc(100%-40px)] px-10">
             <h1 className="text-3xl font-semibold tracking-tight mb-3 mt-2.5">
               Initial Budget
@@ -166,7 +161,7 @@ const Budget = ({ updateStep }: StepProps) => {
               </CardContent>
             </Card>
           </div>
-        </ScrollArea>
+        </div>
         <div className="flex justify-between w-full mt-10 px-10">
           <Button
             className="bg-mblue"
@@ -178,26 +173,18 @@ const Budget = ({ updateStep }: StepProps) => {
           </Button>
           <div className="flex gap-4">
             <Button
-              className="bg-transparent"
-              variant="outline"
-              onClick={handleClickNext}
-            >
-              Skip
-            </Button>
-            {/* <Button
               className="bg-mblue"
               variant="outline"
               onClick={handleClickNext}
             >
               Next
               <ArrowRightIcon className="ml-1" />
-            </Button> */}
-            <ToasterDemo toastTitle="Budget selected successfully!" />
+            </Button>
           </div>
         </div>
       </div>
       <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
-        <ScrollArea className="h-full w-full px-4 scroll-content">
+        <div className="scrollbox overflow-auto px-4 w-full h-full">
           <div className="p-8 rounded-2xl bg-modal border border-muted w-full mb-[76px]">
             <h6 className="text-2xl	mb-3">Initial Budget</h6>
             <p className="mb-7 text-sm text-muted-foreground">
@@ -226,7 +213,7 @@ const Budget = ({ updateStep }: StepProps) => {
           <div className="rounded-2xl bg-modal border border-muted w-full p-4">
             <TableCommon data={budgetTracks} columns={BudgetTrackColumn} />
           </div>
-        </ScrollArea>
+        </div>
       </div>
     </div>
   );

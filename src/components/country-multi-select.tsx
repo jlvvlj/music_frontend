@@ -55,7 +55,7 @@ export function CountryMultiSelect({ frameworks, placeholder }: Props) {
       onKeyDown={handleKeyDown}
       className="overflow-visible bg-transparent"
     >
-      <div className="group border border-input px-3 py-2 text-sm ring-offset-background rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 max-w-[180px]">
+      <div className="group border bg-modal border-input px-3 py-2 text-sm ring-offset-background rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 max-w-[180px]">
         <div className="flex gap-1 flex-wrap">
           {selected.map((framework) => {
             return (

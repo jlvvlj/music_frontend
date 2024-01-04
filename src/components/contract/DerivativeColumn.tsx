@@ -4,13 +4,8 @@ import { ColumnDef } from "@tanstack/react-table"
 
 import { DataTableColumnHeader } from "@/app/dashboard/components/data-table-column-header";
 import { Task } from "@/app/dashboard/data/schema";
-import {
-  Popover,
-  PopoverTrigger,
-} from "@/registry/new-york/ui/popover"
-import UploadtrackPopover from "./UploadtrackPopover";
 
-export const BudgetTrackColumn: ColumnDef<Task>[] = [
+export const DerivativeColumn: ColumnDef<Task>[] = [
   {
     accessorKey: "id",
     header: ({ column }) => (
@@ -32,52 +27,32 @@ export const BudgetTrackColumn: ColumnDef<Task>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "min",
+    accessorKey: "direct",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Min" />
+      <DataTableColumnHeader column={column} title="Direct Merchandising" className="text-center" />
     ),
     cell: ({ row }) =>
-      <div>{row.getValue("min")}</div>,
+      <div className="text-center">{row.getValue("direct")}</div>,
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: "max",
+    accessorKey: "license",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Max" />
+      <DataTableColumnHeader column={column} title="License Merchandising" className="text-center" />
     ),
     cell: ({ row }) =>
-      <div>{row.getValue("max")}</div>,
+      <div className="text-center">{row.getValue("license")}</div>,
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: "multimedia",
+    accessorKey: "events",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Multimedia" />
+      <DataTableColumnHeader column={column} title="Events" className="text-center" />
     ),
     cell: ({ row }) =>
-      <div className="text-center">{row.getValue("multimedia")}</div>,
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "external",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="External" />
-    ),
-    cell: ({ row }) =>
-      <div className="text-center">{row.getValue("external")}</div>,
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "promotion",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Promotion" />
-    ),
-    cell: ({ row }) =>
-      <div className="text-center">{row.getValue("promotion")}</div>,
+      <div className="text-center">{row.getValue("events")}</div>,
     enableSorting: false,
     enableHiding: false,
   },

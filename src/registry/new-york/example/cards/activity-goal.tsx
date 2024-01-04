@@ -59,7 +59,7 @@ const data = [
   },
 ]
 
-export function CardsActivityGoal() {
+export function CardsActivityGoal({style}: {style?:string}) {
   const { theme: mode } = useTheme()
   const [config] = useConfig()
 
@@ -71,7 +71,7 @@ export function CardsActivityGoal() {
   }
 
   return (
-    <Card className="flex flex-col justify-between">
+    <Card className={`flex flex-col justify-between ${style}`}>
       <CardHeader className="pb-4">
         <CardTitle>Move Goal</CardTitle>
         <CardDescription>Set your daily activity goal.</CardDescription>

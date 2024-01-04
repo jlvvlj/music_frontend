@@ -9,9 +9,9 @@ import {
   PopoverTrigger,
 } from "@/registry/new-york/ui/popover"
 import Link from "next/link";
-import UploadtrackPopover from "./UploadtrackPopover";
+import UploadtrackPopover from "./UploadTrackPopover";
 
-export const trackColumn: ColumnDef<Task>[] = [
+export const TeamTrackColumn: ColumnDef<Task>[] = [
   {
     accessorKey: "id",
     header: ({ column }) => (
@@ -28,7 +28,7 @@ export const trackColumn: ColumnDef<Task>[] = [
       <DataTableColumnHeader column={column} title="Track" />
     ),
     cell: ({ row }) =>
-      <div>{row.getValue("title")}</div>,
+      <div className="capitalize">{row.getValue("title")}</div>,
     enableSorting: false,
     enableHiding: false,
   },
@@ -42,21 +42,21 @@ export const trackColumn: ColumnDef<Task>[] = [
     enableSorting: false,
     enableHiding: false,
   },
-  {
-    accessorKey: "album",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} className="text-[#4FABFF] text-center" title="Edit" />
-    ),
-    cell: ({ row }) =>
-      <Popover>
-        <PopoverTrigger asChild>
-          <div className="text-[#4FABFE] text-center cursor-pointer">{row.getValue("album")}</div>
-        </PopoverTrigger>
-        <UploadtrackPopover />
-      </Popover>,
-    enableSorting: false,
-    enableHiding: false,
-  },
+  // {
+  //   accessorKey: "album",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} className="text-[#4FABFF] text-center" title="Edit" />
+  //   ),
+  //   cell: ({ row }) =>
+  //     <Popover>
+  //       <PopoverTrigger asChild>
+  //         <div className="text-[#4FABFE] text-center cursor-pointer">{row.getValue("album")}</div>
+  //       </PopoverTrigger>
+  //       <UploadtrackPopover column='grid-cols-5' artists={false} name={row.getValue("title")}/>
+  //     </Popover>,
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
 ]
 
 

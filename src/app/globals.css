@@ -455,11 +455,21 @@ audio::-webkit-media-controls-panel {
 }
 
 [data-sonner-toast]{
-    background-color: hsl(var(--black3)) !important;
+    background-color: hsl(var(--modal)) !important;
     color: hsl(var(--white3)) !important;
     border-color: hsl(var(--border3)) !important;
 }
 
 .new-contract-modal > button{
     display: none;
+}
+
+.scrollbox::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.scrollbox:hover::-webkit-scrollbar-thumb {
+    background: hsl(var(--accent));
+    border-radius: 50px;
 }
