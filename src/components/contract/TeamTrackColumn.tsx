@@ -42,21 +42,6 @@ export const TeamTrackColumn: ColumnDef<Task>[] = [
     enableSorting: false,
     enableHiding: false,
   },
-  // {
-  //   accessorKey: "album",
-  //   header: ({ column }) => (
-  //     <DataTableColumnHeader column={column} className="text-[#4FABFF] text-center" title="Edit" />
-  //   ),
-  //   cell: ({ row }) =>
-  //     <Popover>
-  //       <PopoverTrigger asChild>
-  //         <div className="text-[#4FABFE] text-center cursor-pointer">{row.getValue("album")}</div>
-  //       </PopoverTrigger>
-  //       <UploadtrackPopover column='grid-cols-5' artists={false} name={row.getValue("title")}/>
-  //     </Popover>,
-  //   enableSorting: false,
-  //   enableHiding: false,
-  // },
 ]
 
 

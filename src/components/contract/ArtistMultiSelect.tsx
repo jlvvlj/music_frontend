@@ -10,21 +10,22 @@ import { Avatar } from "../ui/avatar";
 import Image from "next/image";
 import { CardsActivityGoal } from "../activity-goal";
 
-type Framework = Record<"id" | "value" | "label" | "code" | "avatar" | "rate", string>;
+type Framework = Record<"id" | "value" | "label" | "code" | "profile" | "rate", string>;
 
 type Props = {
+    handleArtist?: (artist: []) => void;
     artists?: Framework[];
     placeholder?: string;
     artistRate?: boolean;
     width?: string;
 };
 
-export function ArtistMultiSelect({ placeholder,width, artistRate, artists = [
+export function ArtistMultiSelect({ placeholder, width, artistRate, handleArtist, artists = [
     {
         id: "1",
         label: "Julie Depree",
         value: "julieDepree",
-        avatar: "/julie.svg",
+        profile: "/julie.svg",
         code: "JD",
         rate: '50'
     },
@@ -32,7 +33,7 @@ export function ArtistMultiSelect({ placeholder,width, artistRate, artists = [
         id: "2",
         label: "Jeff Scott",
         value: "jeffScott",
-        avatar: "/amandine.svg",
+        profile: "/amandine.svg",
         code: "JS",
         rate: '50'
     },
@@ -40,14 +41,22 @@ export function ArtistMultiSelect({ placeholder,width, artistRate, artists = [
         id: "3",
         label: "Orlane Song",
         value: "orlaneSong",
-        avatar: "/orlane.svg",
+        profile: "/orlane.svg",
+        code: "OS",
+        rate: '50'
+    },
+    {
+        id: "4",
+        label: "Jon Doe",
+        value: "Jon",
+        profile: "/jon.svg",
         code: "OS",
         rate: '50'
     },
 ] }: Props) {
     const inputRef = React.useRef<HTMLInputElement>(null);
     const [open, setOpen] = React.useState(false);
-    const [selectedArtists, setSelectedArtists] = React.useState<Framework[]>([artists[0]]);
+    const [selectedArtists, setSelectedArtists] = React.useState<Framework[]>([]);
     const [inputValue, setInputValue] = React.useState("");
 
     const handleUnselect = React.useCallback((framework: Framework) => {
@@ -75,16 +84,14 @@ export function ArtistMultiSelect({ placeholder,width, artistRate, artists = [
         []
     );
 
-    const selectables = artists.filter(
-        (artists) => !selectedArtists.includes(artists)
-    );
 
     return (
         <Command
             onKeyDown={handleKeyDown}
-            className={`overflow-visible bg-transparent h-auto ${width}`}
+            className={`overflow-visible bg-transparent h-auto ${width} `}
         >
-            <div className="group border border-input px-3 py-2 text-sm ring-offset-background rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 bg-card3">
+            <div className="relative group border border-input px-3 py-2 text-sm ring-offset-background rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 bg-card3">
+                {!selectedArtists.length && <p className="absolute">Select Artist</p>}
                 <div className="flex gap-1 flex-wrap">
                     {selectedArtists.map((artist) => {
                         return (
@@ -93,7 +100,7 @@ export function ArtistMultiSelect({ placeholder,width, artistRate, artists = [
 
                                     <Avatar className="h-11 w-11 border border-white">
                                         <Image
-                                            src={artist.avatar}
+                                            src={artist.profile}
                                             width={100}
                                             height={100}
                                             alt="avatar"
@@ -107,7 +114,7 @@ export function ArtistMultiSelect({ placeholder,width, artistRate, artists = [
                                 {artistRate &&
                                     <CardsActivityGoal
                                         label=""
-                                        initialValue={artist.rate}
+                                        initialValue={parseInt(artist.rate)}
                                         unit="%"
                                         step={10}
                                         buttonTitle="Set Share"
@@ -122,16 +129,14 @@ export function ArtistMultiSelect({ placeholder,width, artistRate, artists = [
                                 }
                                 <button
                                     className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                                    onKeyDown={(e) => {
-                                        if (e.key === "Enter") {
-                                            handleUnselect(artist);
-                                        }
-                                    }}
                                     onMouseDown={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();
                                     }}
-                                    onClick={() => handleUnselect(artist)}
+                                    onClick={() => {
+                                        handleUnselect(artist)
+                                        handleArtist(selectedArtists.filter((s) => s.value !== artist.value));
+                                    }}
                                 >
                                     <X className="h-3 w-3 text-white" />
                                 </button>
@@ -145,7 +150,6 @@ export function ArtistMultiSelect({ placeholder,width, artistRate, artists = [
                             onValueChange={setInputValue}
                             onBlur={() => setOpen(false)}
                             onFocus={() => setOpen(true)}
-                            placeholder={placeholder}
                             className="ml-2 bg-transparent outline-none placeholder:text-white3 w-full"
                         />
                         <ChevronDownIcon className="absolute right-0 top-0.5" />
@@ -154,7 +158,7 @@ export function ArtistMultiSelect({ placeholder,width, artistRate, artists = [
             </div>
             <div className="relative flex justify-center">
                 {open ? (
-                    <div className="mt-2 absolute w-max z-10 top-0 rounded-md border bg-modal text-popover-foreground shadow-md outline-none animate-in">
+                    <div className="mt-2 absolute w-full z-10 top-0 rounded-md border bg-modal text-popover-foreground shadow-md outline-none animate-in">
                         <CommandGroup className="h-full overflow-auto">
                             {!artists?.filter(item => !selectedArtists.some(itemToBeRemoved => itemToBeRemoved.id === item.id))?.length && <h3>No Artist</h3>}
                             {artists?.filter(item => !selectedArtists.some(itemToBeRemoved => itemToBeRemoved.id === item.id)).map((artist) => {
@@ -168,13 +172,14 @@ export function ArtistMultiSelect({ placeholder,width, artistRate, artists = [
                                         onSelect={(value) => {
                                             setInputValue("");
                                             setSelectedArtists((prev) => [...prev, artist]);
+                                            handleArtist([...selectedArtists, artist])
                                         }}
                                         className={"cursor-pointer justify-between aria-selected:bg-mblue aria-selected:text-white text-[#4EABFE]"}
                                     >
                                         <div className="flex items-center">
                                             <Avatar className="h-11 w-11 border border-white">
                                                 <Image
-                                                    src={artist.avatar}
+                                                    src={artist.profile}
                                                     width={100}
                                                     height={100}
                                                     alt="avatar"
@@ -188,7 +193,7 @@ export function ArtistMultiSelect({ placeholder,width, artistRate, artists = [
                                         {artistRate &&
                                             <CardsActivityGoal
                                                 label=""
-                                                initialValue={artist.rate}
+                                                initialValue={parseInt(artist.rate)}
                                                 unit="%"
                                                 step={10}
                                                 buttonTitle="Set Share"
@@ -206,8 +211,8 @@ export function ArtistMultiSelect({ placeholder,width, artistRate, artists = [
                             })}
                         </CommandGroup>
                     </div>
-                ) : null}
+                 ) : null}
             </div>
-        </Command>
+        </Command >
     );
 }

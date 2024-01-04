@@ -146,7 +146,7 @@ const Broadcasting = ({ updateStep }: StepProps) => {
                   {broadCastingCards.map((card) =>
                     <Card key={card.id} className="border-none bg-modal-foreground mb-8 rounded-3xl	">
                       <CardHeader className="py-5 pb-0">
-                        <CardTitle className="text-[17px] font-normal flex justify-between">
+                        <CardTitle className="text-[17px] font-normal flex justify-betwee n">
                           <div>
                             <h6>{card.title}</h6>
                             <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">Secondary</Badge>

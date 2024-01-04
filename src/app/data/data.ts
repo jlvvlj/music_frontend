@@ -93,27 +93,27 @@ export const tracks = [{
         {
             "title": "Night Live",
             "status": "processing",
-            "album": "Sub First Album - 1", 
+            "album": "Sub First Album - 1",
             "platforms": ["Spotify", "Youtube"],
-            "revenues":"€379.00",
+            "revenues": "€379.00",
             "YourShare": "40%",
             "YourRevenues": "€1200.0"
         },
         {
             "title": "Night Live",
             "status": "processing",
-            "album": "Sub First Album - 2", 
+            "album": "Sub First Album - 2",
             "platforms": ["Deezer"],
-            "revenues":"€189.00",
+            "revenues": "€189.00",
             "YourShare": "40%",
             "YourRevenues": "€1200.0"
         },
         {
             "title": "Night Live",
             "status": "processing",
-            "album": "Sub First Album - 3", 
+            "album": "Sub First Album - 3",
             "platforms": ["Spotify"],
-            "revenues":"€222.36",
+            "revenues": "€222.36",
             "YourShare": "37%",
             "YourRevenues": "€1200.0"
         },
@@ -130,9 +130,9 @@ export const tracks = [{
         {
             "title": "Night Live",
             "status": "processing",
-            "album": "Sub Second Album - 1", 
+            "album": "Sub Second Album - 1",
             "platforms": ["Spotify", "Youtube", "Deezer"],
-            "revenues":"€789.00",
+            "revenues": "€789.00",
             "YourShare": "28%",
             "YourRevenues": "€3600.0"
         },
@@ -149,18 +149,18 @@ export const tracks = [{
         {
             "title": "Night Live",
             "status": "processing",
-            "album": "Sub First Album - 2", 
+            "album": "Sub First Album - 2",
             "platforms": ["Deezer"],
-            "revenues":"€189.00",
+            "revenues": "€189.00",
             "YourShare": "40%",
             "YourRevenues": "€1200.0"
         },
         {
             "title": "Night Live",
             "status": "processing",
-            "album": "Sub First Album - 3", 
+            "album": "Sub First Album - 3",
             "platforms": ["Spotify"],
-            "revenues":"€222.36",
+            "revenues": "€222.36",
             "YourShare": "37%",
             "YourRevenues": "€1200.0"
         },
@@ -177,9 +177,9 @@ export const tracks = [{
         {
             "title": "Night Live",
             "status": "processing",
-            "album": "Sub Second Album - 1", 
+            "album": "Sub Second Album - 1",
             "platforms": ["Spotify", "Youtube", "Deezer"],
-            "revenues":"€789.00",
+            "revenues": "€789.00",
             "YourShare": "28%",
             "YourRevenues": "€3600.0"
         },
@@ -196,27 +196,27 @@ export const tracks = [{
         {
             "title": "Night Live",
             "status": "processing",
-            "album": "Sub First Album - 1", 
+            "album": "Sub First Album - 1",
             "platforms": ["Spotify", "Youtube"],
-            "revenues":"€379.00",
+            "revenues": "€379.00",
             "YourShare": "40%",
             "YourRevenues": "€1200.0"
         },
         {
             "title": "Night Live",
             "status": "processing",
-            "album": "Sub First Album - 2", 
+            "album": "Sub First Album - 2",
             "platforms": ["Deezer"],
-            "revenues":"€189.00",
+            "revenues": "€189.00",
             "YourShare": "40%",
             "YourRevenues": "€1200.0"
         },
         {
             "title": "Night Live",
             "status": "processing",
-            "album": "Sub First Album - 3", 
+            "album": "Sub First Album - 3",
             "platforms": ["Spotify"],
-            "revenues":"€222.36",
+            "revenues": "€222.36",
             "YourShare": "37%",
             "YourRevenues": "€1200.0"
         },
@@ -339,37 +339,62 @@ export const shareTracks = [
         "id": "1",
         "title": "Jenny Was",
         "status": "",
-        "album": "Edit team"
+        "album": "Edit team",
+        "artists": [
+            { "id": 1, profile: '/amandine.svg' },
+            { "id": 2, profile: '/orlane.svg' },
+            { "id": 3, profile: '/jon.svg' },
+            { "id": 4, profile: '/julie.svg' },
+        ]
     },
     {
         "id": "2",
         "title": "Brightside",
         "status": "",
-        "album": "Edit team"
+        "album": "Edit team",
+        "artists": [
+            { "id": 1, profile: '/amandine.svg' },
+            { "id": 2, profile: '/orlane.svg' },
+        ]
     },
     {
         "id": "3",
         "title": "Like You",
         "status": "",
-        "album": "Edit team"
+        "album": "Edit team",
+        "artists": [
+            { "id": 2, profile: '/orlane.svg' },
+            { "id": 3, profile: '/jon.svg' },
+            { "id": 4, profile: '/julie.svg' },
+        ]
     },
     {
         "id": "4",
         "title": "Somebody",
         "status": "",
-        "album": "Edit team"
+        "album": "Edit team",
+        "artists": [
+            { "id": 3, profile: '/jon.svg' },
+            { "id": 4, profile: '/julie.svg' },
+        ]
     },
     {
         "id": "5",
         "title": "These Things",
         "status": "",
-        "album": "Edit team"
+        "album": "Edit team",
+        "artists": [
+            { "id": 1, profile: '/amandine.svg' },
+        ]
     },
     {
         "id": "6",
         "title": "Andy",
         "status": "",
-        "album": "Edit team"
+        "album": "Edit team",
+        "artists": [
+            { "id": 4, profile: '/julie.svg' },
+        ]
     }
 ]
 
@@ -377,9 +402,13 @@ export const recordingTracks = [
     {
         "id": "1",
         "title": "Jenny Was",
-        "artist": "/jon.svg",
+        "profile": "/jon.svg",
         "share": "15%",
-        "artist1": "/orlane.svg",
+        "artists": [
+            { id: "1", profile: "/julie.svg" },
+            { id: "2", profile: "/amandine.svg" },
+            { id: "3", profile: "/orlane.svg" },
+            { id: "4", profile: "/jon.svg" }],
         "share1": "8%",
         "status": "",
         "album": "Edit shares"
@@ -387,9 +416,11 @@ export const recordingTracks = [
     {
         "id": "2",
         "title": "Brightside",
-        "artist": "/jon.svg",
+        "profile": "/jon.svg",
         "share": "15%",
-        "artist1": "/orlane.svg",
+        "artists": [
+            { id: "3", profile: "/orlane.svg" },
+            { id: "4", profile: "/jon.svg" }],
         "share1": "8%",
         "status": "",
         "album": "Edit shares"
@@ -397,9 +428,13 @@ export const recordingTracks = [
     {
         "id": "3",
         "title": "Like You",
-        "artist": "/jon.svg",
+        "profile": "/jon.svg",
         "share": "15%",
-        "artist1": "/orlane.svg",
+        "artists": [
+            { id: "1", profile: "/julie.svg" },
+            { id: "2", profile: "/amandine.svg" },
+            { id: "3", profile: "/orlane.svg" },
+            { id: "4", profile: "/jon.svg" }],
         "share1": "8%",
         "status": "",
         "album": "Edit shares"
@@ -407,9 +442,10 @@ export const recordingTracks = [
     {
         "id": "4",
         "title": "Somebody",
-        "artist": "/jon.svg",
+        "profile": "/jon.svg",
         "share": "15%",
-        "artist1": "/orlane.svg",
+        "artists": [
+            { id: "4", profile: "/jon.svg" }],
         "share1": "8%",
         "status": "",
         "album": "Edit shares"
@@ -417,9 +453,13 @@ export const recordingTracks = [
     {
         "id": "5",
         "title": "These Things",
-        "artist": "/jon.svg",
+        "profile": "/jon.svg",
         "share": "15%",
-        "artist1": "/orlane.svg",
+        "artists": [
+            { id: "1", profile: "/julie.svg" },
+            { id: "2", profile: "/amandine.svg" },
+            { id: "3", profile: "/orlane.svg" },
+            { id: "4", profile: "/jon.svg" }],
         "share1": "8%",
         "status": "",
         "album": "Edit shares"
@@ -427,9 +467,11 @@ export const recordingTracks = [
     {
         "id": "6",
         "title": "Andy",
-        "artist": "/jon.svg",
+        "profile": "/jon.svg",
         "share": "15%",
-        "artist1": "/orlane.svg",
+        "artists": [
+            { id: "1", profile: "/julie.svg" },
+            { id: "4", profile: "/jon.svg" }],
         "share1": "8%",
         "status": "",
         "album": "Edit shares"

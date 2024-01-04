@@ -70,7 +70,6 @@ export default function UploadTrackTable() {
                                     </TableHead>
                                 </TableRow>
                             ))}
-
                         </TableHeader>
                         <TableHeader className="w-full h-[11px] bg-table3" />
                         <TableBody>
@@ -91,6 +90,7 @@ export default function UploadTrackTable() {
                                                 <Pencil2Icon className="w-4 h-4 mr-1 text-[#4FABFE] text-center cursor-pointer" />
                                             </PopoverTrigger>
                                             <UploadTrackPopover
+                                            popoverType={"track"}
                                                 artists={false}
                                                 name={row?.original?.title}
                                                 track={row.original}

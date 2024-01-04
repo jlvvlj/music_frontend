@@ -4,13 +4,8 @@ import { ColumnDef } from "@tanstack/react-table"
 import { DataTableColumnHeader } from "@/app/dashboard/components/data-table-column-header";
 import Image from "next/image";
 import { Task } from "@/app/dashboard/data/schema";
-import {
-  Popover,
-  PopoverTrigger,
-} from "@/registry/new-york/ui/popover"
 
 import { Avatar } from "../ui/avatar";
-import UploadTrackPopover from "./UploadTrackPopover";
 
 export const RecordingsColumn: ColumnDef<Task>[] = [
   {
@@ -34,14 +29,14 @@ export const RecordingsColumn: ColumnDef<Task>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "artist",
+    accessorKey: "profile",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Artist" />
     ),
     cell: ({ row }) =>
       <Avatar className="bg-[#A3D3FF] h-9 w-9" >
         <Image
-          src={row.getValue("artist")}
+          src={row.getValue("profile")}
           width={100}
           height={100}
           alt="avatar"
@@ -61,19 +56,23 @@ export const RecordingsColumn: ColumnDef<Task>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "artist1",
+    accessorKey: "artists",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Artist" />
     ),
     cell: ({ row }) =>
-      < Avatar className="bg-[#A3D3FF] h-9 w-9" >
-        <Image
-          src={row.getValue("artist1")}
-          width={100}
-          height={100}
-          alt="avatar"
-        />
-      </Avatar >,
+      <div className="flex">
+        {(row.getValue("artists") as { id: string, profile: string }[])?.map((member: { id: string, profile: string }) =>
+          <Avatar key={member.id} className="h-9 w-9 -ml-2 first:ml-0 border border-white">
+            <Image
+              src={member.profile}
+              width={100}
+              height={100}
+              alt="avatar"
+            />
+          </Avatar>
+        )}
+      </div>,
     enableSorting: false,
     enableHiding: false,
   },
@@ -84,21 +83,6 @@ export const RecordingsColumn: ColumnDef<Task>[] = [
     ),
     cell: ({ row }) =>
       <div className="text-center">{row.getValue("share1")}</div>,
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "album",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} className="text-[#4FABFF] text-center" title="Edit" />
-    ),
-    cell: ({ row }) =>
-      <Popover>
-        <PopoverTrigger asChild>
-          <div className="text-[#4FABFE] text-center cursor-pointer text-xs">{row.getValue("album")}</div>
-        </PopoverTrigger>
-        <UploadTrackPopover width="max-w-auto ml-1" column='grid-cols-1' artistRate={true} artists={true} placeholder="Shares" name={row.getValue("title")} />
-      </Popover>,
     enableSorting: false,
     enableHiding: false,
   },

@@ -8,6 +8,15 @@ import {
   ArrowLeftIcon,
   ArrowRightIcon
 } from "@radix-ui/react-icons";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/registry/new-york/ui/table"
+import { flexRender, getCoreRowModel, getFacetedRowModel, getFacetedUniqueValues, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 
 import {
   Recording,
@@ -17,9 +26,13 @@ import { Button } from "@/components/ui/button";
 import { CardsActivityGoal } from "@/components/activity-goal";
 import { Avatar } from "../ui/avatar";
 import { recordingTracks } from "@/app/data/data";
-import { TableCommon } from "./TableCommon";
 import { RecordingsColumn } from "./RecordingsColumn";
-
+import {
+  Popover,
+  PopoverTrigger,
+} from "@/registry/new-york/ui/popover";
+import { Pencil2Icon } from "@radix-ui/react-icons";
+import UploadtrackPopover from "./UploadTrackPopover";
 
 const teamMembers = [
   { id: 1, avatar: '/amandine.svg', name: 'Charly Jones', role: 'Singer', revenue: 15, label: '' },
@@ -34,11 +47,6 @@ const recordingFormSchema = z.object({
   completedAt: z.date().default(new Date()),
   releasedAt: z.date().default(new Date()),
   optionRightsLimit: z.date().default(new Date()),
-  // programType: z.array(
-  //   z.object({
-  //     value: z.string(),
-  //   })
-  // ),
 });
 
 type RecordingFormValues = z.infer<typeof recordingFormSchema>;
@@ -61,26 +69,20 @@ const TABS: {
   ];
 
 const Recordings = ({ updateStep }: StepProps) => {
+  const [updatedTracks, setUpdatedTracks] = useState(recordingTracks);
+  const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
   const [recordings, setRecordings] = useState<Recording[]>([]);
   const [files, setFiles] = useState<any[]>([]);
   const [currentTabIndex, setCurrentTabIndex] = useState(0);
   const [tab, setTab] = useState(TABS[0].value);
 
-  // ** form
   const form = useForm<RecordingFormValues>({
     resolver: zodResolver(recordingFormSchema),
     defaultValues,
     mode: "onChange",
   });
 
-  // const { fields, append } = useFieldArray({
-  //   name: "programType",
-  //   control: form.control,
-  // });
-  // **
-
   useEffect(() => {
-    // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
     return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
   }, []);
 
@@ -109,13 +111,30 @@ const Recordings = ({ updateStep }: StepProps) => {
       });
     }, 1000);
   };
-  const onTabChange = (value: string) => {
-    setTab(value as Tab);
-  };
 
   const handleClickBack = () => {
     updateStep(-1);
   };
+
+  const table = useReactTable<any>({
+    data: updatedTracks,
+    columns: RecordingsColumn,
+    enableRowSelection: true,
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFacetedRowModel: getFacetedRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
+  })
+
+  const handleUpdateTrack = (trackId: string, artists: string, title: string) => {
+    const updatedData = updatedTracks.map((share: any) =>
+      share.id == trackId ? { ...share, title: title, artists: artists } : share
+    );
+    setUpdatedTracks(updatedData);
+  };
+
 
   const handleClickNext = () => {
     toast("Rates updated successfully!", {
@@ -239,7 +258,61 @@ const Recordings = ({ updateStep }: StepProps) => {
             </div>
           </div>
           <div className="rounded-2xl bg-modal border border-muted w-full p-4 mt-8">
-            <TableCommon data={recordingTracks} columns={RecordingsColumn} />
+            <Table>
+              <TableHeader>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id} style={{ border: 'none' }} className="bg-table3-foreground">
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <TableHead key={header.id} className="h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] font-normal">
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                        </TableHead>
+                      );
+                    })}
+                    <TableHead className="h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] font-normal">
+                      Edit
+                    </TableHead>
+                  </TableRow>
+                ))}
+
+              </TableHeader>
+              <TableHeader className="w-full h-[11px] bg-table3" />
+              <TableBody>
+                {table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    className="hover:bg-transparent border-none"
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell
+                        key={cell.id} className="">
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </TableCell>
+                    ))}
+                    <TableCell>
+                      <Popover open={openPopoverId === row.id} onOpenChange={(isOpen) => isOpen ? setOpenPopoverId(row.id) : setOpenPopoverId(null)}>
+                        <PopoverTrigger asChild>
+                          <Pencil2Icon className="w-4 h-4 mr-1 text-[#4FABFE] text-center cursor-pointer" />
+                        </PopoverTrigger>
+                        <UploadtrackPopover
+                          popoverType={"recording"}
+                          artists={true}
+                          name={row?.original?.title}
+                          track={row.original}
+                          onUpdateTrack={handleUpdateTrack}
+                          onClosePopover={() => setOpenPopoverId(null)}
+                        />
+                      </Popover>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </div>
         </div>
       </div>
