@@ -76,15 +76,7 @@ const Shares = ({ updateStep }: StepProps) => {
             <ArrowLeftIcon className="mr-1" />
             Back
           </Button>
-          {/* <Button
-            className="bg-mblue"
-            variant="outline"
-            onClick={handleClickNext}
-          >
-            Next
-            <ArrowRightIcon className="ml-1" />
-          </Button> */}
-          <ToasterDemo toastTitle="Shares added successfully!" />
+          <ToasterDemo toastTitle="Shares added successfully!" updateStep={updateStep}/>
         </div>
       </div>
       <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">

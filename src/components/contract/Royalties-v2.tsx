@@ -345,15 +345,7 @@ const Royalties = ({ updateStep }: StepProps) => {
             >
               Skip
             </Button>
-            {/* <Button
-              className="bg-mblue"
-              variant="outline"
-              onClick={handleClickNext}
-            >
-              Next
-              <ArrowRightIcon className="ml-1" />
-            </Button> */}
-            <ToasterDemo toastTitle="Royalties selected successfully!" />
+            <ToasterDemo toastTitle="Royalties selected successfully!" updateStep={updateStep}/>
           </div>
         </div>
       </div>

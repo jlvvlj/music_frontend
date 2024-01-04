@@ -213,14 +213,7 @@ const Abatements = ({ updateStep }: StepProps) => {
             <Button className="" variant="outline" onClick={handleClickNext}>
               Skip
             </Button>
-            {/* <Button
-              className="bg-mblue"
-              variant="outline"
-              onClick={handleClickNext}
-            >
-              Next
-            </Button> */}
-            <ToasterDemo toastTitle="Abatements added successfully!" />
+            <ToasterDemo toastTitle="Abatements added successfully!" updateStep={updateStep}/>
           </div>
         </div>
       </div>

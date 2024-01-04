@@ -326,15 +326,7 @@ const Contributors = ({ updateStep, children }: StepProps) => {
               <ArrowLeftIcon className="mr-1" />
               Back
             </Button>
-            {/* <Button
-              className="bg-mblue"
-              variant="outline"
-              onClick={handleClickNext}
-            >
-              Next
-              <ArrowRightIcon className="ml-1" />
-            </Button> */}
-            <ToasterDemo toastTitle="Contibutors created successfully!" />
+            <ToasterDemo toastTitle="Contibutors created successfully!" updateStep={updateStep}/>
           </div>
         </Tabs>
       </div>

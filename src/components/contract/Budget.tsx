@@ -169,15 +169,7 @@ const Budget = ({ updateStep }: StepProps) => {
             >
               Skip
             </Button>
-            {/* <Button
-              className="bg-mblue"
-              variant="outline"
-              onClick={handleClickNext}
-            >
-              Next
-              <ArrowRightIcon className="ml-1" />
-            </Button> */}
-            <ToasterDemo toastTitle="Budget selected successfully!" />
+            <ToasterDemo toastTitle="Budget selected successfully!" updateStep={updateStep}/>
           </div>
         </div>
       </div>

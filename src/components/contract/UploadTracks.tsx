@@ -45,9 +45,6 @@ export default function UploadTracks({ updateStep }: StepProps) {
         <div className="w-full py-7 rounded-s-3xl h-full flex flex-col justify-between">
             <div className="scrollbox overflow-auto w-full h-full">
                 <div className="h-[calc(100%-40px)] px-8">
-                    {/* <h1 className="text-3xl font-semibold tracking-tight mb-[60px]">
-                        Let’s upload your tracks
-                    </h1> */}
                     <div className="flex items-center gap-2 mb-3">
                         <h1 className="text-3xl font-semibold tracking-tight">
                             Let’s upload your tracks
@@ -130,15 +127,7 @@ export default function UploadTracks({ updateStep }: StepProps) {
                     <ArrowLeftIcon className="mr-1" />
                     Back
                 </Button>
-                {/* <Button
-                    className="bg-mblue"
-                    variant="outline"
-                    onClick={handleClickNext}
-                >
-                    Next
-                    <ArrowRightIcon className="ml-1" />
-                </Button> */}
-                <ToasterDemo toastTitle="Contibutors created successfully!" />
+                <ToasterDemo toastTitle="Contibutors created successfully!" updateStep={updateStep} />
             </div>
         </div>
     )

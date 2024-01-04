@@ -240,7 +240,7 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
               >
                 {currentTabIndex === TABS.length - 1 ? "Finish" : "Next"}
               </Button> */}
-              <ToasterDemo toastTitle="Derivative used successfully!" />
+              <ToasterDemo toastTitle="Derivative used successfully!" updateStep={updateStep}/>
             </div>
           </div>
         </div>

@@ -210,14 +210,7 @@ const Broadcasting = ({ updateStep }: StepProps) => {
             <Button className="" variant="outline" onClick={handleClickNext}>
               Skip
             </Button>
-            {/* <Button
-              className="bg-mblue"
-              variant="outline"
-              onClick={handleClickNext}
-            >
-              Next
-            </Button> */}
-            <ToasterDemo toastTitle="Broadcasting created successfully!" />
+            <ToasterDemo toastTitle="Broadcasting created successfully!" updateStep={updateStep}/>
           </div>
         </div>
       </div>

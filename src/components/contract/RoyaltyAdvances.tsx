@@ -153,14 +153,7 @@ export default function RoyaltyAdvances({
             <Button className="" variant="outline" onClick={handleClickNext}>
               Skip
             </Button>
-            {/* <Button
-              className="bg-mblue"
-              variant="outline"
-              onClick={handleClickNext}
-            >
-              Next
-            </Button> */}
-            <ToasterDemo toastTitle="Royalties Advances updated successfully!" />
+            <ToasterDemo toastTitle="Royalties Advances updated successfully!" updateStep={updateStep}/>
           </div>
         </div>
       </div>
