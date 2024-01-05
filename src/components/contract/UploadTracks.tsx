@@ -14,8 +14,14 @@ import { AlertCircle } from "lucide-react"
 import ContractDrawer from "@/app/dashboard/components/contract-drawer"
 import { toast } from "sonner"
 
-export default function UploadTracks({ updateStep }: StepProps) {
-    const [selectedFile, setSelectedFile] = useState("");
+interface Props extends StepProps {
+    selectedFile: any;
+    setSelectedFile: any;
+    updateValue: any;
+    setUpdateValue: any;
+}
+
+export default function UploadTracks({ updateStep, selectedFile, setSelectedFile, updateValue, setUpdateValue }: Props) {
     const [selectedAudio, setSelectedAudio] = useState("");
 
     const handleFileUpload = (event: any) => {
@@ -66,7 +72,10 @@ export default function UploadTracks({ updateStep }: StepProps) {
                     <h6 className="text-lg">Album</h6>
                     <p className="text-sm mb-[41px] text-muted-foreground">Enter the album title and your tracks audio folder.</p>
                     <h6 className="mb-2.5">Album title</h6>
-                    <Input className="bg-modal mb-[55px]" />
+                    <Input className="bg-modal mb-[55px]"
+                        value={updateValue}
+                        onChange={(e) => setUpdateValue(e.target.value)}
+                    />
                     <Card className="bg-modal">
                         <CardHeader className="flex-row gap-3 space-y-0 items-center py-2.5">
                             <UploadCloud className="h-5 w-5" />

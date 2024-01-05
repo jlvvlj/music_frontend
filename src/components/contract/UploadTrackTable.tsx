@@ -19,8 +19,9 @@ import { Pencil2Icon } from "@radix-ui/react-icons";
 import { teamTracks } from "@/app/data/data"
 import { TeamTrackColumn } from "./TeamTrackColumn";
 import UploadTrackPopover from "./UploadTrackPopover";
+import { ImageOff } from "lucide-react";
 
-export default function UploadTrackTable() {
+export default function UploadTrackTable({ selectedFile, updateValue}: any) {
 
     const [updatedTracks, setUpdatedTracks] = useState(teamTracks);
     const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
@@ -48,7 +49,13 @@ export default function UploadTrackTable() {
         <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
             <div className="scrollbox overflow-auto px-4 w-full h-full">
                 <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
-                    <img src="https://www.theaudiodb.com/images/media/album/thumb/hot-fuss-limited-edition-7-inch-box-set-4ddc38e3e1d71.jpg" alt="project" className="mx-auto rounded-md w-[90%] mb-[71px]" />
+                    {updateValue && (<h1 className="text-center mb-7 text-2xl">{updateValue}</h1>)}
+                    <div className="relative bg-modal border border-3 rounded-xl relative mb-16 h-[350px] w-[350px] mx-auto flex justify-center items-center flex-col">
+                        {selectedFile && (
+                            <div className="absolute h-full w-full bg-modal rounded-xl"><img src={selectedFile} alt="Selected Image" className="object-fit rounded-xl h-full w-full" /></div>)}
+                        <ImageOff className="text-[#737373] h-9 w-9" />
+                        <h6 className="mt-3 text-lg text-[#737373] text-normal">No Image</h6>
+                    </div>
                     <Table>
                         <TableHeader>
                             {table.getHeaderGroups().map((headerGroup) => (
@@ -90,7 +97,7 @@ export default function UploadTrackTable() {
                                                 <Pencil2Icon className="w-4 h-4 mr-1 text-[#4FABFE] text-center cursor-pointer" />
                                             </PopoverTrigger>
                                             <UploadTrackPopover
-                                            popoverType={"track"}
+                                                popoverType={"track"}
                                                 artists={false}
                                                 name={row?.original?.title}
                                                 track={row.original}
