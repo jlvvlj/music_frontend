@@ -19,36 +19,47 @@ interface Props extends StepProps {
     setSelectedFile: any;
     updateValue: any;
     setUpdateValue: any;
+    setUpdatedTracks:any;
+    updatedTracks:any;
 }
 
-export default function UploadTracks({ updateStep, selectedFile, setSelectedFile, updateValue, setUpdateValue }: Props) {
-    const [selectedAudio, setSelectedAudio] = useState("");
+export default function UploadTracks({ updateStep, selectedFile, setSelectedFile, updateValue, setUpdateValue, setUpdatedTracks, updatedTracks }: Props) {
+    const [selectedAudios, setSelectedAudios] = useState<{ id: string, title: string, audio: string, url?:string; }[]>([]);
 
     const handleFileUpload = (event: any) => {
         const file = event.target.files[0];
         setSelectedFile(URL.createObjectURL(file));
     };
 
-    const handleAudioUpload = (event: any) => {
-        const audio = event.target.files[0];
-        setSelectedAudio(URL.createObjectURL(audio));
-    };
-
     const handleRemoveFile = () => {
         setSelectedFile("")
     }
 
-    const handleRemoveAudio = () => {
-        setSelectedAudio("")
+    const handleAudioUpload = (event: any) => {
+        const audio = event.target.files[0];
+        setSelectedAudios((prev) => [...prev, { id: generateUniqueId(), title:audio?.name.replace(".mp3", ""),audio: "/" + audio?.name, url: URL.createObjectURL(audio) }]);
+    };
+
+    const handleAudioRemove = (audioId: string) => {
+        setSelectedAudios((prev) => prev.filter((audio) => audio.id !== audioId));
+    };
+
+    function generateUniqueId() {
+        return '_' + Math.random().toString(36).substr(2, 9);
     }
+
+    const handleUpdateTracks = () => {
+        setUpdatedTracks([...updatedTracks,...selectedAudios]);
+        setSelectedAudios([])
+    };
 
 
     const handleClickNext = () => {
         toast("Tracks updated successfully!", {
-            description:"Tracks",
+            description: "Tracks",
             action: {
                 label: "X",
-                onClick: () => {},
+                onClick: () => { },
             },
         });
         updateStep(1)
@@ -132,25 +143,33 @@ export default function UploadTracks({ updateStep, selectedFile, setSelectedFile
                                     </div>
                                 </div>
                             </div>
-                            {selectedAudio && (
+
+                            {selectedAudios?.length > 0 && (
                                 <div className="space-y-6 bg-modal p-4 rounded-xl border ">
-                                    <div className="bg-modal rounded-xl selected-image-container z-20 h-full w-full flex items-center justify-between">
-                                        <audio
-                                            controls
-                                            className="w-[calc(100%-30px)] border border-border3 rounded-[30px]"
-                                        >
-                                            <source src={selectedAudio} type="audio/mp3" />
-                                        </audio>
-                                        <Button
-                                            onClick={handleRemoveAudio}
-                                            className="h-4 w-4 flex items-center justify-center shadow-sm rounded-full p-0 mt-1.5"
-                                        >
-                                            <XMarkIcon className="text-black3" />
-                                        </Button>
-                                    </div>
+                                    {
+                                        selectedAudios?.map((audio) => {
+                                            return (
+                                                <div key={audio.id} className="bg-modal rounded-xl selected-image-container z-20 h-full w-full flex items-center justify-between">
+                                                <audio
+                                                        controls
+                                                        className="w-[calc(100%-30px)] border border-border3 rounded-[30px]"
+                                                    >
+                                                        <source src={audio.url} type="audio/mp3" />
+                                                    </audio>
+                                                    <Button
+                                                        onClick={() => handleAudioRemove(audio.id)}
+                                                        className="h-4 w-4 flex items-center justify-center shadow-sm rounded-full p-0 mt-1.5"
+                                                    >
+                                                        <XMarkIcon className="text-black3" />
+                                                    </Button>
+                                                </div>
+                                            )
+                                        })
+                                    }
                                 </div>
                             )}
                         </CardContent>
+                        <Button onClick={handleUpdateTracks} disabled={!selectedAudios.length}>Save</Button>
                     </Card>
                 </div>
             </div>

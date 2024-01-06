@@ -18,7 +18,8 @@ export const TeamTrackColumn: ColumnDef<Task>[] = [
       <DataTableColumnHeader column={column} title="" />
     ),
     cell: ({ row }) =>
-      <div className="text-[#6B7280]">{row.getValue("id")}</div>,
+    // console.log("rowrowrowrowrowrowrow",row)
+      <div className="text-[#6B7280]">{row.index+1}</div>,
     enableSorting: false,
     enableHiding: false,
   },
@@ -33,12 +34,12 @@ export const TeamTrackColumn: ColumnDef<Task>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "status",
+    accessorKey: "audio",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Audio" />
     ),
     cell: ({ row }) =>
-      <Link href="#" className="text-[#6B7280]">{row.getValue("status")}</Link>,
+      <Link href="#" className="text-[#6B7280]">{row.getValue("audio")}</Link>,
     enableSorting: false,
     enableHiding: false,
   },
