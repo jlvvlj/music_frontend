@@ -299,37 +299,37 @@ export const teamTracks = [
     {
         "id": "1",
         "title": "Jenny Was",
-        "status": "/jenny_was.mp3",
+        "audio": "/jenny_was.mp3",
         "album": "Edit track"
     },
     {
         "id": "2",
         "title": "Brightside",
-        "status": "/brightside.mp3",
+        "audio": "/brightside.mp3",
         "album": "Edit track"
     },
     {
         "id": "3",
         "title": "Like You",
-        "status": "/like_you.mp3",
+        "audio": "/like_you.mp3",
         "album": "Edit track"
     },
     {
         "id": "4",
         "title": "Somebody",
-        "status": "/somebody.mp3",
+        "audio": "/somebody.mp3",
         "album": "Edit track"
     },
     {
         "id": "5",
         "title": "These Things",
-        "status": "/these_things.mp3",
+        "audio": "/these_things.mp3",
         "album": "Edit track"
     },
     {
         "id": "6",
         "title": "Andy",
-        "status": "/andy.mp3",
+        "audio": "/andy.mp3",
         "album": "Edit track"
     }
 ]

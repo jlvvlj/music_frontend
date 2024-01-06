@@ -16,14 +16,12 @@ import {
 } from "@/registry/new-york/ui/popover";
 import { Pencil2Icon } from "@radix-ui/react-icons";
 
-import { teamTracks } from "@/app/data/data"
 import { TeamTrackColumn } from "./TeamTrackColumn";
 import UploadTrackPopover from "./UploadTrackPopover";
 import { ImageOff } from "lucide-react";
 
-export default function UploadTrackTable({ selectedFile, updateValue}: any) {
+export default function UploadTrackTable({ selectedFile, updateValue,setUpdatedTracks, updatedTracks }: any) {
 
-    const [updatedTracks, setUpdatedTracks] = useState(teamTracks);
     const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
 
     const table = useReactTable<any>({
@@ -39,7 +37,7 @@ export default function UploadTrackTable({ selectedFile, updateValue}: any) {
     })
 
     const handleUpdateTrack = (trackId: string, newAudio: string, title: string) => {
-        const updatedData = updatedTracks.map((track) =>
+        const updatedData = updatedTracks.map((track:any) =>
             track.id == trackId ? { ...track, status: newAudio, title: title } : track
         );
         setUpdatedTracks(updatedData);
