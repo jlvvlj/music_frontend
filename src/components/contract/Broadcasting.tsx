@@ -15,7 +15,7 @@ import { TableCommon } from "./TableCommon";
 import { broadcastingTracks } from "@/app/data/data";
 import { BroadcastingColumn } from "./BroadcastingColumn";
 import { toast } from "sonner";
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 
 type Tab = {
   label: string;
@@ -146,7 +146,7 @@ const Broadcasting = ({ updateStep }: StepProps) => {
                   {broadCastingCards.map((card) =>
                     <Card key={card.id} className="border-none bg-modal-foreground mb-8 rounded-3xl	">
                       <CardHeader className="py-5 pb-0">
-                        <CardTitle className="text-[17px] font-normal flex justify-betwee n">
+                        <CardTitle className="text-[17px] font-normal flex justify-between">
                           <div>
                             <h6>{card.title}</h6>
                             <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">Secondary</Badge>
@@ -198,6 +198,7 @@ const Broadcasting = ({ updateStep }: StepProps) => {
             variant="outline"
             onClick={handleClickBack}
           >
+            <ArrowLeftIcon className="mr-1" />
             Back
           </Button>
           <div className="flex gap-4">

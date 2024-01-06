@@ -107,7 +107,7 @@ export default function RoyaltyAdvances({
                         {enabled.includes(card.id) && <div className="space-y-8 mt-10">
                           <div className="pl-4 gap-10">
                             {card?.activityCards.map((activityCard) => (
-                              <div className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md mb-5 w-fit bg-modal">
+                              <div className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md mb-5 bg-modal w-[91%] justify-between">
                                 <Avatar className="bg-[#A3D3FF] mt-2 h-11 w-11">
                                   <Image
                                     src={activityCard.avatar}

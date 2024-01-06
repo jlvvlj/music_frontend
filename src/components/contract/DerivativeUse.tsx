@@ -21,7 +21,7 @@ import { Switch } from "@/registry/default/ui/switch";
 import { TableCommon } from "./TableCommon";
 import { derivativeTracks } from "@/app/data/data";
 import { DerivativeColumn } from "./DerivativeColumn";
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 
 type Tab = {
   label: string;
@@ -195,6 +195,7 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
               variant="outline"
               onClick={handleClickBack}
             >
+              <ArrowLeftIcon className="mr-1" />
               Back
             </Button>
             <div className="flex gap-4">

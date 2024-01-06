@@ -55,12 +55,12 @@ export default function UploadTrackTable({ selectedFile, updateValue,setUpdatedT
                         <h6 className="mt-3 text-lg text-[#737373] text-normal">No Image</h6>
                     </div>
                     <Table>
-                        <TableHeader>
+                        <TableHeader className="block">
                             {table.getHeaderGroups().map((headerGroup) => (
                                 <TableRow key={headerGroup.id} style={{ border: 'none' }} className="bg-table3-foreground">
                                     {headerGroup.headers.map((header) => {
                                         return (
-                                            <TableHead key={header.id} className="h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] font-normal">
+                                            <TableHead key={header.id} className="w-[200px] first:w-[110px] h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] font-normal">
                                                 {header.isPlaceholder
                                                     ? null
                                                     : flexRender(
@@ -70,14 +70,14 @@ export default function UploadTrackTable({ selectedFile, updateValue,setUpdatedT
                                             </TableHead>
                                         );
                                     })}
-                                    <TableHead className="h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] font-normal">
-                                        Edit
+                                    <TableHead className="w-[200px] h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] font-normal">
+                                        <div className="text-center">Edit</div>
                                     </TableHead>
                                 </TableRow>
                             ))}
                         </TableHeader>
                         <TableHeader className="w-full h-[11px] bg-table3" />
-                        <TableBody>
+                        <TableBody className="block overflow-y-auto max-h-[448px] scrollbox">
                             {table.getRowModel().rows.map((row) => (
                                 <TableRow
                                     key={row.id}
@@ -85,11 +85,11 @@ export default function UploadTrackTable({ selectedFile, updateValue,setUpdatedT
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell
-                                            key={cell.id} className="">
+                                            key={cell.id} className="w-[200px]">
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </TableCell>
                                     ))}
-                                    <TableCell>
+                                    <TableCell className="w-[200px]">
                                         <Popover open={openPopoverId === row.id} onOpenChange={(isOpen) => isOpen ? setOpenPopoverId(row.id) : setOpenPopoverId(null)}>
                                             <PopoverTrigger asChild>
                                                 <Pencil2Icon className="w-4 h-4 mr-1 text-[#4FABFE] text-center cursor-pointer" />

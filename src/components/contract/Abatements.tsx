@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { toast } from "sonner";
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import { Switch } from "@/registry/default/ui/switch";
 import { Badge } from "@/registry/new-york/ui/badge";
 
@@ -204,6 +204,7 @@ const Abatements = ({ updateStep }: StepProps) => {
             variant="outline"
             onClick={handleClickBack}
           >
+            <ArrowLeftIcon className="mr-1" />
             Back
           </Button>
           <div className="flex gap-4">
