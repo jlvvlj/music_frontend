@@ -15,20 +15,20 @@ import UserAuthForm from "@/components/authentication/user-auth-form";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "localhost:3000"),
-  title: "Sign In",
-  description: "Sign in to your account",
+  title: "Sign Up",
+  description: "Sign up to your account",
 };
 
-export default function SignInPage() {
+export default function SignUpPage() {
   return (
-    <Shell className="max-w-lg">
+    <Shell className="max-w-xl">
       <Card>
         <CardContent className="grid gap-4">
-          <div className="lg:p-8">
-            <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+          <div className="lg:py-8">
+            <div className="mx-auto flex w-full flex-col justify-center space-y-6 ">
               <div className="flex flex-col space-y-2 text-center">
                 <h1 className="text-2xl font-semibold tracking-tight">
-                  SignIn an account
+                  Create an account
                 </h1>
                 <p className="text-sm text-muted-foreground">
                   Enter your email below to create your account

@@ -1,19 +1,34 @@
-import * as z from "zod"
+import * as z from "zod";
 
-export const authSchema = z.object({
-  email: z.string().email({
-    message: "Please enter a valid email address",
-  }),
-  password: z
-    .string()
-    .min(8, {
-      message: "Password must be at least 8 characters long",
-    })
-    .max(100)
-    // .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, {
-    //   message:
-    //     "Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character",
-    // }),
+export const signUpSchema = z.object({
+  firstname: z.string({
+    required_error: "First name is required"
+  }).min(1, { message: "First name is required" }),
+  lastname: z.string({
+    required_error: "Last name is required"
+  }).min(1, { message: "Last name is required" }),
+  email: z.string({
+    required_error: "Email is required"
+  }).email({ message: "Please enter a valid email address" }).min(1, { message: "Email is required" }),
+  password: z.string({ required_error: "Password is required" }).min(1, { message: "Password is required" }).min(8, { message: "Password must be at least 8 characters long" }).max(100),
+  confirmPassword: z.string({
+    required_error: "Confirm password is required"
+  }).min(1, { message: "Confirm password is required" })
+})
+  .refine(data => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+export const signInSchema = z.object({
+  email: z.string({
+    required_error: "Email is required"
+  }).email({ message: "Please enter a valid email address" }).min(1, { message: "Email is required" }),
+  password: z.string({ required_error: "Password is required" }).min(1, { message: "Password is required" }).min(8, { message: "Password must be at least 8 characters long" }).max(100),
+  // .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, {
+  //   message:
+  //     "Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character",
+  // }),
 })
 
 export const verifyEmailSchema = z.object({
@@ -26,13 +41,13 @@ export const verifyEmailSchema = z.object({
 })
 
 export const checkEmailSchema = z.object({
-  email: authSchema.shape.email,
+  email: signInSchema.shape.email,
 })
 
 export const resetPasswordSchema = z
   .object({
-    password: authSchema.shape.password,
-    confirmPassword: authSchema.shape.password,
+    password: signInSchema.shape.password,
+    confirmPassword: signInSchema.shape.password,
     code: verifyEmailSchema.shape.code,
   })
   .refine((data) => data.password === data.confirmPassword, {

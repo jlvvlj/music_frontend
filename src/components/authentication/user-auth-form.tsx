@@ -1,14 +1,14 @@
 "use client";
 
 import * as React from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from 'next/navigation';
 import { useSignIn } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
 import { cn, catchClerkError } from "@/lib/utils";
-import { authSchema } from "@/lib/validations/auth";
+import { signInSchema, signUpSchema } from "@/lib/validations/auth";
 import {
   Form,
   FormControl,
@@ -20,25 +20,21 @@ import {
 import { Icons } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/password-input";
 import { OAuthSignIn } from "./oauth-signin";
 
-type Inputs = z.infer<typeof authSchema>;
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+type Inputs = z.infer<typeof signUpSchema> | z.infer<typeof signInSchema>;
+interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
-export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+const UserAuthForm = ({ className, ...props }: UserAuthFormProps) => {
   const router = useRouter();
+  const pathname = usePathname();
   const { isLoaded, signIn, setActive } = useSignIn();
   const [isPending, startTransition] = React.useTransition();
 
   // react-hook-form
   const form = useForm<Inputs>({
-    resolver: zodResolver(authSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    resolver: zodResolver(pathname === "/signup" ? signUpSchema : signInSchema)
   });
 
   function onSubmit(data: Inputs) {
@@ -73,6 +69,48 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
         >
           <div className="grid gap-2">
+            {pathname === "/signup" && 
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-1">
+                <FormField
+                  control={form.control}
+                  name="firstname"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Firstname</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="Rodney"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="grid gap-1">
+                <FormField
+                  control={form.control}
+                  name="lastname"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Lastname</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="Mullen"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+            }
             <div className="grid gap-1">
               <FormField
                 control={form.control}
@@ -107,6 +145,23 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 )}
               />
             </div>
+            {pathname === "/signup" &&
+              <div className="grid gap-1">
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Confirm password</FormLabel>
+                      <FormControl>
+                        <PasswordInput placeholder="**********" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            }
             <Button type="submit" variant="outline" disabled={isPending} className=" mt-2">
               {isPending && (
                 <Icons.spinner
@@ -114,8 +169,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                   aria-hidden="true"
                 />
               )}
-              Sign in
-              <span className="sr-only">Sign in</span>
+              {pathname === "/signup" ? "Create Account" : "Sign in"}
+              <span className="sr-only">
+                {pathname === "/signup" ? "Create Account" : "Sign in"}
+              </span>
             </Button>
           </div>
         </form>
@@ -139,3 +196,4 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 }
 
 
+export default UserAuthForm;

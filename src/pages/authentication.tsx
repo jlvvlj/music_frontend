@@ -1,12 +1,11 @@
 import '../app/globals.css'
 
 import { Metadata } from "next"
-import Image from "next/image"
 import Link from "next/link"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "../components/ui/button"
-import { UserAuthForm } from "../components/authentication/user-auth-form"
+import UserAuthForm from "../components/authentication/user-auth-form"
 import ModeToggle from "@/components/ui/mode-toggle"
 
 export const metadata: Metadata = {
