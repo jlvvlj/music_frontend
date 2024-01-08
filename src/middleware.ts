@@ -7,6 +7,7 @@ import { type UserRole } from "@/types";
 export default authMiddleware({
   publicRoutes: [
     "/login(.*)",
+    "/signup(.*)",
     "/sso-callback(.*)(.*)",
     "/signout",
     "/dashboard(.*)",

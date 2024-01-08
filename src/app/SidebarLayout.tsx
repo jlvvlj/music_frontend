@@ -14,7 +14,7 @@ export default function SidebarLayout({
     const pathname = usePathname();
     const [open, setOpen] = useState(false);
     const allowedRoutes = [
-        '/', '/login', '/signout'
+        '/', '/login', '/signout', "/signup"
     ]
     return (
         <div className="w-full">
