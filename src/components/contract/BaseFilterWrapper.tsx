@@ -59,7 +59,7 @@ export default function BaseFilterWrapper({
       {showDetails ? (
         <>{loadCardByStep()}</>
       ) : (
-        <div className="bg-modal px-[55px] pt-16 pb-24 rounded-3xl h-[645px] no-scrollbar overflow-y-scroll">
+        <div className="bg-modal px-[55px] pt-16 pb-24 rounded-3xl h-[782px] no-scrollbar overflow-y-scroll">
           <div className="w-full flex justify-between">
             <div className="space-y-6">
               <h1 className="text-3xl font-semibold tracking-tight">

@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table"
 
 import { DataTableColumnHeader } from "@/app/dashboard/components/data-table-column-header";
 import { Task } from "@/app/dashboard/data/schema";
+import { Pencil2Icon } from "@radix-ui/react-icons";
 
 export const AbatementColumn: ColumnDef<Task>[] = [
   {
@@ -29,7 +30,7 @@ export const AbatementColumn: ColumnDef<Task>[] = [
   {
     accessorKey: "foreignsales",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Foreign sales" className="text-center"/>
+      <DataTableColumnHeader column={column} title="Foreign sales" className="text-center" />
     ),
     cell: ({ row }) =>
       <div className="text-center">{row.getValue("foreignsales")}</div>,
@@ -39,17 +40,17 @@ export const AbatementColumn: ColumnDef<Task>[] = [
   {
     accessorKey: "compilation",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Compilation" />
+      <DataTableColumnHeader column={column} title="Compilation" className="truncate w-14" />
     ),
     cell: ({ row }) =>
-      <div className="text-center">{row.getValue("compilation")}</div>,
+      <div className="text-center truncate">{row.getValue("compilation")}</div>,
     enableSorting: false,
     enableHiding: false,
   },
   {
     accessorKey: "promotion",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Promotion" />
+      <DataTableColumnHeader column={column} title="Promotion" className="truncate w-14" />
     ),
     cell: ({ row }) =>
       <div className="text-center">{row.getValue("promotion")}</div>,
@@ -59,7 +60,7 @@ export const AbatementColumn: ColumnDef<Task>[] = [
   {
     accessorKey: "discounted",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Discounted" />
+      <DataTableColumnHeader column={column} title="Discounted" className="truncate w-14" />
     ),
     cell: ({ row }) =>
       <div className="text-center">{row.getValue("discounted")}</div>,
@@ -82,7 +83,7 @@ export const AbatementColumn: ColumnDef<Task>[] = [
       <DataTableColumnHeader column={column} className="text-[#4FABFF] text-center" title="Edit" />
     ),
     cell: ({ row }) =>
-      <div className="text-[#4FABFE] text-xs text-center cursor-pointer">{row.getValue("album")}</div>,
+      <div className="text-[#4FABFE] text-xs text-center cursor-pointer"><Pencil2Icon className="w-4 h-4 mr-1 text-[#4FABFE] text-center cursor-pointer" /></div>,
     enableSorting: false,
     enableHiding: false,
   },

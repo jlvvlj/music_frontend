@@ -407,8 +407,8 @@
 }
 .dashboard-tablebody tr td:nth-child(5),
 .dashboard-table tr th:nth-child(5){
-    min-width: 160px;
-    width: 180px;
+    min-width: 140px;
+    width: 160px;
 }
 .dashboard-tablebody tr td:nth-child(6),
 .dashboard-table tr th:nth-child(6),
@@ -417,8 +417,8 @@
 .dashboard-table tr th:first-child,
 .dashboard-tablebody tr td:last-child,
 .dashboard-table tr th:last-child{
-    min-width: 130px;
-    width: 150px;
+    min-width: 100px;
+    max-width: 150px;
 }
 .dashboard-tablebody tr td:nth-child(6),
 .dashboard-tablebody tr td:first-child,
@@ -458,6 +458,7 @@ audio::-webkit-media-controls-panel {
     background-color: hsl(var(--modal)) !important;
     color: hsl(var(--white3)) !important;
     border-color: hsl(var(--border3)) !important;
+    font-size: 14px !important;
 }
 
 .new-contract-modal > button{
@@ -472,4 +473,11 @@ audio::-webkit-media-controls-panel {
 .scrollbox:hover::-webkit-scrollbar-thumb {
     background: hsl(var(--accent));
     border-radius: 50px;
+}
+
+.sidebar-accordion > svg{
+    display: none;
+}
+.content-overflow{
+    overflow-y: auto !important;
 }

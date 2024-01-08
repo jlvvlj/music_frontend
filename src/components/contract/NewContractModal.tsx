@@ -24,8 +24,8 @@ export default function NewContract() {
 
   return (
     <ContractBuilderProvider>
-      <div className="h-[inherit] w-[1070px] flex flex-col gap-20 relative">
-        <div className="absolute left-1/2 top-5 hidden lg:block w-[400px] z-10 translate-x-[-50%]">
+      <div className="h-[inherit] xl:w-[1241px] w-full flex flex-col gap-20 relative">
+        <div className="absolute left-[88px] top-9 hidden lg:block w-[50%] z-10">
           <ProgressSteps
             step={activeStep}
             updateStep={handleUpdateActiveStep}

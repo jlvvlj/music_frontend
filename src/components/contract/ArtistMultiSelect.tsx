@@ -88,9 +88,9 @@ export function ArtistMultiSelect({ placeholder, width, artistRate, handleArtist
     return (
         <Command
             onKeyDown={handleKeyDown}
-            className={`overflow-visible bg-transparent h-auto ${width} `}
+            className={`overflow-visible bg-transparent h-auto ${width} group`}
         >
-            <div className="relative group border border-input px-3 py-2 text-sm ring-offset-background rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 bg-card3">
+            <div className="relative border border-input px-3 py-2 text-sm ring-offset-background rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 bg-card3">
                 {!selectedArtists.length && <p className="absolute">Select Artist</p>}
                 <div className="flex gap-1 flex-wrap">
                     {selectedArtists.map((artist) => {
@@ -156,9 +156,9 @@ export function ArtistMultiSelect({ placeholder, width, artistRate, handleArtist
                     </div>
                 </div>
             </div>
-            <div className="relative flex justify-center">
-                {open ? (
-                    <div className="mt-2 absolute w-full z-10 top-0 rounded-md border bg-modal text-popover-foreground shadow-md outline-none animate-in">
+            <div className="relative flex justify-center group-hover:visible invisible group-hover:opacity-100 opacity-0">
+                {/* {open ? ( */}
+                    <div className="absolute w-full z-10 rounded-md border bg-modal text-popover-foreground shadow-md outline-none animate-in">
                         <CommandGroup className="h-full overflow-auto">
                             {!artists?.filter(item => !selectedArtists.some(itemToBeRemoved => itemToBeRemoved.id === item.id))?.length && <h3>No Artist</h3>}
                             {artists?.filter(item => !selectedArtists.some(itemToBeRemoved => itemToBeRemoved.id === item.id)).map((artist) => {
@@ -211,7 +211,7 @@ export function ArtistMultiSelect({ placeholder, width, artistRate, handleArtist
                             })}
                         </CommandGroup>
                     </div>
-                 ) : null}
+                 {/* ) : null} */}
             </div>
         </Command >
     );

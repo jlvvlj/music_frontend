@@ -140,7 +140,7 @@ const Contributors = ({ updateStep, children }: StepProps) => {
 
   return (
     <div className={cn("grid grid-cols-2 h-full shadow-lg border rounded-3xl")}>
-      <div className="flex-grow bg-modal pt-8 h-[645px] rounded-s-3xl">
+      <div className="flex-grow bg-modal pt-8 h-[782px] rounded-s-3xl">
         <Tabs
           value={tab}
           onValueChange={onTabChange}
@@ -333,7 +333,7 @@ const Contributors = ({ updateStep, children }: StepProps) => {
           </div>
         </Tabs>
       </div>
-      <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
+      <div className="relative flex items-end flex-col pb-7 pt-6 bg-modal-foreground rounded-r-3xl h-[782px]">
         <div className="scrollbox overflow-auto px-4 w-full h-full">
           <TeamShare />
         </div>

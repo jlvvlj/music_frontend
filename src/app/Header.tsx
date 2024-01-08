@@ -2,22 +2,12 @@ import MainNav from "@/components/dashboard/main-nav";
 import Search from "@/components/dashboard/search";
 import TeamSwitcher from "@/components/dashboard/team-switcher";
 import UserNav from "@/components/dashboard/user-nav";
-import { Button } from "@/components/ui/button";
 import ModeToggle from "@/components/ui/mode-toggle";
-import { Menu } from "lucide-react";
 
-interface ISidebar {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-}
-
-const Header: React.FC<ISidebar> = ({ open, setOpen }) => {
+const Header = () => {
   return (
     <div className="border-b">
       <div className="flex h-16 items-center px-4">
-        <Button onClick={() => setOpen(true)} className={`${open ? "hidden" : "flex"} h-9 w-9 rounded-full justify-center items-center p-0 bg-transparent hover:bg-lightWhite3 mr-3 text-white3`}>
-          <Menu className={`h-5 w-5`} />
-        </Button>
         <TeamSwitcher />
         <MainNav className="mx-6" />
         <div className="ml-auto flex items-center space-x-4">

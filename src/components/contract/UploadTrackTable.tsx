@@ -44,7 +44,7 @@ export default function UploadTrackTable({ selectedFile, updateValue,setUpdatedT
     };
 
     return (
-        <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
+        <div className="relative flex items-end flex-col pb-7 pt-6 bg-modal-foreground rounded-r-3xl h-[782px]">
             <div className="scrollbox overflow-auto px-4 w-full h-full">
                 <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
                     {updateValue && (<h1 className="text-center mb-7 text-2xl">{updateValue}</h1>)}
@@ -60,7 +60,7 @@ export default function UploadTrackTable({ selectedFile, updateValue,setUpdatedT
                                 <TableRow key={headerGroup.id} style={{ border: 'none' }} className="bg-table3-foreground">
                                     {headerGroup.headers.map((header) => {
                                         return (
-                                            <TableHead key={header.id} className="w-[200px] first:w-[110px] h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] font-normal">
+                                            <TableHead key={header.id} className="first:w-[70px] w-[200px] h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] font-normal">
                                                 {header.isPlaceholder
                                                     ? null
                                                     : flexRender(
@@ -85,14 +85,14 @@ export default function UploadTrackTable({ selectedFile, updateValue,setUpdatedT
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell
-                                            key={cell.id} className="w-[200px]">
+                                            key={cell.id} className="first:w-[100px] w-[250px]">
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </TableCell>
                                     ))}
-                                    <TableCell className="w-[200px]">
+                                    <TableCell className="w-[250px]">
                                         <Popover open={openPopoverId === row.id} onOpenChange={(isOpen) => isOpen ? setOpenPopoverId(row.id) : setOpenPopoverId(null)}>
                                             <PopoverTrigger asChild>
-                                                <Pencil2Icon className="w-4 h-4 mr-1 text-[#4FABFE] text-center cursor-pointer" />
+                                                <Pencil2Icon className="w-4 h-4 mr-1 text-[#4FABFE] text-center cursor-pointer ml-8" />
                                             </PopoverTrigger>
                                             <UploadTrackPopover
                                                 popoverType={"track"}

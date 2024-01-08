@@ -488,7 +488,7 @@ export const budgetTracks = [
         "external": "4000",
         "promotion": "4000",
         "status": "",
-        "album": "Edit budget"
+        "album": ""
     },
     {
         "id": "2",
@@ -499,7 +499,7 @@ export const budgetTracks = [
         "external": "4000",
         "promotion": "4000",
         "status": "",
-        "album": "Edit budget"
+        "album": ""
     },
     {
         "id": "3",
@@ -510,7 +510,7 @@ export const budgetTracks = [
         "external": "4000",
         "promotion": "4000",
         "status": "",
-        "album": "Edit budget"
+        "album": ""
     },
     {
         "id": "4",
@@ -521,7 +521,7 @@ export const budgetTracks = [
         "external": "4000",
         "promotion": "4000",
         "status": "",
-        "album": "Edit budget"
+        "album": ""
     },
     {
         "id": "5",
@@ -532,7 +532,7 @@ export const budgetTracks = [
         "external": "4000",
         "promotion": "4000",
         "status": "",
-        "album": "Edit budget"
+        "album": ""
     },
     {
         "id": "6",
@@ -543,7 +543,7 @@ export const budgetTracks = [
         "external": "4000",
         "promotion": "4000",
         "status": "",
-        "album": "Edit budget"
+        "album": ""
     }
 ]
 
@@ -556,7 +556,7 @@ export const royaltiesTracks = [
         "artist1": "/orlane.svg",
         "share1": "8%",
         "status": "",
-        "album": "Edit shares"
+        "album": ""
     },
     {
         "id": "2",
@@ -566,7 +566,7 @@ export const royaltiesTracks = [
         "artist1": "/orlane.svg",
         "share1": "8%",
         "status": "",
-        "album": "Edit shares"
+        "album": ""
     },
     {
         "id": "3",
@@ -576,7 +576,7 @@ export const royaltiesTracks = [
         "artist1": "/orlane.svg",
         "share1": "8%",
         "status": "",
-        "album": "Edit shares"
+        "album": ""
     },
     {
         "id": "4",
@@ -586,7 +586,7 @@ export const royaltiesTracks = [
         "artist1": "/orlane.svg",
         "share1": "8%",
         "status": "",
-        "album": "Edit shares"
+        "album": ""
     },
     {
         "id": "5",
@@ -596,7 +596,7 @@ export const royaltiesTracks = [
         "artist1": "/orlane.svg",
         "share1": "8%",
         "status": "",
-        "album": "Edit shares"
+        "album": ""
     },
     {
         "id": "6",
@@ -606,7 +606,7 @@ export const royaltiesTracks = [
         "artist1": "/orlane.svg",
         "share1": "8%",
         "status": "",
-        "album": "Edit shares"
+        "album": ""
     }
 ]
 
@@ -620,7 +620,7 @@ export const abatementTracks = [
         "discounted": "15%",
         "offcircuit": "15%",
         "status": "",
-        "album": "Edit abatements"
+        "album": ""
     },
     {
         "id": "2",
@@ -631,7 +631,7 @@ export const abatementTracks = [
         "discounted": "15%",
         "offcircuit": "15%",
         "status": "",
-        "album": "Edit abatements"
+        "album": ""
     },
     {
         "id": "3",
@@ -642,7 +642,7 @@ export const abatementTracks = [
         "discounted": "15%",
         "offcircuit": "15%",
         "status": "",
-        "album": "Edit abatements"
+        "album": ""
     },
     {
         "id": "4",
@@ -653,7 +653,7 @@ export const abatementTracks = [
         "discounted": "15%",
         "offcircuit": "15%",
         "status": "",
-        "album": "Edit abatements"
+        "album": ""
     },
     {
         "id": "5",
@@ -664,7 +664,7 @@ export const abatementTracks = [
         "discounted": "15%",
         "offcircuit": "15%",
         "status": "",
-        "album": "Edit abatements"
+        "album": ""
     },
     {
         "id": "6",
@@ -675,7 +675,7 @@ export const abatementTracks = [
         "discounted": "15%",
         "offcircuit": "15%",
         "status": "",
-        "album": "Edit abatements"
+        "album": ""
     }
 ]
 
@@ -686,7 +686,6 @@ export const broadcastingTracks = [
         "broadcasting": "15%",
         "secondary": "15%",
         "status": "",
-        "album": "Edit rights"
     },
     {
         "id": "2",
@@ -694,7 +693,6 @@ export const broadcastingTracks = [
         "broadcasting": "15%",
         "secondary": "15%",
         "status": "",
-        "album": "Edit rights"
     },
     {
         "id": "3",
@@ -702,7 +700,7 @@ export const broadcastingTracks = [
         "broadcasting": "15%",
         "secondary": "15%",
         "status": "",
-        "album": "Edit rights"
+        "album": ""
     },
     {
         "id": "4",
@@ -710,7 +708,7 @@ export const broadcastingTracks = [
         "broadcasting": "15%",
         "secondary": "15%",
         "status": "",
-        "album": "Edit rights"
+        "album": ""
     },
     {
         "id": "5",
@@ -718,7 +716,7 @@ export const broadcastingTracks = [
         "broadcasting": "15%",
         "secondary": "15%",
         "status": "",
-        "album": "Edit rights"
+        "album": ""
     },
     {
         "id": "6",
@@ -726,7 +724,7 @@ export const broadcastingTracks = [
         "broadcasting": "15%",
         "secondary": "15%",
         "status": "",
-        "album": "Edit rights"
+        "album": ""
     }
 ]
 
@@ -738,7 +736,7 @@ export const derivativeTracks = [
         "license": "15%",
         "events": "15%",
         "status": "",
-        "album": "Edit rates"
+        "album": ""
     },
     {
         "id": "2",
@@ -747,7 +745,7 @@ export const derivativeTracks = [
         "license": "15%",
         "events": "15%",
         "status": "",
-        "album": "Edit rates"
+        "album": ""
     },
     {
         "id": "3",
@@ -756,7 +754,7 @@ export const derivativeTracks = [
         "license": "15%",
         "events": "15%",
         "status": "",
-        "album": "Edit rates"
+        "album": ""
     },
     {
         "id": "4",
@@ -765,7 +763,7 @@ export const derivativeTracks = [
         "license": "15%",
         "events": "15%",
         "status": "",
-        "album": "Edit rates"
+        "album": ""
     },
     {
         "id": "5",
@@ -774,7 +772,7 @@ export const derivativeTracks = [
         "license": "15%",
         "events": "15%",
         "status": "",
-        "album": "Edit rates"
+        "album": ""
     },
     {
         "id": "6",
@@ -783,6 +781,5 @@ export const derivativeTracks = [
         "license": "15%",
         "events": "15%",
         "status": "",
-        "album": "Edit rates"
     }
 ]

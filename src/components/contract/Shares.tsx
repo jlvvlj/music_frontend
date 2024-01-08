@@ -74,6 +74,7 @@ const Shares = ({ updateStep }: StepProps) => {
         label: "X",
         onClick: () => { },
       },
+      position: "top-right"
     });
     updateStep(1);
   };
@@ -85,9 +86,14 @@ const Shares = ({ updateStep }: StepProps) => {
     setUpdatedTracks(updatedData);
   };
 
+  const [selectedArtists, setSelectedArtists] = useState<any>([]);
+  const handleSelectedArtist = (artists: any) => {
+    setSelectedArtists(artists)
+  }
+
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
-      <div className="w-full pb-7 pt-16 bg-modal rounded-s-3xl h-[645px] flex flex-col justify-between">
+      <div className="w-full pb-7 pt-[92px] bg-modal rounded-s-3xl h-[782px] flex flex-col justify-between">
         <div className="scrollbox overflow-auto w-full h-full">
           <div className="h-[calc(100%-40px)] px-10">
             <div className="flex items-center gap-2 mb-3">
@@ -105,7 +111,7 @@ const Shares = ({ updateStep }: StepProps) => {
               Invite your team to join the project.
             </p>
             <div className="flex justify-center flex-col items-center space-y-12">
-              <ArtistMultiSelect width="max-w-[230px]" artistRate={false} />
+              <ArtistMultiSelect width="max-w-[230px]" artistRate={false} handleArtist={handleSelectedArtist} />
               <InvitationPopover />
             </div>
           </div>
@@ -129,7 +135,7 @@ const Shares = ({ updateStep }: StepProps) => {
           </Button>
         </div>
       </div>
-      <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
+      <div className="relative flex items-end flex-col pb-7 pt-6 bg-modal-foreground rounded-r-3xl h-[782px]">
         <div className="scrollbox overflow-auto px-4 w-full h-full">
           <TeamShare />
           <div className="rounded-2xl bg-modal border border-muted w-full p-4 mt-8">

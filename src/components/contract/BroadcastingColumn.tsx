@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table"
 
 import { DataTableColumnHeader } from "@/app/dashboard/components/data-table-column-header";
 import { Task } from "@/app/dashboard/data/schema";
+import { Pencil2Icon } from "@radix-ui/react-icons";
 
 export const BroadcastingColumn: ColumnDef<Task>[] = [
   {
@@ -52,7 +53,7 @@ export const BroadcastingColumn: ColumnDef<Task>[] = [
       <DataTableColumnHeader column={column} className="text-[#4FABFF] text-center" title="Edit" />
     ),
     cell: ({ row }) =>
-      <div className="text-[#4FABFE] text-xs text-center cursor-pointer">{row.getValue("album")}</div>,
+      <div className="text-[#4FABFE] text-xs text-center cursor-pointer"><Pencil2Icon className="w-4 h-4 mr-1 text-[#4FABFE] text-center cursor-pointer" /></div>,
     enableSorting: false,
     enableHiding: false,
   },

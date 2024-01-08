@@ -35,6 +35,7 @@ export default function SignInPage() {
                 </p>
               </div>
               <UserAuthForm />
+              <p className="px-8 text-center text-sm text-muted-foreground">Not Registered Yet? <Link href="/signup" className="underline underline-offset-4 hover:text-primary">Create an account</Link></p>
               <p className="px-8 text-center text-sm text-muted-foreground">
                 By clicking continue, you agree to our{" "}
                 <Link

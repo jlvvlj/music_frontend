@@ -119,6 +119,7 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
           label: "X",
           onClick: () => {},
       },
+      position: "top-right"
     });
     setModalOpen(true)
   };
@@ -126,7 +127,7 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
   return (
     <>
       <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
-        <div className="w-full pb-7 pt-16 bg-modal rounded-s-3xl h-[645px] flex flex-col justify-between">
+        <div className="w-full pb-7 pt-[92px] bg-modal rounded-s-3xl h-[782px] flex flex-col justify-between">
           <div className="scrollbox overflow-auto w-full h-full">
             <div className="h-[calc(100%-40px)] px-10">
               <div className="w-full flex justify-between mb-12">
@@ -210,7 +211,7 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
             </div>
           </div>
         </div>
-        <div className="relative flex items-end flex-col pb-7 pt-16 bg-modal-foreground rounded-r-3xl h-[645px]">
+        <div className="relative flex items-end flex-col pb-7 pt-6 bg-modal-foreground rounded-r-3xl h-[782px]">
           <div className="scrollbox overflow-auto px-4 w-full h-full">
             <Card className="bg-modal border-muted">
               <CardHeader>

@@ -69,6 +69,7 @@ export default function UploadTracks({ updateStep, selectedFile, setSelectedFile
                 label: "X",
                 onClick: () => { },
             },
+            position: "top-right"
         });
         updateStep(1)
     };
@@ -76,7 +77,7 @@ export default function UploadTracks({ updateStep, selectedFile, setSelectedFile
     return (
         <div className="w-full py-7 rounded-s-3xl h-full flex flex-col justify-between">
             <div className="scrollbox overflow-auto w-full h-full">
-                <div className="h-[calc(100%-40px)] px-8">
+                <div className="h-[calc(100%-40px)] px-10">
                     <div className="flex items-center gap-2 mb-3">
                         <h1 className="text-3xl font-semibold tracking-tight">
                             Let’s upload your tracks
@@ -105,8 +106,8 @@ export default function UploadTracks({ updateStep, selectedFile, setSelectedFile
                         </CardHeader>
                         <Separator />
                         <CardContent className="py-5 gap-4">
-                            <div className="bg-modal border border-3 py-20 px-2.5 rounded-xl relative">
-                                <div>
+                            <div className="bg-modal border border-3 rounded-xl relative">
+                                <label className="cursor-pointer block py-20 px-2.5">
                                     <UploadCloud className="h-5 w-5 mb-4 mx-auto" />
                                     <h6 className="text-[13px] text-center">Choose a file or drag & drop it here</h6>
                                     <p className="text-[#737373] text-[13px] mx-4 text-center">Only jpg or png. Up to 50 MB.</p>
@@ -116,7 +117,7 @@ export default function UploadTracks({ updateStep, selectedFile, setSelectedFile
                                             <input type="file" hidden onChange={handleFileUpload} value={""} />
                                         </label>
                                     </div>
-                                </div>
+                                </label>
                                 {selectedFile && (
                                     <div>
                                         <div className="bg-modal rounded-xl selected-image-container z-20 absolute h-full w-full inset-0 flex items-center justify-center">
@@ -138,41 +139,43 @@ export default function UploadTracks({ updateStep, selectedFile, setSelectedFile
                         </CardHeader>
                         <Separator />
                         <CardContent className="py-5 gap-4">
-                            <div className="bg-modal relative">
-                                <div className="flex justify-between items-center gap-4">
-                                    <div className="w-full px-2 py-[11px] border border-3 rounded-xl flex justify-between items-center gap-4">
-                                        {
-                                            !selectedAudio ?
-                                                <label className="text-xs bg-modal px-3 w-full cursor-pointer">
-                                                    Select Audio
-                                                    <input type="file" hidden onChange={handleAudio} value={""} />
-                                                </label> :
-                                                <div className="bg-modal rounded-xl selected-image-container z-20 w-full flex items-center justify-between">
-                                                    <audio
-                                                        controls
-                                                        className="w-[calc(100%-30px)] border border-border3 rounded-[30px]"
-                                                    >
-                                                        <source src={selectedAudio?.url} type="audio/mp3" />
-                                                    </audio>
-                                                    <Button
-                                                        className="h-4 w-4 flex items-center justify-center shadow-sm rounded-full p-0 mt-1.5"
-                                                        onClick={() => setSelectedAudio(null)}
-                                                    >
-                                                        <XMarkIcon className="text-black3" />
-                                                    </Button>
-                                                </div>
-
-                                        }
+                            <div className="bg-modal border border-3 rounded-xl relative">
+                                <label className="cursor-pointer block px-2.5 pt-3 pb-4">
+                                    <UploadCloud className="h-5 w-5 mb-4 mx-auto" />
+                                    <h6 className="text-[13px] text-center">Choose a file or drag & drop it here</h6>
+                                    <p className="text-[#737373] text-[13px] mx-4 text-center">Only jpg or png. Up to 50 MB.</p>
+                                    <div className="text-center mt-2">
+                                        <label className="text-[11px] bg-modal p-1 h-[34px] border border-border3 rounded-xl py-2 cursor-pointer">
+                                            Select Audio
+                                            <input type="file" hidden onChange={handleAudio} value={""} />
+                                        </label>
                                     </div>
-                                    <Button onClick={handleAudioUpload} disabled={!selectedAudio}>Upload</Button>
-                                </div>
+                                </label>
+                                {selectedAudio &&
+                                    <div className="inset-0 absolute px-2 py-[11px] w-full bg-modal rounded-xl flex flex-col justify-between">
+                                        <div className="w-full flex justify-between items-center gap-4">
+                                            <div className="bg-modal rounded-xl selected-image-container z-20 w-full flex items-center justify-between">
+                                                <audio
+                                                    controls
+                                                    className="w-[calc(100%-30px)] border border-border3 rounded-[30px]"
+                                                >
+                                                    <source src={selectedAudio?.url} type="audio/mp3" />
+                                                </audio>
+                                                <Button
+                                                    className="h-4 w-4 flex items-center justify-center shadow-sm rounded-full p-0 mt-1.5"
+                                                    onClick={() => setSelectedAudio(null)}
+                                                >
+                                                    <XMarkIcon className="text-black3" />
+                                                </Button>
+                                            </div>
+                                        </div>
+                                            <Button className="w-fit ml-auto" onClick={handleAudioUpload} disabled={!selectedAudio}>Upload</Button>
+                                    </div>
+                                }
                             </div>
 
                             {selectedAudios?.length > 0 && (
                                 <div className="mt-6">
-                                    <div className="border-b pb-5 w-[80%] mx-auto">
-                                        <h6 className="text-[13px] text-center">Choose a file or drag & drop it here</h6>
-                                    </div>
                                     <div className="space-y-6 mt-6 bg-modal p-4 rounded-xl border  max-h-[322px] scrollbox overflow-auto">
                                         {
                                             selectedAudios?.map((audio) => {

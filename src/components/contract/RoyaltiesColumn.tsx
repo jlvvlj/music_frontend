@@ -10,6 +10,7 @@ import {
 } from "@/registry/new-york/ui/popover"
 import Image from "next/image";
 import { Avatar } from "../ui/avatar";
+import { Pencil2Icon } from "@radix-ui/react-icons";
 
 export const RoyaltiesColumn: ColumnDef<Task>[] = [
   {
@@ -94,7 +95,7 @@ export const RoyaltiesColumn: ColumnDef<Task>[] = [
     cell: ({ row }) =>
       <Popover>
         <PopoverTrigger asChild>
-          <div className="text-[#4FABFE] text-center cursor-pointer text-xs">{row.getValue("album")}</div>
+          <div className="text-[#4FABFE] text-center cursor-pointer text-xs"><Pencil2Icon className="w-4 h-4 mr-1 text-[#4FABFE] text-center cursor-pointer" /></div>
         </PopoverTrigger>
       </Popover>,
     enableSorting: false,
