@@ -38,6 +38,9 @@ import { Textarea } from "../../components/ui/textarea";
 import { toast } from "../../components/ui/use-toast";
 import UploadComponent from "@/components/drag/UploadDragDrop";
 import { Separator } from "@/components/ui/separator";
+import { Minus } from "lucide-react";
+import { Plus } from "lucide-react";
+import { useState } from "react";
 
 const profileFormSchema = z.object({
   companyName: z.string().min(2, {
@@ -79,6 +82,15 @@ export function ProfileForm() {
       ),
     });
   }
+
+  const [value, setValue] = useState(10);
+
+  const handleIncrease = () => {
+    setValue(value + 1);
+  };
+  const handleDecrease = () => {
+    setValue(value - 1);
+  };
 
   return (
     <Form {...form}>
@@ -132,7 +144,7 @@ export function ProfileForm() {
                 </FormItem>
               )}
             />
-            <FormField
+            {/* <FormField
               control={form.control}
               name="shareOfCapital"
               render={({ field }) => (
@@ -148,7 +160,41 @@ export function ProfileForm() {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
+            <div>
+              <FormLabel>Share of capital</FormLabel>
+              <div className="flex items-center justify-center space-x-1 mt-3">
+                <Button
+                  variant="default"
+                  type="button"
+                  size="icon"
+                  className={cn(
+                    "bg-transparent border border-solid rounded-full w-[14px] h-[14px] flex justify-center items-center minus-btn text-white hover:text-black border-[#0F172A]",
+                  )}
+                  onClick={handleDecrease}
+                >
+                  <Minus className="h-[10px] w-[10px] " />
+                  <span className="sr-only">Decrease</span>
+                </Button>
+                <div className="flex-1 text-center">
+                  <div className="text-[21px] font-bold tracking-tighter">
+                    {value}%
+                  </div>
+                </div>
+                <Button
+                  variant="default"
+                  size="icon"
+                  type="button"
+                  className={cn(
+                    "bg-transparent border border-solid rounded-full w-[14px] h-[14px] flex justify-center items-center minus-btn  text-white hover:text-black border-[#0F172A]",
+                  )}
+                  onClick={handleIncrease}
+                >
+                  <Plus className="h-[10px] w-[10px]" />
+                  <span className="sr-only">Increase</span>
+                </Button>
+              </div>
+            </div>
             <FormField
               control={form.control}
               name="city"

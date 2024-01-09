@@ -7,9 +7,11 @@ import { CardsActivityGoal } from "@/components/activity-goal";
 const ShareCardRight = ({
   member,
   updateGoal,
+  buttonHidden
 }: {
   member: TeamMember;
   updateGoal: (v: number) => void;
+  buttonHidden: boolean;
 }) => {
   const handleChangeGoal = (v: number) => {
     updateGoal(v);
@@ -40,7 +42,7 @@ const ShareCardRight = ({
           buttonTitle="Set Share"
           minValue={0}
           maxValue={100}
-          buttonHidden
+          buttonHidden={buttonHidden}
           onClickButton={() => {}}
           setGoal={handleChangeGoal}
         />

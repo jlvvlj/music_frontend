@@ -4,12 +4,13 @@ import { Home, Menu } from "lucide-react";
 import { Music, Settings, PersonStanding, Bell, Monitor } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/registry/new-york/ui/tooltip";
 
-const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
+const Sidebar = ({ isCollapsed }: { isCollapsed: number }) => {
     const pathname = usePathname();
     return (
         <div data-collapsed={isCollapsed} className="bg-foreground3 h-full shadow-2xl">
-            {isCollapsed ?
+            {isCollapsed > 4 ?
                 <div>
                     <div className="flex justify-between items-center border-b p-3">
                         <Link href="/dashboard" className="flex items-center text-lg font-medium text-white3">
@@ -17,7 +18,7 @@ const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
                             />
                                 <path className="cls-1" d="M110.6,43.05A8.57,8.57,0,0,1,102,34.44V30.13a8.57,8.57,0,0,1,8.61-8.62h4.31a8.59,8.59,0,0,1,8.62,8.62v4.31a8.59,8.59,0,0,1-8.62,8.61Z" />
                             </svg>
-                            <span>Miuu</span>
+                            Miuu
                         </Link>
                     </div>
                     <div className="p-3">
@@ -87,47 +88,119 @@ const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
                     </div>
                     <div className="p-3">
                         <Link href="/dashboard">
-                            <Button variant="ghost" className={`${pathname === '/dashboard' ? 'bg-accent text-accent-foreground' : ''} w-full justify-start items-center mb-1`}>
-                                <Home className="h-5 w-5" />
-                            </Button>
+                            <TooltipProvider>
+                                <Tooltip delayDuration={0}>
+                                    <TooltipTrigger asChild>
+                                        <Button variant="ghost" className={`${pathname === '/dashboard' ? 'bg-accent text-accent-foreground' : ''} w-full justify-start items-center mb-1`}>
+                                            <Home className="h-5 w-5" />
+                                        </Button>
+                                    </TooltipTrigger>
+                                    <TooltipContent side="right" className="flex items-center gap-4">
+                                        <span>Dashboard</span>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
                         </Link>
                         <Link href="/contracts">
-                            <Button variant="ghost" className={`${pathname === '/contracts' ? 'bg-accent text-accent-foreground' : ''} w-full justify-start items-center mb-1`}>
-                                <Music className="h-5 w-5" />
-                            </Button>
+                            <TooltipProvider>
+                                <Tooltip delayDuration={0}>
+                                    <TooltipTrigger asChild>
+                                        <Button variant="ghost" className={`${pathname === '/contracts' ? 'bg-accent text-accent-foreground' : ''} w-full justify-start items-center mb-1`}>
+                                            <Music className="h-5 w-5" />
+                                        </Button>
+                                    </TooltipTrigger>
+                                    <TooltipContent side="right" className="flex items-center gap-4">
+                                        <span>Contracts</span>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
                         </Link>
                         <Link href="/music">
-                            <Button variant="ghost" className={`${pathname === '/music' ? 'bg-accent text-accent-foreground' : ''} w-full justify-start items-center mb-1`}>
-                                <Music className="h-5 w-5" />
-                            </Button>
+                            <TooltipProvider>
+                                <Tooltip delayDuration={0}>
+                                    <TooltipTrigger asChild>
+                                        <Button variant="ghost" className={`${pathname === '/music' ? 'bg-accent text-accent-foreground' : ''} w-full justify-start items-center mb-1`}>
+                                            <Music className="h-5 w-5" />
+                                        </Button>
+                                    </TooltipTrigger>
+                                    <TooltipContent side="right" className="flex items-center gap-4">
+                                        <span>Music</span>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
                         </Link>
                         <Link href="/archive">
-                            <Button variant="ghost" className={`${pathname === '/archive' ? 'bg-accent text-accent-foreground' : ''} w-full justify-start items-center mb-1`}>
-                                <Music className="h-5 w-5" />
-                            </Button>
+                            <TooltipProvider>
+                                <Tooltip delayDuration={0}>
+                                    <TooltipTrigger asChild>
+                                        <Button variant="ghost" className={`${pathname === '/archive' ? 'bg-accent text-accent-foreground' : ''} w-full justify-start items-center mb-1`}>
+                                            <Music className="h-5 w-5" />
+                                        </Button>
+                                    </TooltipTrigger>
+                                    <TooltipContent side="right" className="flex items-center gap-4">
+                                        <span>Archive</span>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
                         </Link>
                         <Accordion type="single" collapsible>
                             <AccordionItem value="item-1" className="border-0">
                                 <AccordionTrigger className="p-0 w-full justify-between items-center  mb-1 px-4 py-2.5 rounded-md hover:no-underline hover:bg-accent hover:text-accent-foreground sidebar-accordion">
-                                    <div className="flex">
-                                        <Settings className="h-5 w-5" />
-                                    </div>
+                                    <TooltipProvider>
+                                        <Tooltip delayDuration={0}>
+                                            <TooltipTrigger asChild>
+                                                <div className="flex">
+                                                    <Settings className="h-5 w-5" />
+                                                </div>
+                                            </TooltipTrigger>
+                                            <TooltipContent side="right" className="flex items-center gap-4 ml-4">
+                                                <span>Settings</span>
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </TooltipProvider>
                                 </AccordionTrigger>
                                 <AccordionContent>
                                     <Link href="/settings/account">
-                                        <Button variant="ghost" className={`${pathname === '/settings/account' ? 'bg-accent text-accent-foreground' : ''} w-full justify-start items-center mb-1`}>
-                                            <PersonStanding className="h-5 w-5" />
-                                        </Button>
+                                        <TooltipProvider>
+                                            <Tooltip delayDuration={0}>
+                                                <TooltipTrigger asChild>
+                                                    <Button variant="ghost" className={`${pathname === '/settings/account' ? 'bg-accent text-accent-foreground' : ''} w-full justify-start items-center mb-1`}>
+                                                        <PersonStanding className="h-5 w-5" />
+                                                    </Button>
+                                                </TooltipTrigger>
+                                                <TooltipContent side="right" className="flex items-center gap-4">
+                                                    <span>Profile</span>
+                                                </TooltipContent>
+                                            </Tooltip>
+                                        </TooltipProvider>
                                     </Link>
                                     <Link href="/settings/notifications">
-                                        <Button variant="ghost" className={`${pathname === '/settings/notifications' ? 'bg-accent text-accent-foreground' : ''} w-full justify-start items-center mb-1`}>
-                                            <Bell className="h-5 w-5" />
-                                        </Button>
+                                        <TooltipProvider>
+                                            <Tooltip delayDuration={0}>
+                                                <TooltipTrigger asChild>
+                                                    <Button variant="ghost" className={`${pathname === '/settings/notifications' ? 'bg-accent text-accent-foreground' : ''} w-full justify-start items-center mb-1`}>
+                                                        <Bell className="h-5 w-5" />
+                                                    </Button>
+                                                </TooltipTrigger>
+                                                <TooltipContent side="right" className="flex items-center gap-4">
+                                                    <span>Notification</span>
+                                                </TooltipContent>
+                                            </Tooltip>
+                                        </TooltipProvider>
                                     </Link>
                                     <Link href="/settings/display">
-                                        <Button variant="ghost" className={`${pathname === '/settings/display' ? 'bg-accent text-accent-foreground' : ''} w-full justify-start items-center mb-1`}>
-                                            <Monitor className="h-5 w-5" />
-                                        </Button>
+                                        <TooltipProvider>
+                                            <Tooltip delayDuration={0}>
+                                                <TooltipTrigger asChild>
+                                                    <Button variant="ghost" className={`${pathname === '/settings/display' ? 'bg-accent text-accent-foreground' : ''} w-full justify-start items-center mb-1`}>
+                                                        <Monitor className="h-5 w-5" />
+                                                    </Button>
+                                                </TooltipTrigger>
+                                                <TooltipContent side="right" className="flex items-center gap-4">
+                                                    <span>Display</span>
+                                                </TooltipContent>
+                                            </Tooltip>
+                                        </TooltipProvider>
                                     </Link>
                                 </AccordionContent>
                             </AccordionItem>

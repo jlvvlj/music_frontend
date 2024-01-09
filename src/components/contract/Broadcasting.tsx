@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { CardsActivityGoal } from "@/components/activity-goal";
 import { useEffect, useState } from "react";
-import { BroadCasting, StepProps } from "./types";
+import { BroadCasting, StepProps, TeamMember } from "./types";
 import { Badge } from "@/registry/new-york/ui/badge";
 import { Switch } from "@/registry/default/ui/switch";
 import { TableCommon } from "./TableCommon";
@@ -16,6 +16,9 @@ import { broadcastingTracks } from "@/app/data/data";
 import { BroadcastingColumn } from "./BroadcastingColumn";
 import { toast } from "sonner";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
+import useContractBuilder from "@/hooks/useContractBuilder";
+import { Steps } from "@/contexts/ContractBuilderContext";
+import ShareCard from "./ShareCard";
 
 type Tab = {
   label: string;
@@ -75,15 +78,12 @@ const Broadcasting = ({ updateStep }: StepProps) => {
   const [currentTabIndex, setCurrentTabIndex] = useState(0);
   const [tab, setTab] = useState(TABS[0].value);
 
-  const [enabled, setEnabled] = useState<number[]>([])
-
+  const [enabled, setEnabled] = useState<number | null>(null);
   const onCheckHandle = (id: number) => {
-    const checkExist = enabled?.includes(id);
-
-    if (checkExist) {
-      setEnabled((prev) => prev?.filter((item) => item !== id));
+    if (enabled === id) {
+      setEnabled(null);
     } else {
-      setEnabled((prev) => [...prev, id]);
+      setEnabled(id);
     }
   };
 
@@ -115,16 +115,33 @@ const Broadcasting = ({ updateStep }: StepProps) => {
 
   const handleClickNext = () => {
     toast("Broadcasting created successfully!", {
-      description:"Broadcasting",
+      description: "Broadcasting",
       action: {
-          label: "X",
-          onClick: () => {},
+        label: "X",
+        onClick: () => { },
       },
       position: "top-right"
     });
     updateStep(1);
   };
 
+  const { members, dispatch } = useContractBuilder();
+  const handleUpdateGoal = (member: TeamMember, value: number) => {
+    const _members = [...members];
+    const newMember = {
+      ...member,
+      revenue: value,
+    };
+    const index = _members.findIndex((m) => m.id === member.id);
+    const m = _members.splice(index, 1, newMember);
+
+    dispatch({
+      type: Steps.SHARES,
+      payload: {
+        members: _members,
+      },
+    });
+  };
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
@@ -152,36 +169,22 @@ const Broadcasting = ({ updateStep }: StepProps) => {
                             <h6>{card.title}</h6>
                             <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">Secondary</Badge>
                           </div>
-                          <Switch className="mt-2.5" checked={enabled.includes(card.id)} onCheckedChange={() => onCheckHandle(card.id)} />
+                          <Switch className="mt-2.5" checked={enabled === card.id} onCheckedChange={() => onCheckHandle(card.id)} />
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="pb-8">
                         <p className="text-sm	mt-2.5 text-muted-foreground">Paid concession of television broadcasting rights</p>
-                        {enabled.includes(card.id) && <div className="space-y-8 mt-10">
+                        {enabled === card.id && <div className="space-y-8 mt-10">
                           <div className="pl-4">
-                            {card?.activityCards.map((activityCard) => (
-                              <div className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md w-fit bg-modal pb-1.5">
-                                <div className="pt-3">
-                                  <p className="text-sm font-normal leading-none mb-1">
-                                    {activityCard.title}
-                                  </p>
-                                  <p className="text-sm text-muted-foreground">Lorem ipsum</p>
-                                </div>
-                                <div className="">
-                                  <CardsActivityGoal
-                                    label="Abatement rate"
-                                    initialValue={0}
-                                    unit="%"
-                                    step={10}
-                                    buttonTitle="Set Rate"
-                                    minValue={0}
-                                    maxValue={100}
-                                    buttonHidden
-                                    onClickButton={() => { }}
-                                    setGoal={() => { }}
-                                  />
-                                </div>
-                              </div>
+                            {members.map((member, index) => (
+                              <ShareCard
+                                key={index}
+                                member={member}
+                                updateGoal={(v) => handleUpdateGoal(member, v)}
+                                buttonHidden={true}
+                                avatar={false}
+                                bgcolor="bg-modal"
+                              />
                             ))}
                           </div>
                         </div>}
@@ -203,13 +206,13 @@ const Broadcasting = ({ updateStep }: StepProps) => {
             Back
           </Button>
           <div className="flex gap-4">
-          <Button
-                className="bg-mblue"
-                variant="outline"
-                onClick={handleClickNext}
+            <Button
+              className="bg-mblue"
+              variant="outline"
+              onClick={handleClickNext}
             >
-                Next
-                <ArrowRightIcon className="ml-1" />
+              Next
+              <ArrowRightIcon className="ml-1" />
             </Button>
           </div>
         </div>

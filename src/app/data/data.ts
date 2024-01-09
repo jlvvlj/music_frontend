@@ -686,6 +686,7 @@ export const broadcastingTracks = [
         "broadcasting": "15%",
         "secondary": "15%",
         "status": "",
+        "album": ""
     },
     {
         "id": "2",
@@ -693,6 +694,7 @@ export const broadcastingTracks = [
         "broadcasting": "15%",
         "secondary": "15%",
         "status": "",
+        "album": ""
     },
     {
         "id": "3",
@@ -781,5 +783,6 @@ export const derivativeTracks = [
         "license": "15%",
         "events": "15%",
         "status": "",
+        "album": ""
     }
 ]

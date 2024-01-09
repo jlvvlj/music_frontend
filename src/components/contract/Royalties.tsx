@@ -8,11 +8,15 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 
 import { Button } from "@/components/ui/button";
 import { CardsActivityGoal } from "@/components/activity-goal";
-import { SingleRate, StepProps, TieredRate } from "./types";
+import { SingleRate, StepProps, TeamMember, TieredRate } from "./types";
 import { Avatar } from "../ui/avatar";
 import { TableCommon } from "./TableCommon";
 import { recordingTracks } from "@/app/data/data";
 import { RecordingsColumn } from "./RecordingsColumn";
+import ShareCardRight from "./ShareCardRight";
+import useContractBuilder from "@/hooks/useContractBuilder";
+import { Steps } from "@/contexts/ContractBuilderContext";
+import ShareCard from "./ShareCard";
 
 type Tab = {
   label: string;
@@ -106,14 +110,32 @@ const Royalties = ({ updateStep }: StepProps) => {
 
   const handleClickNext = () => {
     toast("Shares added successfully!", {
-      description:"Shares",
+      description: "Shares",
       action: {
-          label: "X",
-          onClick: () => {},
+        label: "X",
+        onClick: () => { },
       },
       position: "top-right"
     });
     updateStep(1);
+  };
+
+  const { members, dispatch } = useContractBuilder();
+  const handleUpdateGoal = (member: TeamMember, value: number) => {
+    const _members = [...members];
+    const newMember = {
+      ...member,
+      revenue: value,
+    };
+    const index = _members.findIndex((m) => m.id === member.id);
+    const m = _members.splice(index, 1, newMember);
+
+    dispatch({
+      type: Steps.SHARES,
+      payload: {
+        members: _members,
+      },
+    });
   };
 
   return (
@@ -127,36 +149,15 @@ const Royalties = ({ updateStep }: StepProps) => {
             <p className="text-sm text-muted-foreground mb-[98px]">
               Enter the appropriate amount of shares to each producer on the team
             </p>
-            {teamMembers.map((member) =>
-              <div className="flex items-start justify-between gap-4 pl-4 py-3 rounded-md mb-5 w-[82%] mx-auto bg-modal-foreground">
-                <Avatar className="bg-[#A3D3FF] mt-2">
-                  <Image
-                    src={member.avatar || "https://ui.shadcn.com/avatars/01.png"}
-                    width={100}
-                    height={100}
-                    alt="avatar"
-                  />
-                </Avatar>
-                <div className="pt-3">
-                  <p className="text-sm font-medium leading-none">{member.name}</p>
-                  <p className="text-sm">{member.role}</p>
-                </div>
-                <div className="">
-                  <CardsActivityGoal
-                    label="SHARES OF Profits"
-                    initialValue={member.revenue || 30}
-                    unit="%"
-                    step={10}
-                    buttonTitle=""
-                    minValue={0}
-                    maxValue={100}
-                    buttonHidden
-                    onClickButton={() => { }}
-                    setGoal={() => { }}
-                  />
-                </div>
-              </div>
-            )}
+            {members.map((member, index) => (
+              <ShareCard
+                key={index}
+                member={member}
+                updateGoal={(v) => handleUpdateGoal(member, v)}
+                buttonHidden={true}
+                avatar={true}
+              />
+            ))}
           </div>
         </div>
         <div className="flex justify-between w-full mt-8 px-10">
@@ -191,37 +192,13 @@ const Royalties = ({ updateStep }: StepProps) => {
                 Edit the shares on each track for a specific allocation
               </p>
               <div className="pl-4 gap-10">
-                {teamMembers.map((member) => (
-                  <div key={member.id} className="flex items-start justify-between gap-4 pl-4 pt-1.5 rounded-md mb-5 w-[85%] bg-modal-foreground right-card">
-                    <Avatar className="bg-[#A3D3FF] mt-2 h-11 w-11">
-                      <Image
-                        src={member.avatar || "https://ui.shadcn.com/avatars/01.png"}
-                        width={100}
-                        height={100}
-                        alt="avatar"
-                      />
-                    </Avatar>
-                    <div className="pt-3">
-                      <p className="text-sm font-medium leading-none text-[#4EABFE]">
-                        {member.name}
-                      </p>
-                      <p className="text-sm text-[#6DB5F9]">{member.role}</p>
-                    </div>
-                    <div className="">
-                      <CardsActivityGoal
-                        label="SHARES OF REVENUES"
-                        initialValue={member.revenue || 30}
-                        unit="%"
-                        step={10}
-                        buttonTitle="Set Share"
-                        minValue={0}
-                        maxValue={100}
-                        buttonHidden
-                        onClickButton={() => { }}
-                        setGoal={() => { }}
-                      />
-                    </div>
-                  </div>
+                {members.map((member, index) => (
+                  <ShareCardRight
+                    key={index}
+                    member={member}
+                    updateGoal={(v) => handleUpdateGoal(member, v)}
+                    buttonHidden={true}
+                  />
                 ))}
               </div>
             </div>

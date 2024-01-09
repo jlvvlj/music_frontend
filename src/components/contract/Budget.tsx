@@ -10,13 +10,16 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
 import { CardsActivityGoal } from "@/components/activity-goal";
-import { Budget, StepProps } from "./types";
+import { Budget, StepProps, TeamMember } from "./types";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import { Badge } from "@/registry/new-york/ui/badge";
 import { Switch } from "@/registry/default/ui/switch";
 import { budgetTracks } from "@/app/data/data"
 import { TableCommon } from "./TableCommon"
 import { BudgetTrackColumn } from "./BudgetTrackColumn"
+import ShareCard from "./ShareCard";
+import useContractBuilder from "@/hooks/useContractBuilder";
+import { Steps } from "@/contexts/ContractBuilderContext";
 
 const budgetCards = [
   {
@@ -47,7 +50,7 @@ const budgetCard = [
 ];
 
 const Budget = ({ updateStep }: StepProps) => {
-  const [enabled, setEnabled] = useState<number[]>([])
+  const [enabled, setEnabled] = useState<number | null>(null);
 
   const handleClickBack = () => {
     updateStep(-1);
@@ -67,27 +70,42 @@ const Budget = ({ updateStep }: StepProps) => {
   });
 
   const onCheckHandle = (id: number) => {
-    const checkExist = enabled?.includes(id);
-
-    if (checkExist) {
-      setEnabled((prev) => prev?.filter((item) => item !== id));
+    if (enabled === id) {
+      setEnabled(null);
     } else {
-      setEnabled((prev) => [...prev, id]);
+      setEnabled(id);
     }
   };
 
   const handleClickNext = () => {
     toast("Budget selected successfully!", {
-      description:"Initial Budget",
+      description: "Initial Budget",
       action: {
-          label: "X",
-          onClick: () => {},
+        label: "X",
+        onClick: () => { },
       },
       position: "top-right"
     });
     updateStep(1);
   };
 
+  const { members, dispatch } = useContractBuilder();
+  const handleUpdateGoal = (member: TeamMember, value: number) => {
+    const _members = [...members];
+    const newMember = {
+      ...member,
+      revenue: value,
+    };
+    const index = _members.findIndex((m) => m.id === member.id);
+    const m = _members.splice(index, 1, newMember);
+
+    dispatch({
+      type: Steps.SHARES,
+      payload: {
+        members: _members,
+      },
+    });
+  };
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
@@ -111,48 +129,23 @@ const Budget = ({ updateStep }: StepProps) => {
                             <h6>{card.title}</h6>
                             <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">Budget</Badge>
                           </div>
-                          <Switch className="mt-2.5" checked={enabled.includes(card.id)} onCheckedChange={() => onCheckHandle(card.id)} />
+                          <Switch className="mt-2.5" checked={enabled === card.id} onCheckedChange={() => onCheckHandle(card.id)} />
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="pb-8">
                         <p className="text-sm	mt-2.5 text-muted-foreground">A budget for  registration will be committed</p>
-                        {enabled.includes(card.id) && <div className="space-y-8 mt-10">
-                          <div className="grid grid-cols-12 gap-6">
-                            {card?.activityCards.map((activityCard) =>
-                              <div key={activityCard.id}
-                                className={cn(
-                                  "flex items-center justify-between pl-4 rounded-md bg-mblue col-span-12 xl:col-span-10 2xl:col-span-8 w-full"
-                                )}
-                              >
-                                <div>
-                                  <p
-                                    className={cn(
-                                      "text-sm font-medium leading-none text-[#FAFAFA]"
-                                    )}
-                                  >
-                                    {activityCard.title}
-                                  </p>
-                                  {activityCard.subTitle &&
-                                    <p className="text-[10px] text-[#B9B9BA] mt-1">
-                                      Lorem ipsum
-                                    </p>
-                                  }
-                                </div>
-                                <CardsActivityGoal
-                                  label="EUR"
-                                  initialValue={activityCard.budget}
-                                  unit=""
-                                  step={10}
-                                  buttonTitle="Set Share"
-                                  minValue={3000}
-                                  maxValue={5000}
-                                  buttonHidden
-                                  onClickButton={() => { }}
-                                  isOwner={true}
-                                  setGoal={() => { }}
-                                />
-                              </div>
-                            )}
+                        {enabled === card.id && <div className="space-y-8 mt-10">
+                          <div className="">
+                            {members.map((member, index) => (
+                              <ShareCard
+                                key={index}
+                                member={member}
+                                updateGoal={(v) => handleUpdateGoal(member, v)}
+                                buttonHidden={true}
+                                avatar={false}
+                                bgcolor="bg-modal"
+                              />
+                            ))}
                           </div>
                         </div>}
                       </CardContent>

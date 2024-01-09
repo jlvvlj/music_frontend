@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 import { CardsActivityGoal } from "@/components/activity-goal";
 import { Label } from "@/components/ui/label";
 import { Icons } from "@/components/icons";
-import { DerivativeUse, StepProps } from "./types";
+import { DerivativeUse, StepProps, TeamMember } from "./types";
 import CongratulationModal from "./CongratulationModal";
 import { Badge } from "@/registry/new-york/ui/badge";
 import { Switch } from "@/registry/default/ui/switch";
@@ -22,6 +22,9 @@ import { TableCommon } from "./TableCommon";
 import { derivativeTracks } from "@/app/data/data";
 import { DerivativeColumn } from "./DerivativeColumn";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
+import useContractBuilder from "@/hooks/useContractBuilder";
+import { Steps } from "@/contexts/ContractBuilderContext";
+import ShareCard from "./ShareCard";
 
 type Tab = {
   label: string;
@@ -96,15 +99,12 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
   const [currentTabIndex, setCurrentTabIndex] = useState(0);
   const [tab, setTab] = useState(TABS[0].value);
 
-  const [enabled, setEnabled] = useState<number[]>([])
-
+  const [enabled, setEnabled] = useState<number | null>(null);
   const onCheckHandle = (id: number) => {
-    const checkExist = enabled?.includes(id);
-
-    if (checkExist) {
-      setEnabled((prev) => prev?.filter((item) => item !== id));
+    if (enabled === id) {
+      setEnabled(null);
     } else {
-      setEnabled((prev) => [...prev, id]);
+      setEnabled(id);
     }
   };
 
@@ -114,14 +114,32 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
 
   const handleClickNext = () => {
     toast("Derivative used successfully", {
-      description:"Derivative",
+      description: "Derivative",
       action: {
-          label: "X",
-          onClick: () => {},
+        label: "X",
+        onClick: () => { },
       },
       position: "top-right"
     });
     setModalOpen(true)
+  };
+
+  const { members, dispatch } = useContractBuilder();
+  const handleUpdateGoal = (member: TeamMember, value: number) => {
+    const _members = [...members];
+    const newMember = {
+      ...member,
+      revenue: value,
+    };
+    const index = _members.findIndex((m) => m.id === member.id);
+    const m = _members.splice(index, 1, newMember);
+
+    dispatch({
+      type: Steps.SHARES,
+      payload: {
+        members: _members,
+      },
+    });
   };
 
   return (
@@ -149,36 +167,22 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
                               <h6>{card.title}</h6>
                               <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">Derivative</Badge>
                             </div>
-                            <Switch className="mt-2.5" checked={enabled.includes(card.id)} onCheckedChange={() => onCheckHandle(card.id)} />
+                            <Switch className="mt-2.5" checked={enabled === card.id} onCheckedChange={() => onCheckHandle(card.id)} />
                           </CardTitle>
                         </CardHeader>
                         <CardContent className="pb-8">
                           <p className="text-sm	mt-2.5 text-muted-foreground">Lorem</p>
-                          {enabled.includes(card.id) && <div className="space-y-8 mt-10">
+                          {enabled === card.id && <div className="space-y-8 mt-10">
                             <div className="pl-4">
-                              {card?.activityCards.map((activityCard) => (
-                                <div className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md w-fit bg-modal pb-1.5 mb-8">
-                                  <div className="pt-3">
-                                    <p className="text-sm font-normal leading-none mb-1">
-                                      {activityCard.title}
-                                    </p>
-                                    <p className="text-sm text-muted-foreground">Lorem ipsum</p>
-                                  </div>
-                                  <div className="">
-                                    <CardsActivityGoal
-                                      label="Abatement rate"
-                                      initialValue={activityCard.revenue || 30}
-                                      unit="%"
-                                      step={10}
-                                      buttonTitle="Set Rate"
-                                      minValue={0}
-                                      maxValue={100}
-                                      buttonHidden
-                                      onClickButton={() => { }}
-                                      setGoal={() => { }}
-                                    />
-                                  </div>
-                                </div>
+                              {members.map((member, index) => (
+                                <ShareCard
+                                  key={index}
+                                  member={member}
+                                  updateGoal={(v) => handleUpdateGoal(member, v)}
+                                  buttonHidden={true}
+                                  avatar={false}
+                                  bgcolor="bg-modal"
+                                />
                               ))}
                             </div>
                           </div>}
@@ -204,10 +208,10 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
                 className="bg-mblue"
                 variant="outline"
                 onClick={handleClickNext}
-            >
+              >
                 Next
                 <ArrowRightIcon className="ml-1" />
-            </Button>
+              </Button>
             </div>
           </div>
         </div>
@@ -245,8 +249,8 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
               </CardContent>
             </Card>
             <div className="rounded-2xl bg-modal border border-muted w-full p-4 mt-[76px]">
-            <TableCommon data={derivativeTracks} columns={DerivativeColumn} />
-          </div>
+              <TableCommon data={derivativeTracks} columns={DerivativeColumn} />
+            </div>
           </div>
         </div>
       </div>

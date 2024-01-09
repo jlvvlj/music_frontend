@@ -18,6 +18,10 @@ import { Button } from "../ui/button";
 import { TableCommon } from "./TableCommon";
 import { royaltiesTracks } from "@/app/data/data";
 import { RoyaltiesColumn } from "./RoyaltiesColumn";
+import ShareCard from "./ShareCard";
+import useContractBuilder from "@/hooks/useContractBuilder";
+import { TeamMember } from "./types";
+import { Steps } from "@/contexts/ContractBuilderContext";
 
 interface Props extends React.PropsWithChildren {
   currentStep?: number;
@@ -49,15 +53,13 @@ export default function RoyaltyAdvances({
   currentStep = 6,
   updateStep,
 }: Props) {
-  const [enabled, setEnabled] = useState<number[]>([])
 
+  const [enabled, setEnabled] = useState<number | null>(null);
   const onCheckHandle = (id: number) => {
-    const checkExist = enabled?.includes(id);
-
-    if (checkExist) {
-      setEnabled((prev) => prev?.filter((item) => item !== id));
+    if (enabled === id) {
+      setEnabled(null);
     } else {
-      setEnabled((prev) => [...prev, id]);
+      setEnabled(id);
     }
   };
 
@@ -67,14 +69,32 @@ export default function RoyaltyAdvances({
 
   const handleClickNext = () => {
     toast("Royalties Advances updated successfully!", {
-      description:"Royalties Advances",
+      description: "Royalties Advances",
       action: {
-          label: "X",
-          onClick: () => {},
+        label: "X",
+        onClick: () => { },
       },
       position: "top-right"
     });
     updateStep(1);
+  };
+
+  const { members, dispatch } = useContractBuilder();
+  const handleUpdateGoal = (member: TeamMember, value: number) => {
+    const _members = [...members];
+    const newMember = {
+      ...member,
+      revenue: value,
+    };
+    const index = _members.findIndex((m) => m.id === member.id);
+    const m = _members.splice(index, 1, newMember);
+
+    dispatch({
+      type: Steps.SHARES,
+      payload: {
+        members: _members,
+      },
+    });
   };
 
 
@@ -100,44 +120,22 @@ export default function RoyaltyAdvances({
                             <h6>{card.title}</h6>
                             <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">Advance</Badge>
                           </div>
-                          <Switch className="mt-2.5" checked={enabled.includes(card.id)} onCheckedChange={() => onCheckHandle(card.id)} />
+                          <Switch className="mt-2.5" checked={enabled === card.id} onCheckedChange={() => onCheckHandle(card.id)} />
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="pb-8">
                         <p className="text-sm	mt-2.5 text-muted-foreground">An advance will be paid a signature</p>
-                        {enabled.includes(card.id) && <div className="space-y-8 mt-10">
+                        {enabled === card.id && <div className="space-y-8 mt-10">
                           <div className="pl-4 gap-10">
-                            {card?.activityCards.map((activityCard) => (
-                              <div className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md mb-5 bg-modal w-[91%] justify-between">
-                                <Avatar className="bg-[#A3D3FF] mt-2 h-11 w-11">
-                                  <Image
-                                    src={activityCard.avatar}
-                                    width={100}
-                                    height={100}
-                                    alt="avatar"
-                                  />
-                                </Avatar>
-                                <div className="pt-3">
-                                  <p className="text-sm font-normal leading-none mb-1">
-                                    {activityCard.name}
-                                  </p>
-                                  <p className="text-sm">{activityCard.role}</p>
-                                </div>
-                                <div className="">
-                                  <CardsActivityGoal
-                                    label={activityCard.label}
-                                    initialValue={parseInt(activityCard.revenue) || 30}
-                                    unit=""
-                                    step={10}
-                                    buttonTitle="Set Share"
-                                    minValue={0}
-                                    maxValue={100}
-                                    buttonHidden
-                                    onClickButton={() => { }}
-                                    setGoal={() => { }}
-                                  />
-                                </div>
-                              </div>
+                            {members.map((member, index) => (
+                              <ShareCard
+                                key={index}
+                                member={member}
+                                updateGoal={(v) => handleUpdateGoal(member, v)}
+                                buttonHidden={true}
+                                avatar={true}
+                                bgcolor="bg-modal"
+                              />
                             ))}
                           </div>
                         </div>}

@@ -14,11 +14,14 @@ import { Badge } from "@/registry/new-york/ui/badge";
 
 import { CardsActivityGoal } from "@/components/activity-goal";
 import { cn } from "@/lib/utils";
-import {  StepProps } from "./types";
+import { StepProps, TeamMember } from "./types";
 import { CountryMultiSelect } from "../country-multi-select";
 import { abatementTracks } from "@/app/data/data";
 import { TableCommon } from "./TableCommon";
 import { AbatementColumn } from "./AbatementColumn";
+import ShareCard from "./ShareCard";
+import useContractBuilder from "@/hooks/useContractBuilder";
+import { Steps } from "@/contexts/ContractBuilderContext";
 
 const COUNTRIES = [
   {
@@ -101,28 +104,43 @@ const Abatements = ({ updateStep }: StepProps) => {
     updateStep(-1);
   };
 
-  const [enabled, setEnabled] = useState<number[]>([])
-
+  const [enabled, setEnabled] = useState<number | null>(null);
   const onCheckHandle = (id: number) => {
-    const checkExist = enabled?.includes(id);
-
-    if (checkExist) {
-      setEnabled((prev) => prev?.filter((item) => item !== id));
+    if (enabled === id) {
+      setEnabled(null);
     } else {
-      setEnabled((prev) => [...prev, id]);
+      setEnabled(id);
     }
   };
 
   const handleClickNext = () => {
     toast("Abatements added successfully!", {
-      description:"Abatements",
+      description: "Abatements",
       action: {
-          label: "X",
-          onClick: () => {},
+        label: "X",
+        onClick: () => { },
       },
       position: "top-right"
     });
     updateStep(1);
+  };
+
+  const { members, dispatch } = useContractBuilder();
+  const handleUpdateGoal = (member: TeamMember, value: number) => {
+    const _members = [...members];
+    const newMember = {
+      ...member,
+      revenue: value,
+    };
+    const index = _members.findIndex((m) => m.id === member.id);
+    const m = _members.splice(index, 1, newMember);
+
+    dispatch({
+      type: Steps.SHARES,
+      payload: {
+        members: _members,
+      },
+    });
   };
 
 
@@ -152,36 +170,22 @@ const Abatements = ({ updateStep }: StepProps) => {
                             <h6>{card.title}</h6>
                             <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">Abatements</Badge>
                           </div>
-                          <Switch className="mt-2.5" checked={enabled.includes(card.id)} onCheckedChange={() => onCheckHandle(card.id)} />
+                          <Switch className="mt-2.5" checked={enabled === card.id} onCheckedChange={() => onCheckHandle(card.id)} />
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="pb-8">
                         <p className="text-sm	mt-2.5 text-muted-foreground">An abatement for foreign sales will be applied</p>
-                        {enabled.includes(card.id) && <div className="space-y-8 mt-10">
+                        {enabled === card.id && <div className="space-y-8 mt-10">
                           <div className="pl-4 gap-7 flex flex-col justify-center items-center">
-                            {card?.activityCards.map((activityCard) => (
-                              <div className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md w-fit bg-modal pb-1.5">
-                                <div className="pt-3">
-                                  <p className="text-sm font-normal leading-none mb-1">
-                                    Abatement rate
-                                  </p>
-                                  <p className="text-sm">Lorem ipsum</p>
-                                </div>
-                                <div className="">
-                                  <CardsActivityGoal
-                                    label="SHARES OF REVENUES"
-                                    initialValue={0}
-                                    unit="%"
-                                    step={10}
-                                    buttonTitle="Set Rate"
-                                    minValue={0}
-                                    maxValue={100}
-                                    buttonHidden={activityCard.button}
-                                    onClickButton={() => { }}
-                                    setGoal={() => { }}
-                                  />
-                                </div>
-                              </div>
+                            {members.map((member, index) => (
+                              <ShareCard
+                                key={index}
+                                member={member}
+                                updateGoal={(v) => handleUpdateGoal(member, v)}
+                                buttonHidden={true}
+                                avatar={false}
+                                bgcolor="bg-modal"
+                              />
                             ))}
                             <div className={cn(card.id === 1 ? "" : "hidden")}>
                               <CountryMultiSelect
@@ -210,12 +214,12 @@ const Abatements = ({ updateStep }: StepProps) => {
           </Button>
           <div className="flex gap-4">
             <Button
-                className="bg-mblue"
-                variant="outline"
-                onClick={handleClickNext}
+              className="bg-mblue"
+              variant="outline"
+              onClick={handleClickNext}
             >
-                Next
-                <ArrowRightIcon className="ml-1" />
+              Next
+              <ArrowRightIcon className="ml-1" />
             </Button>
           </div>
         </div>

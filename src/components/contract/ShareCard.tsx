@@ -9,9 +9,15 @@ import { CardsActivityGoal } from "@/components/activity-goal";
 const ShareCard = ({
   member,
   updateGoal,
+  buttonHidden,
+  avatar,
+  bgcolor
 }: {
   member: TeamMember;
   updateGoal: (v: number) => void;
+  buttonHidden: boolean;
+  avatar?: boolean;
+  bgcolor?: string;
 }) => {
   const handleChangeGoal = (v: number) => {
     updateGoal(v);
@@ -20,10 +26,10 @@ const ShareCard = ({
     <div
       className={cn(
         "flex items-start gap-4 px-4 py-3 rounded-md mb-5 w-fit mx-auto",
-        isOwner(member) ? "bg-mblue" : "bg-modal-foreground"
+        isOwner(member) ? "bg-mblue" : `bg-modal-foreground ${bgcolor}`
       )}
     >
-      <Avatar className="bg-[#A3D3FF] mt-2">
+      {avatar && <Avatar className="bg-[#A3D3FF] mt-2">
         <Image
           src={member.avatar || "https://ui.shadcn.com/avatars/01.png"}
           width={100}
@@ -31,6 +37,7 @@ const ShareCard = ({
           alt="avatar"
         />
       </Avatar>
+      }
       <div className="pt-3">
         <p className="text-sm font-medium leading-none">{member.name}</p>
         <p className="text-sm">{member.role}</p>
@@ -44,7 +51,8 @@ const ShareCard = ({
           buttonTitle="Set Share"
           minValue={0}
           maxValue={100}
-          onClickButton={() => {}}
+          buttonHidden={buttonHidden}
+          onClickButton={() => { }}
           isOwner={isOwner(member)}
           setGoal={handleChangeGoal}
         />

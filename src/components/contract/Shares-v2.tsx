@@ -102,6 +102,7 @@ const Shares = ({ updateStep }: StepProps) => {
                     key={index}
                     member={member}
                     updateGoal={(v) => handleUpdateGoal(member, v)}
+                    buttonHidden={true}
                   />
                 ))}
               </div>
