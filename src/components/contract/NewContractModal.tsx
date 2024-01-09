@@ -2,7 +2,7 @@
 import { useState } from "react";
 import ProgressSteps from "@/components/contract/ProgressSteps";
 import CreateStepCards from "@/components/contract/createStepCards";
-import { STEPS } from "@/components/contract/types";
+import { STEPS, StepIndex } from "@/components/contract/types";
 import { ContractBuilderProvider } from "@/contexts/ContractBuilderContext";
 
 export default function NewContract() {
@@ -25,7 +25,7 @@ export default function NewContract() {
   return (
     <ContractBuilderProvider>
       <div className="h-[inherit] xl:w-[1241px] w-full flex flex-col gap-20 relative">
-        <div className="absolute left-[88px] top-9 hidden lg:block w-[50%] z-10">
+        <div className={`absolute top-9 hidden lg:block z-10 ${activeStep === StepIndex.INTRODUCTION ? 'left-1/2 translate-x-[-50%] w-[454px]' : 'left-[88px] w-[50%]'}`}>
           <ProgressSteps
             step={activeStep}
             updateStep={handleUpdateActiveStep}

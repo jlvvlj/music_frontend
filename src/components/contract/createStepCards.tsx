@@ -39,6 +39,7 @@ import RoyaltyAdvances from "./RoyaltyAdvances";
 import BaseFilterWrapper from "./BaseFilterWrapper";
 import ProgressSteps from "./ProgressSteps";
 import DerivativeUse from "./DerivativeUse";
+import Introduction from "./Introduction";
 
 const CreateStepCards = ({
   step,
@@ -75,8 +76,10 @@ const CreateStepCards = ({
         return <Broadcasting updateStep={updateStep} />;
       case StepIndex.DERIVATIVE_USE:
         return <DerivativeUse updateStep={updateStep} />;
+      case StepIndex.INTRODUCTION:
+        return <Introduction updateStep={updateStep} />;
       default:
-        return ;
+        return;
     }
   }, [step]);
 

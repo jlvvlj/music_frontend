@@ -121,7 +121,7 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
       },
       position: "top-right"
     });
-    setModalOpen(true)
+    updateStep(1);
   };
 
   const { members, dispatch } = useContractBuilder();
