@@ -87,6 +87,7 @@ export enum StepIndex {
   ABATEMENTS,
   BROADCASTING,
   DERIVATIVE_USE,
+  INTRODUCTION
 }
 
 export enum ContributionSubType {}
@@ -170,6 +171,14 @@ export const STEPS = [
   {
     label: "Derivative use",
     step: StepIndex.DERIVATIVE_USE,
+    title: "Derivative use",
+    subTitle: "Would you like to include Derivative use rules?",
+    saveBtnHidden: false,
+    description: "Enter the contract secondary use details",
+  },
+  {
+    label: "INTRODUCTION",
+    step: StepIndex.INTRODUCTION,
     title: "Derivative use",
     subTitle: "Would you like to include Derivative use rules?",
     saveBtnHidden: false,

@@ -19,16 +19,19 @@ import AdvanceRoyaltiesCard from "./advanceRoyaltiesCard";
 import AbatementsCard from "./abatementsCard";
 import BroadcastingCard from "./broadcastingCard";
 import DerivativeCard from "./derivativeCard";
+import Link from "next/link";
 
 export default function TableDrawer({ name }: { name: string }) {
     return (
         <SheetContent className="mt-0 p-0 sm:max-w-[503px]" side="right">
             <ScrollArea className="h-full py-6 px-4">
                 <SheetHeader className="flex-row space-y-0 justify-between pt-4 mb-8">
-                    <SheetTitle className="text-2xl">{ name }</SheetTitle>
-                    <Button className="hover:bg-[#4EABFE] bg-[#4EABFE] rounded-lg" variant="default">
-                        See contract
-                    </Button>
+                    <SheetTitle className="text-2xl">{name}</SheetTitle>
+                    <Link href="/summary">
+                        <Button className="hover:bg-[#4EABFE] bg-[#4EABFE] rounded-lg" variant="default">
+                            See contract
+                        </Button>
+                    </Link>
                 </SheetHeader>
                 <TopTracksCard />
                 <Card className="px-4 pt-6 pb-14 mb-4 bg-black3">

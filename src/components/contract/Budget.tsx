@@ -30,12 +30,12 @@ const budgetCards = [
     ]
   },
   {
-    id: 2, title: 'Multimedia', activityCards: [
+    id: 2, title: 'Image', activityCards: [
       { id: 1, title: 'Salary', budget: 3000, subTitle: true }
     ]
   },
   {
-    id: 3, title: 'Promotion', activityCards: [
+    id: 3, title: 'PR & Promotion', activityCards: [
       { id: 1, title: 'Budget', budget: 3000, subTitle: true }
     ]
   }

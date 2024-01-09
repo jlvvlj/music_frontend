@@ -107,6 +107,7 @@ export default function DashboardPage() {
                     </DialogFooter>
                   </DialogContent>
                 </Dialog>
+                <Button disabled>Create a License Contract</Button>
               </div>
             </div>
             <Graph />
