@@ -98,7 +98,7 @@ export default function UploadTrackPopover({
                                             variant={'outline'}
                                             className={`text-[11px] bg-modal py-1 px-2 h-[38px] w-full ${audioURL ? 'invisible' : 'visible'}`}
                                         >
-                                            <label className="flex items-center  cursor-pointer">
+                                            <label className="flex items-center cursor-pointer w-full justify-center h-full">
                                                 <UploadCloud className="h-5 w-5 mr-1" />
                                                 Select Audio
                                                 <input

@@ -20,22 +20,24 @@ import { BudgetTrackColumn } from "./BudgetTrackColumn"
 import ShareCard from "./ShareCard";
 import useContractBuilder from "@/hooks/useContractBuilder";
 import { Steps } from "@/contexts/ContractBuilderContext";
+import { Label } from "@/registry/new-york/ui/label";
+import { Input } from "@/registry/new-york/ui/input";
 
 const budgetCards = [
   {
-    id: 1, title: 'Registration', activityCards: [
+    id: 1, title: 'Registration', otherInput: false, activityCards: [
       { id: 1, title: 'Minimum Budget', budget: 3000, subTitle: false },
       { id: 2, title: 'Maximum Budget', budget: 4000, subTitle: false },
       { id: 3, title: 'External Royalties', budget: 2000, subTitle: false }
     ]
   },
   {
-    id: 2, title: 'Image', activityCards: [
+    id: 2, title: 'Image', otherInput: false, activityCards: [
       { id: 1, title: 'Salary', budget: 3000, subTitle: true }
     ]
   },
   {
-    id: 3, title: 'PR & Promotion', activityCards: [
+    id: 3, title: 'PR & Promotion', otherInput: true, activityCards: [
       { id: 1, title: 'Budget', budget: 3000, subTitle: true }
     ]
   }
@@ -147,6 +149,12 @@ const Budget = ({ updateStep }: StepProps) => {
                               />
                             ))}
                           </div>
+                          {card.otherInput &&
+                            <div className="flex items-between gap-4">
+                              <Label className="mt-2">Other</Label>
+                              <Input type="text" placeholder="" />
+                            </div>
+                          }
                         </div>}
                       </CardContent>
                     </Card>

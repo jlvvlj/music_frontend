@@ -103,7 +103,7 @@ export default function AdditionalConditions() {
     };
     return (
         <div className="md:mx-[76px] md:my-[85px] mx-6 my-8">
-            <h1 className="text-3xl font-semibold tracking-tight mb-3 text-white">
+            <h1 className="text-3xl font-semibold tracking-tight mb-3">
                 Let’s add additional conditions
             </h1>
             <p className="text-sm text-muted-foreground md:mb-28 mb-10">

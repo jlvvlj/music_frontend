@@ -58,9 +58,6 @@ export default function DashboardPage() {
                 Your Dashboard
               </h2>
               <div className="flex items-center space-x-2">
-                {/* <Link href="/contracts">
-                  <Button variant="outline">Add a new contract</Button>
-                </Link> */}
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button variant="outline">Add a new contract</Button>

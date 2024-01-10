@@ -85,14 +85,14 @@ export default function UploadTrackTable({ selectedFile, updateValue,setUpdatedT
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell
-                                            key={cell.id} className="first:w-[100px] w-[250px]">
+                                            key={cell.id} className="first:w-[100px] w-[200px]">
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </TableCell>
                                     ))}
-                                    <TableCell className="w-[250px]">
+                                    <TableCell className="w-[200px]">
                                         <Popover open={openPopoverId === row.id} onOpenChange={(isOpen) => isOpen ? setOpenPopoverId(row.id) : setOpenPopoverId(null)}>
                                             <PopoverTrigger asChild>
-                                                <Pencil2Icon className="w-4 h-4 mr-1 text-[#4FABFE] text-center cursor-pointer ml-8" />
+                                                <Pencil2Icon className="w-4 h-4 mr-1 text-[#4FABFE] text-center cursor-pointer" />
                                             </PopoverTrigger>
                                             <UploadTrackPopover
                                                 popoverType={"track"}

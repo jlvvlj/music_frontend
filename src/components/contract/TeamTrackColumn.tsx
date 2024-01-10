@@ -43,6 +43,16 @@ export const TeamTrackColumn: ColumnDef<Task>[] = [
     enableSorting: false,
     enableHiding: false,
   },
+  {
+    accessorKey: "code",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Code" className="pl-10" />
+    ),
+    cell: ({ row }) =>
+      <div className="text-[#6B7280] truncate w-[100px]">{row.getValue("code")}</div>,
+    enableSorting: false,
+    enableHiding: false,
+  },
 ]
 
 

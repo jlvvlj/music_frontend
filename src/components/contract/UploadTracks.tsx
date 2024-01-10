@@ -154,13 +154,14 @@ export default function UploadTracks({ updateStep, selectedFile, setSelectedFile
                                 {selectedAudio &&
                                     <div className="inset-0 absolute px-2 py-[11px] w-full bg-modal rounded-xl flex flex-col justify-between">
                                         <div className="w-full flex justify-between items-center gap-4">
-                                            <div className="bg-modal rounded-xl selected-image-container z-20 w-full flex items-center justify-between">
+                                            <div className="bg-modal rounded-xl selected-image-container z-20 w-full flex items-center justify-between gap-4">
                                                 <audio
                                                     controls
-                                                    className="w-[calc(100%-30px)] border border-border3 rounded-[30px]"
+                                                    className="w-[50%] border border-border3 rounded-[30px]"
                                                 >
                                                     <source src={selectedAudio?.url} type="audio/mp3" />
                                                 </audio>
+                                                <Input type="text" placeholder="Code" className="bg-modal w-[40%]" />
                                                 <Button
                                                     className="h-4 w-4 flex items-center justify-center shadow-sm rounded-full p-0 mt-1.5"
                                                     onClick={() => setSelectedAudio(null)}
@@ -169,7 +170,7 @@ export default function UploadTracks({ updateStep, selectedFile, setSelectedFile
                                                 </Button>
                                             </div>
                                         </div>
-                                            <Button className="w-fit ml-auto" onClick={handleAudioUpload} disabled={!selectedAudio}>Upload</Button>
+                                        <Button className="w-fit ml-auto" onClick={handleAudioUpload} disabled={!selectedAudio}>Upload</Button>
                                     </div>
                                 }
                             </div>
@@ -202,7 +203,7 @@ export default function UploadTracks({ updateStep, selectedFile, setSelectedFile
 
                             )}
                         </CardContent>
-                        {selectedAudios.length ? <Button className="mb-5 mr-6 ml-auto flex" onClick={handleUpdateTracks} disabled={!selectedAudios.length}>Save</Button>: ""}
+                        {selectedAudios.length ? <Button className="mb-5 mr-6 ml-auto flex" onClick={handleUpdateTracks} disabled={!selectedAudios.length}>Save</Button> : ""}
                     </Card>
                 </div>
             </div>

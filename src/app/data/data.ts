@@ -300,37 +300,43 @@ export const teamTracks = [
         "id": "1",
         "title": "Jenny Was",
         "audio": "/jenny_was.mp3",
-        "album": "Edit track"
+        "album": "Edit track",
+        "code": "FRW56B1911881818181"
     },
     {
         "id": "2",
         "title": "Brightside",
         "audio": "/brightside.mp3",
-        "album": "Edit track"
+        "album": "Edit track",
+        "code": "THG56B1911824243587"
     },
     {
         "id": "3",
         "title": "Like You",
         "audio": "/like_you.mp3",
-        "album": "Edit track"
+        "album": "Edit track",
+        "code": "EKY98B1916381817481"
     },
     {
         "id": "4",
         "title": "Somebody",
         "audio": "/somebody.mp3",
-        "album": "Edit track"
+        "album": "Edit track",
+        "code": "PRS56B1915781818165"
     },
     {
         "id": "5",
         "title": "These Things",
         "audio": "/these_things.mp3",
-        "album": "Edit track"
+        "album": "Edit track",
+        "code": "FRW56B1911881818181"
     },
     {
         "id": "6",
         "title": "Andy",
         "audio": "/andy.mp3",
-        "album": "Edit track"
+        "album": "Edit track",
+        "code": "EKY98B1916381817481"
     }
 ]
 

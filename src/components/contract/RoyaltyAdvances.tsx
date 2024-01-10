@@ -22,6 +22,12 @@ import ShareCard from "./ShareCard";
 import useContractBuilder from "@/hooks/useContractBuilder";
 import { TeamMember } from "./types";
 import { Steps } from "@/contexts/ContractBuilderContext";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import DatePicker from "../ui/date-picker";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { ArtistMultiSelect } from "./ArtistMultiSelect";
 
 interface Props extends React.PropsWithChildren {
   currentStep?: number;
@@ -30,19 +36,19 @@ interface Props extends React.PropsWithChildren {
 
 const royaltiesCards = [
   {
-    id: 1, title: 'At signature', activityCards: [
+    id: 1, title: 'At signature', showDatePicker: false, activityCards: [
       { id: 1, avatar: '/jon.svg', name: 'Charly Jones', role: 'Singer', revenue: '€3000', label: "" },
       { id: 2, avatar: '/orlane.svg', name: 'Orlane Moog', role: 'Musician', revenue: '€0', label: "SHARES OF REVENUES" }
     ]
   },
   {
-    id: 2, title: 'At Commercial release', activityCards: [
+    id: 2, title: 'At Commercial release', showDatePicker: false, activityCards: [
       { id: 1, avatar: '/jon.svg', name: 'Charly Jones', role: 'Singer', revenue: '€3000', label: "" },
       { id: 2, avatar: '/orlane.svg', name: 'Orlane Moog', role: 'Musician', revenue: '€0', label: "SHARES OF REVENUES" }
     ]
   },
   {
-    id: 3, title: 'At Specific Date', activityCards: [
+    id: 3, title: 'At Specific Date', showDatePicker: true, activityCards: [
       { id: 1, avatar: '/jon.svg', name: 'Charly Jones', role: 'Singer', revenue: '€3000', label: "" },
       { id: 2, avatar: '/orlane.svg', name: 'Orlane Moog', role: 'Musician', revenue: '€0', label: "SHARES OF REVENUES" }
     ]
@@ -97,6 +103,28 @@ export default function RoyaltyAdvances({
     });
   };
 
+  const recordingFormSchema = z.object({
+    number: z.number().default(10),
+    programType: z.enum(["album", "single"], {
+      required_error: "Select program type",
+    }),
+    completedAt: z.date().default(new Date()),
+    releasedAt: z.date().default(new Date()),
+    optionRightsLimit: z.date().default(new Date()),
+  });
+  type RecordingFormValues = z.infer<typeof recordingFormSchema>;
+
+  const defaultValues: Partial<RecordingFormValues> = {};
+  const form = useForm<RecordingFormValues>({
+    resolver: zodResolver(recordingFormSchema),
+    defaultValues,
+    mode: "onChange",
+  });
+
+  const [selectedArtists, setSelectedArtists] = useState<any>([]);
+  const handleSelectedArtist = (artists: any) => {
+    setSelectedArtists(artists)
+  }
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
@@ -126,6 +154,32 @@ export default function RoyaltyAdvances({
                       <CardContent className="pb-8">
                         <p className="text-sm	mt-2.5 text-muted-foreground">An advance will be paid a signature</p>
                         {enabled === card.id && <div className="space-y-8 mt-10">
+                          {card.showDatePicker &&
+                            <div className="mt-3 space-y-3 flex flex-col justify-center items-center">
+                              <Form {...form}>
+                                <FormField
+                                  control={form.control}
+                                  name="optionRightsLimit"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormControl>
+                                        <DatePicker
+                                          className="max-w-[230px]"
+                                          buttonClassName="w-[230px] text-sm text-white3 bg-card3"
+                                          placeholder="Jan 20, 2023"
+                                          date={field.value}
+                                          onDateChange={(d) =>
+                                            field.onChange(d || new Date())
+                                          }
+                                        />
+                                      </FormControl>
+                                    </FormItem>
+                                  )}
+                                />
+                              </Form>
+                              <ArtistMultiSelect width="max-w-[230px]" artistRate={false} handleArtist={handleSelectedArtist} />
+                            </div>
+                          }
                           <div className="pl-4 gap-10">
                             {members.map((member, index) => (
                               <ShareCard

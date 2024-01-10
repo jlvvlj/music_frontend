@@ -6,7 +6,7 @@ import CongratulationModal from "./CongratulationModal";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/registry/default/ui/select";
 import { Label } from "@/registry/new-york/ui/label";
-import { Input } from "@/registry/default/ui/input";
+import { Input } from "@/registry/new-york/ui/input";
 
 const questions = [
     { id: 1, que: 'Which of these sounds most like you?', value1: 'option 1', value2: 'option 2' },
