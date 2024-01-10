@@ -19,7 +19,7 @@ import CreateTrackTabs from "@/components/track/createTrackTabs";
 import TracksTable from "./tracks_table";
 import Graph from "./graph";
 import NewContract from "@/components/contract/NewContractModal";
-import { X } from "lucide-react";
+import { Plus, X } from "lucide-react";
 
 const cards = [
   {
@@ -60,7 +60,10 @@ export default function DashboardPage() {
               <div className="flex items-center space-x-2">
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button variant="outline">Add a new contract</Button>
+                    <Button className="hover:bg-[#4EABFE] bg-[#4EABFE] text-white" variant="default">
+                      <Plus className="w-4 h-4 mr-1" />
+                      New Contract
+                    </Button>
                   </DialogTrigger>
                   <DialogContent className="top-0 left-0 max-w-[100vw] h-screen translate-x-0 translate-y-0 bg-background3/[0.03] backdrop-blur-sm flex justify-center items-center data-[state=closed]:slide-out-to-left-[initial] data-[state=closed]:slide-out-to-top-[initial] data-[state=open]:slide-in-from-left-[initial] data-[state=open]:slide-in-from-top-[initial] rounded-none border-none new-contract-modal">
                     <div className="max-w-[1241px] p-0 !rounded-3xl border-none relative">
@@ -74,7 +77,11 @@ export default function DashboardPage() {
                 </Dialog>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button>Add a new track</Button>
+                    {/* <Button>Add a new track</Button> */}
+                    <Button className="hover:bg-[#4EABFE] bg-[#4EABFE] text-white" variant="default">
+                      <Plus className="w-4 h-4 mr-1" />
+                      New Track
+                    </Button>
                   </DialogTrigger>
                   <DialogContent className="sm:max-w-[1200px]">
                     <DialogHeader>
@@ -104,7 +111,10 @@ export default function DashboardPage() {
                     </DialogFooter>
                   </DialogContent>
                 </Dialog>
-                <Button disabled>Create a License Contract</Button>
+                <Button disabled className="hover:bg-[#4EABFE] bg-[#4EABFE] text-white" variant="default">
+                  <Plus className="w-4 h-4 mr-1" />
+                  License Contract
+                </Button>
               </div>
             </div>
             <Graph />

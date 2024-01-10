@@ -10,6 +10,10 @@ import { Badge } from "@/registry/new-york/ui/badge";
 import { Switch } from "@/registry/default/ui/switch";
 import { useState } from "react";
 import { Checkbox } from "@/registry/new-york/ui/checkbox";
+import { StepProps } from "./types";
+import { toast } from "sonner";
+import { Button } from "../ui/button";
+import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 
 const additionalCards = [
     {
@@ -78,7 +82,7 @@ const additionalCards = [
     }
 ]
 
-export default function AdditionalConditions() {
+export default function AdditionalConditions({ updateStep }: StepProps) {
     const [enabled, setEnabled] = useState<number[]>([])
     const [check, setCheck] = useState<number[]>([])
 
@@ -101,63 +105,106 @@ export default function AdditionalConditions() {
             setCheck((prev) => [...prev, id]);
         }
     };
+
+    const handleClickBack = () => {
+        updateStep(-1);
+    };
+
+    const handleClickNext = () => {
+        toast("Additional Conditions used successfully", {
+            description: "Additional Conditions",
+            action: {
+                label: "X",
+                onClick: () => { },
+            },
+            position: "top-right"
+        });
+        updateStep(1);
+    };
+
     return (
-        <div className="md:mx-[76px] md:my-[85px] mx-6 my-8">
-            <h1 className="text-3xl font-semibold tracking-tight mb-3">
-                Let’s add additional conditions
-            </h1>
-            <p className="text-sm text-muted-foreground md:mb-28 mb-10">
-                These contract conditions are optional, select the ones you would like to include
-            </p>
-            <Card className="bg-transparent border-none shadow-none">
-                <CardContent className="space-y-9 p-0">
-                    {additionalCards.map((card, index) =>
-                        <Card key={index} className="bg-modal rounded-3xl border-[#2E2E2E]">
-                            <CardHeader className="py-5 pb-0">
-                                <CardTitle className="text-[17px] font-normal flex justify-between">
-                                    <div>
-                                        <h6 className="text-[#4EABFE] text-2xl">{card.title}</h6>
-                                        <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">{card.badgeTitle}</Badge>
-                                        <p className="text-[#A1A1AA] text-sm mt-2">Select the {card.desc} categories you want to add</p>
-                                    </div>
-                                    <Switch className="mt-2.5" checked={enabled.includes(card.id)} onCheckedChange={() => onCheckHandle(card.id)} />
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent className="pb-8">
-                                {enabled.includes(card.id) && <div>
-                                    <div className="md:pt-16 pt-8 grid xl:grid-cols-3 xl:gap-[60px] sm:grid-cols-2 grid-cols-1 gap-5">
-                                        {card?.checkboxCards.map((checkboxCard, index) =>
-                                            <Card
-                                                key={index}
-                                                className={`${check.includes(checkboxCard.id) ? 'bg-blueForeground border-[#0072F4]' : 'bg-modal border-[#2E2E2E]'} pt-3.5 px-4 pb-6 flex justify-between items-center`}
-                                            >
-                                                <div>
-                                                    <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
-                                                        <CardTitle className="text-sm font-medium pb-5">
-                                                            {checkboxCard.title}
-                                                        </CardTitle>
-                                                    </CardHeader>
-                                                    <CardContent className="p-0">
-                                                        <div className="text-[15px] font-normal text-muted-foreground">
-                                                            {checkboxCard.subTitle}
-                                                        </div>
-                                                    </CardContent>
-                                                </div>
-                                                <Checkbox
-                                                    checked={check.includes(checkboxCard.id)} 
-                                                    onCheckedChange={() => onCheck(checkboxCard.id)}
-                                                    aria-label="Select all"
-                                                    className="translate-y-[2px]"
-                                                />
-                                            </Card>
-                                        )}
-                                    </div>
-                                </div>}
-                            </CardContent>
-                        </Card>
-                    )}
-                </CardContent>
-            </Card>
+        <div className="grid grid-cols-1 h-full shadow-lg border rounded-3xl">
+            <div className="w-full pb-7 pt-[92px] bg-modal rounded-3xl h-[782px] flex flex-col justify-between">
+                <div className="scrollbox overflow-auto w-full h-full">
+                    <div className="h-[calc(100%-40px)] px-10">
+                        <div className="mb-7 mt-3">
+                            <h1 className="text-3xl font-semibold tracking-tight mb-3">
+                                Let’s add additional conditions
+                            </h1>
+                            <p className="text-sm text-muted-foreground mb-10">
+                                These contract conditions are optional, select the ones you would like to include
+                            </p>
+                            <Card className="bg-transparent border-none shadow-none">
+                                <CardContent className="space-y-9 p-0">
+                                    {additionalCards.map((card, index) =>
+                                        <Card key={index} className="bg-modal rounded-3xl border-[#2E2E2E]">
+                                            <CardHeader className="py-5 pb-0">
+                                                <CardTitle className="text-[17px] font-normal flex justify-between">
+                                                    <div>
+                                                        <h6 className="text-[#4EABFE] text-2xl">{card.title}</h6>
+                                                        <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">{card.badgeTitle}</Badge>
+                                                        <p className="text-[#A1A1AA] text-sm mt-2">Select the {card.desc} categories you want to add</p>
+                                                    </div>
+                                                    <Switch className="mt-2.5" checked={enabled.includes(card.id)} onCheckedChange={() => onCheckHandle(card.id)} />
+                                                </CardTitle>
+                                            </CardHeader>
+                                            <CardContent className="pb-8">
+                                                {enabled.includes(card.id) && <div>
+                                                    <div className="md:pt-16 pt-8 grid xl:grid-cols-3 xl:gap-[60px] sm:grid-cols-2 grid-cols-1 gap-5">
+                                                        {card?.checkboxCards.map((checkboxCard, index) =>
+                                                            <Card
+                                                                key={index}
+                                                                className={`${check.includes(checkboxCard.id) ? 'bg-blueForeground border-[#0072F4]' : 'bg-modal border-[#2E2E2E]'} pt-3.5 px-4 pb-6 flex justify-between items-center`}
+                                                            >
+                                                                <div>
+                                                                    <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
+                                                                        <CardTitle className="text-sm font-medium pb-5">
+                                                                            {checkboxCard.title}
+                                                                        </CardTitle>
+                                                                    </CardHeader>
+                                                                    <CardContent className="p-0">
+                                                                        <div className="text-[15px] font-normal text-muted-foreground">
+                                                                            {checkboxCard.subTitle}
+                                                                        </div>
+                                                                    </CardContent>
+                                                                </div>
+                                                                <Checkbox
+                                                                    checked={check.includes(checkboxCard.id)}
+                                                                    onCheckedChange={() => onCheck(checkboxCard.id)}
+                                                                    aria-label="Select all"
+                                                                    className="translate-y-[2px]"
+                                                                />
+                                                            </Card>
+                                                        )}
+                                                    </div>
+                                                </div>}
+                                            </CardContent>
+                                        </Card>
+                                    )}
+                                </CardContent>
+                            </Card>
+                        </div>
+                    </div>
+                </div>
+                <div className="flex justify-between w-full mt-8 px-8">
+                    <Button
+                        className="bg-mblue"
+                        variant="outline"
+                        onClick={handleClickBack}
+                    >
+                        <ArrowLeftIcon className="mr-1" />
+                        Back
+                    </Button>
+                    <Button
+                        className="bg-mblue"
+                        variant="outline"
+                        onClick={handleClickNext}
+                    >
+                        Next
+                        <ArrowRightIcon className="ml-1" />
+                    </Button>
+                </div>
+            </div>
         </div>
     )
 }

@@ -82,6 +82,7 @@ export enum StepIndex {
   SHARES,
   RECORDINGS,
   ROYALTIES,
+  ADDITIONALCONDITIONS,
   BUDGET,
   ROYALTIES_ADVANCES,
   ABATEMENTS,
@@ -133,6 +134,14 @@ export const STEPS = [
     subTitle: "",
     saveBtnHidden: false,
     description: "Enter the contract royalties details",
+  },
+  {
+    label: "Additional Conditions",
+    step: StepIndex.ADDITIONALCONDITIONS,
+    title: "Additional Conditions",
+    subTitle: "",
+    saveBtnHidden: false,
+    description: "Enter firm and optional recordings details",
   },
   {
     label: "Budgets",

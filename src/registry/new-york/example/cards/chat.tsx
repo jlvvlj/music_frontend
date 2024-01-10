@@ -112,7 +112,7 @@ export function CardsChat() {
                   <Button
                     size="icon"
                     variant="outline"
-                    className="ml-auto rounded-full bg-[#4EABFE]"
+                    className="ml-auto rounded-full bg-[#4EABFE] text-white"
                     onClick={() => setOpen(true)}
                   >
                     <PlusIcon className="h-4 w-4" />
@@ -162,7 +162,7 @@ export function CardsChat() {
               placeholder="Type your message..."
               className="flex-1 bg-black3 rounded-3xl"
             />
-            <Button type="submit" size="icon" className="bg-[#4EABFE] text-foreground">
+            <Button type="submit" size="icon" className="bg-[#4EABFE] text-white">
               <PaperPlaneIcon className="h-4 w-4" />
               <span className="sr-only">Send</span>
             </Button>

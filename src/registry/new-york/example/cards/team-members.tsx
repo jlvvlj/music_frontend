@@ -55,7 +55,7 @@ export function CardsTeamMembers() {
         ))}
       </CardContent>
       <CardFooter className="">
-        <Button type="submit" className="w-full hover:bg-[#4EABFE] bg-[#4EABFE] text-foreground" variant="default">
+        <Button type="submit" className="w-full hover:bg-[#4EABFE] bg-[#4EABFE] text-white" variant="default">
           Add an artist
         </Button>
       </CardFooter>

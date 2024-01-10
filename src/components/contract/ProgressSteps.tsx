@@ -16,23 +16,25 @@ const ProgressSteps = ({ className, step: activeStep, updateStep }: Props) => {
   const afterWidth = () => {
     const width = `${((100 / (totalSteps - 1)) * (activeStep - 1)).toFixed()}`;
     return activeStep === StepIndex.SHARES
-      ? "after:w-[11.11%]"
+      ? "after:w-[10%]"
       : activeStep === StepIndex.RECORDINGS
-      ? "after:w-[22.22%]"
+      ? "after:w-[20%]"
       : activeStep === StepIndex.ROYALTIES
-      ? "after:w-[33.33%]"
+      ? "after:w-[30%]"
+      : activeStep === StepIndex.ADDITIONALCONDITIONS
+      ? "after:w-[40%]"
       : activeStep === StepIndex.BUDGET
-      ? "after:w-[44.44%]"
+      ? "after:w-[50%]"
       : activeStep === StepIndex.ROYALTIES_ADVANCES
-      ? "after:w-[55.55%]"
+      ? "after:w-[60%]"
       : activeStep === StepIndex.ABATEMENTS
-      ? "after:w-[66.66%]"
+      ? "after:w-[70%]"
       : activeStep === StepIndex.BROADCASTING
-      ? "after:w-[77.77%]"
+      ? "after:w-[80%]"
       : activeStep === StepIndex.DERIVATIVE_USE
-      ? "after:w-[88.88%]"
+      ? "after:w-[90%]"
       : activeStep === StepIndex.INTRODUCTION
-      ? "after:w-[99.99%]"
+      ? "after:w-[100%]"
       : "";
   };
 

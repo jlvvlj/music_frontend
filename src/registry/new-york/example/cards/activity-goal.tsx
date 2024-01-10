@@ -125,7 +125,7 @@ export function CardsActivityGoal({style}: {style?:string}) {
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full hover:bg-[#4EABFE] bg-[#4EABFE] rounded-3xl">Set Goal</Button>
+        <Button className="w-full hover:bg-[#4EABFE] bg-[#4EABFE] rounded-3xl text-white">Set Goal</Button>
       </CardFooter>
     </Card>
   )

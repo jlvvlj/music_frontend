@@ -296,7 +296,7 @@ const Graph = () => {
                                         Your contract for Fields of Dreams is nearly done! Click below to complete the last steps.
                                     </CardDescription>
                                     <div className='text-center mt-6'>
-                                        <Button className="hover:bg-[#4EABFE] bg-[#4EABFE]" variant="default">
+                                        <Button className="hover:bg-[#4EABFE] bg-[#4EABFE] text-white" variant="default">
                                             Complete contract
                                         </Button>
                                     </div>

@@ -40,6 +40,7 @@ import BaseFilterWrapper from "./BaseFilterWrapper";
 import ProgressSteps from "./ProgressSteps";
 import DerivativeUse from "./DerivativeUse";
 import Introduction from "./Introduction";
+import AdditionalConditions from "./AdditionalConditions";
 
 const CreateStepCards = ({
   step,
@@ -66,6 +67,8 @@ const CreateStepCards = ({
       // return isProducerMode ? <ProducerRecordings /> : <ArtistRecordings />;
       case StepIndex.ROYALTIES:
         return <Royalties updateStep={updateStep} />;
+      case StepIndex.ADDITIONALCONDITIONS:
+        return <AdditionalConditions updateStep={updateStep} />;
       case StepIndex.BUDGET:
         return <Budget updateStep={updateStep} />;
       case StepIndex.ROYALTIES_ADVANCES:

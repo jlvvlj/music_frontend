@@ -150,7 +150,7 @@ export function DataTable<TData, TValue>({
                           </TableCell>
                           <TableCell className="px-2 py-3.5 flex gap-2 justify-center">
                             {subrow?.platforms?.map((platform: string) =>
-                              <Badge variant="outline" className="bg-[#4FABFF] justify-center px-2.5 rounded-full">{platform}</Badge>
+                              <Badge variant="outline" className="bg-[#4FABFF] justify-center px-2.5 rounded-full text-white">{platform}</Badge>
                             )}
                           </TableCell>
                           <TableCell className="px-2 py-3.5 text-center">

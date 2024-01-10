@@ -25,7 +25,7 @@ export default function NewContract() {
   return (
     <ContractBuilderProvider>
       <div className="h-[inherit] xl:w-[1241px] w-full flex flex-col gap-20 relative">
-        <div className={`absolute top-9 hidden lg:block z-10 ${activeStep === StepIndex.INTRODUCTION ? 'left-1/2 translate-x-[-50%] w-[454px]' : 'left-[88px] w-[50%]'}`}>
+        <div className={`absolute top-9 hidden lg:block z-10 ${activeStep === StepIndex.INTRODUCTION || activeStep === StepIndex.ADDITIONALCONDITIONS ? 'left-1/2 translate-x-[-50%] w-[454px]' : 'left-[88px] w-[50%]'}`}>
           <ProgressSteps
             step={activeStep}
             updateStep={handleUpdateActiveStep}

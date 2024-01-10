@@ -87,7 +87,7 @@ export const columns: ColumnDef<Task>[] = [
               <Badge
                 key={index}
                 variant="outline"
-                className="bg-[#4EABFE] justify-center px-2.5 rounded-full"
+                className="bg-[#4EABFE] justify-center px-2.5 rounded-full text-white"
               >
                 {platform}
               </Badge>

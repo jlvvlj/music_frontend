@@ -32,8 +32,8 @@ export default function SummaryNav() {
                     </Link>
                     <Dialog>
                         <DialogTrigger asChild>
-                            <Button>
-                                <Pencil2Icon className="w-4 h-4 mr-2" />
+                            <Button className="hover:bg-[#4EABFE] bg-[#4EABFE] text-white" variant="default">
+                                <Pencil2Icon className="w-4 h-4 mr-1" />
                                 Edit options
                             </Button>
                         </DialogTrigger>
