@@ -57,8 +57,8 @@ const royaltiesCards = [
 
 export default function RoyaltyAdvances({
   currentStep = 6,
-  updateStep,
-}: Props) {
+  handleNextStep, handleBackStep
+}: any) {
 
   const [enabled, setEnabled] = useState<number | null>(null);
   const onCheckHandle = (id: number) => {
@@ -67,10 +67,6 @@ export default function RoyaltyAdvances({
     } else {
       setEnabled(id);
     }
-  };
-
-  const handleClickBack = () => {
-    updateStep(-1);
   };
 
   const handleClickNext = () => {
@@ -82,7 +78,7 @@ export default function RoyaltyAdvances({
       },
       position: "top-right"
     });
-    updateStep(1);
+    handleNextStep();
   };
 
   const { members, dispatch } = useContractBuilder();
@@ -205,7 +201,7 @@ export default function RoyaltyAdvances({
           <Button
             className="bg-mblue"
             variant="outline"
-            onClick={handleClickBack}
+            onClick={handleBackStep}
           >
             <ArrowLeftIcon className="mr-1" />
             Back
@@ -248,7 +244,7 @@ export default function RoyaltyAdvances({
                 <div className="">
                   <CardsActivityGoal
                     label={'base rate on sales'}
-                    initialValue={'€8000' || 30}
+                    initialValue={8000 || 30}
                     unit=""
                     step={10}
                     buttonTitle="Set Share"
@@ -290,7 +286,7 @@ export default function RoyaltyAdvances({
                 <div className="">
                   <CardsActivityGoal
                     label={'base rate on sales'}
-                    initialValue={'€3000' || 30}
+                    initialValue={3000 || 30}
                     unit=""
                     step={10}
                     buttonTitle="Set Share"

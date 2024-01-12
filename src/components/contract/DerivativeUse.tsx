@@ -91,7 +91,7 @@ const cards = [
   }
 ]
 
-const DerivativeUse = ({ updateStep }: StepProps) => {
+const DerivativeUse = ({ handleNextStep, handleBackStep }: any) => {
   const [derivativeUse, setDerivativeUse] =
     useState<DerivativeUse>(baseDerivativeUse);
   const [modalOpen, setModalOpen] = useState(false);
@@ -108,10 +108,6 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
     }
   };
 
-  const handleClickBack = () => {
-    updateStep(-1);
-  };
-
   const handleClickNext = () => {
     toast("Derivative used successfully", {
       description: "Derivative",
@@ -121,7 +117,7 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
       },
       position: "top-right"
     });
-    updateStep(1);
+    handleNextStep(1);
   };
 
   const { members, dispatch } = useContractBuilder();
@@ -198,7 +194,7 @@ const DerivativeUse = ({ updateStep }: StepProps) => {
             <Button
               className="bg-mblue"
               variant="outline"
-              onClick={handleClickBack}
+              onClick={handleBackStep}
             >
               <ArrowLeftIcon className="mr-1" />
               Back

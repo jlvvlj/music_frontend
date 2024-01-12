@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader } from "../ui/card"
 import { Input } from "../ui/input"
 import { Separator } from "../ui/separator"
 import { Button } from "../ui/button"
-import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons"
 import { useState } from "react"
 import { XMarkIcon } from "@heroicons/react/20/solid"
 import { StepProps } from "./types"
@@ -13,8 +12,10 @@ import { Sheet, SheetTrigger } from "@/registry/new-york/ui/sheet"
 import { AlertCircle } from "lucide-react"
 import ContractDrawer from "@/app/dashboard/components/contract-drawer"
 import { toast } from "sonner"
+import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons"
 
-interface Props extends StepProps {
+interface Props {
+    handleNextStep:any
     selectedFile: any;
     setSelectedFile: any;
     updateValue: any;
@@ -23,7 +24,7 @@ interface Props extends StepProps {
     updatedTracks: any;
 }
 
-export default function UploadTracks({ updateStep, selectedFile, setSelectedFile, updateValue, setUpdateValue, setUpdatedTracks, updatedTracks }: Props) {
+export default function UploadTracks({ handleNextStep, selectedFile, setSelectedFile, updateValue, setUpdateValue, setUpdatedTracks, updatedTracks }: Props) {
     const [selectedAudios, setSelectedAudios] = useState<{ id: string, title: string, audio: string, url?: string; }[]>([]);
     const [selectedAudio, setSelectedAudio] = useState<{ id: string, title: string, audio: string, url?: string; } | null>(null);
 
@@ -71,7 +72,7 @@ export default function UploadTracks({ updateStep, selectedFile, setSelectedFile
             },
             position: "top-right"
         });
-        updateStep(1)
+        handleNextStep();
     };
 
     return (
@@ -174,7 +175,6 @@ export default function UploadTracks({ updateStep, selectedFile, setSelectedFile
                                     </div>
                                 }
                             </div>
-
                             {selectedAudios?.length > 0 && (
                                 <div className="mt-6">
                                     <div className="space-y-6 mt-6 bg-modal p-4 rounded-xl border  max-h-[322px] scrollbox overflow-auto">

@@ -81,7 +81,6 @@ export enum StepIndex {
   CONTRIBUTORS = 1,
   SHARES,
   RECORDINGS,
-  ROYALTIES,
   ADDITIONALCONDITIONS,
   BUDGET,
   ROYALTIES_ADVANCES,
@@ -103,6 +102,7 @@ export type Step = {
 
 export const STEPS = [
   {
+    id:1,
     label: "Contributors",
     step: StepIndex.CONTRIBUTORS,
     title: "Let’s start with the team",
@@ -111,6 +111,7 @@ export const STEPS = [
     subTitle: "",
   },
   {
+    id:2,
     label: "Shares",
     step: StepIndex.SHARES,
     title: "Now time to allocate shares",
@@ -120,6 +121,7 @@ export const STEPS = [
       "Enter the appropriate amount of shares to everyone on the team",
   },
   {
+    id:3,
     label: "Recordings",
     step: StepIndex.RECORDINGS,
     title: "Recordings",
@@ -128,14 +130,7 @@ export const STEPS = [
     description: "Enter firm and optional recordings details",
   },
   {
-    label: "Royalties",
-    step: StepIndex.ROYALTIES,
-    title: "Royalties",
-    subTitle: "",
-    saveBtnHidden: false,
-    description: "Enter the contract royalties details",
-  },
-  {
+    id:4,
     label: "Additional Conditions",
     step: StepIndex.ADDITIONALCONDITIONS,
     title: "Additional Conditions",
@@ -144,6 +139,19 @@ export const STEPS = [
     description: "Enter firm and optional recordings details",
   },
   {
+    id:10,
+    label: "INTRODUCTION",
+    step: StepIndex.INTRODUCTION,
+    title: "Introduction",
+    subTitle: "Would you like to include Introduction?",
+    saveBtnHidden: false,
+    description: "Enter the contract secondary use details",
+  }
+];
+
+export const OPTIONAL_STEPS = [
+  {
+    id:5,
     label: "Budgets",
     step: StepIndex.BUDGET,
     title: "Initial Budget",
@@ -152,6 +160,7 @@ export const STEPS = [
     description: "Enter the budget  details",
   },
   {
+    id:6,
     label: "Royalties Advances",
     step: StepIndex.ROYALTIES_ADVANCES,
     title: "Royalties Advances",
@@ -161,6 +170,7 @@ export const STEPS = [
     description: "Enter the contract royalties details",
   },
   {
+    id:7,
     label: "Abatements",
     step: StepIndex.ABATEMENTS,
     title: "Abatements",
@@ -169,6 +179,7 @@ export const STEPS = [
     description: "Enter the contract royalties details",
   },
   {
+    id:8,
     label: "BroadCasting",
     step: StepIndex.BROADCASTING,
     title: "Broadcasting right & Secondary Use",
@@ -178,22 +189,15 @@ export const STEPS = [
     description: "Enter the contract secondary use details",
   },
   {
+    id:9,
     label: "Derivative use",
     step: StepIndex.DERIVATIVE_USE,
     title: "Derivative use",
     subTitle: "Would you like to include Derivative use rules?",
     saveBtnHidden: false,
     description: "Enter the contract secondary use details",
-  },
-  {
-    label: "INTRODUCTION",
-    step: StepIndex.INTRODUCTION,
-    title: "Derivative use",
-    subTitle: "Would you like to include Derivative use rules?",
-    saveBtnHidden: false,
-    description: "Enter the contract secondary use details",
-  },
-];
+  }
+]
 
 // ** types
 export type Country = {

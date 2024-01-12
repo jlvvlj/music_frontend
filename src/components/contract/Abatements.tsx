@@ -98,11 +98,7 @@ const cards = [
   }
 ]
 
-const Abatements = ({ updateStep }: StepProps) => {
-
-  const handleClickBack = () => {
-    updateStep(-1);
-  };
+const Abatements = ({ handleNextStep, handleBackStep }: any) => {
 
   const [enabled, setEnabled] = useState<number | null>(null);
   const onCheckHandle = (id: number) => {
@@ -122,7 +118,7 @@ const Abatements = ({ updateStep }: StepProps) => {
       },
       position: "top-right"
     });
-    updateStep(1);
+    handleNextStep();
   };
 
   const { members, dispatch } = useContractBuilder();
@@ -207,7 +203,7 @@ const Abatements = ({ updateStep }: StepProps) => {
           <Button
             className="bg-mblue"
             variant="outline"
-            onClick={handleClickBack}
+            onClick={handleBackStep}
           >
             <ArrowLeftIcon className="mr-1" />
             Back

@@ -30,13 +30,10 @@ import { flexRender, getCoreRowModel, getFacetedRowModel, getFacetedUniqueValues
 import UploadTrackPopover from "./UploadTrackPopover";
 import { useState } from "react";
 
-const Shares = ({ updateStep }: StepProps) => {
+const Shares = ({ handleNextStep, handleBackStep }: any) => {
   const { members, dispatch } = useContractBuilder();
   const [updatedTracks, setUpdatedTracks] = useState(shareTracks as any);
   const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
-  const handleClickBack = () => {
-    updateStep(-1);
-  };
 
   const handleUpdateGoal = (member: TeamMember, value: number) => {
     const _members = [...members];
@@ -76,7 +73,7 @@ const Shares = ({ updateStep }: StepProps) => {
       },
       position: "top-right"
     });
-    updateStep(1);
+    handleNextStep();
   };
 
   const handleUpdateTrack = (trackId: string, artists: string, title: string) => {
@@ -120,7 +117,7 @@ const Shares = ({ updateStep }: StepProps) => {
           <Button
             className="bg-mblue"
             variant="outline"
-            onClick={handleClickBack}
+            onClick={handleBackStep}
           >
             <ArrowLeftIcon className="mr-1" />
             Back

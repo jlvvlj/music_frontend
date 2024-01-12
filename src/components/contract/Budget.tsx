@@ -51,12 +51,9 @@ const budgetCard = [
   { title: "Promotion", cost: "EUR 7000" }
 ];
 
-const Budget = ({ updateStep }: StepProps) => {
+const Budget = ({ handleNextStep, handleBackStep }: any) => {
   const [enabled, setEnabled] = useState<number | null>(null);
 
-  const handleClickBack = () => {
-    updateStep(-1);
-  };
   const [budget, setBudget] = useState<Budget>({
     registration: {
       minimum: 3000,
@@ -88,7 +85,7 @@ const Budget = ({ updateStep }: StepProps) => {
       },
       position: "top-right"
     });
-    updateStep(1);
+    handleNextStep();
   };
 
   const { members, dispatch } = useContractBuilder();
@@ -168,7 +165,7 @@ const Budget = ({ updateStep }: StepProps) => {
           <Button
             className="bg-mblue"
             variant="outline"
-            onClick={handleClickBack}
+            onClick={handleBackStep}
           >
             <ArrowLeftIcon className="mr-1" />
             Back

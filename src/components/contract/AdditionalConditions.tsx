@@ -10,16 +10,20 @@ import { Badge } from "@/registry/new-york/ui/badge";
 import { Switch } from "@/registry/default/ui/switch";
 import { useState } from "react";
 import { Checkbox } from "@/registry/new-york/ui/checkbox";
-import { StepProps } from "./types";
+import { StepIndex, StepProps } from "./types";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 
 const additionalCards = [
     {
-        id: 1,
-        title: 'Initial Budget',
-        badgeTitle: 'Budget', desc: 'budget',
+        id: 5,
+        label: "Budgets",
+        step: StepIndex.BUDGET,
+        title: "Initial Budget",
+        subTitle: "",
+        saveBtnHidden: false,
+        description: "Enter the budget  details",
         checkboxCards: [
             { id: 1, title: 'Registration', subTitle: 'Free for two weeks' },
             { id: 2, title: 'Multimedia', subTitle: 'Budget' },
@@ -27,30 +31,27 @@ const additionalCards = [
         ]
     },
     {
-        id: 2,
-        title: 'Royalties',
-        badgeTitle: 'Royalties',
-        desc: 'royalties',
-        checkboxCards: [
-            { id: 4, title: 'Single Rate', subTitle: 'Royalty rate' },
-            { id: 5, title: 'Tiered', subTitle: 'Royalty rate' }
-        ]
-    },
-    {
-        id: 3,
-        title: 'Royalties Advances',
-        badgeTitle: 'Royalties',
-        desc: 'advances',
+        id: 6,
+        label: "Royalties Advances",
+        step: StepIndex.ROYALTIES_ADVANCES,
+        title: "Royalties Advances",
+        subTitle:
+            "Would you like to include a Royalty advance for some of your Recordings?",
+        saveBtnHidden: false,
+        description: "Enter the contract royalties details",
         checkboxCards: [
             { id: 6, title: ' At Signature', subTitle: 'Advance' },
             { id: 7, title: 'At Commercial Release', subTitle: 'Advance' }
         ]
     },
     {
-        id: 4,
-        title: 'Abatements',
-        badgeTitle: 'Abatements',
-        desc: 'abatements',
+        id: 7,
+        label: "Abatements",
+        step: StepIndex.ABATEMENTS,
+        title: "Abatements",
+        subTitle: "Would you like to include Abatements to the contract?",
+        saveBtnHidden: false,
+        description: "Enter the contract royalties details",
         checkboxCards: [
             { id: 8, title: 'Foreign Sales', subTitle: 'Abatement rate' },
             { id: 9, title: 'Compilations', subTitle: 'Abatement rate' },
@@ -60,20 +61,26 @@ const additionalCards = [
         ]
     },
     {
-        id: 5,
-        title: 'Broadcasting right & Secondary Use',
-        badgeTitle: 'Budget',
-        desc: 'secondary use case',
+        id: 8,
+        label: "BroadCasting",
+        step: StepIndex.BROADCASTING,
+        title: "Broadcasting right & Secondary Use",
+        subTitle: "Would you like to include Broadcasting right & Secondary Use rules?",
+        saveBtnHidden: false,
+        description: "Enter the contract secondary use details",
         checkboxCards: [
             { id: 13, title: 'Broadcasting', subTitle: 'Royalty rate' },
             { id: 14, title: 'Secondary Use', subTitle: 'Royalty rate' }
         ]
     },
     {
-        id: 6,
-        title: 'Derivative use',
-        badgeTitle: 'Derivative use',
-        desc: 'derivative use',
+        id: 9,
+        label: "Derivative use",
+        step: StepIndex.DERIVATIVE_USE,
+        title: "Derivative use",
+        subTitle: "Would you like to include Derivative use rules?",
+        saveBtnHidden: false,
+        description: "Enter the contract secondary use details",
         checkboxCards: [
             { id: 15, title: 'Direct Merchandising', subTitle: 'Commission rate' },
             { id: 16, title: 'Direct Merchandising', subTitle: 'Commission rate' },
@@ -82,19 +89,9 @@ const additionalCards = [
     }
 ]
 
-export default function AdditionalConditions({ updateStep }: StepProps) {
+export default function AdditionalConditions({ handleNextStep, handleBackStep, handleSwitchChange }: any) {
     const [enabled, setEnabled] = useState<number[]>([])
     const [check, setCheck] = useState<number[]>([])
-
-    const onCheckHandle = (id: number) => {
-        const checkExist = enabled?.includes(id);
-
-        if (checkExist) {
-            setEnabled((prev) => prev?.filter((item) => item !== id));
-        } else {
-            setEnabled((prev) => [...prev, id]);
-        }
-    };
 
     const onCheck = (id: number) => {
         const checkExist = check?.includes(id);
@@ -106,10 +103,6 @@ export default function AdditionalConditions({ updateStep }: StepProps) {
         }
     };
 
-    const handleClickBack = () => {
-        updateStep(-1);
-    };
-
     const handleClickNext = () => {
         toast("Additional Conditions used successfully", {
             description: "Additional Conditions",
@@ -119,7 +112,7 @@ export default function AdditionalConditions({ updateStep }: StepProps) {
             },
             position: "top-right"
         });
-        updateStep(1);
+        handleNextStep();
     };
 
     return (
@@ -142,10 +135,10 @@ export default function AdditionalConditions({ updateStep }: StepProps) {
                                                 <CardTitle className="text-[17px] font-normal flex justify-between">
                                                     <div>
                                                         <h6 className="text-[#4EABFE] text-2xl">{card.title}</h6>
-                                                        <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">{card.badgeTitle}</Badge>
-                                                        <p className="text-[#A1A1AA] text-sm mt-2">Select the {card.desc} categories you want to add</p>
+                                                        <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">{card.label}</Badge>
+                                                        <p className="text-[#A1A1AA] text-sm mt-2">Select the {card.label} categories you want to add</p>
                                                     </div>
-                                                    <Switch className="mt-2.5" checked={enabled.includes(card.id)} onCheckedChange={() => onCheckHandle(card.id)} />
+                                                    <Switch className="mt-2.5" onCheckedChange={(e) => handleSwitchChange(card, e)} />
                                                 </CardTitle>
                                             </CardHeader>
                                             <CardContent className="pb-8">
@@ -190,7 +183,7 @@ export default function AdditionalConditions({ updateStep }: StepProps) {
                     <Button
                         className="bg-mblue"
                         variant="outline"
-                        onClick={handleClickBack}
+                        onClick={handleBackStep}
                     >
                         <ArrowLeftIcon className="mr-1" />
                         Back

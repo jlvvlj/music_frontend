@@ -72,7 +72,7 @@ const cards = [
   { id: 2, title: 'Secondary Use', desc: 'Royalties to be paid for secondary use' }
 ]
 
-const Broadcasting = ({ updateStep }: StepProps) => {
+const Broadcasting = ({ handleNextStep, handleBackStep }: any) => {
   const [broadCasting, setBroadCasting] =
     useState<BroadCasting>(baseBroadCasting);
   const [currentTabIndex, setCurrentTabIndex] = useState(0);
@@ -87,31 +87,6 @@ const Broadcasting = ({ updateStep }: StepProps) => {
     }
   };
 
-  useEffect(() => {
-    if (currentTabIndex === TABS.length) {
-      updateStep(1);
-    } else {
-      setTab(TABS[currentTabIndex].value);
-    }
-  }, [currentTabIndex]);
-
-  const handleChangeGoalValues = (
-    parent: TabName,
-    subField: "percentage",
-    value: number
-  ) => {
-    setBroadCasting((prev) => ({
-      ...prev,
-      [parent]: {
-        ...prev[parent],
-        [subField]: value,
-      },
-    }));
-  };
-
-  const handleClickBack = () => {
-    updateStep(-1);
-  };
 
   const handleClickNext = () => {
     toast("Broadcasting created successfully!", {
@@ -122,7 +97,7 @@ const Broadcasting = ({ updateStep }: StepProps) => {
       },
       position: "top-right"
     });
-    updateStep(1);
+    handleNextStep(1);
   };
 
   const { members, dispatch } = useContractBuilder();
@@ -200,7 +175,7 @@ const Broadcasting = ({ updateStep }: StepProps) => {
           <Button
             className="bg-mblue"
             variant="outline"
-            onClick={handleClickBack}
+            onClick={handleBackStep}
           >
             <ArrowLeftIcon className="mr-1" />
             Back

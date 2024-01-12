@@ -54,8 +54,7 @@ const baseRate = {
   percentage: 0,
 };
 
-const Royalties = ({ updateStep }: StepProps) => {
-  const [currentTabIndex, setCurrentTabIndex] = useState(0);
+const Royalties = ({ handleNextStep, handleBackStep }: any) => {
   const [tab, setTab] = useState(TABS[0].value);
   const [singleRate, setSingleRate] = useState<SingleRate>({
     percentage: 0,
@@ -70,22 +69,10 @@ const Royalties = ({ updateStep }: StepProps) => {
     mode: "onChange",
   });
 
-  useEffect(() => {
-    if (currentTabIndex >= TABS.length) {
-      updateStep(1);
-    } else {
-      setTab(TABS[currentTabIndex].value);
-    }
-  }, [currentTabIndex]);
-
   const handleChangeSingleRatePercentage = (value: number) => {
     setSingleRate({
       percentage: value,
     });
-  };
-
-  const handleClickNextTab = () => {
-    setCurrentTabIndex(currentTabIndex + 1);
   };
 
   const onSubmit = (data: RateFormValues) => {
@@ -100,14 +87,6 @@ const Royalties = ({ updateStep }: StepProps) => {
   };
 
 
-  const handleClickBack = () => {
-    updateStep(-1);
-  };
-
-  const onTabChange = (value: string) => {
-    setTab(value as string);
-  };
-
   const handleClickNext = () => {
     toast("Shares added successfully!", {
       description: "Shares",
@@ -117,7 +96,7 @@ const Royalties = ({ updateStep }: StepProps) => {
       },
       position: "top-right"
     });
-    updateStep(1);
+    handleNextStep()
   };
 
   const { members, dispatch } = useContractBuilder();
@@ -164,7 +143,7 @@ const Royalties = ({ updateStep }: StepProps) => {
           <Button
             className="bg-mblue"
             variant="outline"
-            onClick={handleClickBack}
+            onClick={handleBackStep}
           >
             <ArrowLeftIcon className="mr-1" />
             Back

@@ -73,7 +73,7 @@ const TABS: {
     },
   ];
 
-const Recordings = ({ updateStep }: StepProps) => {
+const Recordings = ({ handleNextStep, handleBackStep }: any) => {
   const [updatedTracks, setUpdatedTracks] = useState(recordingTracks);
   const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
   const [recordings, setRecordings] = useState<Recording[]>([]);
@@ -91,14 +91,6 @@ const Recordings = ({ updateStep }: StepProps) => {
     return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
   }, []);
 
-  useEffect(() => {
-    if (currentTabIndex === TABS.length) {
-      updateStep(1);
-    } else {
-      setTab(TABS[currentTabIndex].value);
-    }
-  }, [currentTabIndex]);
-
   const onSubmit = (data: RecordingFormValues) => {
     console.log(data);
 
@@ -115,10 +107,6 @@ const Recordings = ({ updateStep }: StepProps) => {
         number: 0,
       });
     }, 1000);
-  };
-
-  const handleClickBack = () => {
-    updateStep(-1);
   };
 
   const table = useReactTable<any>({
@@ -150,7 +138,7 @@ const Recordings = ({ updateStep }: StepProps) => {
       },
       position: "top-right"
     });
-    updateStep(1);
+    handleNextStep();
   };
 
   const { members, dispatch } = useContractBuilder();
@@ -198,7 +186,7 @@ const Recordings = ({ updateStep }: StepProps) => {
           <Button
             className="bg-mblue"
             variant="outline"
-            onClick={handleClickBack}
+            onClick={handleBackStep}
           >
             <ArrowLeftIcon className="mr-1" />
             Back

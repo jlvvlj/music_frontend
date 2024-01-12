@@ -5,35 +5,26 @@ import clsx from "clsx";
 import { STEPS, StepIndex } from "./types";
 import { cn } from "@/lib/utils";
 
-interface Props extends React.HTMLAttributes<HTMLElement> {
-  step: StepIndex;
-  updateStep?: (step: number) => void;
-}
-
-const ProgressSteps = ({ className, step: activeStep, updateStep }: Props) => {
-  const totalSteps = STEPS.length;
+const ProgressSteps = ({ className, currentStep, handleNext, steps }: any) => {
 
   const afterWidth = () => {
-    const width = `${((100 / (totalSteps - 1)) * (activeStep - 1)).toFixed()}`;
-    return activeStep === StepIndex.SHARES
+    return currentStep === StepIndex.SHARES
       ? "after:w-[10%]"
-      : activeStep === StepIndex.RECORDINGS
-      ? "after:w-[20%]"
-      : activeStep === StepIndex.ROYALTIES
+      : currentStep === StepIndex.RECORDINGS
       ? "after:w-[30%]"
-      : activeStep === StepIndex.ADDITIONALCONDITIONS
+      : currentStep === StepIndex.ADDITIONALCONDITIONS
       ? "after:w-[40%]"
-      : activeStep === StepIndex.BUDGET
+      : currentStep === StepIndex.BUDGET
       ? "after:w-[50%]"
-      : activeStep === StepIndex.ROYALTIES_ADVANCES
+      : currentStep === StepIndex.ROYALTIES_ADVANCES
       ? "after:w-[60%]"
-      : activeStep === StepIndex.ABATEMENTS
+      : currentStep === StepIndex.ABATEMENTS
       ? "after:w-[70%]"
-      : activeStep === StepIndex.BROADCASTING
+      : currentStep === StepIndex.BROADCASTING
       ? "after:w-[80%]"
-      : activeStep === StepIndex.DERIVATIVE_USE
+      : currentStep === StepIndex.DERIVATIVE_USE
       ? "after:w-[90%]"
-      : activeStep === StepIndex.INTRODUCTION
+      : currentStep === StepIndex.INTRODUCTION
       ? "after:w-[100%]"
       : "";
   };
@@ -47,22 +38,20 @@ const ProgressSteps = ({ className, step: activeStep, updateStep }: Props) => {
             afterWidth()
           )}
         >
-          {STEPS.map(({ step, label }) => (
-            <div key={step} className="relative z-[1] w-7 h-7 rounded-full flex justify-center items-center bg-modal">
+          {steps?.map((step:any) => (
+            <div key={step.id} className="relative z-[1] w-7 h-7 rounded-full flex justify-center items-center bg-modal">
               <div
                 className={clsx(
                   "w-5 h-5 rounded-full border-2 border-mblue border-solid  duration-300 ease-in flex justify-center items-center cursor-pointer",
-                  activeStep > step ? "bg-mblue" : " bg-modal"
+                  currentStep > step.id ? "bg-mblue" : " bg-modal"
                 )}
-                onClick={() => {
-                  if (updateStep) updateStep(step);
-                }}
+                onClick={handleNext}
               >
-                {activeStep > step ? (
+                {currentStep > step.id ? (
                   <span className="relative z-10 flex h-[10px] w-[10px] items-center justify-center rounded-full bg-mblue">
                     <Check className="h-3 w-3" aria-hidden="true" />
                   </span>
-                ) : activeStep === step && (
+                ) : currentStep === step.id && (
                   <div className="rounded-full h-2 w-2 bg-mblue"></div>
                 )}
               </div>
