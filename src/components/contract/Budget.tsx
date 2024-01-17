@@ -1,75 +1,87 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
 import { CardsActivityGoal } from "@/components/activity-goal";
-import { Budget, StepProps, TeamMember } from "./types";
+import { TeamMember } from "./types";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import { Badge } from "@/registry/new-york/ui/badge";
 import { Switch } from "@/registry/default/ui/switch";
-import { budgetTracks } from "@/app/data/data"
-import { TableCommon } from "./TableCommon"
-import { BudgetTrackColumn } from "./BudgetTrackColumn"
+import { budgetTracks } from "@/app/data/data";
+import { TableCommon } from "./TableCommon";
+import { BudgetTrackColumn } from "./BudgetTrackColumn";
 import ShareCard from "./ShareCard";
 import useContractBuilder from "@/hooks/useContractBuilder";
 import { Steps } from "@/contexts/ContractBuilderContext";
 import { Label } from "@/registry/new-york/ui/label";
 import { Input } from "@/registry/new-york/ui/input";
+import BudgetShareCard from "./BudgetShareCard ";
 
 const budgetCards = [
   {
-    id: 1, title: 'Registration', otherInput: false, activityCards: [
-      { id: 1, title: 'Minimum Budget', budget: 3000, subTitle: false },
-      { id: 2, title: 'Maximum Budget', budget: 4000, subTitle: false },
-      { id: 3, title: 'External Royalties', budget: 2000, subTitle: false }
-    ]
+    id: 1,
+    title: "Registration",
+    value:"registration",
+    otherInput: false,
+    activityCards: [
+      { id: 1, title: "Minimum Budget", cost: 3000, subTitle: false },
+      { id: 2, title: "Maximum Budget", cost: 4000, subTitle: false },
+      { id: 3, title: "External Royalties", cost: 2000, subTitle: false },
+    ],
   },
   {
-    id: 2, title: 'Image', otherInput: false, activityCards: [
-      { id: 1, title: 'Salary', budget: 3000, subTitle: true }
-    ]
+    id: 2,
+    title: "Image",
+    value:"image",
+    otherInput: false,
+    activityCards: [{ id: 1, title: "Salary", cost: 3000, subTitle: true }],
   },
   {
-    id: 3, title: 'PR & Promotion', otherInput: true, activityCards: [
-      { id: 1, title: 'Budget', budget: 3000, subTitle: true }
-    ]
-  }
-]
-
-const budgetCard = [
-  { title: "Minimum Budget", cost: "EUR 5000" },
-  { title: "Maximum Budget", cost: "EUR 9000" },
-  { title: "External Royalties", cost: "50%" },
-  { title: "Multimedia", cost: "EUR 3000" },
-  { title: "Promotion", cost: "EUR 7000" }
+    id: 3,
+    title: "PR & Promotion",
+    value: "promotion",
+    otherInput: true,
+    activityCards: [{ id: 1, title: "Budget", cost: 3000, subTitle: true }],
+  },
 ];
 
-const Budget = ({ updateStep }: StepProps) => {
-  const [enabled, setEnabled] = useState<number | null>(null);
+const Budget = ({
+  handleNextStep,
+  handleBackStep,
+  contractCreation,
+  setContractCreation,
+}: any) => {
+  const [enabled, setEnabled] = useState<number | null>(
+    contractCreation.budget || null
+  );
+  const { dispatch } = useContractBuilder();
 
-  const handleClickBack = () => {
-    updateStep(-1);
-  };
-  const [budget, setBudget] = useState<Budget>({
-    registration: {
-      minimum: 3000,
-      maximum: 5000,
-      royalties: 30,
-    },
-    multimedia: {
-      salary: 3000,
-    },
-    promotion: {
-      salary: 3000,
-    },
-  });
+  const [selectedBudgets, setSelectedBudgets] = useState([]);
+  const getDataById = (selectedOptions: string[]) =>
+    Array.isArray(selectedOptions)
+      ? budgetCards.filter((item) => selectedOptions.includes(item.value))
+      : [budgetCards.find((item) => item.value === selectedOptions)] || [];
+
+  useEffect(() => {
+    setSelectedBudgets(
+      getDataById(contractCreation.AdditionalConditionsChecks) as any
+    );
+  }, [contractCreation.AdditionalConditionsChecks]);
+
+  useEffect(() => {
+    if (enabled) {
+      setContractCreation((prevData: any) => ({
+        ...prevData,
+        budget: {
+          enabled: enabled,
+          selectedBudgets: selectedBudgets,
+          budgetCards: budgetCards,
+        },
+      }));
+    }
+  }, [enabled]);
 
   const onCheckHandle = (id: number) => {
     if (enabled === id) {
@@ -86,20 +98,31 @@ const Budget = ({ updateStep }: StepProps) => {
         label: "X",
         onClick: () => { },
       },
-      position: "top-right"
+      position: "top-right",
     });
-    updateStep(1);
+    handleNextStep();
   };
 
-  const { members, dispatch } = useContractBuilder();
-  const handleUpdateGoal = (member: TeamMember, value: number) => {
-    const _members = [...members];
+  const handleUpdateGoal = (cardId:any, member: TeamMember, value: number) => {
+    const _members = [...contractCreation.budget.budgetCards];
     const newMember = {
       ...member,
-      revenue: value,
+      cost: value.toString(),
     };
-    const index = _members.findIndex((m) => m.id === member.id);
-    const m = _members.splice(index, 1, newMember);
+
+    console.log("before", _members);
+
+    const cardIndex = _members.findIndex((card) => card.id === cardId);
+
+    const index = _members[cardIndex]?.activityCards?.findIndex((m:any) => m.id === member.id);
+    _members[cardIndex].activityCards.splice(index, 1, newMember);
+
+    setContractCreation((prevData: any) => ({
+      ...prevData,
+      cost: { enabled: enabled, budgetCards: _members },
+    }));
+
+    console.log("after", _members);
 
     dispatch({
       type: Steps.SHARES,
@@ -123,42 +146,56 @@ const Budget = ({ updateStep }: StepProps) => {
             <Card className="bg-transparent border-none shadow-none">
               <CardContent className="space-y-6 p-0">
                 <div className="pl-2.5">
-                  {budgetCards.map((card) =>
-                    <Card key={card.id} className="border-none bg-modal-foreground mb-8 rounded-3xl	">
+                  {selectedBudgets.map((card: any) => (
+                    <Card
+                      key={card.value}
+                      className="border-none bg-modal-foreground mb-8 rounded-3xl	"
+                    >
                       <CardHeader className="py-5 pb-0">
                         <CardTitle className="text-[17px] font-normal flex justify-between">
                           <div>
                             <h6>{card.title}</h6>
-                            <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">Budget</Badge>
+                            <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">
+                              Budget
+                            </Badge>
                           </div>
-                          <Switch className="mt-2.5" checked={enabled === card.id} onCheckedChange={() => onCheckHandle(card.id)} />
+                          <Switch
+                            className="mt-2.5"
+                            checked={enabled === card.id}
+                            onCheckedChange={() => onCheckHandle(card.id)}
+                          />
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="pb-8">
-                        <p className="text-sm	mt-2.5 text-muted-foreground">A budget for  registration will be committed</p>
-                        {enabled === card.id && <div className="space-y-8 mt-10">
-                          <div className="">
-                            {members.map((member, index) => (
-                              <ShareCard
-                                key={index}
-                                member={member}
-                                updateGoal={(v) => handleUpdateGoal(member, v)}
-                                buttonHidden={true}
-                                avatar={false}
-                                bgcolor="bg-modal"
-                              />
-                            ))}
-                          </div>
-                          {card.otherInput &&
-                            <div className="flex items-between gap-4">
-                              <Label className="mt-2">Other</Label>
-                              <Input type="text" placeholder="" />
+                        <p className="text-sm	mt-2.5 text-muted-foreground">
+                          A budget for registration will be committed
+                        </p>
+                        {enabled === card.id && (
+                          <div className="space-y-8 mt-10">
+                            <div className="">
+                              {card.activityCards.map((activity: any, index: any) => (
+                                <BudgetShareCard
+                                  key={index}
+                                  card={activity}
+                                  step={1000}
+                                  updateGoal={(v) => handleUpdateGoal(card.id, activity, v)}
+                                  buttonHidden={true}
+                                  avatar={false}
+                                  bgcolor="bg-modal"
+                                />
+                              ))}
                             </div>
-                          }
-                        </div>}
+                            {card.otherInput && (
+                              <div className="flex items-between gap-4">
+                                <Label className="mt-2">Other</Label>
+                                <Input type="text" placeholder="" />
+                              </div>
+                            )}
+                          </div>
+                        )}
                       </CardContent>
                     </Card>
-                  )}
+                  ))}
                 </div>
               </CardContent>
             </Card>
@@ -168,7 +205,7 @@ const Budget = ({ updateStep }: StepProps) => {
           <Button
             className="bg-mblue"
             variant="outline"
-            onClick={handleClickBack}
+            onClick={handleBackStep}
           >
             <ArrowLeftIcon className="mr-1" />
             Back
@@ -189,26 +226,31 @@ const Budget = ({ updateStep }: StepProps) => {
         <div className="scrollbox overflow-auto px-4 w-full h-full">
           <div className="p-8 rounded-2xl bg-modal border border-muted w-full mb-[76px]">
             <h6 className="text-2xl	mb-3">Initial Budget</h6>
-            <p className="mb-7 text-sm text-muted-foreground">
-              Budget details
-            </p>
+            <p className="mb-7 text-sm text-muted-foreground">Budget details</p>
             <div className="flex flex-wrap gap-[18px]">
-              {budgetCard.map((card, index) => (
-                <Card
-                  key={index}
-                  className="bg-modal-foreground border-[#1D1D1F] pt-2 px-2.5 pb-6 w-[132px] h-[102px]"
-                >
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
-                    <CardTitle className="text-xs font-normal pb-5">
-                      {card.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-0">
-                    <div className="text-xs font-normal text-[#4EABFE]">
-                      {card.cost}
-                    </div>
-                  </CardContent>
-                </Card>
+              {budgetCards.map((card, index) => (
+                <>
+                  {
+                    card.activityCards.map((activity:any, index:any) => (
+                      <Card
+                        key={index}
+                        className="bg-modal-foreground border-[#1D1D1F] pt-2 px-2.5 pb-6 w-[132px] h-[102px]"
+                      >
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
+                          <CardTitle className="text-xs font-normal pb-5">
+                            {activity.title}
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-0">
+                          <div className="text-xs font-normal text-[#4EABFE]">
+                            {activity.cost}
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                    ))
+                  }
+                </>
               ))}
             </div>
           </div>

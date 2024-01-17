@@ -14,12 +14,8 @@ const questions = [
     { id: 3, que: 'What\'s your annual revenue?', value1: 'option 1', value2: 'option 2' }
 ]
 
-const Introduction = ({ updateStep }: StepProps) => {
+const Introduction = ({ handleBackStep }: any) => {
     const [modalOpen, setModalOpen] = useState(false);
-
-    const handleClickBack = () => {
-        updateStep(-1);
-    };
 
     const handleClickNext = () => {
         toast("Derivative used successfully", {
@@ -81,7 +77,7 @@ const Introduction = ({ updateStep }: StepProps) => {
                         <Button
                             className="bg-mblue"
                             variant="outline"
-                            onClick={handleClickBack}
+                            onClick={handleBackStep}
                         >
                             <ArrowLeftIcon className="mr-1" />
                             Back

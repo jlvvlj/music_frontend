@@ -1,29 +1,28 @@
-"use client"
+"use client";
 
-import { Cross2Icon } from "@radix-ui/react-icons"
-import { Table } from "@tanstack/react-table"
+import { Cross2Icon } from "@radix-ui/react-icons";
+import { Table } from "@tanstack/react-table";
 
-import { Button } from "@/registry/new-york/ui/button"
-import { Input } from "@/registry/new-york/ui/input"
-import { DataTableViewOptions } from "./data-table-view-options"
+import { Button } from "@/registry/new-york/ui/button";
+import { Input } from "@/registry/new-york/ui/input";
+import { DataTableViewOptions } from "./data-table-view-options";
 
-import { priorities, statuses, albums, titles } from "../data/data"
-import { DataTableFacetedFilter } from "./data-table-faceted-filter"
-import TrackList from "../../../../records/src/components/TrackList"
+import { priorities, statuses, albums, titles } from "../data/data";
+import { DataTableFacetedFilter } from "./data-table-faceted-filter";
+import TrackList from "../../../../records/src/components/TrackList";
 
 interface DataTableToolbarProps<TData> {
-  table: Table<TData>
+  table: Table<TData>;
 }
 
 export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
-  const isFiltered = table.getState().columnFilters.length > 0
+  const isFiltered = table.getState().columnFilters.length > 0;
 
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
-
         <Input
           placeholder="Filter tracks"
           value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
@@ -49,7 +48,7 @@ export function DataTableToolbar<TData>({
           />
         )} */}
 
-          {table.getColumn("album") && (
+        {table.getColumn("album") && (
           <DataTableFacetedFilter
             column={table.getColumn("album")}
             title="Albums"
@@ -60,7 +59,7 @@ export function DataTableToolbar<TData>({
         {table.getColumn("priority") && (
           <DataTableFacetedFilter
             column={table.getColumn("priority")}
-            title="Revenues"
+            title="Priority"
             options={priorities}
           />
         )}
@@ -75,9 +74,8 @@ export function DataTableToolbar<TData>({
             <Cross2Icon className="ml-2 h-4 w-4" />
           </Button>
         )}
-
       </div>
       <DataTableViewOptions table={table} />
     </div>
-  )
+  );
 }

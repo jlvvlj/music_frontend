@@ -4,10 +4,7 @@ import { useForm } from "react-hook-form";
 import Image from "next/image";
 import { toast } from "sonner";
 import * as z from "zod";
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon
-} from "@radix-ui/react-icons";
+import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import {
   Table,
   TableBody,
@@ -15,23 +12,25 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/registry/new-york/ui/table"
-import { flexRender, getCoreRowModel, getFacetedRowModel, getFacetedUniqueValues, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
-
+} from "@/registry/new-york/ui/table";
 import {
-  Recording,
-  StepProps,
-  TeamMember,
-} from "./types";
+  flexRender,
+  getCoreRowModel,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+
+import { Recording, StepProps, TeamMember } from "./types";
 import { Button } from "@/components/ui/button";
 import { CardsActivityGoal } from "@/components/activity-goal";
 import { Avatar } from "../ui/avatar";
 import { recordingTracks } from "@/app/data/data";
 import { RecordingsColumn } from "./RecordingsColumn";
-import {
-  Popover,
-  PopoverTrigger,
-} from "@/registry/new-york/ui/popover";
+import { Popover, PopoverTrigger } from "@/registry/new-york/ui/popover";
 import { Pencil2Icon } from "@radix-ui/react-icons";
 import UploadtrackPopover from "./UploadTrackPopover";
 import useContractBuilder from "@/hooks/useContractBuilder";
@@ -40,9 +39,23 @@ import { Steps } from "@/contexts/ContractBuilderContext";
 import ShareCardRight from "./ShareCardRight";
 
 const teamMembers = [
-  { id: 1, avatar: '/amandine.svg', name: 'Charly Jones', role: 'Singer', revenue: 15, label: '' },
-  { id: 2, avatar: '/orlane.svg', name: 'Orlane Moog', role: 'Musician', revenue: 8, label: 'base rate on sales' },
-]
+  {
+    id: 1,
+    avatar: "/amandine.svg",
+    name: "Charly Jones",
+    role: "Singer",
+    revenue: 15,
+    label: "",
+  },
+  {
+    id: 2,
+    avatar: "/orlane.svg",
+    name: "Orlane Moog",
+    role: "Musician",
+    revenue: 8,
+    label: "base rate on sales",
+  },
+];
 
 const recordingFormSchema = z.object({
   number: z.number().default(10),
@@ -63,18 +76,25 @@ const TABS: {
   label: string;
   value: Tab;
 }[] = [
-    {
-      label: "Firm",
-      value: "firm",
-    },
-    {
-      label: "Optional",
-      value: "optional",
-    },
-  ];
+  {
+    label: "Firm",
+    value: "firm",
+  },
+  {
+    label: "Optional",
+    value: "optional",
+  },
+];
 
-const Recordings = ({ updateStep }: StepProps) => {
-  const [updatedTracks, setUpdatedTracks] = useState(recordingTracks);
+const Recordings = ({
+  handleNextStep,
+  handleBackStep,
+  contractCreation,
+  setContractCreation,
+}: any) => {
+  const [updatedTracks, setUpdatedTracks] = useState(
+    contractCreation.TeamAndShares || recordingTracks
+  );
   const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
   const [recordings, setRecordings] = useState<Recording[]>([]);
   const [files, setFiles] = useState<any[]>([]);
@@ -90,14 +110,6 @@ const Recordings = ({ updateStep }: StepProps) => {
   useEffect(() => {
     return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
   }, []);
-
-  useEffect(() => {
-    if (currentTabIndex === TABS.length) {
-      updateStep(1);
-    } else {
-      setTab(TABS[currentTabIndex].value);
-    }
-  }, [currentTabIndex]);
 
   const onSubmit = (data: RecordingFormValues) => {
     console.log(data);
@@ -117,9 +129,14 @@ const Recordings = ({ updateStep }: StepProps) => {
     }, 1000);
   };
 
-  const handleClickBack = () => {
-    updateStep(-1);
-  };
+  useEffect(() => {
+    if (updatedTracks) {
+      setContractCreation((prevData: any) => ({
+        ...prevData,
+        TeamAndShares: updatedTracks,
+      }));
+    }
+  }, [updatedTracks]);
 
   const table = useReactTable<any>({
     data: updatedTracks,
@@ -131,38 +148,48 @@ const Recordings = ({ updateStep }: StepProps) => {
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
-  })
+  });
 
-  const handleUpdateTrack = (trackId: string, artists: string, title: string) => {
+  const handleUpdateTrack = (
+    trackId: string,
+    artists: string,
+    title: string
+  ) => {
     const updatedData = updatedTracks.map((share: any) =>
       share.id == trackId ? { ...share, title: title, artists: artists } : share
     );
     setUpdatedTracks(updatedData);
   };
 
-
   const handleClickNext = () => {
     toast("Rates updated successfully!", {
       description: "Rates",
       action: {
         label: "X",
-        onClick: () => { },
+        onClick: () => {},
       },
-      position: "top-right"
+      position: "top-right",
     });
-    updateStep(1);
+    handleNextStep();
   };
 
   const { members, dispatch } = useContractBuilder();
+
   const handleUpdateGoal = (member: TeamMember, value: number) => {
-    const _members = [...members];
+    const _members = [...contractCreation.TeamMembers.Artists];
     const newMember = {
       ...member,
-      revenue: value,
+      revenue: value.toString(),
     };
     const index = _members.findIndex((m) => m.id === member.id);
-    const m = _members.splice(index, 1, newMember);
+    _members.splice(index, 1, newMember);
 
+    setContractCreation((prevData: any) => ({
+      ...prevData,
+      TeamMembers: {
+        Artists: _members,
+      },
+    }));
     dispatch({
       type: Steps.SHARES,
       payload: {
@@ -170,7 +197,6 @@ const Recordings = ({ updateStep }: StepProps) => {
       },
     });
   };
-
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
@@ -183,22 +209,24 @@ const Recordings = ({ updateStep }: StepProps) => {
             <p className="text-sm text-muted-foreground mb-[98px]">
               Enter the appropriate base rate to everyone on the team
             </p>
-            {members.map((member, index) => (
-              <ShareCard
-                key={index}
-                member={member}
-                updateGoal={(v) => handleUpdateGoal(member, v)}
-                buttonHidden={true}
-                avatar={true}
-              />
-            ))}
+            {(contractCreation.TeamMembers.Artists || []).map(
+              (member: TeamMember, index: number) => (
+                <ShareCard
+                  key={index}
+                  member={member}
+                  updateGoal={(v) => handleUpdateGoal(member, v)}
+                  buttonHidden={true}
+                  avatar={true}
+                />
+              )
+            )}
           </div>
         </div>
         <div className="flex justify-between w-full mt-8 px-10">
           <Button
             className="bg-mblue"
             variant="outline"
-            onClick={handleClickBack}
+            onClick={handleBackStep}
           >
             <ArrowLeftIcon className="mr-1" />
             Back
@@ -226,14 +254,16 @@ const Recordings = ({ updateStep }: StepProps) => {
                 Edit the rates on each track for a specific allocation
               </p>
               <div className="pl-4 gap-10">
-                {members.map((member, index) => (
-                  <ShareCardRight
-                    key={index}
-                    member={member}
-                    updateGoal={(v) => handleUpdateGoal(member, v)}
-                    buttonHidden={true}
-                  />
-                ))}
+                {(contractCreation.TeamMembers.Artists || []).map(
+                  (member: TeamMember, index: number) => (
+                    <ShareCardRight
+                      key={index}
+                      member={member}
+                      updateGoal={(v) => handleUpdateGoal(member, v)}
+                      buttonHidden={true}
+                    />
+                  )
+                )}
               </div>
             </div>
           </div>
@@ -241,16 +271,23 @@ const Recordings = ({ updateStep }: StepProps) => {
             <Table>
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id} style={{ border: 'none' }} className="bg-table3-foreground">
+                  <TableRow
+                    key={headerGroup.id}
+                    style={{ border: "none" }}
+                    className="bg-table3-foreground"
+                  >
                     {headerGroup.headers.map((header) => {
                       return (
-                        <TableHead key={header.id} className="h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] font-normal">
+                        <TableHead
+                          key={header.id}
+                          className="h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] font-normal"
+                        >
                           {header.isPlaceholder
                             ? null
                             : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
                         </TableHead>
                       );
                     })}
@@ -259,7 +296,6 @@ const Recordings = ({ updateStep }: StepProps) => {
                     </TableHead>
                   </TableRow>
                 ))}
-
               </TableHeader>
               <TableHeader className="w-full h-[11px] bg-table3" />
               <TableBody>
@@ -269,13 +305,22 @@ const Recordings = ({ updateStep }: StepProps) => {
                     className="hover:bg-transparent border-none"
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell
-                        key={cell.id} className="">
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      <TableCell key={cell.id} className="">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
                       </TableCell>
                     ))}
                     <TableCell>
-                      <Popover open={openPopoverId === row.id} onOpenChange={(isOpen) => isOpen ? setOpenPopoverId(row.id) : setOpenPopoverId(null)}>
+                      <Popover
+                        open={openPopoverId === row.id}
+                        onOpenChange={(isOpen) =>
+                          isOpen
+                            ? setOpenPopoverId(row.id)
+                            : setOpenPopoverId(null)
+                        }
+                      >
                         <PopoverTrigger asChild>
                           <Pencil2Icon className="w-4 h-4 mr-1 text-[#4FABFE] text-center cursor-pointer" />
                         </PopoverTrigger>

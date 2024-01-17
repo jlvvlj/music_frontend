@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import Link from "next/link"
+import Link from "next/link";
 
-import { ColumnDef } from "@tanstack/react-table"
+import { ColumnDef } from "@tanstack/react-table";
 
-import { Badge } from "@/registry/new-york/ui/badge"
-import { Checkbox } from "@/registry/new-york/ui/checkbox"
+import { Badge } from "@/registry/new-york/ui/badge";
+import { Checkbox } from "@/registry/new-york/ui/checkbox";
 
-import { albums, priorities, statuses, titles } from "../data/data"
-import { Task } from "../data/schema"
-import { DataTableColumnHeader } from "./data-table-column-header"
-import { DataTableRowActions } from "./data-table-row-actions"
+import { albums, priorities, statuses, titles } from "../data/data";
+import { Task } from "../data/schema";
+import { DataTableColumnHeader } from "./data-table-column-header";
+import { DataTableRowActions } from "./data-table-row-actions";
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -39,10 +39,11 @@ export const columns: ColumnDef<Task>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Tracks" />
     ),
-    cell: ({ row }) =>
+    cell: ({ row }) => (
       <Link href={`contracts_settings/${row.getValue("id")}`}>
         <div className="max-w-[160px]">{row.getValue("id")}</div>
-      </Link>,
+      </Link>
+    ),
     enableSorting: false,
     enableHiding: false,
   },
@@ -53,17 +54,13 @@ export const columns: ColumnDef<Task>[] = [
     ),
     cell: ({ row }) => {
       const album = albums.find(
-        (album) => album.value === row.getValue("album"))
+        (album) => album.value === row.getValue("album")
+      );
 
-      return (
-        <div className="w-[160px]">{row.getValue("album")}</div>
-      )
-
-
-
+      return <div className="w-[160px]">{row.getValue("album")}</div>;
     },
     filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
+      return value.includes(row.getValue(id));
     },
   },
   {
@@ -73,7 +70,8 @@ export const columns: ColumnDef<Task>[] = [
     ),
     cell: ({ row }) => {
       const title = titles.find(
-        (title) => title.value === row.getValue("title"))
+        (title) => title.value === row.getValue("title")
+      );
 
       return (
         <div className="flex space-x-2">
@@ -82,10 +80,10 @@ export const columns: ColumnDef<Task>[] = [
             {row.getValue("title")}
           </span>
         </div>
-      )
+      );
     },
     filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
+      return value.includes(row.getValue(id));
     },
   },
   {
@@ -93,11 +91,11 @@ export const columns: ColumnDef<Task>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Platforms" />
     ),
-    cell:({ row }) => {
-      return
+    cell: ({ row }) => {
+      return;
     },
     filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
+      return value.includes(row.getValue(id));
     },
   },
   {
@@ -107,10 +105,11 @@ export const columns: ColumnDef<Task>[] = [
     ),
     cell: ({ row }) => {
       const status = statuses.find(
-        (status) => status.value === row.getValue("status"))
+        (status) => status.value === row.getValue("status")
+      );
 
       if (!status) {
-        return null
+        return null;
       }
 
       return (
@@ -118,27 +117,27 @@ export const columns: ColumnDef<Task>[] = [
           {status.color && (
             <span className={`w-2.5 h-2.5 rounded-full ${status.color}`} />
           )}
-           <span>{status.label}</span>
+          <span>{status.label}</span>
         </div>
-      )
+      );
     },
     filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
+      return value.includes(row.getValue(id));
     },
   },
 
   {
-    accessorKey: "revenue",
+    accessorKey: "priority",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Revenues" />
     ),
     cell: ({ row }) => {
       const priority = priorities.find(
         (priority) => priority.value === row.getValue("priority")
-      )
+      );
 
       if (!priority) {
-        return null
+        return null;
       }
 
       return (
@@ -151,11 +150,11 @@ export const columns: ColumnDef<Task>[] = [
       );
     },
     filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
+      return value.includes(row.getValue(id));
     },
   },
   {
     id: "actions",
     cell: ({ row }) => <DataTableRowActions row={row} />,
   },
-]
+];

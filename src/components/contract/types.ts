@@ -4,12 +4,16 @@ export interface StepProps extends React.PropsWithChildren {
 }
 export type TeamMember = {
   id: number;
+  label?: string;
   name: string;
   surName: string;
   email: string;
   avatar?: string;
   role: string;
-  revenue?: number;
+  revenue?: string;
+  rate?: number;
+  profile?: string
+  value?: string
 };
 
 export interface Recording {
@@ -79,9 +83,9 @@ export const COUNTRIES = [
 
 export enum StepIndex {
   CONTRIBUTORS = 1,
-  SHARES,
+  TEAMS,
   RECORDINGS,
-  ROYALTIES,
+  SHARES,
   ADDITIONALCONDITIONS,
   BUDGET,
   ROYALTIES_ADVANCES,
@@ -91,7 +95,7 @@ export enum StepIndex {
   INTRODUCTION
 }
 
-export enum ContributionSubType {}
+export enum ContributionSubType { }
 
 export type Step = {
   label: string;
@@ -103,6 +107,7 @@ export type Step = {
 
 export const STEPS = [
   {
+    id: 1,
     label: "Contributors",
     step: StepIndex.CONTRIBUTORS,
     title: "Let’s start with the team",
@@ -111,8 +116,9 @@ export const STEPS = [
     subTitle: "",
   },
   {
-    label: "Shares",
-    step: StepIndex.SHARES,
+    id: 2,
+    label: "Teams",
+    step: StepIndex.TEAMS,
     title: "Now time to allocate shares",
     subTitle: "",
     saveBtnHidden: false,
@@ -120,6 +126,7 @@ export const STEPS = [
       "Enter the appropriate amount of shares to everyone on the team",
   },
   {
+    id: 3,
     label: "Recordings",
     step: StepIndex.RECORDINGS,
     title: "Recordings",
@@ -128,14 +135,7 @@ export const STEPS = [
     description: "Enter firm and optional recordings details",
   },
   {
-    label: "Royalties",
-    step: StepIndex.ROYALTIES,
-    title: "Royalties",
-    subTitle: "",
-    saveBtnHidden: false,
-    description: "Enter the contract royalties details",
-  },
-  {
+    id: 5,
     label: "Additional Conditions",
     step: StepIndex.ADDITIONALCONDITIONS,
     title: "Additional Conditions",
@@ -144,55 +144,14 @@ export const STEPS = [
     description: "Enter firm and optional recordings details",
   },
   {
-    label: "Budgets",
-    step: StepIndex.BUDGET,
-    title: "Initial Budget",
-    subTitle: "",
-    saveBtnHidden: false,
-    description: "Enter the budget  details",
-  },
-  {
-    label: "Royalties Advances",
-    step: StepIndex.ROYALTIES_ADVANCES,
-    title: "Royalties Advances",
-    subTitle:
-      "Would you like to include a Royalty advance for some of your Recordings?",
-    saveBtnHidden: false,
-    description: "Enter the contract royalties details",
-  },
-  {
-    label: "Abatements",
-    step: StepIndex.ABATEMENTS,
-    title: "Abatements",
-    subTitle: "Would you like to include Abatements to the contract?",
-    saveBtnHidden: false,
-    description: "Enter the contract royalties details",
-  },
-  {
-    label: "BroadCasting",
-    step: StepIndex.BROADCASTING,
-    title: "Broadcasting right & Secondary Use",
-    subTitle:
-      "Would you like to include Broadcasting right & Secondary Use rules?",
-    saveBtnHidden: false,
-    description: "Enter the contract secondary use details",
-  },
-  {
-    label: "Derivative use",
-    step: StepIndex.DERIVATIVE_USE,
-    title: "Derivative use",
-    subTitle: "Would you like to include Derivative use rules?",
-    saveBtnHidden: false,
-    description: "Enter the contract secondary use details",
-  },
-  {
+    id: 11,
     label: "INTRODUCTION",
     step: StepIndex.INTRODUCTION,
-    title: "Derivative use",
-    subTitle: "Would you like to include Derivative use rules?",
+    title: "Introduction",
+    subTitle: "Would you like to include Introduction?",
     saveBtnHidden: false,
     description: "Enter the contract secondary use details",
-  },
+  }
 ];
 
 // ** types
@@ -234,7 +193,7 @@ export interface Budget {
     maximum: number;
     royalties: number;
   };
-  multimedia: {
+  Image: {
     salary: number;
   };
   promotion: {
@@ -269,7 +228,7 @@ export const initialMembers: TeamMember[] = [
     email: "",
     role: "Master Owner",
     avatar: "/amandine.svg",
-    revenue: 50,
+    revenue: "50",
   },
   {
     id: 2,
@@ -278,7 +237,7 @@ export const initialMembers: TeamMember[] = [
     email: "",
     role: "Singer",
     avatar: "/orlane.svg",
-    revenue: 50,
+    revenue: "50",
   },
   {
     id: 3,
@@ -287,6 +246,6 @@ export const initialMembers: TeamMember[] = [
     email: "",
     role: "Musician",
     avatar: "/jon.svg",
-    revenue: 30,
+    revenue: "30",
   },
 ];

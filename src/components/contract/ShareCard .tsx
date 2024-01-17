@@ -12,14 +12,12 @@ const ShareCard = ({
   buttonHidden,
   avatar,
   bgcolor,
-  unit
 }: {
   member: TeamMember;
   updateGoal: (v: number) => void;
   buttonHidden: boolean;
   avatar?: boolean;
   bgcolor?: string;
-  unit?: string;
 }) => {
   const handleChangeGoal = (v: number) => {
     updateGoal(v);
@@ -49,7 +47,7 @@ const ShareCard = ({
         <CardsActivityGoal
           label="SHARES OF REVENUES"
           initialValue={Number(member.revenue) || 30}
-          unit={unit || "€"}
+          unit="%"
           step={10}
           buttonTitle="Set Share"
           minValue={0}

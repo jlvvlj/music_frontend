@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -41,77 +41,71 @@ const COUNTRIES = [
   },
 ];
 
-const abatementsCards = [
-  {
-    id: 1, title: 'Foreign sales', activityCards: [
-      { id: 1, button: false }
-    ]
-  },
-  {
-    id: 2, title: 'Compilation', activityCards: [
-      { id: 1, button: true }
-    ]
-  },
-  {
-    id: 3, title: 'Promotion', activityCards: [
-      { id: 1, button: true }
-    ]
-  },
-  {
-    id: 4, title: 'Discount sales', activityCards: [
-      { id: 1, button: true }
-    ]
-  },
-  {
-    id: 5, title: 'Off-Circuit sales', activityCards: [
-      { id: 1, button: true }
-    ]
-  }
-]
-
 const cards = [
   {
-    id: 1, title: 'Foreign sales', desc: 'Abatements taken for foreign markets', subCards: [
-      { id: 1, title: ' Abatement rate', desc: 'In Canada and USA', rate: '20%' },
-      { id: 2, title: 'Abatement rate ', desc: 'In Italy, Spain and Portugal', rate: '10%' },
-    ]
+    id: 1,
+    title: "Foreign sales",
+    value: "foreign_sales",
+    desc: "Abatements taken for foreign markets",
+    subCards: [
+      {
+        id: 1,
+        title: "Abatement rate",
+        cost: 10,
+        country: []
+      },
+    ],
   },
   {
-    id: 2, title: 'Compilations', desc: 'Abatements taken for compilations', subCards: [
-      { id: 1, title: 'Share of Base', desc: '', rate: '20%' }
-    ]
+    id: 2,
+    title: "Compilations",
+    value: "compilations",
+    desc: "Abatements taken for compilations",
+    subCards: [{ id: 1, title: "Share of Base", cost: 40 }],
   },
   {
-    id: 3, title: 'Promotions', desc: 'Abatements taken for promotions', subCards: [
-      { id: 1, title: 'Share of Base', desc: '', rate: '20%' }
-    ]
+    id: 3,
+    title: "Promotions",
+    value: "promotions",
+    desc: "An abatement for promotions will be applied",
+    subCards: [{ id: 1, title: "Share of Base", cost: 50 }],
   },
   {
-    id: 4, title: 'Discounted Sales', desc: 'Abatements taken for discounted sales', subCards: [
-      { id: 1, title: 'Share of Base', desc: '', rate: '20%' }
-    ]
+    id: 4,
+    title: "Discounted Sales",
+    value: "discounted_sales",
+    desc: "An abatement for discount sales will be applied",
+    subCards: [{ id: 1, title: "Abatement rate", cost: 80 }],
   },
   {
-    id: 5, title: 'Off Traditional Circuits Sales', desc: 'Abatements for sales outside the traditional circuit', subCards: [
-      { id: 1, title: 'Share of Base', desc: '', rate: '20%' }
-    ]
-  }
-]
+    id: 5,
+    title: "Off-Circuits Sales",
+    value: "off_traditional_circuits_sales",
+    desc: "An abatement for off-circuit sales will be applied",
+    subCards: [{ id: 1, title: "Abatement rate", cost: 10 }],
+  },
+];
 
-const Abatements = ({ updateStep }: StepProps) => {
+const Abatements = ({
+  handleNextStep,
+  handleBackStep,
+  contractCreation,
+  setContractCreation,
+}: any) => {
+  const [enabled, setEnabled] = useState<string>();
+  const [selectedAbatements, setSelectedAbatements] = useState([]);
+  const { members, dispatch } = useContractBuilder();
 
-  const handleClickBack = () => {
-    updateStep(-1);
-  };
+  const getDataById = (ids: any) =>
+    Array.isArray(ids)
+      ? cards.filter((item) => ids.includes(item.value))
+      : [cards.find((item) => item.id === ids)] || [];
 
-  const [enabled, setEnabled] = useState<number | null>(null);
-  const onCheckHandle = (id: number) => {
-    if (enabled === id) {
-      setEnabled(null);
-    } else {
-      setEnabled(id);
-    }
-  };
+  useEffect(() => {
+    setSelectedAbatements(
+      getDataById(contractCreation.AdditionalConditionsChecks) as any
+    );
+  }, [contractCreation.AdditionalConditionsChecks]);
 
   const handleClickNext = () => {
     toast("Abatements added successfully!", {
@@ -120,20 +114,36 @@ const Abatements = ({ updateStep }: StepProps) => {
         label: "X",
         onClick: () => { },
       },
-      position: "top-right"
+      position: "top-right",
     });
-    updateStep(1);
+    handleNextStep();
   };
 
-  const { members, dispatch } = useContractBuilder();
-  const handleUpdateGoal = (member: TeamMember, value: number) => {
-    const _members = [...members];
+  useEffect(() => {
+    if (enabled) {
+      setContractCreation((prevData: any) => ({
+        ...prevData,
+        abatements: cards,
+      }));
+    }
+  }, [enabled]);
+
+  const handleUpdateGoal = (cardId: number, member: TeamMember, value: number) => {
+    const _members = [...contractCreation.abatements];
     const newMember = {
       ...member,
-      revenue: value,
+      cost: value,
     };
-    const index = _members.findIndex((m) => m.id === member.id);
-    const m = _members.splice(index, 1, newMember);
+
+    const cardIndex = _members.findIndex((card) => card.id === cardId);
+
+    const index = _members[cardIndex]?.subCards?.findIndex((m: any) => m.id === member.id);
+    _members[cardIndex].subCards.splice(index, 1, newMember);
+
+    setContractCreation((prevData: any) => ({
+      ...prevData,
+      abatements: _members,
+    }));
 
     dispatch({
       type: Steps.SHARES,
@@ -143,6 +153,9 @@ const Abatements = ({ updateStep }: StepProps) => {
     });
   };
 
+  const handleUpdateCountry = () => {
+
+  }
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
@@ -155,49 +168,78 @@ const Abatements = ({ updateStep }: StepProps) => {
                   Abatements
                 </h1>
                 <p className="text-sm text-muted-foreground">
-                  Enter the contract royalties details
+                  Enter the contract Abatements details
                 </p>
               </div>
             </div>
             <Card className="bg-transparent border-none shadow-none">
               <CardContent className="space-y-6 p-0">
                 <div className="pl-2.5">
-                  {abatementsCards.map((card) =>
-                    <Card key={card.id} className="border-none bg-modal-foreground mb-8 rounded-3xl	">
+                  {selectedAbatements?.map((card: any) => (
+                    <Card
+                      key={card.id}
+                      className="border-none bg-modal-foreground mb-8 rounded-3xl	"
+                    >
                       <CardHeader className="py-5 pb-0">
                         <CardTitle className="text-[17px] font-normal flex justify-between">
                           <div>
                             <h6>{card.title}</h6>
-                            <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">Abatements</Badge>
+                            <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">
+                              Abatements
+                            </Badge>
                           </div>
-                          <Switch className="mt-2.5" checked={enabled === card.id} onCheckedChange={() => onCheckHandle(card.id)} />
+                          <Switch
+                            className="mt-2.5"
+                            checked={enabled === card.value}
+                            onCheckedChange={() => setEnabled(card.value)}
+                          />
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="pb-8">
-                        <p className="text-sm	mt-2.5 text-muted-foreground">An abatement for foreign sales will be applied</p>
-                        {enabled === card.id && <div className="space-y-8 mt-10">
-                          <div className="pl-4 gap-7 flex flex-col justify-center items-center">
-                            {members.map((member, index) => (
-                              <ShareCard
-                                key={index}
-                                member={member}
-                                updateGoal={(v) => handleUpdateGoal(member, v)}
-                                buttonHidden={true}
-                                avatar={false}
-                                bgcolor="bg-modal"
-                              />
-                            ))}
-                            <div className={cn(card.id === 1 ? "" : "hidden")}>
-                              <CountryMultiSelect
-                                frameworks={COUNTRIES}
-                                placeholder="Countries"
-                              />
+                        <p className="text-sm	mt-2.5 text-muted-foreground">
+                          An abatement for foreign sales will be applied
+                        </p>
+                        {enabled === card.value && (
+                          <div className="space-y-8 mt-10">
+                            <div className="pl-4 gap-7 flex flex-col justify-center items-center">
+                              {card?.subCards.map((member: any, index: number) => (
+                                <div className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md w-fit bg-modal pb-1.5 mb-8" key={index}>
+                                  <div className="pt-3">
+                                    <p className="text-sm font-normal leading-none mb-1">
+                                      {member.title}
+                                    </p>
+                                    <p className="text-sm text-muted-foreground">Lorem ipsum</p>
+                                  </div>
+                                  <div className="">
+                                    <CardsActivityGoal
+                                      label="Abatement rate"
+                                      initialValue={member.cost || 30}
+                                      unit="%"
+                                      step={10}
+                                      buttonTitle="Set Rate"
+                                      minValue={5}
+                                      maxValue={100}
+                                      buttonHidden
+                                      onClickButton={() => { }}
+                                      setGoal={(v) => handleUpdateGoal(card.id, member, v)}
+                                    />
+                                  </div>
+                                </div>
+                              ))}
+                              <div
+                                className={cn(card.id === 1 ? "" : "hidden")}
+                              >
+                                <CountryMultiSelect
+                                  frameworks={COUNTRIES}
+                                  placeholder="Countries"
+                                />
+                              </div>
                             </div>
                           </div>
-                        </div>}
+                        )}
                       </CardContent>
                     </Card>
-                  )}
+                  ))}
                 </div>
               </CardContent>
             </Card>
@@ -207,7 +249,7 @@ const Abatements = ({ updateStep }: StepProps) => {
           <Button
             className="bg-mblue"
             variant="outline"
-            onClick={handleClickBack}
+            onClick={handleBackStep}
           >
             <ArrowLeftIcon className="mr-1" />
             Back
@@ -234,27 +276,34 @@ const Abatements = ({ updateStep }: StepProps) => {
               </CardDescription>
             </CardHeader>
             <CardContent className="">
-              {cards.map((card) =>
-                <Card key={card.id} className="bg-transparent border-none shadow-none">
+              {cards.map((card) => (
+                <Card
+                  key={card.id}
+                  className="bg-transparent border-none shadow-none"
+                >
                   <CardHeader>
-                    <CardTitle className="text-lg font-normal">{card.title}</CardTitle>
-                    <CardDescription>
-                      {card.desc}
-                    </CardDescription>
+                    <CardTitle className="text-lg font-normal">
+                      {card.title}
+                    </CardTitle>
+                    <CardDescription>{card.desc}</CardDescription>
                   </CardHeader>
                   <CardContent className="flex justify-start items-center gap-6">
                     {card?.subCards.map((innercard) => (
                       <div className="rounded-md bg-modal-foreground px-[10px] py-2 w-[150px] min-h-[90px] space-y-1">
-                        <p className="text-[12px] font-normal">{innercard.title}</p>
-                        <p className="text-[#94A3B8] text-[9px] font-normal">
-                          {innercard.desc}
+                        <p className="text-[12px] font-normal">
+                          {innercard.title}
                         </p>
-                        <p className="text-mblue text-[12px] font-normal">{innercard.rate}</p>
+                        <p className="text-[#94A3B8] text-[9px] font-normal">
+                          Lorem Ipsum
+                        </p>
+                        <p className="text-mblue text-[12px] font-normal">
+                          {innercard.cost}
+                        </p>
                       </div>
                     ))}
                   </CardContent>
                 </Card>
-              )}
+              ))}
             </CardContent>
           </Card>
           <div className="rounded-2xl bg-modal border border-muted w-full p-4 mt-[76px] abatements-table">

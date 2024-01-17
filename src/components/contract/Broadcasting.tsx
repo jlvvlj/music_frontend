@@ -6,9 +6,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CardsActivityGoal } from "@/components/activity-goal";
 import { useEffect, useState } from "react";
-import { BroadCasting, StepProps, TeamMember } from "./types";
+import { BroadCasting } from "./types";
 import { Badge } from "@/registry/new-york/ui/badge";
 import { Switch } from "@/registry/default/ui/switch";
 import { TableCommon } from "./TableCommon";
@@ -16,34 +15,9 @@ import { broadcastingTracks } from "@/app/data/data";
 import { BroadcastingColumn } from "./BroadcastingColumn";
 import { toast } from "sonner";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
-import useContractBuilder from "@/hooks/useContractBuilder";
-import { Steps } from "@/contexts/ContractBuilderContext";
-import ShareCard from "./ShareCard";
-
-type Tab = {
-  label: string;
-  value: TabName;
-  description: string;
-  cardTitle: string;
-};
+import { CardsActivityGoal } from "../activity-goal";
 
 type TabName = "foreignSales" | "secondaryUses";
-
-const TABS: Tab[] = [
-  {
-    label: "Broadcasting right",
-    value: "foreignSales",
-    description:
-      "Paid concession of television broadcasting rights as a percentage of net pre-tax operating revenues received by the producer",
-    cardTitle: "Concession",
-  },
-  {
-    label: "Secondary uses",
-    value: "secondaryUses",
-    description: "Share of amounts received by the producer excluding taxes",
-    cardTitle: "Share",
-  },
-];
 
 const baseBroadCasting = {
   foreignSales: {
@@ -54,63 +28,52 @@ const baseBroadCasting = {
   },
 };
 
-const broadCastingCards = [
+const cards = [
   {
-    id: 1, title: 'Broadcasting right', activityCards: [
-      { id: 1, title: 'Concession' }
-    ]
+    id: 1, value: "broadcasting",
+    title: "Broadcasting",
+    desc: "Concession Royalties to be paid",
+    activityCards: [{ id: 1, title: "Concession", cost: 40 }],
   },
   {
-    id: 2, title: 'Secondary uses', activityCards: [
-      { id: 1, title: 'Share' }
-    ]
-  }
-]
+    id: 2,
+    title: "Secondary Use",
+    value: "secondary_use",
+    desc: "Royalties to be paid for secondary use",
+    activityCards: [{ id: 1, title: "Share", cost: 50 }],
+  },
+];
 
-const cards = [
-  { id: 1, title: 'Broadcasting', desc: 'Concession Royalties to be paid' },
-  { id: 2, title: 'Secondary Use', desc: 'Royalties to be paid for secondary use' }
-]
-
-const Broadcasting = ({ updateStep }: StepProps) => {
+const Broadcasting = ({
+  handleNextStep,
+  handleBackStep,
+  contractCreation,
+  setContractCreation,
+}: any) => {
   const [broadCasting, setBroadCasting] =
     useState<BroadCasting>(baseBroadCasting);
-  const [currentTabIndex, setCurrentTabIndex] = useState(0);
-  const [tab, setTab] = useState(TABS[0].value);
 
-  const [enabled, setEnabled] = useState<number | null>(null);
+  const [enabled, setEnabled] = useState<number | null>(
+    contractCreation.BroadCasting
+  );
+  const [selectedBroadCasting, setSelectedBroadCasting] = useState([]);
+  const getDataById = (ids: any) =>
+    Array.isArray(ids)
+      ? cards.filter((item) => ids.includes(item.value))
+      : [cards.find((item) => item.id === ids)] || [];
+
+  useEffect(() => {
+    setSelectedBroadCasting(
+      getDataById(contractCreation.AdditionalConditionsChecks) as any
+    );
+  }, [contractCreation.AdditionalConditionsChecks]);
+
   const onCheckHandle = (id: number) => {
     if (enabled === id) {
       setEnabled(null);
     } else {
       setEnabled(id);
     }
-  };
-
-  useEffect(() => {
-    if (currentTabIndex === TABS.length) {
-      updateStep(1);
-    } else {
-      setTab(TABS[currentTabIndex].value);
-    }
-  }, [currentTabIndex]);
-
-  const handleChangeGoalValues = (
-    parent: TabName,
-    subField: "percentage",
-    value: number
-  ) => {
-    setBroadCasting((prev) => ({
-      ...prev,
-      [parent]: {
-        ...prev[parent],
-        [subField]: value,
-      },
-    }));
-  };
-
-  const handleClickBack = () => {
-    updateStep(-1);
   };
 
   const handleClickNext = () => {
@@ -120,27 +83,36 @@ const Broadcasting = ({ updateStep }: StepProps) => {
         label: "X",
         onClick: () => { },
       },
-      position: "top-right"
+      position: "top-right",
     });
-    updateStep(1);
+    handleNextStep(1);
   };
 
-  const { members, dispatch } = useContractBuilder();
-  const handleUpdateGoal = (member: TeamMember, value: number) => {
-    const _members = [...members];
+  useEffect(() => {
+    if (enabled) {
+      setContractCreation((prevData: any) => ({
+        ...prevData,
+        broadCasting: cards,
+      }));
+    }
+  }, [enabled]);
+
+  const handleUpdateGoal = (cardId: any, member: any, value: number) => {
+    const _members = [...contractCreation.broadCasting];
     const newMember = {
       ...member,
-      revenue: value,
+      cost: value.toString(),
     };
-    const index = _members.findIndex((m) => m.id === member.id);
-    const m = _members.splice(index, 1, newMember);
 
-    dispatch({
-      type: Steps.SHARES,
-      payload: {
-        members: _members,
-      },
-    });
+    const cardIndex = _members.findIndex((card) => card.id === cardId);
+
+    const index = _members[cardIndex]?.activityCards?.findIndex((m: any) => m.id === member.id);
+    _members[cardIndex].activityCards.splice(index, 1, newMember);
+
+    setContractCreation((prevData: any) => ({
+      ...prevData,
+      cost: { enabled: enabled, budgetCards: _members },
+    }));
   };
 
   return (
@@ -161,36 +133,63 @@ const Broadcasting = ({ updateStep }: StepProps) => {
             <Card className="bg-transparent border-none shadow-none">
               <CardContent className="space-y-6 p-0">
                 <div className="pl-2.5">
-                  {broadCastingCards.map((card) =>
-                    <Card key={card.id} className="border-none bg-modal-foreground mb-8 rounded-3xl	">
+                  {selectedBroadCasting.map((card: any) => (
+                    <Card
+                      key={card.id}
+                      className="border-none bg-modal-foreground mb-8 rounded-3xl	"
+                    >
                       <CardHeader className="py-5 pb-0">
                         <CardTitle className="text-[17px] font-normal flex justify-between">
                           <div>
                             <h6>{card.title}</h6>
-                            <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">Secondary</Badge>
+                            <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">
+                              Secondary
+                            </Badge>
                           </div>
-                          <Switch className="mt-2.5" checked={enabled === card.id} onCheckedChange={() => onCheckHandle(card.id)} />
+                          <Switch
+                            className="mt-2.5"
+                            checked={enabled === card.id}
+                            onCheckedChange={() => onCheckHandle(card.id)}
+                          />
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="pb-8">
-                        <p className="text-sm	mt-2.5 text-muted-foreground">Paid concession of television broadcasting rights</p>
-                        {enabled === card.id && <div className="space-y-8 mt-10">
-                          <div className="pl-4">
-                            {members.map((member, index) => (
-                              <ShareCard
-                                key={index}
-                                member={member}
-                                updateGoal={(v) => handleUpdateGoal(member, v)}
-                                buttonHidden={true}
-                                avatar={false}
-                                bgcolor="bg-modal"
-                              />
-                            ))}
+                        <p className="text-sm	mt-2.5 text-muted-foreground">
+                          Paid concession of television broadcasting rights
+                        </p>
+                        {enabled === card.id && (
+                          <div className="space-y-8 mt-10">
+                            <div className="pl-4">
+                              {card?.activityCards.map((member: any, index: any) => (
+                                <div className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md w-fit bg-modal pb-1.5 mb-8" key={index}>
+                                  <div className="pt-3">
+                                    <p className="text-sm font-normal leading-none mb-1">
+                                      {member.title}
+                                    </p>
+                                    <p className="text-sm text-muted-foreground">Lorem ipsum</p>
+                                  </div>
+                                  <div className="">
+                                    <CardsActivityGoal
+                                      label="Abatement rate"
+                                      initialValue={member.cost || 30}
+                                      unit="%"
+                                      step={10}
+                                      buttonTitle="Set Rate"
+                                      minValue={5}
+                                      maxValue={100}
+                                      buttonHidden
+                                      onClickButton={() => { }}
+                                      setGoal={(v) => handleUpdateGoal(card.id, member, v)}
+                                    />
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
                           </div>
-                        </div>}
+                        )}
                       </CardContent>
                     </Card>
-                  )}
+                  ))}
                 </div>
               </CardContent>
             </Card>
@@ -200,7 +199,7 @@ const Broadcasting = ({ updateStep }: StepProps) => {
           <Button
             className="bg-mblue"
             variant="outline"
-            onClick={handleClickBack}
+            onClick={handleBackStep}
           >
             <ArrowLeftIcon className="mr-1" />
             Back
@@ -227,26 +226,34 @@ const Broadcasting = ({ updateStep }: StepProps) => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {cards.map((card) =>
-                <Card key={card.id} className="bg-transparent border-none shadow-none">
+              {selectedBroadCasting.map((card: any) => (
+                <Card
+                  key={card.id}
+                  className="bg-transparent border-none shadow-none"
+                >
                   <CardHeader>
-                    <CardTitle className="text-lg font-normal">{card.title}</CardTitle>
-                    <CardDescription>
-                      {card.desc}
-                    </CardDescription>
+                    <CardTitle className="text-lg font-normal">
+                      {card.title}
+                    </CardTitle>
+                    <CardDescription>{card.desc}</CardDescription>
                   </CardHeader>
                   <CardContent className="flex justify-start items-center gap-6">
-                    <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
-                      <p className="text-[12px] font-normal">Royalty rate</p>
-                      <p className="text-mblue text-[12px] font-normal">20%</p>
-                    </div>
+                    {card.activityCards?.map((activity: any, index: number) => (
+                      <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4" key={index}>
+                        <p className="text-[12px] font-normal">{activity?.title}</p>
+                        <p className="text-mblue text-[12px] font-normal">{activity?.cost}%</p>
+                      </div>
+                    ))}
                   </CardContent>
                 </Card>
-              )}
+              ))}
             </CardContent>
           </Card>
           <div className="rounded-2xl bg-modal border border-muted w-full p-4 mt-[76px]">
-            <TableCommon data={broadcastingTracks} columns={BroadcastingColumn} />
+            <TableCommon
+              data={broadcastingTracks}
+              columns={BroadcastingColumn}
+            />
           </div>
         </div>
       </div>
