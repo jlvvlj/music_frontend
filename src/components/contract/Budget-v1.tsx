@@ -34,8 +34,8 @@ const TABS: Tab[] = [
 ];
 
 const budgetCard = [
-  { title: "Minimum Budget", cost: "EUR 5000" },
-  { title: "Maximum Budget", cost: "EUR 9000" },
+  { title: "Minimum Budget", cost: "5000" },
+  { title: "Maximum Budget", cost: "9000" },
   { title: "External Royalties", cost: "50%" },
 ];
 
@@ -48,7 +48,7 @@ const Budget = ({ updateStep }: StepProps) => {
       maximum: 5000,
       royalties: 30,
     },
-    multimedia: {
+    Image: {
       salary: 3000,
     },
     promotion: {

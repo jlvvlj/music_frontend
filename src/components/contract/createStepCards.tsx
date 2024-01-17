@@ -65,8 +65,8 @@ const CreateStepCards = ({
       case StepIndex.RECORDINGS:
         return <Recordings updateStep={updateStep} />;
       // return isProducerMode ? <ProducerRecordings /> : <ArtistRecordings />;
-      case StepIndex.ROYALTIES:
-        return <Royalties updateStep={updateStep} />;
+      // case StepIndex.ROYALTIES:
+      //   return <Royalties updateStep={updateStep} />;
       case StepIndex.ADDITIONALCONDITIONS:
         return <AdditionalConditions updateStep={updateStep} />;
       case StepIndex.BUDGET:

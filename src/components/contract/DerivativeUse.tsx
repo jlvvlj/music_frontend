@@ -8,13 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { cn } from "@/lib/utils";
-import { CardsActivityGoal } from "@/components/activity-goal";
-import { Label } from "@/components/ui/label";
-import { Icons } from "@/components/icons";
-import { DerivativeUse, StepProps, TeamMember } from "./types";
+import { TeamMember } from "./types";
 import CongratulationModal from "./CongratulationModal";
 import { Badge } from "@/registry/new-york/ui/badge";
 import { Switch } from "@/registry/default/ui/switch";
@@ -25,6 +19,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import useContractBuilder from "@/hooks/useContractBuilder";
 import { Steps } from "@/contexts/ContractBuilderContext";
 import ShareCard from "./ShareCard";
+import { CardsActivityGoal } from "../activity-goal";
 
 type Tab = {
   label: string;
@@ -36,70 +31,50 @@ type Tab = {
 
 type TabName = "merchandising" | "partnerships";
 
-const TABS: Tab[] = [
+const cards = [
   {
-    label: "Merchandising",
-    value: "merchandising",
-    title: "Direct merchandising",
-    description: "Lorem ipsum",
-    cardTitle: "Concession",
+    id: 14,
+    title: "Merchandising",
+    value: "direct_merchandising",
+    desc: "Royalties taken on merchandising comissions",
+    subCards: [
+      { id: 1, title: "Direct Commission", desc: "Lorem ipsum", cost: 30 },
+      { id: 2, title: "License Comission", desc: "Lorem ipsum", cost: 10 },
+    ],
   },
   {
-    label: "Partnerships",
-    value: "partnerships",
-    title: "Partnerships and Live events comission",
-    description: "Lorem ipsum",
-    cardTitle: "Share",
+    id: 15,
+    title: "Partnerships and Live events",
+    value: "commission_rate",
+    desc: "Royalties taken on merchandising comissions",
+    subCards: [{ id: 1, title: "Commission rate", desc: "", cost: 30 }],
   },
 ];
 
-const baseDerivativeUse = {
-  merchandising: {
-    percentage: 0,
-  },
-  partnerships: {
-    percentage: 0,
-  },
-};
-
-const derivativeCards = [
-  {
-    id: 1, title: 'Merchandising', activityCards: [
-      { id: 1, title: 'Direct Commission', revenue: 30 },
-      { id: 2, title: 'License Comission', revenue: 10 }
-    ]
-  },
-  {
-    id: 2, title: 'Partnerships', activityCards: [
-      { id: 1, title: 'Commission rate', revenue: 30 }
-    ]
-  }
-]
-
-const cards = [
-  {
-    id: 1, title: 'Merchandising', desc: 'Royalties taken on merchandising comissions', subCards: [
-      { id: 1, title: 'Commission rate', desc: 'DIRECT', rate: '30%' },
-      { id: 2, title: 'Commission rate', desc: 'LICENSE', rate: '10%' },
-    ]
-  },
-  {
-    id: 2, title: 'Partnerships and Live events', desc: 'Royalties taken on merchandising comissions',
-    subCards: [
-      { id: 1, title: 'Commission rate', desc: '', rate: '30%' },
-    ]
-  }
-]
-
-const DerivativeUse = ({ handleNextStep, handleBackStep }: any) => {
-  const [derivativeUse, setDerivativeUse] =
-    useState<DerivativeUse>(baseDerivativeUse);
+const DerivativeUse = ({
+  handleNextStep,
+  handleBackStep,
+  contractCreation,
+  setContractCreation,
+}: any) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const { members, dispatch } = useContractBuilder();
+  const [enabled, setEnabled] = useState<number | null>(
+    contractCreation.derivativeUse
+  );
 
-  const [currentTabIndex, setCurrentTabIndex] = useState(0);
-  const [tab, setTab] = useState(TABS[0].value);
+  const [selectedDerivativeUse, setSelectedDerivativeUse] = useState([]);
+  const getDataById = (ids: any) =>
+    Array.isArray(ids)
+      ? cards.filter((item) => ids.includes(item.value))
+      : [cards.find((item) => item.id === ids)] || [];
 
-  const [enabled, setEnabled] = useState<number | null>(null);
+  useEffect(() => {
+    setSelectedDerivativeUse(
+      getDataById(contractCreation.AdditionalConditionsChecks) as any
+    );
+  }, [contractCreation.AdditionalConditionsChecks]);
+
   const onCheckHandle = (id: number) => {
     if (enabled === id) {
       setEnabled(null);
@@ -107,35 +82,44 @@ const DerivativeUse = ({ handleNextStep, handleBackStep }: any) => {
       setEnabled(id);
     }
   };
-
+  // DerivativeUse
   const handleClickNext = () => {
     toast("Derivative used successfully", {
       description: "Derivative",
       action: {
         label: "X",
-        onClick: () => { },
+        onClick: () => {},
       },
-      position: "top-right"
+      position: "top-right",
     });
     handleNextStep(1);
   };
 
-  const { members, dispatch } = useContractBuilder();
-  const handleUpdateGoal = (member: TeamMember, value: number) => {
-    const _members = [...members];
+  useEffect(() => {
+    if (enabled) {
+      setContractCreation((prevData: any) => ({
+        ...prevData,
+        derivativeUse: cards,
+      }));
+    }
+  }, [enabled]);
+
+  const handleUpdateGoal = (cardId: any, member: any, value: number) => {
+    const _members = [...contractCreation.derivativeUse];
     const newMember = {
       ...member,
-      revenue: value,
+      cost: value.toString(),
     };
-    const index = _members.findIndex((m) => m.id === member.id);
-    const m = _members.splice(index, 1, newMember);
 
-    dispatch({
-      type: Steps.SHARES,
-      payload: {
-        members: _members,
-      },
-    });
+    const cardIndex = _members.findIndex((card) => card.id === cardId);
+
+    const index = _members[cardIndex]?.subCards?.findIndex((m: any) => m.id === member.id);
+    _members[cardIndex].subCards.splice(index, 1, newMember);
+
+    setContractCreation((prevData: any) => ({
+      ...prevData,
+      cost: { enabled: enabled, derivativeUse: _members },
+    }));
   };
 
   return (
@@ -155,36 +139,63 @@ const DerivativeUse = ({ handleNextStep, handleBackStep }: any) => {
               <Card className="bg-transparent border-none shadow-none">
                 <CardContent className="space-y-6 p-0">
                   <div className="pl-2.5">
-                    {derivativeCards.map((card) =>
-                      <Card key={card.id} className="border-none bg-modal-foreground mb-8 rounded-3xl	">
+                    {selectedDerivativeUse.map((card: any) => (
+                      <Card
+                        key={card.id}
+                        className="border-none bg-modal-foreground mb-8 rounded-3xl	"
+                      >
                         <CardHeader className="py-5 pb-0">
                           <CardTitle className="text-[17px] font-normal flex justify-between">
                             <div>
                               <h6>{card.title}</h6>
-                              <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">Derivative</Badge>
+                              <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">
+                                Derivative
+                              </Badge>
                             </div>
-                            <Switch className="mt-2.5" checked={enabled === card.id} onCheckedChange={() => onCheckHandle(card.id)} />
+                            <Switch
+                              className="mt-2.5"
+                              checked={enabled === card.id}
+                              onCheckedChange={() => onCheckHandle(card.id)}
+                            />
                           </CardTitle>
                         </CardHeader>
                         <CardContent className="pb-8">
-                          <p className="text-sm	mt-2.5 text-muted-foreground">Lorem</p>
-                          {enabled === card.id && <div className="space-y-8 mt-10">
-                            <div className="pl-4">
-                              {members.map((member, index) => (
-                                <ShareCard
-                                  key={index}
-                                  member={member}
-                                  updateGoal={(v) => handleUpdateGoal(member, v)}
-                                  buttonHidden={true}
-                                  avatar={false}
-                                  bgcolor="bg-modal"
-                                />
-                              ))}
+                          <p className="text-sm	mt-2.5 text-muted-foreground">
+                            Lorem
+                          </p>
+                          {enabled === card.id && (
+                            <div className="space-y-8 mt-10">
+                              <div className="pl-4">
+                                {card?.subCards?.map((member:any, index:number) => (
+                                  <div className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md w-fit bg-modal pb-1.5 mb-8" key={index}>
+                                  <div className="pt-3">
+                                    <p className="text-sm font-normal leading-none mb-1">
+                                      {member.title}
+                                    </p>
+                                    <p className="text-sm text-muted-foreground">Lorem ipsum</p>
+                                  </div>
+                                  <div className="">
+                                    <CardsActivityGoal
+                                      label="Abatement rate"
+                                      initialValue={member.cost || 30}
+                                      unit="%"
+                                      step={10}
+                                      buttonTitle="Set Rate"
+                                      minValue={5}
+                                      maxValue={100}
+                                      buttonHidden
+                                      onClickButton={() => { }}
+                                      setGoal={(v) => handleUpdateGoal(card.id, member, v)}
+                                    />
+                                  </div>
+                                </div>
+                                ))}
+                              </div>
                             </div>
-                          </div>}
+                          )}
                         </CardContent>
                       </Card>
-                    )}
+                    ))}
                   </div>
                 </CardContent>
               </Card>
@@ -217,31 +228,39 @@ const DerivativeUse = ({ handleNextStep, handleBackStep }: any) => {
               <CardHeader>
                 <CardTitle>Derivative use</CardTitle>
                 <CardDescription>
-                  Abatements rates for foreign markets, compilation and Promotion
+                  Abatements rates for foreign markets, compilation and
+                  Promotion
                 </CardDescription>
               </CardHeader>
               <CardContent className="">
-                {cards.map((card) =>
-                  <Card key={card.id} className="bg-transparent border-none shadow-none">
+                {cards.map((card) => (
+                  <Card
+                    key={card.id}
+                    className="bg-transparent border-none shadow-none"
+                  >
                     <CardHeader>
-                      <CardTitle className="text-lg font-normal">{card.title}</CardTitle>
-                      <CardDescription>
-                        {card.desc}
-                      </CardDescription>
+                      <CardTitle className="text-lg font-normal">
+                        {card.title}
+                      </CardTitle>
+                      <CardDescription>{card.desc}</CardDescription>
                     </CardHeader>
                     <CardContent className="flex justify-start items-center gap-6">
                       {card?.subCards.map((innercard) => (
                         <div className="rounded-md bg-modal-foreground px-[10px] py-2 w-[150px] min-h-[90px] space-y-1">
-                          <p className="text-[12px] font-normal">{innercard.title}</p>
+                          <p className="text-[12px] font-normal">
+                            {innercard.title}
+                          </p>
                           <p className="text-[#94A3B8] text-[9px] font-normal">
                             {innercard.desc}
                           </p>
-                          <p className="text-mblue text-[12px] font-normal">{innercard.rate}</p>
+                          <p className="text-mblue text-[12px] font-normal">
+                            {innercard.cost}
+                          </p>
                         </div>
                       ))}
                     </CardContent>
                   </Card>
-                )}
+                ))}
               </CardContent>
             </Card>
             <div className="rounded-2xl bg-modal border border-muted w-full p-4 mt-[76px]">

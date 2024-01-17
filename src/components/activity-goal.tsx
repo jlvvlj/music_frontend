@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Minus, Plus } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Bar, BarChart, ResponsiveContainer } from "recharts";
@@ -79,7 +79,7 @@ interface Props extends React.HTMLAttributes<HTMLElement> {
 export function CardsActivityGoal({
   unit,
   className,
-  initialValue = 0,
+  initialValue,
   step = 1,
   label,
   cardTitle,
@@ -98,13 +98,10 @@ export function CardsActivityGoal({
 
   const theme = themes.find((theme) => theme.name === config.theme);
 
-  useEffect(() => {
-
-  }, [initialValue]);
+  useEffect(() => {}, [initialValue]);
   function onClick(adjustment: number) {
-    setGoal(initialValue + adjustment);
+    setGoal(Number(initialValue) + adjustment);
   }
-
   return (
     <Card className="bg-transparent border-none shadow-none">
       <CardTitle className="text-base"></CardTitle>
@@ -129,8 +126,8 @@ export function CardsActivityGoal({
           </Button>
           <div className="flex-1 text-center">
             <div className="text-[21px] font-bold tracking-tighter">
-              {initialValue}
               {unit || ""}
+              {initialValue}
             </div>
             <div className="text-[0.40rem] uppercase">{label}</div>
           </div>

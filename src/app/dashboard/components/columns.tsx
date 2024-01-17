@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { ColumnDef } from "@tanstack/react-table"
+import { ColumnDef } from "@tanstack/react-table";
 
-import { Badge } from "@/registry/new-york/ui/badge"
-import CountUp from 'react-countup';
+import { Badge } from "@/registry/new-york/ui/badge";
+import CountUp from "react-countup";
 
-import { albums, priorities, statuses, titles } from "../data/data"
-import { Task } from "../data/schema"
-import { DataTableColumnHeader } from "./data-table-column-header"
+import { albums, priorities, statuses, titles } from "../data/data";
+import { Task } from "../data/schema";
+import { DataTableColumnHeader } from "./data-table-column-header";
 import { Sheet, SheetTrigger } from "@/registry/new-york/ui/sheet";
 import TableDrawer from "./table-drawer";
 
@@ -17,13 +17,16 @@ export const columns: ColumnDef<Task>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Contract" />
     ),
-    cell: ({ row }) =>
+    cell: ({ row }) => (
       <Sheet>
         <SheetTrigger asChild>
-          <div className="max-w-[160px] cursor-pointer">{row.getValue("id")}</div>
+          <div className="max-w-[160px] cursor-pointer">
+            {row.getValue("id")}
+          </div>
         </SheetTrigger>
-        <TableDrawer  name={row.getValue("id")}/>
-      </Sheet>,
+        <TableDrawer name={row.getValue("id")} />
+      </Sheet>
+    ),
     enableSorting: false,
     enableHiding: false,
   },
@@ -34,7 +37,8 @@ export const columns: ColumnDef<Task>[] = [
     ),
     cell: ({ row }) => {
       const title = titles.find(
-        (title) => title.value === row.getValue("title"))
+        (title) => title.value === row.getValue("title")
+      );
 
       return (
         <div className="flex space-x-2 justify-center">
@@ -43,10 +47,10 @@ export const columns: ColumnDef<Task>[] = [
             {row.getValue("title")}
           </span>
         </div>
-      )
+      );
     },
     filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
+      return value.includes(row.getValue(id));
     },
     enableSorting: false,
   },
@@ -57,17 +61,17 @@ export const columns: ColumnDef<Task>[] = [
     ),
     cell: ({ row }) => {
       const album = albums.find(
-        (album) => album.value === row.getValue("album"))
+        (album) => album.value === row.getValue("album")
+      );
 
       return (
-        <div className="w-[160px] mx-auto text-center">{row.getValue("album")}</div>
-      )
-
-
-
+        <div className="w-[160px] mx-auto text-center">
+          {row.getValue("album")}
+        </div>
+      );
     },
     filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
+      return value.includes(row.getValue(id));
     },
     enableSorting: false,
   },
@@ -96,7 +100,7 @@ export const columns: ColumnDef<Task>[] = [
       );
     },
     filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
+      return value.includes(row.getValue(id));
     },
     enableSorting: false,
   },
@@ -107,10 +111,11 @@ export const columns: ColumnDef<Task>[] = [
     ),
     cell: ({ row }) => {
       const status = statuses.find(
-        (status) => status.value === row.getValue("status"))
+        (status) => status.value === row.getValue("status")
+      );
 
       if (!status) {
-        return null
+        return null;
       }
 
       return (
@@ -120,26 +125,26 @@ export const columns: ColumnDef<Task>[] = [
           )}
           <span>{status.label}</span>
         </div>
-      )
+      );
     },
     filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
+      return value.includes(row.getValue(id));
     },
     enableSorting: false,
   },
 
   {
-    accessorKey: "revenue",
+    accessorKey: "priority",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Revenues" />
     ),
     cell: ({ row }) => {
       const priority = priorities.find(
         (priority) => priority.value === row.getValue("priority")
-      )
+      );
 
       if (!priority) {
-        return null
+        return null;
       }
 
       return (
@@ -152,7 +157,7 @@ export const columns: ColumnDef<Task>[] = [
       );
     },
     filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
+      return value.includes(row.getValue(id));
     },
     enableSorting: false,
   },
@@ -162,9 +167,7 @@ export const columns: ColumnDef<Task>[] = [
       <DataTableColumnHeader column={column} title="Your Share" />
     ),
     cell: ({ row }) => {
-      return (
-        <div className='text-center'>{row.getValue("YourShare")}</div>
-      )
+      return <div className="text-center">{row.getValue("YourShare")}</div>;
     },
     enableSorting: false,
   },
@@ -178,13 +181,13 @@ export const columns: ColumnDef<Task>[] = [
       return (
         <CountUp
           start={0}
-          end={parseFloat(yourRevenuesValue?.replace(/[^0-9.]/g, '') || '0')}
+          end={parseFloat(yourRevenuesValue?.replace(/[^0-9.]/g, "") || "0")}
           duration={5}
-          className='w-[100px] text-end'
+          className="w-[100px] text-end"
           formattingFn={(value) => `€${value.toFixed(1)}`}
         />
-      )
+      );
     },
     enableSorting: false,
   },
-]
+];
