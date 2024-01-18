@@ -23,18 +23,18 @@ export default function NewContract() {
       cover: "",
       audios: [],
     },
-    members: { masterOwners:[], artists: [] },
+    members: { masterOwners: [], artists: [] },
     rates: [],
     shares: [],
     additionalConditions: null,
     initialBudget: [],
-    RoyaltyAdvances: null,
+    royaltyAdvances: null,
     abatements: [],
     broadCasting: [],
     derivativeUse: [],
   });
   const [currentStep, setCurrentStep] = useState<number>(1);
-  const [checkedBoxes, setCheckedBoxes] = useState({
+  const [checkedBoxes, setCheckedBoxes] = useState<any>({
     4: false,
     6: false,
     7: false,
@@ -50,8 +50,7 @@ export default function NewContract() {
       } else {
         setCurrentStep(3);
       }
-    }
-    else if (currentStep < 6) {
+    } else if (currentStep < 6) {
       setCurrentStep((prevStep) => Math.max(prevStep - 1, 1));
     } else if (currentStep === 5) {
       const previousPage = Object.keys(checkedBoxes)
@@ -66,8 +65,10 @@ export default function NewContract() {
       const previousPage = Object.keys(checkedBoxes)
         .reverse()
         .find((page) => checkedBoxes[page] && parseInt(page, 11) < currentStep);
-        if (previousPage) {
-        setCurrentStep(currentStep === 6 ? parseInt("5") : parseInt(previousPage));
+      if (previousPage) {
+        setCurrentStep(
+          currentStep === 6 ? parseInt("5") : parseInt(previousPage)
+        );
       } else {
         setCurrentStep(5);
       }
@@ -81,8 +82,7 @@ export default function NewContract() {
       } else {
         setCurrentStep(4);
       }
-    }
-    else if (currentStep < 5) {
+    } else if (currentStep < 5) {
       setCurrentStep((prevStep) => Math.min(prevStep + 1, 11));
     } else if (currentStep === 5) {
       const selectedSteps = Object.keys(checkedBoxes).filter(
@@ -108,12 +108,13 @@ export default function NewContract() {
 
   const handleSwitchChange = (step: any, e: any) => {
     if (e) {
-      if (!steps.some((st => st.id === step.id)))
-        setSteps((prevSteps) => [...prevSteps, step].sort((a, b) => a.id - b.id));
-    }
-    else
+      if (!steps.some((st) => st.id === step.id))
+        setSteps((prevSteps) =>
+          [...prevSteps, step].sort((a, b) => a.id - b.id)
+        );
+    } else
       setSteps((prevSteps) => prevSteps.filter(({ id }) => id !== step.id));
-    setCheckedBoxes((prevSteps) => {
+    setCheckedBoxes((prevSteps: any) => {
       return { ...prevSteps, [step.id]: e };
     });
   };
@@ -229,11 +230,12 @@ export default function NewContract() {
     <ContractBuilderProvider>
       <div className="h-[inherit] xl:w-[1241px] w-full flex flex-col gap-20 relative">
         <div
-          className={`absolute top-9 hidden lg:block z-10 ${currentStep === StepIndex.INTRODUCTION ||
+          className={`absolute top-9 hidden lg:block z-10 ${
+            currentStep === StepIndex.INTRODUCTION ||
             currentStep === StepIndex.ADDITIONALCONDITIONS
-            ? "left-1/2 translate-x-[-50%] w-[454px]"
-            : "left-[88px] w-[50%]"
-            }`}
+              ? "left-1/2 translate-x-[-50%] w-[454px]"
+              : "left-[88px] w-[50%]"
+          }`}
         >
           <ProgressSteps
             currentStep={currentStep}

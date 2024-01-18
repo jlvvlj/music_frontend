@@ -38,19 +38,19 @@ const cards = [
   {
     id: 1,
     title: "At signature",
-    value:"at_signature",
+    value: "at_signature",
     showDatePicker: false,
   },
   {
     id: 2,
     title: "At Commercial release",
-    value:"at_commercial_release",
+    value: "at_commercial_release",
     showDatePicker: false,
   },
   {
     id: 3,
     title: "At Specific Date",
-    value:"at_specific_date",
+    value: "at_specific_date",
     showDatePicker: true,
   },
 ];
@@ -61,7 +61,7 @@ export default function RoyaltyAdvances({
   contractCreation,
   setContractCreation,
 }: any) {
-  const [enabled, setEnabled] = useState<string>(
+  const [enabled, setEnabled] = useState<string | any>(
     contractCreation.royaltyAdvances
   );
   const [selectedRoyaltiesCards, setSelectedRoyaltiesCards] = useState([]);
@@ -72,12 +72,12 @@ export default function RoyaltyAdvances({
 
   useEffect(() => {
     setSelectedRoyaltiesCards(
-      getDataById(contractCreation.AdditionalConditionsChecks) as any
+      getDataById(contractCreation.additionalConditions) as any
     );
-  }, [contractCreation.AdditionalConditionsChecks]);
+  }, [contractCreation.additionalConditions]);
 
   const onCheckHandle = (id: number) => {
-    if (enabled === id) {
+    if ((enabled as any) === id) {
       setEnabled(null);
     } else {
       setEnabled(id);
@@ -100,25 +100,44 @@ export default function RoyaltyAdvances({
     if (enabled) {
       setContractCreation((prevData: any) => ({
         ...prevData,
-        royaltyAdvances: cards.map((card) =>{return {...card,activityCards: contractCreation.TeamMembers.Artists}} ),
+        royaltyAdvances: contractCreation?.members?.artists?.map(
+          (artist: any) => {
+            return { ...artist, categories: selectedRoyaltiesCards };
+          }
+        ),
       }));
     }
   }, [enabled]);
 
-  const { members, dispatch } = useContractBuilder();
-  const handleUpdateGoal = (member: TeamMember, value: number) => {
-    const _members = [...members];
-    const newMember = {
-      ...member,
-      revenue: value.toString(),
-    };
-    const index = _members.findIndex((m) => m.id === member.id);
-    const m = _members.splice(index, 1, newMember);
+  const { dispatch } = useContractBuilder();
+
+  const handleUpdateGoal = (
+    category: any,
+    member: TeamMember,
+    value: number
+  ) => {
+    setContractCreation((prevData: any) => {
+      const updatedRoyaltyAdvances = prevData.royaltyAdvances.map(
+        (card: any) => {
+          if (card.id === member?.id && card.categories) {
+            const updatedCategories = card.categories.map((cat: any) => {
+              if (cat.id === category?.id) {
+                return { ...cat, revenue: value };
+              }
+              return cat;
+            });
+            return { ...card, categories: updatedCategories };
+          }
+          return card;
+        }
+      );
+      return { ...prevData, royaltyAdvances: updatedRoyaltyAdvances };
+    });
 
     dispatch({
       type: Steps.SHARES,
       payload: {
-        members: _members,
+        members: [...contractCreation?.royaltyAdvances],
       },
     });
   };
@@ -141,9 +160,10 @@ export default function RoyaltyAdvances({
     mode: "onChange",
   });
 
-  const [selectedArtists, setSelectedArtists] = useState<any>([]);
-  const handleSelectedArtist = (artists: any) => {
-    setSelectedArtists(artists);
+  const calculateTotalRevenue = (categories: any) => {
+    return categories.reduce((totalRevenue: any, category: any) => {
+      return totalRevenue + (category.revenue || 0);
+    }, 0);
   };
 
   return (
@@ -188,50 +208,27 @@ export default function RoyaltyAdvances({
                         </p>
                         {enabled === card.id && (
                           <div className="space-y-8 mt-10">
-                            {card.showDatePicker && (
-                              <div className="mt-3 space-y-3 flex flex-col justify-center items-center">
-                                <Form {...form}>
-                                  <FormField
-                                    control={form.control}
-                                    name="optionRightsLimit"
-                                    render={({ field }) => (
-                                      <FormItem>
-                                        <FormControl>
-                                          <DatePicker
-                                            className="max-w-[230px]"
-                                            buttonClassName="w-[230px] text-sm text-white3 bg-card3"
-                                            placeholder="Jan 20, 2023"
-                                            date={field.value}
-                                            onDateChange={(d) =>
-                                              field.onChange(d || new Date())
-                                            }
-                                          />
-                                        </FormControl>
-                                      </FormItem>
-                                    )}
-                                  />
-                                </Form>
-                                <ArtistMultiSelect
-                                  width="max-w-[230px]"
-                                  artistRate={false}
-                                  handleArtist={handleSelectedArtist}
-                                />
-                              </div>
-                            )}
                             <div className="pl-4 gap-10">
-                              {card?.activityCards?.map((member:any, index:number) => (
-                                <MemberCard
-                                  key={index}
-                                  member={{...member, revenue:member.revenue * 100}}
-                                  updateGoal={(v) =>
-                                    handleUpdateGoal(member, v)
-                                  }
-                                  unit="€"
-                                  buttonHidden={true}
-                                  avatar={true}
-                                  bgcolor="bg-modal"
-                                />
-                              ))}
+                              {contractCreation?.royaltyAdvances?.map(
+                                (member: any, index: number) => (
+                                  <MemberCard
+                                    key={index}
+                                    member={{
+                                      ...member,
+                                      revenue: member?.categories?.find(
+                                        (category: any) =>
+                                          category.id === card.id
+                                      )?.revenue,
+                                    }}
+                                    updateGoal={(v) =>
+                                      handleUpdateGoal(card, member, v)
+                                    }
+                                    unit="€"
+                                    avatar={true}
+                                    bgcolor="bg-modal"
+                                  />
+                                )
+                              )}
                             </div>
                           </div>
                         )}
@@ -274,77 +271,64 @@ export default function RoyaltyAdvances({
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="flex items-start mx-auto gap-4 pl-2.5 pt-1.5 rounded-md mb-1 w-fit bg-black3 right-card">
-                <Avatar className="bg-[#A3D3FF] mt-2 h-11 w-11">
-                  <Image src="/jon.svg" width={100} height={100} alt="avatar" />
-                </Avatar>
-                <div className="pt-3">
-                  <p className="text-sm font-normal leading-none mb-1">
-                    Charly Jones
-                  </p>
-                  <p className="text-sm">Singer</p>
-                </div>
-                <div className="">
-                  <CardsActivityGoal
-                    label={"base rate on sales"}
-                    initialValue={8000 || 30}
-                    unit=""
-                    step={10}
-                    buttonTitle="Set Share"
-                    minValue={0}
-                    maxValue={100}
-                    buttonHidden
-                    onClickButton={() => {}}
-                    setGoal={() => {}}
-                  />
-                </div>
-              </div>
-              <div className="flex items-center gap-6 px-20 mb-12">
-                <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
-                  <p className="text-[12px] font-normal">At Signature</p>
-                  <p className="text-mblue text-[12px] font-normal">€ 3000</p>
-                </div>
-                <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
-                  <p className="text-[12px] font-normal">At release</p>
-                  <p className="text-mblue text-[12px] font-normal">€ 5000</p>
-                </div>
-              </div>
-              <div className="flex items-start mx-auto gap-4 pl-2.5 pt-1.5 rounded-md mb-1 w-fit bg-black3 right-card">
-                <Avatar className="bg-[#A3D3FF] mt-2 h-11 w-11">
-                  <Image
-                    src="/orlane.svg"
-                    width={100}
-                    height={100}
-                    alt="avatar"
-                  />
-                </Avatar>
-                <div className="pt-3">
-                  <p className="text-sm font-normal leading-none mb-1">
-                    Orlane Moog
-                  </p>
-                  <p className="text-sm">Musician</p>
-                </div>
-                <div className="">
-                  <CardsActivityGoal
-                    label={"base rate on sales"}
-                    initialValue={3000 || 30}
-                    unit=""
-                    step={10}
-                    buttonTitle="Set Share"
-                    minValue={0}
-                    maxValue={100}
-                    buttonHidden
-                    onClickButton={() => {}}
-                    setGoal={() => {}}
-                  />
-                </div>
-              </div>
-              <div className="flex items-center gap-6 px-20">
-                <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
-                  <p className="text-[12px] font-normal">At Specific Date</p>
-                  <p className="text-mblue text-[12px] font-normal">€ 3000</p>
-                </div>
-              </div>
+              {contractCreation?.royaltyAdvances?.map((card: any) => {
+                return (
+                  <>
+                    <div className="flex items-start mx-auto gap-4 pl-2.5 pt-1.5 rounded-md mb-1 w-fit bg-black3 right-card">
+                      <Avatar className="bg-[#A3D3FF] mt-2 h-11 w-11">
+                        <Image
+                          src={card.avatar}
+                          width={100}
+                          height={100}
+                          alt="avatar"
+                        />
+                      </Avatar>
+                      <div className="pt-3">
+                        <p className="text-sm font-normal leading-none mb-1">
+                          {card.name}
+                        </p>
+                        <p className="text-sm">
+                          {card.role.charAt(0).toUpperCase() +
+                            card.role.slice(1)}
+                        </p>
+                      </div>
+                      <div className="">
+                        <CardsActivityGoal
+                          label={"base rate on sales"}
+                          initialValue={calculateTotalRevenue(card.categories)}
+                          unit=""
+                          step={10}
+                          minValue={0}
+                          maxValue={1000}
+                          buttonHidden
+                          onClickButton={() => {}}
+                          setGoal={() => {}}
+                        />
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-6 px-20 mb-12">
+                      {card.categories.map((categ: any, index: number) => {
+                        return (
+                          <>
+                            {card.categories[index].revenue ? (
+                              <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
+                                <p className="text-[12px] font-normal">
+                                  {card.categories[index].title}
+                                </p>
+                                <p className="text-mblue text-[12px] font-normal">
+                                  € {card.categories[index].revenue}
+                                </p>
+                              </div>
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        );
+                      })}
+                    </div>
+                  </>
+                );
+              })}
             </CardContent>
           </Card>
           <div className="rounded-2xl bg-modal border border-muted w-full p-4">

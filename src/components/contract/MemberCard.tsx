@@ -14,9 +14,9 @@ const ShareCard = ({
   buttonTitle,
   avatar,
   bgcolor,
-  unit
+  unit,
 }: {
-  step?: number
+  step?: number;
   member: TeamMember;
   updateGoal: (v: number) => void;
   buttonHidden?: boolean;
@@ -62,7 +62,6 @@ const ShareCard = ({
           onClickButton={() => {}}
           isOwner={isOwner(member)}
           setGoal={handleChangeGoal}
-          
         />
       </div>
     </div>

@@ -16,18 +16,7 @@ import { derivativeTracks } from "@/app/data/data";
 import { DerivativeColumn } from "./DerivativeColumn";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import useContractBuilder from "@/hooks/useContractBuilder";
-import { Steps } from "@/contexts/ContractBuilderContext";
 import { CardsActivityGoal } from "../activity-goal";
-
-type Tab = {
-  label: string;
-  value: TabName;
-  title: string;
-  description: string;
-  cardTitle: string;
-};
-
-type TabName = "merchandising" | "partnerships";
 
 const cards = [
   {
@@ -69,9 +58,9 @@ const DerivativeUse = ({
 
   useEffect(() => {
     setSelectedDerivativeUse(
-      getDataById(contractCreation.AdditionalConditionsChecks) as any
+      getDataById(contractCreation.additionalConditions) as any
     );
-  }, [contractCreation.AdditionalConditionsChecks]);
+  }, [contractCreation.additionalConditions]);
 
   const onCheckHandle = (id: number) => {
     if (enabled === id) {
@@ -111,7 +100,9 @@ const DerivativeUse = ({
 
     const cardIndex = _members.findIndex((card) => card.id === cardId);
 
-    const index = _members[cardIndex]?.subCards?.findIndex((m: any) => m.id === member.id);
+    const index = _members[cardIndex]?.subCards?.findIndex(
+      (m: any) => m.id === member.id
+    );
     _members[cardIndex].subCards.splice(index, 1, newMember);
 
     setContractCreation((prevData: any) => ({
@@ -164,30 +155,39 @@ const DerivativeUse = ({
                           {enabled === card.id && (
                             <div className="space-y-8 mt-10">
                               <div className="pl-4">
-                                {card?.subCards?.map((member:any, index:number) => (
-                                  <div className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md w-fit bg-modal pb-1.5 mb-8" key={index}>
-                                  <div className="pt-3">
-                                    <p className="text-sm font-normal leading-none mb-1">
-                                      {member.title}
-                                    </p>
-                                    <p className="text-sm text-muted-foreground">Lorem ipsum</p>
-                                  </div>
-                                  <div className="">
-                                    <CardsActivityGoal
-                                      label="Abatement rate"
-                                      initialValue={member.cost || 30}
-                                      unit="%"
-                                      step={10}
-                                      buttonTitle="Set Rate"
-                                      minValue={5}
-                                      maxValue={100}
-                                      buttonHidden
-                                      onClickButton={() => { }}
-                                      setGoal={(v) => handleUpdateGoal(card.id, member, v)}
-                                    />
-                                  </div>
-                                </div>
-                                ))}
+                                {card?.subCards?.map(
+                                  (member: any, index: number) => (
+                                    <div
+                                      className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md w-fit bg-modal pb-1.5 mb-8"
+                                      key={index}
+                                    >
+                                      <div className="pt-3">
+                                        <p className="text-sm font-normal leading-none mb-1">
+                                          {member.title}
+                                        </p>
+                                        <p className="text-sm text-muted-foreground">
+                                          Lorem ipsum
+                                        </p>
+                                      </div>
+                                      <div className="">
+                                        <CardsActivityGoal
+                                          label="Abatement rate"
+                                          initialValue={member.cost || 30}
+                                          unit="%"
+                                          step={10}
+                                          buttonTitle="Set Rate"
+                                          minValue={5}
+                                          maxValue={100}
+                                          buttonHidden
+                                          onClickButton={() => {}}
+                                          setGoal={(v) =>
+                                            handleUpdateGoal(card.id, member, v)
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                  )
+                                )}
                               </div>
                             </div>
                           )}

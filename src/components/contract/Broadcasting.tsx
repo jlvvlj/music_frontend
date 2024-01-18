@@ -30,7 +30,8 @@ const baseBroadCasting = {
 
 const cards = [
   {
-    id: 1, value: "broadcasting",
+    id: 1,
+    value: "broadcasting",
     title: "Broadcasting",
     desc: "Concession Royalties to be paid",
     activityCards: [{ id: 1, title: "Concession", cost: 40 }],
@@ -64,9 +65,9 @@ const Broadcasting = ({
 
   useEffect(() => {
     setSelectedBroadCasting(
-      getDataById(contractCreation.AdditionalConditionsChecks) as any
+      getDataById(contractCreation.additionalConditions) as any
     );
-  }, [contractCreation.AdditionalConditionsChecks]);
+  }, [contractCreation.additionalConditions]);
 
   const onCheckHandle = (id: number) => {
     if (enabled === id) {
@@ -81,7 +82,7 @@ const Broadcasting = ({
       description: "Broadcasting",
       action: {
         label: "X",
-        onClick: () => { },
+        onClick: () => {},
       },
       position: "top-right",
     });
@@ -106,7 +107,9 @@ const Broadcasting = ({
 
     const cardIndex = _members.findIndex((card) => card.id === cardId);
 
-    const index = _members[cardIndex]?.activityCards?.findIndex((m: any) => m.id === member.id);
+    const index = _members[cardIndex]?.activityCards?.findIndex(
+      (m: any) => m.id === member.id
+    );
     _members[cardIndex].activityCards.splice(index, 1, newMember);
 
     setContractCreation((prevData: any) => ({
@@ -160,30 +163,39 @@ const Broadcasting = ({
                         {enabled === card.id && (
                           <div className="space-y-8 mt-10">
                             <div className="pl-4">
-                              {card?.activityCards.map((member: any, index: any) => (
-                                <div className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md w-fit bg-modal pb-1.5 mb-8" key={index}>
-                                  <div className="pt-3">
-                                    <p className="text-sm font-normal leading-none mb-1">
-                                      {member.title}
-                                    </p>
-                                    <p className="text-sm text-muted-foreground">Lorem ipsum</p>
+                              {card?.activityCards.map(
+                                (member: any, index: any) => (
+                                  <div
+                                    className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md w-fit bg-modal pb-1.5 mb-8"
+                                    key={index}
+                                  >
+                                    <div className="pt-3">
+                                      <p className="text-sm font-normal leading-none mb-1">
+                                        {member.title}
+                                      </p>
+                                      <p className="text-sm text-muted-foreground">
+                                        Lorem ipsum
+                                      </p>
+                                    </div>
+                                    <div className="">
+                                      <CardsActivityGoal
+                                        label="Abatement rate"
+                                        initialValue={member.cost || 30}
+                                        unit="%"
+                                        step={10}
+                                        buttonTitle="Set Rate"
+                                        minValue={5}
+                                        maxValue={100}
+                                        buttonHidden
+                                        onClickButton={() => {}}
+                                        setGoal={(v) =>
+                                          handleUpdateGoal(card.id, member, v)
+                                        }
+                                      />
+                                    </div>
                                   </div>
-                                  <div className="">
-                                    <CardsActivityGoal
-                                      label="Abatement rate"
-                                      initialValue={member.cost || 30}
-                                      unit="%"
-                                      step={10}
-                                      buttonTitle="Set Rate"
-                                      minValue={5}
-                                      maxValue={100}
-                                      buttonHidden
-                                      onClickButton={() => { }}
-                                      setGoal={(v) => handleUpdateGoal(card.id, member, v)}
-                                    />
-                                  </div>
-                                </div>
-                              ))}
+                                )
+                              )}
                             </div>
                           </div>
                         )}
@@ -239,9 +251,16 @@ const Broadcasting = ({
                   </CardHeader>
                   <CardContent className="flex justify-start items-center gap-6">
                     {card.activityCards?.map((activity: any, index: number) => (
-                      <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4" key={index}>
-                        <p className="text-[12px] font-normal">{activity?.title}</p>
-                        <p className="text-mblue text-[12px] font-normal">{activity?.cost}%</p>
+                      <div
+                        className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4"
+                        key={index}
+                      >
+                        <p className="text-[12px] font-normal">
+                          {activity?.title}
+                        </p>
+                        <p className="text-mblue text-[12px] font-normal">
+                          {activity?.cost}%
+                        </p>
                       </div>
                     ))}
                   </CardContent>
