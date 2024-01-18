@@ -53,7 +53,7 @@ const Budget = ({
   setContractCreation,
 }: any) => {
   const [enabled, setEnabled] = useState<number | null>(
-    contractCreation.budget || null
+    contractCreation.initialBudget || null
   );
   const { dispatch } = useContractBuilder();
 
@@ -65,19 +65,15 @@ const Budget = ({
 
   useEffect(() => {
     setSelectedBudgets(
-      getDataById(contractCreation.AdditionalConditionsChecks) as any
+      getDataById(contractCreation.additionalConditions) as any
     );
-  }, [contractCreation.AdditionalConditionsChecks]);
+  }, [contractCreation.additionalConditions]);
 
   useEffect(() => {
     if (enabled) {
       setContractCreation((prevData: any) => ({
         ...prevData,
-        budget: {
-          enabled: enabled,
-          selectedBudgets: selectedBudgets,
-          budgetCards: budgetCards,
-        },
+        initialBudget: budgetCards,
       }));
     }
   }, [enabled]);
@@ -103,7 +99,7 @@ const Budget = ({
   };
 
   const handleUpdateGoal = (cardId:any, member: TeamMember, value: number) => {
-    const _members = [...contractCreation.budget.budgetCards];
+    const _members = [...contractCreation.initialBudget];
     const newMember = {
       ...member,
       cost: value.toString(),

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -6,8 +6,6 @@ import { toast } from "sonner";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 
 import { Button } from "@/components/ui/button";
-import { SingleRate, TieredRate } from "./types";
-import { Avatar } from "../ui/avatar";
 import { TableCommon } from "./TableCommon";
 import { recordingTracks } from "@/app/data/data";
 import { RecordingsColumn } from "./RecordingsColumn";
@@ -15,42 +13,7 @@ import useContractBuilder from "@/hooks/useContractBuilder";
 import { Steps } from "@/contexts/ContractBuilderContext";
 import MemberCard from "./MemberCard";
 
-const rateFormSchema = z.object({
-  from: z.number().default(0),
-  to: z.number().default(0),
-  percentage: z.number().default(0),
-});
-
-type RateFormValues = z.infer<typeof rateFormSchema>;
-const defaultValues: Partial<RateFormValues> = {};
-
-const baseRate = {
-  from: 0,
-  to: 0,
-  percentage: 0,
-};
-
-const Royalties = ({ handleNextStep, handleBackStep }: any) => {
-  const [tieredRates, setTieredRates] = useState<TieredRate[]>([]);
-
-  // ** form
-  const form = useForm<RateFormValues>({
-    resolver: zodResolver(rateFormSchema),
-    defaultValues,
-    mode: "onChange",
-  });
-
-  const onSubmit = (data: RateFormValues) => {
-    console.log(data);
-    const _tieredRates = [...tieredRates];
-    _tieredRates.push(data);
-    setTieredRates(_tieredRates);
-
-    setTimeout(() => {
-      form.reset(baseRate);
-    }, 500);
-  };
-
+const Shares = ({ handleNextStep, handleBackStep, setContractCreation, contractCreation }: any) => {
 
   const handleClickNext = () => {
     toast("Shares added successfully!", {
@@ -64,15 +27,28 @@ const Royalties = ({ handleNextStep, handleBackStep }: any) => {
     handleNextStep()
   };
 
-  const { members, dispatch } = useContractBuilder();
+  useEffect(() => {
+    setContractCreation((prevData: any) => ({
+      ...prevData,
+      shares: [...contractCreation?.members?.masterOwners],
+    }));
+}, []);
+
+  const { dispatch } = useContractBuilder();
   const handleUpdateGoal = (member: any, value: number) => {
-    const _members = [...members];
+    const _members = [...contractCreation?.shares];
     const newMember = {
       ...member,
       revenue: value,
     };
+
     const index = _members.findIndex((m) => m.id === member.id);
-    const m = _members.splice(index, 1, newMember);
+    _members.splice(index, 1, newMember);
+
+    setContractCreation((prevData: any) => ({
+      ...prevData,
+      shares: _members
+    }));
 
     dispatch({
       type: Steps.SHARES,
@@ -93,7 +69,7 @@ const Royalties = ({ handleNextStep, handleBackStep }: any) => {
             <p className="text-sm text-muted-foreground mb-[98px]">
               Enter the appropriate amount of shares to each producer on the team
             </p>
-            {members.map((member, index) => (
+            {contractCreation?.shares.map((member:any, index:number) => (
               <MemberCard
                 key={index}
                 member={member}
@@ -136,7 +112,7 @@ const Royalties = ({ handleNextStep, handleBackStep }: any) => {
                 Edit the shares on each track for a specific allocation
               </p>
               <div className="pl-4 gap-10">
-                {members.map((member, index) => (
+                {contractCreation?.shares.map((member:any, index:number) => (
                   <MemberCard
                     key={index}
                     unit={"%"}
@@ -158,4 +134,4 @@ const Royalties = ({ handleNextStep, handleBackStep }: any) => {
   );
 };
 
-export default Royalties;
+export default Shares;

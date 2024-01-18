@@ -47,44 +47,24 @@ const Teams = ({
   setContractCreation,
   handleSwitchChange
 }: any) => {
-  const { members, dispatch } = useContractBuilder();
   const [updatedTracks, setUpdatedTracks] = useState(
     contractCreation?.TeamMembers?.updatedTracks || (shareTracks as any)
   );
   const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
   const [selectedArtists, setSelectedArtists] = useState<any>(
-    contractCreation?.TeamMembers?.Artists || []
+    [...contractCreation?.members?.artists, ...contractCreation?.members?.masterOwners]
   );
 
   useEffect(() => {
-    if (updatedTracks || selectedArtists) {
+    if (selectedArtists)
       setContractCreation((prevData: any) => ({
         ...prevData,
-        TeamMembers: {
-          updatedTracks: updatedTracks,
-          Artists: selectedArtists,
+        members: {
+          masterOwners: selectedArtists?.filter((artist: any) => artist.role === "master owner"),
+          artists: selectedArtists?.filter((artist: any) => artist.role !== "master owner")
         },
       }));
-    }
-  }, [updatedTracks, selectedArtists]);
-
-  const handleUpdateGoal = (member: TeamMember, value: number) => {
-    const _members = [...members];
-    const newMember = {
-      ...member,
-      revenue: value.toString(),
-    };
-    const index = _members.findIndex((m) => m.id === member.id);
-
-    _members.splice(index, 1, newMember);
-
-    dispatch({
-      type: Steps.SHARES,
-      payload: {
-        members: _members,
-      },
-    });
-  };
+  }, [selectedArtists]);
 
   const table = useReactTable<any>({
     data: updatedTracks,
@@ -103,7 +83,7 @@ const Teams = ({
       description: "Artists",
       action: {
         label: "X",
-        onClick: () => {},
+        onClick: () => { },
       },
       position: "top-right",
     });
@@ -126,10 +106,10 @@ const Teams = ({
     const masterOwners = artists?.filter(
       (artist: any) => artist.role === "master owner"
     );
-    if(masterOwners?.length > 1)
-      handleSwitchChange({id: 4} ,true)
+    if (masterOwners?.length > 1)
+      handleSwitchChange({ id: 4 }, true)
     else
-      handleSwitchChange({id: 4} ,false)
+      handleSwitchChange({ id: 4 }, false)
   };
 
   return (
@@ -156,7 +136,7 @@ const Teams = ({
                 width="max-w-[230px]"
                 artistRate={false}
                 handleArtist={handleSelectedArtist}
-                selectedArtist={contractCreation?.TeamMembers?.Artists}
+                selectedArtist={[...contractCreation?.members?.masterOwners, ...contractCreation?.members?.artists]}
               />
               <InvitationPopover />
             </div>
@@ -183,7 +163,7 @@ const Teams = ({
       </div>
       <div className="relative flex items-end flex-col pb-7 pt-6 bg-modal-foreground rounded-r-3xl h-[782px]">
         <div className="scrollbox overflow-auto px-4 w-full h-full">
-          <TeamShare selectedArtist={contractCreation?.TeamMembers?.Artists} />
+          <TeamShare members={contractCreation?.members} />
           <div className="rounded-2xl bg-modal border border-muted w-full p-4 mt-8">
             {/* <TableCommon data={shareTracks} columns={ShareTrackColumn} /> */}
             <Table>
@@ -203,9 +183,9 @@ const Teams = ({
                           {header.isPlaceholder
                             ? null
                             : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
                         </TableHead>
                       );
                     })}

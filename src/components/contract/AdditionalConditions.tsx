@@ -105,7 +105,7 @@ export default function AdditionalConditions({
 }: any) {
   //   const [enabled, setEnabled] = useState<number[]>([]);
   const [check, setCheck] = useState<string[]>(
-    contractCreation.AdditionalConditionsChecks || []
+    contractCreation.additionalConditions || []
   );
 
   const onCheck = (value: string) => {
@@ -121,7 +121,7 @@ export default function AdditionalConditions({
     if (check) {
       setContractCreation((prevData: any) => ({
         ...prevData,
-        AdditionalConditionsChecks: check,
+        additionalConditions: check,
       }));
     }
   }, [check]);

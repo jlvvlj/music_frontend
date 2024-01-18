@@ -14,20 +14,20 @@ import Abatements from "./Abatements";
 import Broadcasting from "./Broadcasting";
 import DerivativeUse from "./DerivativeUse";
 import Introduction from "./Introduction";
-import { shareTracks, recordingTracks } from "@/app/data/data";
 
 export default function NewContract() {
   const [steps, setSteps] = useState(STEPS);
   const [contractCreation, setContractCreation] = useState({
-    Album: { albumTitle: "", cover: "", audio: [] },
-    TeamMembers: { updatedTracks: shareTracks, Artists: [] },
-    TeamAndShares: recordingTracks,
-    AdditionalConditionsChecks: null,
-    budget: {
-      enabled: [],
-      selectedBudgets: [],
-      budgetCards: [],
+    album: {
+      title: "",
+      cover: "",
+      audios: [],
     },
+    members: { masterOwners:[], artists: [] },
+    rates: [],
+    shares: [],
+    additionalConditions: null,
+    initialBudget: [],
     RoyaltyAdvances: null,
     abatements: [],
     broadCasting: [],

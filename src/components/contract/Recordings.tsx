@@ -24,10 +24,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { Recording, StepProps, TeamMember } from "./types";
+import { Recording, TeamMember } from "./types";
 import { Button } from "@/components/ui/button";
-import { CardsActivityGoal } from "@/components/activity-goal";
-import { Avatar } from "../ui/avatar";
 import { recordingTracks } from "@/app/data/data";
 import { RecordingsColumn } from "./RecordingsColumn";
 import { Popover, PopoverTrigger } from "@/registry/new-york/ui/popover";
@@ -85,20 +83,16 @@ const TABS: {
   },
 ];
 
-const Recordings = ({
+const TeamAndRates = ({
   handleNextStep,
   handleBackStep,
   contractCreation,
   setContractCreation,
 }: any) => {
   const [updatedTracks, setUpdatedTracks] = useState(
-    contractCreation.TeamAndShares || recordingTracks
+     recordingTracks
   );
   const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
-  const [recordings, setRecordings] = useState<Recording[]>([]);
-  const [files, setFiles] = useState<any[]>([]);
-  const [currentTabIndex, setCurrentTabIndex] = useState(0);
-  const [tab, setTab] = useState(TABS[0].value);
 
   const form = useForm<RecordingFormValues>({
     resolver: zodResolver(recordingFormSchema),
@@ -107,35 +101,11 @@ const Recordings = ({
   });
 
   useEffect(() => {
-    return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
-  }, []);
-
-  const onSubmit = (data: RecordingFormValues) => {
-    console.log(data);
-
-    const recording = {
-      ...data,
-      recordingType: tab,
-    };
-
-    const _recordings = [...recordings];
-    _recordings.push(recording);
-    setRecordings(_recordings);
-    setTimeout(() => {
-      form.reset({
-        number: 0,
-      });
-    }, 1000);
-  };
-
-  useEffect(() => {
-    if (updatedTracks) {
       setContractCreation((prevData: any) => ({
         ...prevData,
-        TeamAndShares: updatedTracks,
+        rates: [...contractCreation?.members?.masterOwners, ...contractCreation?.members?.artists],
       }));
-    }
-  }, [updatedTracks]);
+  }, []);
 
   const table = useReactTable<any>({
     data: updatedTracks,
@@ -172,10 +142,9 @@ const Recordings = ({
     handleNextStep();
   };
 
-  const { members, dispatch } = useContractBuilder();
-
+  const { dispatch } = useContractBuilder();
   const handleUpdateGoal = (member: TeamMember, value: number) => {
-    const _members = [...contractCreation.TeamMembers.Artists];
+    const _members = [...contractCreation?.rates];
     const newMember = {
       ...member,
       revenue: value.toString(),
@@ -185,9 +154,7 @@ const Recordings = ({
 
     setContractCreation((prevData: any) => ({
       ...prevData,
-      TeamMembers: {
-        Artists: _members,
-      },
+      teamAndRates: _members
     }));
     dispatch({
       type: Steps.SHARES,
@@ -196,6 +163,8 @@ const Recordings = ({
       },
     });
   };
+
+  console.log("contractCreation?.teamAndRatescontractCreation?.teamAndRatescontractCreation?.teamAndRates",contractCreation)
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
@@ -208,7 +177,7 @@ const Recordings = ({
             <p className="text-sm text-muted-foreground mb-[98px]">
               Enter the appropriate base rate to everyone on the team
             </p>
-            {(contractCreation.TeamMembers.Artists || []).map(
+            {contractCreation?.rates?.map(
               (member: TeamMember, index: number) => (
                 <MemberCard
                   key={index}
@@ -253,7 +222,7 @@ const Recordings = ({
                 Edit the rates on each track for a specific allocation
               </p>
               <div className="pl-4 gap-10">
-                {(contractCreation.TeamMembers.Artists || []).map(
+                {contractCreation?.rates?.map(
                   (member: TeamMember, index: number) => (
                     <MemberCard
                   key={index}
@@ -346,4 +315,4 @@ const Recordings = ({
   );
 };
 
-export default Recordings;
+export default TeamAndRates;

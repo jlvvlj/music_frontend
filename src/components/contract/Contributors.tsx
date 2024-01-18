@@ -14,23 +14,23 @@ const Contributors = ({
   setContractCreation,
 }: any) => {
   const [selectedFile, setSelectedFile] = useState(
-    contractCreation.Album.cover || ""
+    contractCreation.album.cover || ""
   );
   const [updateValue, setUpdateValue] = useState(
-    contractCreation.Album.albumTitle || ""
+    contractCreation.album.title || ""
   );
   const [updatedTracks, setUpdatedTracks] = useState(
-    contractCreation.Album.audio
+    contractCreation.album.audios
   );
 
   useEffect(() => {
     if (selectedFile || updateValue || updatedTracks) {
       setContractCreation((prevData: any) => ({
         ...prevData,
-        Album: {
-          albumTitle: updateValue,
+        album: {
+          title: updateValue,
           cover: selectedFile,
-          audio: updatedTracks,
+          audios: updatedTracks,
         },
       }));
     }
