@@ -12,16 +12,15 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import { Switch } from "@/registry/default/ui/switch";
 import { Badge } from "@/registry/new-york/ui/badge";
 
-import { CardsActivityGoal } from "@/components/activity-goal";
 import { cn } from "@/lib/utils";
-import { StepProps, TeamMember } from "./types";
+import { TeamMember } from "./types";
 import { CountryMultiSelect } from "../country-multi-select";
 import { abatementTracks } from "@/app/data/data";
 import { TableCommon } from "./TableCommon";
 import { AbatementColumn } from "./AbatementColumn";
-import ShareCard from "./ShareCard";
 import useContractBuilder from "@/hooks/useContractBuilder";
 import { Steps } from "@/contexts/ContractBuilderContext";
+import CategoryCard from "./CategoryCard";
 
 const COUNTRIES = [
   {
@@ -52,6 +51,7 @@ const cards = [
         id: 1,
         title: "Abatement rate",
         cost: 10,
+        rate: true,
         country: []
       },
     ],
@@ -61,28 +61,30 @@ const cards = [
     title: "Compilations",
     value: "compilations",
     desc: "Abatements taken for compilations",
-    subCards: [{ id: 1, title: "Share of Base", cost: 40 }],
+    subCards: [{ id: 1, title: "Share of Base", cost: 40, rate: false }],
   },
   {
     id: 3,
     title: "Promotions",
     value: "promotions",
+    rate: false,
     desc: "An abatement for promotions will be applied",
-    subCards: [{ id: 1, title: "Share of Base", cost: 50 }],
+    subCards: [{ id: 1, title: "Share of Base", cost: 50, rate: false }],
   },
   {
     id: 4,
     title: "Discounted Sales",
     value: "discounted_sales",
+    rate: false,
     desc: "An abatement for discount sales will be applied",
-    subCards: [{ id: 1, title: "Abatement rate", cost: 80 }],
+    subCards: [{ id: 1, title: "Abatement rate", cost: 80, rate: false }],
   },
   {
     id: 5,
     title: "Off-Circuits Sales",
     value: "off_traditional_circuits_sales",
     desc: "An abatement for off-circuit sales will be applied",
-    subCards: [{ id: 1, title: "Abatement rate", cost: 10 }],
+    subCards: [{ id: 1, title: "Abatement rate", cost: 10, rate: false }],
   },
 ];
 
@@ -175,9 +177,9 @@ const Abatements = ({
             <Card className="bg-transparent border-none shadow-none">
               <CardContent className="space-y-6 p-0">
                 <div className="pl-2.5">
-                  {selectedAbatements?.map((card: any) => (
+                  {selectedAbatements?.map((card: any, index:number) => (
                     <Card
-                      key={card.id}
+                      key={index}
                       className="border-none bg-modal-foreground mb-8 rounded-3xl	"
                     >
                       <CardHeader className="py-5 pb-0">
@@ -202,29 +204,17 @@ const Abatements = ({
                         {enabled === card.value && (
                           <div className="space-y-8 mt-10">
                             <div className="pl-4 gap-7 flex flex-col justify-center items-center">
-                              {card?.subCards.map((member: any, index: number) => (
-                                <div className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md w-fit bg-modal pb-1.5 mb-8" key={index}>
-                                  <div className="pt-3">
-                                    <p className="text-sm font-normal leading-none mb-1">
-                                      {member.title}
-                                    </p>
-                                    <p className="text-sm text-muted-foreground">Lorem ipsum</p>
-                                  </div>
-                                  <div className="">
-                                    <CardsActivityGoal
-                                      label="Abatement rate"
-                                      initialValue={member.cost || 30}
-                                      unit="%"
-                                      step={10}
-                                      buttonTitle="Set Rate"
-                                      minValue={5}
-                                      maxValue={100}
-                                      buttonHidden
-                                      onClickButton={() => { }}
-                                      setGoal={(v) => handleUpdateGoal(card.id, member, v)}
-                                    />
-                                  </div>
-                                </div>
+                              {card?.subCards?.map((activity: any, index: number) => (
+                                <CategoryCard  
+                                  key={index}
+                                  card={activity}
+                                  step={0}
+                                  buttonTitle={activity?.rate ? "Set Rate" :""}
+                                  unit={"%"}
+                                  updateGoal={(v) => handleUpdateGoal(card.id, activity, v)}
+                                  avatar={false}
+                                  bgcolor="bg-modal"
+                                />
                               ))}
                               <div
                                 className={cn(card.id === 1 ? "" : "hidden")}
@@ -288,8 +278,8 @@ const Abatements = ({
                     <CardDescription>{card.desc}</CardDescription>
                   </CardHeader>
                   <CardContent className="flex justify-start items-center gap-6">
-                    {card?.subCards.map((innercard) => (
-                      <div className="rounded-md bg-modal-foreground px-[10px] py-2 w-[150px] min-h-[90px] space-y-1">
+                    {card?.subCards.map((innercard, index) => (
+                      <div className="rounded-md bg-modal-foreground px-[10px] py-2 w-[150px] min-h-[90px] space-y-1" key={index}>
                         <p className="text-[12px] font-normal">
                           {innercard.title}
                         </p>
@@ -297,7 +287,7 @@ const Abatements = ({
                           Lorem Ipsum
                         </p>
                         <p className="text-mblue text-[12px] font-normal">
-                          {innercard.cost}
+                          {innercard.cost}%
                         </p>
                       </div>
                     ))}

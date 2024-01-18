@@ -8,7 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { TeamMember } from "./types";
 import CongratulationModal from "./CongratulationModal";
 import { Badge } from "@/registry/new-york/ui/badge";
 import { Switch } from "@/registry/default/ui/switch";
@@ -18,7 +17,6 @@ import { DerivativeColumn } from "./DerivativeColumn";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import useContractBuilder from "@/hooks/useContractBuilder";
 import { Steps } from "@/contexts/ContractBuilderContext";
-import ShareCard from "./ShareCard";
 import { CardsActivityGoal } from "../activity-goal";
 
 type Tab = {

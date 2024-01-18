@@ -64,7 +64,7 @@ interface Props extends React.HTMLAttributes<HTMLElement> {
   initialValue: number;
   step: number;
   label: string;
-  buttonTitle: string;
+  buttonTitle?: string;
   cardTitle?: string;
   isOwner?: boolean;
   minValue: number;
@@ -98,7 +98,7 @@ export function CardsActivityGoal({
 
   const theme = themes.find((theme) => theme.name === config.theme);
 
-  useEffect(() => {}, [initialValue]);
+  useEffect(() => { }, [initialValue]);
   function onClick(adjustment: number) {
     setGoal(Number(initialValue) + adjustment);
   }
@@ -110,41 +110,46 @@ export function CardsActivityGoal({
       </CardDescription>
       <CardContent className={`pb-1 ${padding}`}>
         <div className="flex items-center justify-center space-x-2">
-          <Button
-            variant="default"
-            type="button"
-            size="icon"
-            className={cn(
-              "bg-transparent border border-solid rounded-full w-[14px] h-[14px] flex justify-center items-center minus-btn text-white hover:text-black",
-              isOwner ? "border-[#8AC4FB]" : "border-[#0F172A]"
-            )}
-            onClick={() => onClick(-step)}
-            disabled={initialValue <= minValue}
-          >
-            <Minus className="h-[10px] w-[10px] " />
-            <span className="sr-only">Decrease</span>
-          </Button>
+          {
+            !buttonHidden && <Button
+              variant="default"
+              type="button"
+              size="icon"
+              className={cn(
+                "bg-transparent border border-solid rounded-full w-[14px] h-[14px] flex justify-center items-center minus-btn text-white hover:text-black",
+                isOwner ? "border-[#8AC4FB]" : "border-[#0F172A]"
+              )}
+              onClick={() => onClick(-step)}
+              disabled={initialValue <= minValue}
+            >
+              <Minus className="h-[10px] w-[10px] " />
+              <span className="sr-only">Decrease</span>
+            </Button>}
           <div className="flex-1 text-center">
             <div className="text-[21px] font-bold tracking-tighter">
-              {unit || ""}
+              {unit !== "%" && unit}
               {initialValue}
+              {unit === "%" && unit}
             </div>
             <div className="text-[0.40rem] uppercase">{label}</div>
           </div>
-          <Button
-            variant="default"
-            size="icon"
-            type="button"
-            className={cn(
-              "bg-transparent border border-solid rounded-full w-[14px] h-[14px] flex justify-center items-center minus-btn  text-white hover:text-black",
-              isOwner ? "border-[#8AC4FB]" : "border-[#0F172A]"
-            )}
-            onClick={() => onClick(step)}
-            disabled={initialValue >= maxValue}
-          >
-            <Plus className="h-[10px] w-[10px]" />
-            <span className="sr-only">Increase</span>
-          </Button>
+          {
+            !buttonHidden &&
+            <Button
+              variant="default"
+              size="icon"
+              type="button"
+              className={cn(
+                "bg-transparent border border-solid rounded-full w-[14px] h-[14px] flex justify-center items-center minus-btn  text-white hover:text-black",
+                isOwner ? "border-[#8AC4FB]" : "border-[#0F172A]"
+              )}
+              onClick={() => onClick(step)}
+              disabled={initialValue >= maxValue}
+            >
+              <Plus className="h-[10px] w-[10px]" />
+              <span className="sr-only">Increase</span>
+            </Button>
+          }
         </div>
         {chartHidden ? null : (
           <div className={cn("h-[30px]", chartHidden ? "hidden" : "")}>
@@ -161,10 +166,9 @@ export function CardsActivityGoal({
                     {
                       fill: isOwner ? "#fff" : "#6DB5F9",
                       opacity: 0.4,
-                      "--theme-primary": `hsl(${
-                        theme?.cssVars[mode === "dark" ? "dark" : "light"]
-                          .primary
-                      })`,
+                      "--theme-primary": `hsl(${theme?.cssVars[mode === "dark" ? "dark" : "light"]
+                        .primary
+                        })`,
                     } as React.CSSProperties
                   }
                 />
@@ -173,7 +177,7 @@ export function CardsActivityGoal({
           </div>
         )}
       </CardContent>
-      <CardFooter className={`${cn(buttonHidden ? "hidden" : "")} pb-0 mt-1`}>
+      <CardFooter className={`${cn(buttonTitle ? "" : "hidden")} pb-0 mt-1`}>
         <button
           type="button"
           className={cn(

@@ -17,14 +17,13 @@ import { Icons } from "@/components/ui/icons";
 import { Notifications } from "@/components/track/notifications";
 import TrackUpload from "./TrackUpload";
 import TeamAllocation from "./TeamAllocation";
-import Shares from "./Shares";
+import Teams from "./Teams";
 import CardFilter from "./CardFilter";
 import { Button } from "@/components/ui/button";
 import AdaptForm from "./AdaptForm";
 import { Separator } from "@/components/ui/separator";
 import ProducerRecordings from "./ProducerRecordings";
 import Budget from "./Budget";
-import Royalties from "./Royalties";
 import Abatements from "./Abatements";
 import Broadcasting from "./Broadcasting";
 import ProducerForm from "./ProducerForm";
@@ -61,7 +60,7 @@ const CreateStepCards = ({
       case StepIndex.CONTRIBUTORS:
         return <Contributors updateStep={updateStep}>{stepper}</Contributors>;
       case StepIndex.SHARES:
-        return <Shares updateStep={updateStep} />;
+        return <Teams updateStep={updateStep} />;
       case StepIndex.RECORDINGS:
         return <Recordings updateStep={updateStep} />;
       // return isProducerMode ? <ProducerRecordings /> : <ArtistRecordings />;

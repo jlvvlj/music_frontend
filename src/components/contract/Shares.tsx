@@ -1,38 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { toast } from "sonner";
-import Image from "next/image";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 
 import { Button } from "@/components/ui/button";
-import { CardsActivityGoal } from "@/components/activity-goal";
-import { SingleRate, StepProps, TeamMember, TieredRate } from "./types";
+import { SingleRate, TieredRate } from "./types";
 import { Avatar } from "../ui/avatar";
 import { TableCommon } from "./TableCommon";
 import { recordingTracks } from "@/app/data/data";
 import { RecordingsColumn } from "./RecordingsColumn";
-import ShareCardRight from "./ShareCardRight";
 import useContractBuilder from "@/hooks/useContractBuilder";
 import { Steps } from "@/contexts/ContractBuilderContext";
-import ShareCard from "./ShareCard";
-
-type Tab = {
-  label: string;
-  value: string;
-};
-
-const TABS: Tab[] = [
-  {
-    label: "Single Rate",
-    value: "single",
-  },
-  {
-    label: "Tiered Rate",
-    value: "tiered",
-  },
-];
+import MemberCard from "./MemberCard";
 
 const rateFormSchema = z.object({
   from: z.number().default(0),
@@ -50,11 +31,6 @@ const baseRate = {
 };
 
 const Royalties = ({ handleNextStep, handleBackStep }: any) => {
-  const [tab, setTab] = useState(TABS[0].value);
-  const [singleRate, setSingleRate] = useState<SingleRate>({
-    percentage: 0,
-  });
-  const [tieredRateInput, setTieredRateInput] = useState<TieredRate>(baseRate);
   const [tieredRates, setTieredRates] = useState<TieredRate[]>([]);
 
   // ** form
@@ -63,12 +39,6 @@ const Royalties = ({ handleNextStep, handleBackStep }: any) => {
     defaultValues,
     mode: "onChange",
   });
-
-  const handleChangeSingleRatePercentage = (value: number) => {
-    setSingleRate({
-      percentage: value,
-    });
-  };
 
   const onSubmit = (data: RateFormValues) => {
     console.log(data);
@@ -124,11 +94,11 @@ const Royalties = ({ handleNextStep, handleBackStep }: any) => {
               Enter the appropriate amount of shares to each producer on the team
             </p>
             {members.map((member, index) => (
-              <ShareCard
+              <MemberCard
                 key={index}
                 member={member}
+                unit={"%"}
                 updateGoal={(v) => handleUpdateGoal(member, v)}
-                buttonHidden={true}
                 avatar={true}
               />
             ))}
@@ -167,11 +137,13 @@ const Royalties = ({ handleNextStep, handleBackStep }: any) => {
               </p>
               <div className="pl-4 gap-10">
                 {members.map((member, index) => (
-                  <ShareCardRight
+                  <MemberCard
                     key={index}
+                    unit={"%"}
                     member={member}
                     updateGoal={(v) => handleUpdateGoal(member, v)}
                     buttonHidden={true}
+                    avatar={true}
                   />
                 ))}
               </div>

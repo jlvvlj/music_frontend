@@ -144,7 +144,7 @@ export function ArtistMultiSelect({
                   </Avatar>
                   <div className="flex flex-col">
                     <span className="ml-4 text-sm">{artist.name}</span>
-                    <span className="ml-4 text-[11px]">{artist.role}</span>
+                    <span className="ml-4 text-[11px] capitalize">{artist.role}</span>
                   </div>
                 </div>
                 {artistRate && (
@@ -153,7 +153,6 @@ export function ArtistMultiSelect({
                     initialValue={artist.revenue}
                     unit="%"
                     step={10}
-                    buttonTitle="Set Share"
                     minValue={0}
                     maxValue={100}
                     buttonHidden
@@ -239,14 +238,14 @@ export function ArtistMultiSelect({
                       </Avatar>
                       <div className="flex flex-col">
                         <span className="ml-4 text-sm">{artist.name}</span>
-                        <span className="ml-4 text-[11px] ">{artist.role}</span>
+                        <span className="ml-4 text-[11px] capitalize">{artist.role}</span>
                       </div>
                     </div>
                     {artistRate && (
                       <CardsActivityGoal
                         label=""
                         initialValue={parseInt(artist.revenue)}
-                        unit="%"
+                        unit={"%"}
                         step={10}
                         buttonTitle="Set Share"
                         minValue={0}

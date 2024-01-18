@@ -34,9 +34,8 @@ import { Popover, PopoverTrigger } from "@/registry/new-york/ui/popover";
 import { Pencil2Icon } from "@radix-ui/react-icons";
 import UploadtrackPopover from "./UploadTrackPopover";
 import useContractBuilder from "@/hooks/useContractBuilder";
-import ShareCard from "./ShareCard";
+import MemberCard from "./MemberCard";
 import { Steps } from "@/contexts/ContractBuilderContext";
-import ShareCardRight from "./ShareCardRight";
 
 const teamMembers = [
   {
@@ -211,11 +210,11 @@ const Recordings = ({
             </p>
             {(contractCreation.TeamMembers.Artists || []).map(
               (member: TeamMember, index: number) => (
-                <ShareCard
+                <MemberCard
                   key={index}
+                  unit={"%"}
                   member={member}
                   updateGoal={(v) => handleUpdateGoal(member, v)}
-                  buttonHidden={true}
                   avatar={true}
                 />
               )
@@ -256,12 +255,14 @@ const Recordings = ({
               <div className="pl-4 gap-10">
                 {(contractCreation.TeamMembers.Artists || []).map(
                   (member: TeamMember, index: number) => (
-                    <ShareCardRight
-                      key={index}
-                      member={member}
-                      updateGoal={(v) => handleUpdateGoal(member, v)}
-                      buttonHidden={true}
-                    />
+                    <MemberCard
+                  key={index}
+                  unit={"%"}
+                  member={member}
+                  updateGoal={(v) => handleUpdateGoal(member, v)}
+                  buttonHidden={true}
+                  avatar={true}
+                />
                   )
                 )}
               </div>

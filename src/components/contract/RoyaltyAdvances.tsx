@@ -18,7 +18,7 @@ import { Button } from "../ui/button";
 import { TableCommon } from "./TableCommon";
 import { royaltiesTracks } from "@/app/data/data";
 import { RoyaltiesColumn } from "./RoyaltiesColumn";
-import ShareCard from "./ShareCard";
+import MemberCard from "./MemberCard";
 import useContractBuilder from "@/hooks/useContractBuilder";
 import { TeamMember } from "./types";
 import { Steps } from "@/contexts/ContractBuilderContext";
@@ -98,10 +98,9 @@ export default function RoyaltyAdvances({
 
   useEffect(() => {
     if (enabled) {
-      console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee RAM Ram RAM Ram")
       setContractCreation((prevData: any) => ({
         ...prevData,
-        royaltyAdvances: cards.map((card) =>{return {...card,title:"Dddddddd",activityCards: contractCreation.TeamMembers.Artists}} ),
+        royaltyAdvances: cards.map((card) =>{return {...card,activityCards: contractCreation.TeamMembers.Artists}} ),
       }));
     }
   }, [enabled]);
@@ -163,7 +162,6 @@ export default function RoyaltyAdvances({
             <Card className="bg-transparent border-none shadow-none">
               <CardContent className="space-y-6 p-0">
                 <div className="pl-2.5">
-                  {console.log("selectedRoyaltiesCards",selectedRoyaltiesCards)}
                   {selectedRoyaltiesCards.map((card: any, index) => (
                     <Card
                       key={index}
@@ -222,7 +220,7 @@ export default function RoyaltyAdvances({
                             )}
                             <div className="pl-4 gap-10">
                               {card?.activityCards?.map((member:any, index:number) => (
-                                <ShareCard
+                                <MemberCard
                                   key={index}
                                   member={{...member, revenue:member.revenue * 100}}
                                   updateGoal={(v) =>

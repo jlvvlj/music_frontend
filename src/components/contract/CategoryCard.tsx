@@ -6,31 +6,28 @@ import Image from "next/image";
 import { isOwner } from "./utils";
 import { CardsActivityGoal } from "@/components/activity-goal";
 
-const BudgetShareCard = ({
+const CategoryCard = ({
   card,
   step,
   updateGoal,
   buttonHidden,
-  avatar,
-  bgcolor,
+  buttonTitle,
+  unit
 }: {
   card: any;
   step?:number,
   updateGoal: (v: number) => void;
-  buttonHidden: boolean;
+  buttonHidden?: boolean;
   avatar?: boolean;
   bgcolor?: string;
+  buttonTitle?: string;
+  unit?: string;
 }) => {
   const handleChangeGoal = (v: number) => {
     updateGoal(v);
   };
   return (
-    <div
-      className={cn(
-        "flex items-start gap-4 px-4 py-3 rounded-md mb-5 w-fit mx-auto",
-        "bg-mblue"
-      )}
-    >
+    <div className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md w-fit bg-modal pb-1.5 mb-8">
       <div className="pt-3">
         <p className="text-sm font-medium leading-none">{card.title}</p>
       </div>
@@ -38,14 +35,14 @@ const BudgetShareCard = ({
         <CardsActivityGoal
           label="SHARES OF REVENUES"
           initialValue={card.cost || 30}
-          unit=""
+          unit={unit || "€"}
           step={step || 10}
-          buttonTitle="Set Share"
+          buttonTitle={buttonTitle || ""}
           minValue={0}
           maxValue={10000000000}
           buttonHidden={buttonHidden}
           onClickButton={() => {}}
-          isOwner={true}
+          isOwner={false}
           setGoal={handleChangeGoal}
         />
       </div>
@@ -53,4 +50,4 @@ const BudgetShareCard = ({
   );
 };
 
-export default BudgetShareCard;
+export default CategoryCard;

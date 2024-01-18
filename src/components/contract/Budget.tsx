@@ -12,12 +12,11 @@ import { Switch } from "@/registry/default/ui/switch";
 import { budgetTracks } from "@/app/data/data";
 import { TableCommon } from "./TableCommon";
 import { BudgetTrackColumn } from "./BudgetTrackColumn";
-import ShareCard from "./ShareCard";
 import useContractBuilder from "@/hooks/useContractBuilder";
 import { Steps } from "@/contexts/ContractBuilderContext";
 import { Label } from "@/registry/new-york/ui/label";
 import { Input } from "@/registry/new-york/ui/input";
-import BudgetShareCard from "./BudgetShareCard ";
+import CategoryCard from "./CategoryCard";
 
 const budgetCards = [
   {
@@ -174,12 +173,11 @@ const Budget = ({
                           <div className="space-y-8 mt-10">
                             <div className="">
                               {card.activityCards.map((activity: any, index: any) => (
-                                <BudgetShareCard
+                                <CategoryCard  
                                   key={index}
                                   card={activity}
                                   step={1000}
                                   updateGoal={(v) => handleUpdateGoal(card.id, activity, v)}
-                                  buttonHidden={true}
                                   avatar={false}
                                   bgcolor="bg-modal"
                                 />

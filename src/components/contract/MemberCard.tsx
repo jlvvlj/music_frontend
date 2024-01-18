@@ -7,17 +7,23 @@ import { isOwner } from "./utils";
 import { CardsActivityGoal } from "@/components/activity-goal";
 
 const ShareCard = ({
+  step,
   member,
   updateGoal,
   buttonHidden,
+  buttonTitle,
   avatar,
   bgcolor,
+  unit
 }: {
+  step?: number
   member: TeamMember;
   updateGoal: (v: number) => void;
-  buttonHidden: boolean;
+  buttonHidden?: boolean;
+  buttonTitle?: string;
   avatar?: boolean;
   bgcolor?: string;
+  unit?: string;
 }) => {
   const handleChangeGoal = (v: number) => {
     updateGoal(v);
@@ -32,7 +38,7 @@ const ShareCard = ({
       {avatar && (
         <Avatar className="bg-[#A3D3FF] mt-2">
           <Image
-            src={member.avatar || "https://ui.shadcn.com/avatars/01.png"}
+            src={member?.avatar || "https://ui.shadcn.com/avatars/01.png"}
             width={100}
             height={100}
             alt="avatar"
@@ -47,15 +53,16 @@ const ShareCard = ({
         <CardsActivityGoal
           label="SHARES OF REVENUES"
           initialValue={Number(member.revenue) || 30}
-          unit="%"
-          step={10}
-          buttonTitle="Set Share"
+          unit={unit || "€"}
+          step={step || 10}
+          buttonTitle={buttonTitle || ""}
           minValue={0}
           maxValue={100}
           buttonHidden={buttonHidden}
           onClickButton={() => {}}
           isOwner={isOwner(member)}
           setGoal={handleChangeGoal}
+          
         />
       </div>
     </div>

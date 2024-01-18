@@ -1,7 +1,6 @@
 // ** Components
 import { Button } from "../ui/button";
-import ShareCard from "./ShareCard";
-import ShareCardRight from "./ShareCardRight";
+import MemberCard from "./MemberCard";
 import { StepProps, TeamMember } from "./types";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import useContractBuilder from "@/hooks/useContractBuilder";
@@ -57,7 +56,7 @@ const Shares = ({ updateStep }: StepProps) => {
               Enter the appropriate amount of shares to everyone on the team
             </p>
             {members.map((member, index) => (
-              <ShareCard
+              <MemberCard
                 key={index}
                 member={member}
                 updateGoal={(v) => handleUpdateGoal(member, v)}
@@ -98,12 +97,14 @@ const Shares = ({ updateStep }: StepProps) => {
               </p>
               <div className="pl-4 gap-10">
                 {members.map((member, index) => (
-                  <ShareCardRight
-                    key={index}
-                    member={member}
-                    updateGoal={(v) => handleUpdateGoal(member, v)}
-                    buttonHidden={true}
-                  />
+                       <MemberCard
+                       key={index}
+                       unit={"%"}
+                       member={member}
+                       updateGoal={(v) => handleUpdateGoal(member, v)}
+                       buttonHidden={true}
+                       avatar={true}
+                     />
                 ))}
               </div>
             </div>

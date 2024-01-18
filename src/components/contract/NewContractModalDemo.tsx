@@ -28,7 +28,7 @@ export default function NewContract() {
       selectedBudgets: [],
       budgetCards: [],
     },
-    royaltyAdvances: [],
+    RoyaltyAdvances: null,
     abatements: [],
     broadCasting: [],
     derivativeUse: [],
@@ -66,8 +66,8 @@ export default function NewContract() {
       const previousPage = Object.keys(checkedBoxes)
         .reverse()
         .find((page) => checkedBoxes[page] && parseInt(page, 11) < currentStep);
-      if (previousPage) {
-        setCurrentStep(parseInt(previousPage));
+        if (previousPage) {
+        setCurrentStep(currentStep === 6 ? parseInt("5") : parseInt(previousPage));
       } else {
         setCurrentStep(5);
       }
@@ -86,7 +86,7 @@ export default function NewContract() {
       setCurrentStep((prevStep) => Math.min(prevStep + 1, 11));
     } else if (currentStep === 5) {
       const selectedSteps = Object.keys(checkedBoxes).filter(
-        (step) => checkedBoxes[step]
+        (step) => checkedBoxes[step] && parseInt(step, 11) > 5
       );
       if (selectedSteps.length > 0) {
         const nextStep = Math.min(...selectedSteps.map(Number));
