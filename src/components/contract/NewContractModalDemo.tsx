@@ -66,9 +66,7 @@ export default function NewContract() {
         .reverse()
         .find((page) => checkedBoxes[page] && parseInt(page, 11) < currentStep);
       if (previousPage) {
-        setCurrentStep(
-          currentStep === 6 ? parseInt("5") : parseInt(previousPage)
-        );
+        setCurrentStep((!(currentStep > 5) || previousPage === "4") ? parseInt("5") : parseInt(previousPage));
       } else {
         setCurrentStep(5);
       }

@@ -89,7 +89,7 @@ export default function RoyaltyAdvances({
       description: "Royalties Advances",
       action: {
         label: "X",
-        onClick: () => {},
+        onClick: () => { },
       },
       position: "top-right",
     });
@@ -97,7 +97,6 @@ export default function RoyaltyAdvances({
   };
 
   useEffect(() => {
-    if (enabled) {
       setContractCreation((prevData: any) => ({
         ...prevData,
         royaltyAdvances: contractCreation?.members?.artists?.map(
@@ -106,8 +105,8 @@ export default function RoyaltyAdvances({
           }
         ),
       }));
-    }
-  }, [enabled]);
+  }, [selectedRoyaltiesCards]);
+
 
   const { dispatch } = useContractBuilder();
 
@@ -296,13 +295,13 @@ export default function RoyaltyAdvances({
                         <CardsActivityGoal
                           label={"base rate on sales"}
                           initialValue={calculateTotalRevenue(card.categories)}
-                          unit=""
+                          unit="€"
                           step={10}
                           minValue={0}
                           maxValue={1000}
                           buttonHidden
-                          onClickButton={() => {}}
-                          setGoal={() => {}}
+                          onClickButton={() => { }}
+                          setGoal={() => { }}
                         />
                       </div>
                     </div>
@@ -316,7 +315,7 @@ export default function RoyaltyAdvances({
                                   {card.categories[index].title}
                                 </p>
                                 <p className="text-mblue text-[12px] font-normal">
-                                  € {card.categories[index].revenue}
+                                  €{card.categories[index].revenue}
                                 </p>
                               </div>
                             ) : (

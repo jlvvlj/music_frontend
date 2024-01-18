@@ -18,7 +18,6 @@ export const TeamTrackColumn: ColumnDef<Task>[] = [
       <DataTableColumnHeader column={column} title="" />
     ),
     cell: ({ row }) =>
-    // console.log("rowrowrowrowrowrowrow",row)
       <div className="text-[#6B7280]">{row.index+1}</div>,
     enableSorting: false,
     enableHiding: false,
