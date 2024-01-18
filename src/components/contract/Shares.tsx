@@ -13,18 +13,22 @@ import useContractBuilder from "@/hooks/useContractBuilder";
 import { Steps } from "@/contexts/ContractBuilderContext";
 import MemberCard from "./MemberCard";
 
-const Shares = ({ handleNextStep, handleBackStep, setContractCreation, contractCreation }: any) => {
-
+const Shares = ({
+  handleNextStep,
+  handleBackStep,
+  setContractCreation,
+  contractCreation,
+}: any) => {
   const handleClickNext = () => {
     toast("Shares added successfully!", {
       description: "Shares",
       action: {
         label: "X",
-        onClick: () => { },
+        onClick: () => {},
       },
-      position: "top-right"
+      position: "top-right",
     });
-    handleNextStep()
+    handleNextStep();
   };
 
   useEffect(() => {
@@ -32,7 +36,7 @@ const Shares = ({ handleNextStep, handleBackStep, setContractCreation, contractC
       ...prevData,
       shares: [...contractCreation?.members?.masterOwners],
     }));
-}, []);
+  }, []);
 
   const { dispatch } = useContractBuilder();
   const handleUpdateGoal = (member: any, value: number) => {
@@ -47,7 +51,7 @@ const Shares = ({ handleNextStep, handleBackStep, setContractCreation, contractC
 
     setContractCreation((prevData: any) => ({
       ...prevData,
-      shares: _members
+      shares: _members,
     }));
 
     dispatch({
@@ -67,9 +71,10 @@ const Shares = ({ handleNextStep, handleBackStep, setContractCreation, contractC
               And producers shares
             </h1>
             <p className="text-sm text-muted-foreground mb-[98px]">
-              Enter the appropriate amount of shares to each producer on the team
+              Enter the appropriate amount of shares to each producer on the
+              team
             </p>
-            {contractCreation?.shares.map((member:any, index:number) => (
+            {contractCreation?.shares.map((member: any, index: number) => (
               <MemberCard
                 key={index}
                 member={member}
@@ -112,7 +117,7 @@ const Shares = ({ handleNextStep, handleBackStep, setContractCreation, contractC
                 Edit the shares on each track for a specific allocation
               </p>
               <div className="pl-4 gap-10">
-                {contractCreation?.shares.map((member:any, index:number) => (
+                {contractCreation?.shares.map((member: any, index: number) => (
                   <MemberCard
                     key={index}
                     unit={"%"}

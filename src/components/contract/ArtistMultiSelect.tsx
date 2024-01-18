@@ -19,11 +19,11 @@ type Framework = Record<
   | "code"
   | "revenue"
   | "role",
-   any
+  any
 > & { id: number };
 
 type Props = {
-  handleArtist?: (artist: []) => void;
+  handleArtist?: any; // (artist: []) => void;
   artists?: Framework[];
   placeholder?: string;
   artistRate?: boolean;
@@ -144,7 +144,9 @@ export function ArtistMultiSelect({
                   </Avatar>
                   <div className="flex flex-col">
                     <span className="ml-4 text-sm">{artist.name}</span>
-                    <span className="ml-4 text-[11px] capitalize">{artist.role}</span>
+                    <span className="ml-4 text-[11px] capitalize">
+                      {artist.role}
+                    </span>
                   </div>
                 </div>
                 {artistRate && (
@@ -171,7 +173,9 @@ export function ArtistMultiSelect({
                   onClick={() => {
                     handleUnselect(artist);
                     handleArtist(
-                      selectedArtists.filter((s) => s.value !== artist.value)
+                      (selectedArtists as any).filter(
+                        (s: any) => s.value !== artist.value
+                      )
                     );
                   }}
                 >
@@ -238,7 +242,9 @@ export function ArtistMultiSelect({
                       </Avatar>
                       <div className="flex flex-col">
                         <span className="ml-4 text-sm">{artist.name}</span>
-                        <span className="ml-4 text-[11px] capitalize">{artist.role}</span>
+                        <span className="ml-4 text-[11px] capitalize">
+                          {artist.role}
+                        </span>
                       </div>
                     </div>
                     {artistRate && (

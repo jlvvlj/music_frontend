@@ -45,23 +45,28 @@ const Teams = ({
   handleBackStep,
   contractCreation,
   setContractCreation,
-  handleSwitchChange
+  handleSwitchChange,
 }: any) => {
   const [updatedTracks, setUpdatedTracks] = useState(
     contractCreation?.TeamMembers?.updatedTracks || (shareTracks as any)
   );
   const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
-  const [selectedArtists, setSelectedArtists] = useState<any>(
-    [...contractCreation?.members?.artists, ...contractCreation?.members?.masterOwners]
-  );
+  const [selectedArtists, setSelectedArtists] = useState<any>([
+    ...contractCreation?.members?.artists,
+    ...contractCreation?.members?.masterOwners,
+  ]);
 
   useEffect(() => {
     if (selectedArtists)
       setContractCreation((prevData: any) => ({
         ...prevData,
         members: {
-          masterOwners: selectedArtists?.filter((artist: any) => artist.role === "master owner"),
-          artists: selectedArtists?.filter((artist: any) => artist.role !== "master owner")
+          masterOwners: selectedArtists?.filter(
+            (artist: any) => artist.role === "master owner"
+          ),
+          artists: selectedArtists?.filter(
+            (artist: any) => artist.role !== "master owner"
+          ),
         },
       }));
   }, [selectedArtists]);
@@ -83,7 +88,7 @@ const Teams = ({
       description: "Artists",
       action: {
         label: "X",
-        onClick: () => { },
+        onClick: () => {},
       },
       position: "top-right",
     });
@@ -106,10 +111,8 @@ const Teams = ({
     const masterOwners = artists?.filter(
       (artist: any) => artist.role === "master owner"
     );
-    if (masterOwners?.length > 1)
-      handleSwitchChange({ id: 4 }, true)
-    else
-      handleSwitchChange({ id: 4 }, false)
+    if (masterOwners?.length > 1) handleSwitchChange({ id: 4 }, true);
+    else handleSwitchChange({ id: 4 }, false);
   };
 
   return (
@@ -136,7 +139,10 @@ const Teams = ({
                 width="max-w-[230px]"
                 artistRate={false}
                 handleArtist={handleSelectedArtist}
-                selectedArtist={[...contractCreation?.members?.masterOwners, ...contractCreation?.members?.artists]}
+                selectedArtist={[
+                  ...contractCreation?.members?.masterOwners,
+                  ...contractCreation?.members?.artists,
+                ]}
               />
               <InvitationPopover />
             </div>
@@ -183,9 +189,9 @@ const Teams = ({
                           {header.isPlaceholder
                             ? null
                             : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
                         </TableHead>
                       );
                     })}

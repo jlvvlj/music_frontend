@@ -22,7 +22,7 @@ const budgetCards = [
   {
     id: 1,
     title: "Registration",
-    value:"registration",
+    value: "registration",
     otherInput: false,
     activityCards: [
       { id: 1, title: "Minimum Budget", cost: 3000, subTitle: false },
@@ -33,7 +33,7 @@ const budgetCards = [
   {
     id: 2,
     title: "Image",
-    value:"image",
+    value: "image",
     otherInput: false,
     activityCards: [{ id: 1, title: "Salary", cost: 3000, subTitle: true }],
   },
@@ -91,33 +91,31 @@ const Budget = ({
       description: "Initial Budget",
       action: {
         label: "X",
-        onClick: () => { },
+        onClick: () => {},
       },
       position: "top-right",
     });
     handleNextStep();
   };
 
-  const handleUpdateGoal = (cardId:any, member: TeamMember, value: number) => {
+  const handleUpdateGoal = (cardId: any, member: TeamMember, value: number) => {
     const _members = [...contractCreation.initialBudget];
     const newMember = {
       ...member,
       cost: value.toString(),
     };
 
-    console.log("before", _members);
-
     const cardIndex = _members.findIndex((card) => card.id === cardId);
 
-    const index = _members[cardIndex]?.activityCards?.findIndex((m:any) => m.id === member.id);
+    const index = _members[cardIndex]?.activityCards?.findIndex(
+      (m: any) => m.id === member.id
+    );
     _members[cardIndex].activityCards.splice(index, 1, newMember);
 
     setContractCreation((prevData: any) => ({
       ...prevData,
       cost: { enabled: enabled, budgetCards: _members },
     }));
-
-    console.log("after", _members);
 
     dispatch({
       type: Steps.SHARES,
@@ -168,16 +166,20 @@ const Budget = ({
                         {enabled === card.id && (
                           <div className="space-y-8 mt-10">
                             <div className="">
-                              {card.activityCards.map((activity: any, index: any) => (
-                                <CategoryCard  
-                                  key={index}
-                                  card={activity}
-                                  step={1000}
-                                  updateGoal={(v) => handleUpdateGoal(card.id, activity, v)}
-                                  avatar={false}
-                                  bgcolor="bg-modal"
-                                />
-                              ))}
+                              {card.activityCards.map(
+                                (activity: any, index: any) => (
+                                  <CategoryCard
+                                    key={index}
+                                    card={activity}
+                                    step={1000}
+                                    updateGoal={(v) =>
+                                      handleUpdateGoal(card.id, activity, v)
+                                    }
+                                    avatar={false}
+                                    bgcolor="bg-modal"
+                                  />
+                                )
+                              )}
                             </div>
                             {card.otherInput && (
                               <div className="flex items-between gap-4">
@@ -224,26 +226,23 @@ const Budget = ({
             <div className="flex flex-wrap gap-[18px]">
               {budgetCards.map((card, index) => (
                 <>
-                  {
-                    card.activityCards.map((activity:any, index:any) => (
-                      <Card
-                        key={index}
-                        className="bg-modal-foreground border-[#1D1D1F] pt-2 px-2.5 pb-6 w-[132px] h-[102px]"
-                      >
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
-                          <CardTitle className="text-xs font-normal pb-5">
-                            {activity.title}
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent className="p-0">
-                          <div className="text-xs font-normal text-[#4EABFE]">
-                            {activity.cost}
-                          </div>
-                        </CardContent>
-                      </Card>
-
-                    ))
-                  }
+                  {card.activityCards.map((activity: any, index: any) => (
+                    <Card
+                      key={index}
+                      className="bg-modal-foreground border-[#1D1D1F] pt-2 px-2.5 pb-6 w-[132px] h-[102px]"
+                    >
+                      <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
+                        <CardTitle className="text-xs font-normal pb-5">
+                          {activity.title}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-0">
+                        <div className="text-xs font-normal text-[#4EABFE]">
+                          {activity.cost}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
                 </>
               ))}
             </div>
