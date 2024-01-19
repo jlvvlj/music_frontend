@@ -80,13 +80,13 @@ export default function UploadTrackTable({
           </div>
           <Table>
             <TableHeader className="block">
-              {table.getHeaderGroups().map((headerGroup) => (
+              {table?.getHeaderGroups().map((headerGroup) => (
                 <TableRow
-                  key={headerGroup.id}
+                  key={headerGroup?.id}
                   style={{ border: "none" }}
                   className="bg-table3-foreground"
                 >
-                  {headerGroup.headers.map((header) => {
+                  {headerGroup?.headers.map((header) => {
                     return (
                       <TableHead
                         key={header.id}
@@ -95,9 +95,9 @@ export default function UploadTrackTable({
                         {header.isPlaceholder
                           ? null
                           : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                       </TableHead>
                     );
                   })}
@@ -108,54 +108,62 @@ export default function UploadTrackTable({
               ))}
             </TableHeader>
             <TableHeader className="w-full h-[11px] bg-table3" />
-            {updatedTracks.length !== 0 ? (
-              <TableBody className="block overflow-y-auto max-h-[448px] scrollbox">
-                {table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    className="hover:bg-transparent border-none"
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell
-                        key={cell.id}
-                        className="first:w-[100px] w-[200px]"
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
+            <TableBody className="block overflow-y-auto max-h-[448px] scrollbox">
+              {updatedTracks?.length !== 0 ? (
+                <>
+                  {table?.getRowModel().rows.map((row) => (
+                    <TableRow
+                      key={row.id}
+                      className="hover:bg-transparent border-none"
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell
+                          key={cell.id}
+                          className="first:w-[100px] w-[200px]"
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                      <TableCell className="w-[200px]">
+                        <Popover
+                          open={openPopoverId === row.id}
+                          onOpenChange={(isOpen) =>
+                            isOpen
+                              ? setOpenPopoverId(row.id)
+                              : setOpenPopoverId(null)
+                          }
+                        >
+                          <PopoverTrigger asChild>
+                            <Pencil2Icon className="w-4 h-4 mr-1 text-[#4FABFE] text-center cursor-pointer" />
+                          </PopoverTrigger>
+                          <UploadTrackPopover
+                            popoverType={"track"}
+                            artists={false}
+                            name={row?.original?.title}
+                            track={row.original}
+                            onUpdateTrack={handleUpdateTrack}
+                            onClosePopover={() => setOpenPopoverId(null)}
+                          />
+                        </Popover>
                       </TableCell>
-                    ))}
-                    <TableCell className="w-[200px]">
-                      <Popover
-                        open={openPopoverId === row.id}
-                        onOpenChange={(isOpen) =>
-                          isOpen
-                            ? setOpenPopoverId(row.id)
-                            : setOpenPopoverId(null)
-                        }
-                      >
-                        <PopoverTrigger asChild>
-                          <Pencil2Icon className="w-4 h-4 mr-1 text-[#4FABFE] text-center cursor-pointer" />
-                        </PopoverTrigger>
-                        <UploadTrackPopover
-                          popoverType={"track"}
-                          artists={false}
-                          name={row?.original?.title}
-                          track={row.original}
-                          onUpdateTrack={handleUpdateTrack}
-                          onClosePopover={() => setOpenPopoverId(null)}
-                        />
-                      </Popover>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            ) : (
-              <TableBody className="mt-8 text-center block overflow-y-auto max-h-[448px] scrollbox">
-                No Track's Found
-              </TableBody>
-            )}
+                    </TableRow>
+                  ))}
+                </>
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={TeamTrackColumn?.length}
+                    className="h-24 text-center"
+                  >
+                    No Track's Found
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+
           </Table>
         </div>
       </div>

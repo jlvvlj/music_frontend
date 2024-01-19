@@ -21,36 +21,10 @@ import Graph from "./graph";
 import NewContractModalDemo from "@/components/contract/NewContractModalDemo";
 import { Plus, X } from "lucide-react";
 
-const cards = [
-  {
-    title: "Total Revenue",
-    amount: "$4236.0",
-    content: "+34% from last month",
-  },
-  {
-    title: "Monthly Streams Revenue",
-    amount: "$436.0",
-    content: "+10% from last month",
-  },
-  {
-    title: "Monthly Sales Revenue",
-    amount: "$236.0",
-    content: "+38% from last month",
-  },
-  {
-    title: "Balance",
-    amount: "$52 236.0",
-    content: "+201 since last hour",
-  },
-];
-
-
 export default function DashboardPage() {
   return (
     <>
-      <div>{/* <Nav /> */}</div>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <div className="md:hidden"></div>
         <div className="hidden flex-col md:flex">
           <div className="flex-1 space-y-4 p-8 pt-6">
             <div className="flex items-center justify-between space-y-2">
@@ -77,7 +51,6 @@ export default function DashboardPage() {
                 </Dialog>
                 <Dialog>
                   <DialogTrigger asChild>
-                    {/* <Button>Add a new track</Button> */}
                     <Button className="hover:bg-[#4EABFE] bg-[#4EABFE] text-white" variant="default">
                       <Plus className="w-4 h-4 mr-1" />
                       New Track
@@ -121,7 +94,6 @@ export default function DashboardPage() {
           </div>
         </div>
         <TracksTable />
-        {/* <SheetSide /> */}
       </ThemeProvider>
     </>
   );

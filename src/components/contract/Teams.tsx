@@ -56,20 +56,25 @@ const Teams = ({
     ...contractCreation?.members?.masterOwners,
   ]);
 
-  useEffect(() => {
-    if (selectedArtists)
-      setContractCreation((prevData: any) => ({
-        ...prevData,
-        members: {
-          masterOwners: selectedArtists?.filter(
-            (artist: any) => artist.role === "master owner"
-          ),
-          artists: selectedArtists?.filter(
-            (artist: any) => artist.role !== "master owner"
-          ),
-        },
-      }));
-  }, [selectedArtists]);
+  // useEffect(() => {
+  //   if (selectedArtists)
+  //     setContractCreation((prevData: any) => ({
+  //       ...prevData,
+  //       members: {
+  //         masterOwners: selectedArtists?.filter(
+  //           (artist: any) => artist.role === "master owner"
+  //         ),
+  //         artists: selectedArtists?.filter(
+  //           (artist: any) => artist.role !== "master owner"
+  //         ),
+  //       },
+  //       royaltyAdvances: {
+  //         options: selectedArtists?.filter(
+  //           (artist: any) => artist.role !== "master owner"
+  //         )
+  //       }
+  //     }));
+  // }, [selectedArtists]);
 
   const table = useReactTable<any>({
     data: updatedTracks,
@@ -88,7 +93,7 @@ const Teams = ({
       description: "Artists",
       action: {
         label: "X",
-        onClick: () => {},
+        onClick: () => { },
       },
       position: "top-right",
     });
@@ -107,12 +112,36 @@ const Teams = ({
   };
 
   const handleSelectedArtist = (artists: any) => {
-    setSelectedArtists(artists);
-    const masterOwners = artists?.filter(
-      (artist: any) => artist.role === "master owner"
-    );
-    if (masterOwners?.length > 1) handleSwitchChange({ id: 4 }, true);
-    else handleSwitchChange({ id: 4 }, false);
+    setSelectedArtists(() => {
+      setContractCreation((prev: any) => {
+        const updatedMembers = {
+          masterOwners: artists?.filter(
+            (artist: any) => artist.role === "master owner"
+          ),
+          artists: artists?.filter(
+            (artist: any) => artist.role !== "master owner"
+          ),
+        };
+
+        return {
+          ...prev,
+          members: updatedMembers,
+          royaltyAdvances: { ...prev?.royaltyAdvances, options: updatedMembers?.artists },
+        };
+      });
+
+      const masterOwners = artists?.filter(
+        (artist: any) => artist.role === "master owner"
+      );
+
+      if (masterOwners?.length > 1) {
+        handleSwitchChange({ id: 4 }, true);
+      } else {
+        handleSwitchChange({ id: 4 }, false);
+      }
+
+      return artists;
+    });
   };
 
   return (
@@ -189,9 +218,9 @@ const Teams = ({
                           {header.isPlaceholder
                             ? null
                             : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
                         </TableHead>
                       );
                     })}

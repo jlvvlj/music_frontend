@@ -89,7 +89,9 @@ const TeamAndRates = ({
   contractCreation,
   setContractCreation,
 }: any) => {
-  const [updatedTracks, setUpdatedTracks] = useState(recordingTracks);
+  const [updatedTracks, setUpdatedTracks] = useState(
+     recordingTracks
+  );
   const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
 
   const form = useForm<RecordingFormValues>({
@@ -99,13 +101,10 @@ const TeamAndRates = ({
   });
 
   useEffect(() => {
-    setContractCreation((prevData: any) => ({
-      ...prevData,
-      rates: [
-        ...contractCreation?.members?.masterOwners,
-        ...contractCreation?.members?.artists,
-      ],
-    }));
+      setContractCreation((prevData: any) => ({
+        ...prevData,
+        rates: [...contractCreation?.members?.masterOwners, ...contractCreation?.members?.artists],
+      }));
   }, []);
 
   const table = useReactTable<any>({
@@ -155,7 +154,7 @@ const TeamAndRates = ({
 
     setContractCreation((prevData: any) => ({
       ...prevData,
-      rates: _members,
+      teamAndRates: _members
     }));
     dispatch({
       type: Steps.SHARES,
@@ -224,13 +223,13 @@ const TeamAndRates = ({
                 {contractCreation?.rates?.map(
                   (member: TeamMember, index: number) => (
                     <MemberCard
-                      key={index}
-                      unit={"%"}
-                      member={member}
-                      updateGoal={(v) => handleUpdateGoal(member, v)}
-                      buttonHidden={true}
-                      avatar={true}
-                    />
+                  key={index}
+                  unit={"%"}
+                  member={member}
+                  updateGoal={(v) => handleUpdateGoal(member, v)}
+                  buttonHidden={true}
+                  avatar={true}
+                />
                   )
                 )}
               </div>

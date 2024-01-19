@@ -20,8 +20,8 @@ const additionalCards = [
     saveBtnHidden: false,
     description: "Enter the budget  details",
     checkboxCards: [
-      { id: 1, value:"registration", title: "Registration", subTitle: "Free for two weeks" },
-      { id: 2, value:"image" ,title: "Image", subTitle: "Budget" },
+      { id: 1, value: "registration", title: "Registration", subTitle: "Free for two weeks" },
+      { id: 2, value: "image", title: "Image", subTitle: "Budget" },
       { id: 3, value: "promotion", title: "Promotion", subTitle: "Budget" },
     ],
   },
@@ -35,9 +35,9 @@ const additionalCards = [
     saveBtnHidden: false,
     description: "Enter the contract royalties details",
     checkboxCards: [
-      { id: 1, value:"at_signature", title: " At Signature", subTitle: "Advance" },
-      { id: 2, value:"at_commercial_release", title: "At Commercial Release", subTitle: "Advance" },
-      { id: 3, value:"at_specific_date", title: "At Specific Date", subTitle: "Advance" },
+      { id: 1, value: "at_signature", title: " At Signature", subTitle: "Advance" },
+      { id: 2, value: "at_commercial_release", title: "At Commercial Release", subTitle: "Advance" },
+      { id: 3, value: "at_specific_date", title: "At Specific Date", subTitle: "Advance" },
     ],
   },
   {
@@ -49,10 +49,10 @@ const additionalCards = [
     saveBtnHidden: false,
     description: "Enter the contract royalties details",
     checkboxCards: [
-      { id: 1, value:"foreign_sales", title: "Foreign Sales", subTitle: "Abatement rate" },
-      { id: 2, value:"compilations", title: "Compilations", subTitle: "Abatement rate" },
-      { id: 3, value:"promotions", title: "Promotions", subTitle: "Abatement rate" },
-      { id: 4, value:"discounted_sales", title: "Discounted Sales", subTitle: "Abatement rate" },
+      { id: 1, value: "foreign_sales", title: "Foreign Sales", subTitle: "Abatement rate" },
+      { id: 2, value: "compilations", title: "Compilations", subTitle: "Abatement rate" },
+      { id: 3, value: "promotions", title: "Promotions", subTitle: "Abatement rate" },
+      { id: 4, value: "discounted_sales", title: "Discounted Sales", subTitle: "Abatement rate" },
       {
         id: 5,
         title: "Off Traditional Circuits Sales",
@@ -103,17 +103,36 @@ export default function AdditionalConditions({
   contractCreation,
   setContractCreation,
 }: any) {
-  //   const [enabled, setEnabled] = useState<number[]>([]);
   const [check, setCheck] = useState<string[]>(
-    contractCreation.additionalConditions || []
+    contractCreation?.additionalConditions || []
   );
 
-  const onCheck = (value: string) => {
-    const checkExist = check?.includes(value);
+  const onCheck = (card: any, subcard: any) => {
+    const checkExist = check?.includes(subcard?.value);
     if (checkExist) {
-      setCheck((prev) => prev?.filter((item) => item !== value));
+      setCheck((prev) => prev?.filter((item) => item !== subcard.value));
+      switch (card.id) {
+        case StepIndex.ROYALTIES_ADVANCES:
+          setContractCreation((prev: any) => {
+            const updatedRoyalities = prev?.royaltyAdvances?.options?.map((artist: any) => {
+              return { ...artist, categories: artist?.categories?.filter((category: any) => category?.value !== subcard?.value) }
+            })
+            return { ...prev, royaltyAdvances: { ...prev?.royaltyAdvances, options: updatedRoyalities } }
+          })
+          break;
+      }
     } else {
-      setCheck((prev) => [...prev, value]);
+      setCheck((prev) => [...prev, subcard.value]);
+      switch (card.id) {
+        case StepIndex.ROYALTIES_ADVANCES:
+          setContractCreation((prev: any) => {
+            const updatedRoyalities = prev?.royaltyAdvances?.options?.map((artist: any) => {
+              return { ...artist, categories: artist?.categories?.length ? [...artist?.categories, subcard] : [subcard] }
+            })
+            return { ...prev, royaltyAdvances: { ...prev?.royaltyAdvances, options: updatedRoyalities } }
+          })
+          break;
+      }
     }
   };
 
@@ -131,7 +150,7 @@ export default function AdditionalConditions({
       description: "Additional Conditions",
       action: {
         label: "X",
-        onClick: () => {},
+        onClick: () => { },
       },
       position: "top-right",
     });
@@ -186,11 +205,10 @@ export default function AdditionalConditions({
                                 (checkboxCard, index) => (
                                   <Card
                                     key={index}
-                                    className={`${
-                                      check.includes(checkboxCard.value)
-                                        ? "bg-blueForeground border-[#0072F4]"
-                                        : "bg-modal border-[#2E2E2E]"
-                                    } pt-3.5 px-4 pb-6 flex justify-between items-center`}
+                                    className={`${check.includes(checkboxCard.value)
+                                      ? "bg-blueForeground border-[#0072F4]"
+                                      : "bg-modal border-[#2E2E2E]"
+                                      } pt-3.5 px-4 pb-6 flex justify-between items-center`}
                                   >
                                     <div>
                                       <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
@@ -207,7 +225,7 @@ export default function AdditionalConditions({
                                     <Checkbox
                                       checked={check.includes(checkboxCard.value)}
                                       onCheckedChange={() =>
-                                        onCheck(checkboxCard.value)
+                                        onCheck(card, checkboxCard)
                                       }
                                       aria-label="Select all"
                                       className="translate-y-[2px]"
