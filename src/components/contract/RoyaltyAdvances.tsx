@@ -113,27 +113,26 @@ export default function RoyaltyAdvances({
   ) => {
     setContractCreation((prev: any) => {
       const updatedRoyaltyAdvances = prev?.royaltyAdvances?.options?.map(
-        (card: any) => {
-          if (card.id === member?.id && card?.categories) {
-            const updatedCategories = card?.categories.map((cat: any) => {
+        (artist: any) => {
+          if (artist.id === member?.id) {
+            const updatedCategories = (artist?.categories || []).map((cat: any) => {
               if (cat.id === category?.id) {
                 return { ...cat, revenue: value };
               }
               return cat;
             });
-            return { ...card, categories: updatedCategories };
+    
+            if (updatedCategories.some((cat: any) => cat.id === category?.id)) {
+              return { ...artist, categories: updatedCategories };
+            } else {
+              return { ...artist, categories: [...updatedCategories, { ...category, revenue: value }] };
+            }
           }
-          return card;
+          return artist;
         }
       );
+      
       return { ...prev, royaltyAdvances: { ...prev?.royaltyAdvances, options: updatedRoyaltyAdvances } };
-    });
-
-    dispatch({
-      type: Steps.SHARES,
-      payload: {
-        members: [...contractCreation?.royaltyAdvances],
-      },
     });
   };
 
@@ -159,7 +158,7 @@ export default function RoyaltyAdvances({
             <Card className="bg-transparent border-none shadow-none">
               <CardContent className="space-y-6 p-0">
                 <div className="pl-2.5">
-                  {selectedRoyaltiesCards?.map((card: any, index) => (
+                  {contractCreation?.royaltyAdvances?.subOptions?.map((card: any, index: number) => (
                     <Card
                       key={index}
                       className="border-none bg-modal-foreground mb-8 rounded-3xl	"

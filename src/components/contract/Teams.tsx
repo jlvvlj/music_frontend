@@ -123,10 +123,23 @@ const Teams = ({
           ),
         };
 
+        let updatedState = [...prev?.royaltyAdvances?.options];
+
+        artists?.map((member: any) => {
+          const existingMemberIndex = updatedState.findIndex((m) => m.id === member.id);
+          if (existingMemberIndex !== -1) {
+            updatedState = updatedState.filter((existingMember) => {
+              return artists.some((newMember:any) => newMember.id === existingMember.id);
+            });
+          } else {
+            updatedState.push(member);
+          }
+        });
+
         return {
           ...prev,
           members: updatedMembers,
-          royaltyAdvances: { ...prev?.royaltyAdvances, options: updatedMembers?.artists },
+          royaltyAdvances: { ...prev?.royaltyAdvances, options: updatedState},
         };
       });
 

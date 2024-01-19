@@ -114,10 +114,7 @@ export default function AdditionalConditions({
       switch (card.id) {
         case StepIndex.ROYALTIES_ADVANCES:
           setContractCreation((prev: any) => {
-            const updatedRoyalities = prev?.royaltyAdvances?.options?.map((artist: any) => {
-              return { ...artist, categories: artist?.categories?.filter((category: any) => category?.value !== subcard?.value) }
-            })
-            return { ...prev, royaltyAdvances: { ...prev?.royaltyAdvances, options: updatedRoyalities } }
+            return { ...prev, royaltyAdvances: { ...prev?.royaltyAdvances, subOptions: prev?.royaltyAdvances?.subOptions.filter((category:any) => category?.value !== subcard?.value) } }
           })
           break;
       }
@@ -126,10 +123,7 @@ export default function AdditionalConditions({
       switch (card.id) {
         case StepIndex.ROYALTIES_ADVANCES:
           setContractCreation((prev: any) => {
-            const updatedRoyalities = prev?.royaltyAdvances?.options?.map((artist: any) => {
-              return { ...artist, categories: artist?.categories?.length ? [...artist?.categories, subcard] : [subcard] }
-            })
-            return { ...prev, royaltyAdvances: { ...prev?.royaltyAdvances, options: updatedRoyalities } }
+            return { ...prev, royaltyAdvances: { ...prev?.royaltyAdvances, subOptions:[...prev?.royaltyAdvances?.subOptions, subcard] } }
           })
           break;
       }

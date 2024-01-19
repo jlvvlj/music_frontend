@@ -28,7 +28,7 @@ export default function NewContract() {
     shares: [],
     additionalConditions: null,
     initialBudget: [],
-    royaltyAdvances: { selected: {}, options:[]},
+    royaltyAdvances: { selected: {}, options:[], subOptions:[]},
     abatements: [],
     broadCasting: [],
     derivativeUse: [],
