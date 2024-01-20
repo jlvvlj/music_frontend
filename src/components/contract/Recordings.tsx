@@ -1,7 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import Image from "next/image";
+import React, { useState,  } from "react";
 import { toast } from "sonner";
 import * as z from "zod";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
@@ -35,54 +32,6 @@ import useContractBuilder from "@/hooks/useContractBuilder";
 import MemberCard from "./MemberCard";
 import { Steps } from "@/contexts/ContractBuilderContext";
 
-const teamMembers = [
-  {
-    id: 1,
-    avatar: "/amandine.svg",
-    name: "Charly Jones",
-    role: "Singer",
-    revenue: 15,
-    label: "",
-  },
-  {
-    id: 2,
-    avatar: "/orlane.svg",
-    name: "Orlane Moog",
-    role: "Musician",
-    revenue: 8,
-    label: "base rate on sales",
-  },
-];
-
-const recordingFormSchema = z.object({
-  number: z.number().default(10),
-  programType: z.enum(["album", "single"], {
-    required_error: "Select program type",
-  }),
-  completedAt: z.date().default(new Date()),
-  releasedAt: z.date().default(new Date()),
-  optionRightsLimit: z.date().default(new Date()),
-});
-
-type RecordingFormValues = z.infer<typeof recordingFormSchema>;
-
-const defaultValues: Partial<RecordingFormValues> = {};
-
-type Tab = "firm" | "optional";
-const TABS: {
-  label: string;
-  value: Tab;
-}[] = [
-  {
-    label: "Firm",
-    value: "firm",
-  },
-  {
-    label: "Optional",
-    value: "optional",
-  },
-];
-
 const TeamAndRates = ({
   handleNextStep,
   handleBackStep,
@@ -90,7 +39,7 @@ const TeamAndRates = ({
   setContractCreation,
 }: any) => {
   const [updatedTracks, setUpdatedTracks] = useState(
-     recordingTracks
+    recordingTracks
   );
   const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
 
@@ -122,7 +71,7 @@ const TeamAndRates = ({
       description: "Rates",
       action: {
         label: "X",
-        onClick: () => {},
+        onClick: () => { },
       },
       position: "top-right",
     });
@@ -162,17 +111,20 @@ const TeamAndRates = ({
             <p className="text-sm text-muted-foreground mb-[98px]">
               Enter the appropriate base rate to everyone on the team
             </p>
-            {contractCreation?.rates?.map(
-              (member: TeamMember, index: number) => (
-                <MemberCard
-                  key={index}
-                  unit={"%"}
-                  member={member}
-                  updateGoal={(v) => handleUpdateGoal(member, v)}
-                  avatar={true}
-                />
-              )
-            )}
+            <div className="w-[70%] mx-auto">
+
+              {contractCreation?.rates?.map(
+                (member: TeamMember, index: number) => (
+                  <MemberCard
+                    key={index}
+                    unit={"%"}
+                    member={member}
+                    updateGoal={(v) => handleUpdateGoal(member, v)}
+                    avatar={true}
+                  />
+                )
+              )}
+            </div>
           </div>
         </div>
         <div className="flex justify-between w-full mt-8 px-10">
@@ -206,17 +158,17 @@ const TeamAndRates = ({
               <p className="text-muted-foreground mb-7 text-sm">
                 Edit the rates on each track for a specific allocation
               </p>
-              <div className="pl-4 gap-10">
+              <div className="pl-4 gap-10 w-[82%]">
                 {contractCreation?.rates?.map(
                   (member: TeamMember, index: number) => (
                     <MemberCard
-                  key={index}
-                  unit={"%"}
-                  member={member}
-                  updateGoal={(v) => handleUpdateGoal(member, v)}
-                  buttonHidden={true}
-                  avatar={true}
-                />
+                      key={index}
+                      unit={"%"}
+                      member={member}
+                      updateGoal={(v) => handleUpdateGoal(member, v)}
+                      buttonHidden={true}
+                      avatar={true}
+                    />
                   )
                 )}
               </div>
@@ -240,9 +192,9 @@ const TeamAndRates = ({
                           {header.isPlaceholder
                             ? null
                             : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
                         </TableHead>
                       );
                     })}

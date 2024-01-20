@@ -59,7 +59,7 @@ export default function UploadTrackTable({
   return (
     <div className="relative flex items-end flex-col pb-7 pt-6 bg-modal-foreground rounded-r-3xl h-[782px]">
       <div className="scrollbox overflow-auto px-4 w-full h-full">
-        <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
+      <div className="p-8 rounded-2xl bg-modal border border-muted w-full min-h-full">
           {updateValue && (
             <h1 className="text-center mb-7 text-2xl">{updateValue}</h1>
           )}
@@ -90,7 +90,7 @@ export default function UploadTrackTable({
                     return (
                       <TableHead
                         key={header.id}
-                        className="first:w-[70px] w-[200px] h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] font-normal"
+                        className="first:w-[60px] w-[200px] h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] font-normal"
                       >
                         {header.isPlaceholder
                           ? null
@@ -101,15 +101,15 @@ export default function UploadTrackTable({
                       </TableHead>
                     );
                   })}
-                  <TableHead className="w-[200px] h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] font-normal">
+                  <TableHead className="w-[100px] h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] font-normal">
                     <div className="text-center">Edit</div>
                   </TableHead>
                 </TableRow>
               ))}
             </TableHeader>
             <TableHeader className="w-full h-[11px] bg-table3" />
-            <TableBody className="block overflow-y-auto max-h-[448px] scrollbox">
-              {updatedTracks?.length !== 0 ? (
+            <TableBody className={`block overflow-y-auto max-h-[448px] scrollbox ${updatedTracks?.length !== 0 ? '' : 'relative h-28'} `}>
+              {updatedTracks?.length ? (
                 <>
                   {table?.getRowModel().rows.map((row) => (
                     <TableRow
@@ -127,7 +127,7 @@ export default function UploadTrackTable({
                           )}
                         </TableCell>
                       ))}
-                      <TableCell className="w-[200px]">
+                      <TableCell className="w-[150px]">
                         <Popover
                           open={openPopoverId === row.id}
                           onOpenChange={(isOpen) =>
@@ -156,9 +156,9 @@ export default function UploadTrackTable({
                 <TableRow>
                   <TableCell
                     colSpan={TeamTrackColumn?.length}
-                    className="h-24 text-center"
+                    className="h-full absolute inset-0 w-full flex items-center justify-center"
                   >
-                    No Track's Found
+                    No Track&apos;s Found
                   </TableCell>
                 </TableRow>
               )}

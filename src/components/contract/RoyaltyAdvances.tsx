@@ -130,7 +130,7 @@ export default function RoyaltyAdvances({
                         </p>
                         {card?.isOpen && (
                           <div className="space-y-8 mt-10">
-                            <div className="pl-4 gap-10">
+                            <div className="pl-4 gap-10 w-[82%]">
                               {contractCreation?.royaltyAdvances?.options?.map(
                                 (member: any, index: number) => (
                                   <MemberCard
@@ -196,7 +196,7 @@ export default function RoyaltyAdvances({
               {contractCreation?.royaltyAdvances?.options?.map((card: any) => {
                 return (
                   <>
-                    <div className="flex items-start mx-auto gap-4 pl-2.5 pt-1.5 rounded-md mb-1 w-fit bg-black3 right-card">
+                    <div className="flex items-start justify-between mx-auto gap-4 pl-2.5 pt-1.5 rounded-md mb-1 w-[58%] bg-black3 right-card">
                       <Avatar className="bg-[#A3D3FF] mt-2 h-11 w-11">
                         <Image
                           src={card.avatar}
@@ -228,7 +228,7 @@ export default function RoyaltyAdvances({
                         />
                       </div>
                     </div>
-                    <div className="flex items-center gap-6 px-20 mb-12">
+                    <div className="flex items-center gap-6 mb-12 flex-wrap w-[78%] ml-auto">
                       {card?.categories?.map((category: any, index: number) => {
                         return (
                           <>

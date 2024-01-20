@@ -206,8 +206,8 @@ export function ArtistMultiSelect({
                 !selectedArtists.some(
                   (itemToBeRemoved) => itemToBeRemoved.id === item.id
                 )
-            )?.length && <h3>No Artist</h3>}
-            {artists
+                )?.length && <h3 className="text-sm text-center p-2">No Artist</h3>}
+                {artists
               ?.filter(
                 (item) =>
                   !selectedArtists.some(

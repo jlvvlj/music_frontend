@@ -28,7 +28,7 @@ const additionalCards = [
         ]
       },
       { id: 2, value: "image", title: "Image", subTitle: "Budget", categories: [{ id: 1, title: "Salary", revenue: 3000, subTitle: true }] },
-      { id: 3, value: "promotion", title: "Promotion", subTitle: "Budget", categories: [{ id: 1, title: "Budget", revenue: 3000, subTitle: true }] },
+      { id: 3, value: "promotion", title: "PR & Promotion", subTitle: "Budget", categories: [{ id: 1, title: "Budget", revenue: 3000, subTitle: true }] },
     ],
   },
   {

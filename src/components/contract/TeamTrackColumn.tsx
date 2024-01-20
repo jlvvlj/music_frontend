@@ -4,12 +4,7 @@ import { ColumnDef } from "@tanstack/react-table"
 
 import { DataTableColumnHeader } from "@/app/dashboard/components/data-table-column-header";
 import { Task } from "@/app/dashboard/data/schema";
-import {
-  Popover,
-  PopoverTrigger,
-} from "@/registry/new-york/ui/popover"
 import Link from "next/link";
-import UploadtrackPopover from "./UploadTrackPopover";
 
 export const TeamTrackColumn: ColumnDef<Task>[] = [
   {
@@ -18,7 +13,7 @@ export const TeamTrackColumn: ColumnDef<Task>[] = [
       <DataTableColumnHeader column={column} title="" />
     ),
     cell: ({ row }) =>
-      <div className="text-[#6B7280]">{row.index+1}</div>,
+      <div className="text-[#6B7280]">{row.index + 1}</div>,
     enableSorting: false,
     enableHiding: false,
   },
@@ -28,27 +23,27 @@ export const TeamTrackColumn: ColumnDef<Task>[] = [
       <DataTableColumnHeader column={column} title="Track" />
     ),
     cell: ({ row }) =>
-      <div className="capitalize">{row.getValue("title")}</div>,
+      <div className="capitalize w-[120px] truncate">{row.getValue("title")}</div>,
     enableSorting: false,
     enableHiding: false,
   },
   {
     accessorKey: "audio",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Audio" />
+      <DataTableColumnHeader column={column} title="Audio" className="pl-4" />
     ),
     cell: ({ row }) =>
-      <Link href="#" className="text-[#6B7280]">{row.getValue("audio")}</Link>,
+      <Link href="#" className="text-[#6B7280] w-[120px] truncate block">{row.getValue("audio")}</Link>,
     enableSorting: false,
     enableHiding: false,
   },
   {
     accessorKey: "code",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Code" className="pl-10" />
+      <DataTableColumnHeader column={column} title="Code" className="pl-6" />
     ),
     cell: ({ row }) =>
-      <div className="text-[#6B7280] truncate w-[100px]">{row.getValue("code")}</div>,
+      <div className="text-[#6B7280] w-[100px] truncate">{row.getValue("code")}</div>,
     enableSorting: false,
     enableHiding: false,
   },

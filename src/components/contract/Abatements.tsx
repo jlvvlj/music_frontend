@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,73 +17,24 @@ import { CountryMultiSelect } from "../country-multi-select";
 import { abatementTracks } from "@/app/data/data";
 import { TableCommon } from "./TableCommon";
 import { AbatementColumn } from "./AbatementColumn";
-import useContractBuilder from "@/hooks/useContractBuilder";
-import { Steps } from "@/contexts/ContractBuilderContext";
 import CategoryCard from "./CategoryCard";
+import { ES, FR, GB } from "country-flag-icons/react/3x2";
 
 const COUNTRIES = [
   {
     label: "France",
     value: "france",
-    code: "FR",
+    code: <FR title="France" className="w-3 h-4" />
   },
   {
     label: "Spain",
     value: "spain",
-    code: "ES",
+    code: <ES title="Spain" className="w-3 h-4" />
   },
   {
     label: "England",
     value: "england",
-    code: "GB",
-  },
-];
-
-const cards = [
-  {
-    id: 1,
-    title: "Foreign sales",
-    value: "foreign_sales",
-    desc: "Abatements taken for foreign markets",
-    subCards: [
-      {
-        id: 1,
-        title: "Abatement rate",
-        cost: 10,
-        rate: true,
-        country: []
-      },
-    ],
-  },
-  {
-    id: 2,
-    title: "Compilations",
-    value: "compilations",
-    desc: "Abatements taken for compilations",
-    subCards: [{ id: 1, title: "Share of Base", cost: 40, rate: false }],
-  },
-  {
-    id: 3,
-    title: "Promotions",
-    value: "promotions",
-    rate: false,
-    desc: "An abatement for promotions will be applied",
-    subCards: [{ id: 1, title: "Share of Base", cost: 50, rate: false }],
-  },
-  {
-    id: 4,
-    title: "Discounted Sales",
-    value: "discounted_sales",
-    rate: false,
-    desc: "An abatement for discount sales will be applied",
-    subCards: [{ id: 1, title: "Abatement rate", cost: 80, rate: false }],
-  },
-  {
-    id: 5,
-    title: "Off-Circuits Sales",
-    value: "off_traditional_circuits_sales",
-    desc: "An abatement for off-circuit sales will be applied",
-    subCards: [{ id: 1, title: "Abatement rate", cost: 10, rate: false }],
+    code: <GB title="England" className="w-3 h-4" />
   },
 ];
 
@@ -184,30 +134,30 @@ const Abatements = ({
                           An abatement for foreign sales will be applied
                         </p>
                         {card?.isOpen && (
-                          <div className="space-y-8 mt-10">
-                            <div className="pl-4 gap-7 flex flex-col justify-center items-center">
-                              {card?.categories?.map((activity: any, index: number) => (
-                                <CategoryCard  
-                                  key={index}
-                                  card={activity}
-                                  step={0}
-                                  buttonTitle={activity?.rate ? "Set Rate" :""}
-                                  unit={"%"}
-                                  updateGoal={(v) => handleUpdateGoal(card, activity, v)}
-                                  avatar={false}
-                                  bgcolor="bg-modal"
-                                />
-                              ))}
-                              <div
-                                className={cn(card.id === 1 ? "" : "hidden")}
-                              >
-                                <CountryMultiSelect
-                                  frameworks={COUNTRIES}
-                                  placeholder="Countries"
-                                />
-                              </div>
-                            </div>
+                          <div className="mt-10 flex gap-4 items-start">
+                          <div className="pl-4 w-[68%]">
+                            {card?.subCards?.map((activity: any, index: number) => (
+                              <CategoryCard
+                                key={index}
+                                card={activity}
+                                step={0}
+                                buttonTitle={activity?.rate ? "Set Rate" : ""}
+                                unit={"%"}
+                                updateGoal={(v) => handleUpdateGoal(card.id, activity, v)}
+                                avatar={false}
+                                bgcolor="bg-modal"
+                              />
+                            ))}
                           </div>
+                          <div
+                            className={cn(card.id === 1 ? "" : "hidden")}
+                          >
+                            <CountryMultiSelect
+                              frameworks={COUNTRIES}
+                              placeholder="Countries"
+                            />
+                          </div>
+                        </div>
                         )}
                       </CardContent>
                     </Card>
@@ -259,7 +209,7 @@ const Abatements = ({
                     </CardTitle>
                     <CardDescription>{card.desc}</CardDescription>
                   </CardHeader>
-                  <CardContent className="flex justify-start items-center gap-6">
+                  <CardContent className="flex justify-start items-center gap-6 flex-wrap">
                     {card?.categories?.map((category:any, index:number) => (
                       <div className="rounded-md bg-modal-foreground px-[10px] py-2 w-[150px] min-h-[90px] space-y-1" key={index}>
                         <p className="text-[12px] font-normal">

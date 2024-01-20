@@ -27,7 +27,7 @@ const CategoryCard = ({
     updateGoal(v);
   };
   return (
-    <div className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md w-fit bg-modal pb-1.5 mb-8">
+    <div className="flex items-start justify-between gap-4 pl-2.5 pt-1.5 rounded-md bg-modal pb-1.5 mb-8">
       <div className="pt-3">
         <p className="text-sm font-medium leading-none">{card.title}</p>
       </div>

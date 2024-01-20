@@ -134,12 +134,12 @@ const DerivativeUse = ({
                           </p>
                           {card?.isOpen && (
                             <div className="space-y-8 mt-10">
-                              <div className="pl-4">
+                              <div className="pl-4 w-3/4">
                                 {card?.categories?.map(
                                   (member: any, index: number) => (
                                     <div
-                                      className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md w-fit bg-modal pb-1.5 mb-8"
-                                      key={index}
+                                    className="flex items-start justify-between gap-4 pl-2.5 pt-1.5 rounded-md bg-modal pb-1.5 mb-8"
+                                    key={index}
                                     >
                                       <div className="pt-3">
                                         <p className="text-sm font-normal leading-none mb-1">
@@ -220,7 +220,7 @@ const DerivativeUse = ({
                       </CardTitle>
                       <CardDescription>{card.desc}</CardDescription>
                     </CardHeader>
-                    <CardContent className="flex justify-start items-center gap-6">
+                    <CardContent className="flex justify-start items-center gap-6 flex-wrap">
                       {card?.categories?.map((category: any, index: number) => (
                         category?.revenue ?
                           <div className="rounded-md bg-modal-foreground px-[10px] py-2 w-[150px] min-h-[90px] space-y-1" key={index}>

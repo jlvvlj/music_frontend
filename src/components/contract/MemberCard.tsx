@@ -31,7 +31,7 @@ const ShareCard = ({
   return (
     <div
       className={cn(
-        "flex items-start gap-4 px-4 py-3 rounded-md mb-5 w-fit mx-auto",
+        "flex items-start justify-between gap-4 px-4 py-3 rounded-md mb-5 mx-auto",
         isOwner(member) ? "bg-mblue" : `bg-modal-foreground ${bgcolor}`
       )}
     >

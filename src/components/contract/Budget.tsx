@@ -78,11 +78,11 @@ const Budget = ({
     handleNextStep();
   };
 
-  const handleUpdateGoal = (card:any,member: TeamMember, value: number) => {
+  const handleUpdateGoal = (card: any, member: TeamMember, value: number) => {
     setContractCreation((prev: any) => {
       const updatedInitialBudget = prev?.initialBudget?.map(
         (budget: any) => {
-          if(budget?.id === card?.id){
+          if (budget?.id === card?.id) {
             const updatedSubOptions = (budget?.categories)?.map((cat: any) => {
               if (cat?.id === member?.id) {
                 return { ...cat, revenue: value };
@@ -109,7 +109,10 @@ const Budget = ({
             <p className="text-sm text-muted-foreground mb-12">
               Enter the budget details
             </p>
-            <Card className="bg-transparent border-none shadow-none">
+            {!contractCreation?.initialBudget?.length &&
+              <h1 className="text-xl text-[#737373] text-normal">No Selected Categories</h1>
+            }
+            <Card className={`bg-transparent border-none shadow-none ${!contractCreation?.initialBudget?.length && 'h-[calc(100%-160px)] flex justify-center items-center'}`}>
               <CardContent className="space-y-6 p-0">
                 <div className="pl-2.5">
                   {contractCreation?.initialBudget?.map((card: any) => (
@@ -138,7 +141,7 @@ const Budget = ({
                         </p>
                         {card?.isOpen &&
                           <div className="space-y-8 mt-10">
-                            <div className="">
+                            <div className="pl-4 w-3/5">
                               {card?.categories?.map(
                                 (category: any, index: any) => (
                                   <CategoryCard
@@ -211,7 +214,7 @@ const Budget = ({
                       </CardHeader>
                       <CardContent className="p-0">
                         <div className="text-xs font-normal text-[#4EABFE]">
-                          {activity.revenue}
+                        €{activity.cost}
                         </div>
                       </CardContent>
                     </Card>
