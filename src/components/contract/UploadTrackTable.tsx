@@ -59,7 +59,7 @@ export default function UploadTrackTable({
   return (
     <div className="relative flex items-end flex-col pb-7 pt-6 bg-modal-foreground rounded-r-3xl h-[782px]">
       <div className="scrollbox overflow-auto px-4 w-full h-full">
-        <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
+      <div className="p-8 rounded-2xl bg-modal border border-muted w-full min-h-full">
           {updateValue && (
             <h1 className="text-center mb-7 text-2xl">{updateValue}</h1>
           )}
@@ -80,82 +80,90 @@ export default function UploadTrackTable({
           </div>
           <Table>
             <TableHeader className="block">
-              {table.getHeaderGroups().map((headerGroup) => (
+              {table?.getHeaderGroups().map((headerGroup) => (
                 <TableRow
-                  key={headerGroup.id}
+                  key={headerGroup?.id}
                   style={{ border: "none" }}
                   className="bg-table3-foreground"
                 >
-                  {headerGroup.headers.map((header) => {
+                  {headerGroup?.headers.map((header) => {
                     return (
                       <TableHead
                         key={header.id}
-                        className="first:w-[70px] w-[200px] h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] font-normal"
+                        className="first:w-[60px] w-[200px] h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] font-normal"
                       >
                         {header.isPlaceholder
                           ? null
                           : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                       </TableHead>
                     );
                   })}
-                  <TableHead className="w-[200px] h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] font-normal">
+                  <TableHead className="w-[100px] h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] font-normal">
                     <div className="text-center">Edit</div>
                   </TableHead>
                 </TableRow>
               ))}
             </TableHeader>
             <TableHeader className="w-full h-[11px] bg-table3" />
-            {updatedTracks.length !== 0 ? (
-              <TableBody className="block overflow-y-auto max-h-[448px] scrollbox">
-                {table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    className="hover:bg-transparent border-none"
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell
-                        key={cell.id}
-                        className="first:w-[100px] w-[200px]"
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
+            <TableBody className={`block overflow-y-auto max-h-[448px] scrollbox ${updatedTracks?.length !== 0 ? '' : 'relative h-28'} `}>
+              {updatedTracks?.length ? (
+                <>
+                  {table?.getRowModel().rows.map((row) => (
+                    <TableRow
+                      key={row.id}
+                      className="hover:bg-transparent border-none"
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell
+                          key={cell.id}
+                          className="first:w-[100px] w-[200px]"
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                      <TableCell className="w-[150px]">
+                        <Popover
+                          open={openPopoverId === row.id}
+                          onOpenChange={(isOpen) =>
+                            isOpen
+                              ? setOpenPopoverId(row.id)
+                              : setOpenPopoverId(null)
+                          }
+                        >
+                          <PopoverTrigger asChild>
+                            <Pencil2Icon className="w-4 h-4 mr-1 text-[#4FABFE] text-center cursor-pointer" />
+                          </PopoverTrigger>
+                          <UploadTrackPopover
+                            popoverType={"track"}
+                            artists={false}
+                            name={row?.original?.title}
+                            track={row.original}
+                            onUpdateTrack={handleUpdateTrack}
+                            onClosePopover={() => setOpenPopoverId(null)}
+                          />
+                        </Popover>
                       </TableCell>
-                    ))}
-                    <TableCell className="w-[200px]">
-                      <Popover
-                        open={openPopoverId === row.id}
-                        onOpenChange={(isOpen) =>
-                          isOpen
-                            ? setOpenPopoverId(row.id)
-                            : setOpenPopoverId(null)
-                        }
-                      >
-                        <PopoverTrigger asChild>
-                          <Pencil2Icon className="w-4 h-4 mr-1 text-[#4FABFE] text-center cursor-pointer" />
-                        </PopoverTrigger>
-                        <UploadTrackPopover
-                          popoverType={"track"}
-                          artists={false}
-                          name={row?.original?.title}
-                          track={row.original}
-                          onUpdateTrack={handleUpdateTrack}
-                          onClosePopover={() => setOpenPopoverId(null)}
-                        />
-                      </Popover>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            ) : (
-              <TableBody className="mt-8 text-center block overflow-y-auto max-h-[448px] scrollbox">
-                No Track's Found
-              </TableBody>
-            )}
+                    </TableRow>
+                  ))}
+                </>
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={TeamTrackColumn?.length}
+                    className="h-full absolute inset-0 w-full flex items-center justify-center"
+                  >
+                    No Track&apos;s Found
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+
           </Table>
         </div>
       </div>

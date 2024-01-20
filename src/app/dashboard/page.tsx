@@ -18,39 +18,13 @@ import { Button } from "@/components/ui/button";
 import CreateTrackTabs from "@/components/track/createTrackTabs";
 import TracksTable from "./tracks_table";
 import Graph from "./graph";
-import NewContractModalDemo from "@/components/contract/NewContractModalDemo";
+import NewContractModal from "@/components/contract/NewContractModal";
 import { Plus, X } from "lucide-react";
-
-const cards = [
-  {
-    title: "Total Revenue",
-    amount: "$4236.0",
-    content: "+34% from last month",
-  },
-  {
-    title: "Monthly Streams Revenue",
-    amount: "$436.0",
-    content: "+10% from last month",
-  },
-  {
-    title: "Monthly Sales Revenue",
-    amount: "$236.0",
-    content: "+38% from last month",
-  },
-  {
-    title: "Balance",
-    amount: "$52 236.0",
-    content: "+201 since last hour",
-  },
-];
-
 
 export default function DashboardPage() {
   return (
     <>
-      <div>{/* <Nav /> */}</div>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <div className="md:hidden"></div>
         <div className="hidden flex-col md:flex">
           <div className="flex-1 space-y-4 p-8 pt-6">
             <div className="flex items-center justify-between space-y-2">
@@ -67,7 +41,7 @@ export default function DashboardPage() {
                   </DialogTrigger>
                   <DialogContent className="top-0 left-0 max-w-[100vw] h-screen translate-x-0 translate-y-0 bg-background3/[0.03] backdrop-blur-sm flex justify-center items-center data-[state=closed]:slide-out-to-left-[initial] data-[state=closed]:slide-out-to-top-[initial] data-[state=open]:slide-in-from-left-[initial] data-[state=open]:slide-in-from-top-[initial] rounded-none border-none new-contract-modal">
                     <div className="max-w-[1241px] p-0 !rounded-3xl border-none relative">
-                      <NewContractModalDemo />
+                      <NewContractModal />
                       <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
                         <X className="h-4 w-4" />
                         <span className="sr-only">Close</span>
@@ -77,7 +51,6 @@ export default function DashboardPage() {
                 </Dialog>
                 <Dialog>
                   <DialogTrigger asChild>
-                    {/* <Button>Add a new track</Button> */}
                     <Button className="hover:bg-[#4EABFE] bg-[#4EABFE] text-white" variant="default">
                       <Plus className="w-4 h-4 mr-1" />
                       New Track
@@ -121,7 +94,6 @@ export default function DashboardPage() {
           </div>
         </div>
         <TracksTable />
-        {/* <SheetSide /> */}
       </ThemeProvider>
     </>
   );

@@ -27,14 +27,14 @@ const CategoryCard = ({
     updateGoal(v);
   };
   return (
-    <div className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md w-fit bg-modal pb-1.5 mb-8">
+    <div className="flex items-start justify-between gap-4 pl-2.5 pt-1.5 rounded-md bg-modal pb-1.5 mb-8">
       <div className="pt-3">
         <p className="text-sm font-medium leading-none">{card.title}</p>
       </div>
       <div className="">
         <CardsActivityGoal
           label="SHARES OF REVENUES"
-          initialValue={card.cost || 30}
+          initialValue={card.revenue || 30}
           unit={unit || "€"}
           step={step || 10}
           buttonTitle={buttonTitle || ""}

@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import {
   Card,
@@ -19,41 +18,7 @@ import { TableCommon } from "./TableCommon";
 import { royaltiesTracks } from "@/app/data/data";
 import { RoyaltiesColumn } from "./RoyaltiesColumn";
 import MemberCard from "./MemberCard";
-import useContractBuilder from "@/hooks/useContractBuilder";
 import { TeamMember } from "./types";
-import { Steps } from "@/contexts/ContractBuilderContext";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
-import DatePicker from "../ui/date-picker";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { ArtistMultiSelect } from "./ArtistMultiSelect";
-
-interface Props extends React.PropsWithChildren {
-  currentStep?: number;
-  updateStep: (step: number) => void;
-}
-
-const cards = [
-  {
-    id: 1,
-    title: "At signature",
-    value: "at_signature",
-    showDatePicker: false,
-  },
-  {
-    id: 2,
-    title: "At Commercial release",
-    value: "at_commercial_release",
-    showDatePicker: false,
-  },
-  {
-    id: 3,
-    title: "At Specific Date",
-    value: "at_specific_date",
-    showDatePicker: true,
-  },
-];
 
 export default function RoyaltyAdvances({
   handleNextStep,
@@ -61,27 +26,18 @@ export default function RoyaltyAdvances({
   contractCreation,
   setContractCreation,
 }: any) {
-  const [enabled, setEnabled] = useState<string | any>(
-    contractCreation.royaltyAdvances
-  );
-  const [selectedRoyaltiesCards, setSelectedRoyaltiesCards] = useState([]);
-  const getDataById = (ids: any) =>
-    Array.isArray(ids)
-      ? cards.filter((item) => ids.includes(item.value))
-      : [cards.find((item) => item.id === ids)] || [];
 
-  useEffect(() => {
-    setSelectedRoyaltiesCards(
-      getDataById(contractCreation.additionalConditions) as any
-    );
-  }, [contractCreation.additionalConditions]);
-
-  const onCheckHandle = (id: number) => {
-    if ((enabled as any) === id) {
-      setEnabled(null);
-    } else {
-      setEnabled(id);
-    }
+  const onCheckHandle = (value: string, e: any) => {
+    setContractCreation((prev: any) => {
+      const updateSubOptions = prev?.royaltyAdvances?.subOptions?.map(
+        (subOption: any) => {
+          if (subOption.value === value) {
+            return { ...subOption, isOpen: e };
+          }
+          return subOption
+        });
+      return { ...prev, royaltyAdvances: { ...prev?.royaltyAdvances, subOptions: updateSubOptions } };
+    });
   };
 
   const handleClickNext = () => {
@@ -96,71 +52,38 @@ export default function RoyaltyAdvances({
     handleNextStep();
   };
 
-  useEffect(() => {
-      setContractCreation((prevData: any) => ({
-        ...prevData,
-        royaltyAdvances: contractCreation?.members?.artists?.map(
-          (artist: any) => {
-            return { ...artist, categories: selectedRoyaltiesCards };
-          }
-        ),
-      }));
-  }, [selectedRoyaltiesCards]);
-
-
-  const { dispatch } = useContractBuilder();
-
   const handleUpdateGoal = (
     category: any,
     member: TeamMember,
     value: number
   ) => {
-    setContractCreation((prevData: any) => {
-      const updatedRoyaltyAdvances = prevData.royaltyAdvances.map(
-        (card: any) => {
-          if (card.id === member?.id && card.categories) {
-            const updatedCategories = card.categories.map((cat: any) => {
+    setContractCreation((prev: any) => {
+      const updatedRoyaltyAdvances = prev?.royaltyAdvances?.options?.map(
+        (artist: any) => {
+          if (artist.id === member?.id) {
+            const updatedCategories = (artist?.categories || []).map((cat: any) => {
               if (cat.id === category?.id) {
                 return { ...cat, revenue: value };
               }
               return cat;
             });
-            return { ...card, categories: updatedCategories };
+
+            if (updatedCategories.some((cat: any) => cat.id === category?.id)) {
+              return { ...artist, categories: updatedCategories };
+            } else {
+              return { ...artist, categories: [...updatedCategories, { ...category, revenue: value }] };
+            }
           }
-          return card;
+          return artist;
         }
       );
-      return { ...prevData, royaltyAdvances: updatedRoyaltyAdvances };
-    });
 
-    dispatch({
-      type: Steps.SHARES,
-      payload: {
-        members: [...contractCreation?.royaltyAdvances],
-      },
+      return { ...prev, royaltyAdvances: { ...prev?.royaltyAdvances, options: updatedRoyaltyAdvances } };
     });
   };
 
-  const recordingFormSchema = z.object({
-    number: z.number().default(10),
-    programType: z.enum(["album", "single"], {
-      required_error: "Select program type",
-    }),
-    completedAt: z.date().default(new Date()),
-    releasedAt: z.date().default(new Date()),
-    optionRightsLimit: z.date().default(new Date()),
-  });
-  type RecordingFormValues = z.infer<typeof recordingFormSchema>;
-
-  const defaultValues: Partial<RecordingFormValues> = {};
-  const form = useForm<RecordingFormValues>({
-    resolver: zodResolver(recordingFormSchema),
-    defaultValues,
-    mode: "onChange",
-  });
-
   const calculateTotalRevenue = (categories: any) => {
-    return categories.reduce((totalRevenue: any, category: any) => {
+    return categories?.reduce((totalRevenue: any, category: any) => {
       return totalRevenue + (category.revenue || 0);
     }, 0);
   };
@@ -181,7 +104,7 @@ export default function RoyaltyAdvances({
             <Card className="bg-transparent border-none shadow-none">
               <CardContent className="space-y-6 p-0">
                 <div className="pl-2.5">
-                  {selectedRoyaltiesCards.map((card: any, index) => (
+                  {contractCreation?.royaltyAdvances?.subOptions?.map((card: any, index: number) => (
                     <Card
                       key={index}
                       className="border-none bg-modal-foreground mb-8 rounded-3xl	"
@@ -196,8 +119,8 @@ export default function RoyaltyAdvances({
                           </div>
                           <Switch
                             className="mt-2.5"
-                            checked={enabled === card.id}
-                            onCheckedChange={() => onCheckHandle(card.id)}
+                            checked={card?.isOpen}
+                            onCheckedChange={(e) => onCheckHandle(card.value, e)}
                           />
                         </CardTitle>
                       </CardHeader>
@@ -205,10 +128,10 @@ export default function RoyaltyAdvances({
                         <p className="text-sm	mt-2.5 text-muted-foreground">
                           An advance will be paid a signature
                         </p>
-                        {enabled === card.id && (
+                        {card?.isOpen && (
                           <div className="space-y-8 mt-10">
-                            <div className="pl-4 gap-10">
-                              {contractCreation?.royaltyAdvances?.map(
+                            <div className="pl-4 gap-10 w-[82%]">
+                              {contractCreation?.royaltyAdvances?.options?.map(
                                 (member: any, index: number) => (
                                   <MemberCard
                                     key={index}
@@ -270,10 +193,10 @@ export default function RoyaltyAdvances({
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {contractCreation?.royaltyAdvances?.map((card: any) => {
+              {contractCreation?.royaltyAdvances?.options?.map((card: any) => {
                 return (
                   <>
-                    <div className="flex items-start mx-auto gap-4 pl-2.5 pt-1.5 rounded-md mb-1 w-fit bg-black3 right-card">
+                    <div className="flex items-start justify-between mx-auto gap-4 pl-2.5 pt-1.5 rounded-md mb-1 w-[58%] bg-black3 right-card">
                       <Avatar className="bg-[#A3D3FF] mt-2 h-11 w-11">
                         <Image
                           src={card.avatar}
@@ -294,7 +217,7 @@ export default function RoyaltyAdvances({
                       <div className="">
                         <CardsActivityGoal
                           label={"base rate on sales"}
-                          initialValue={calculateTotalRevenue(card.categories)}
+                          initialValue={calculateTotalRevenue(card.categories) || 0}
                           unit="€"
                           step={10}
                           minValue={0}
@@ -305,17 +228,17 @@ export default function RoyaltyAdvances({
                         />
                       </div>
                     </div>
-                    <div className="flex items-center gap-6 px-20 mb-12">
-                      {card.categories.map((categ: any, index: number) => {
+                    <div className="flex items-center gap-6 mb-12 flex-wrap w-[78%] ml-auto">
+                      {card?.categories?.map((category: any, index: number) => {
                         return (
                           <>
                             {card.categories[index].revenue ? (
                               <div className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4">
                                 <p className="text-[12px] font-normal">
-                                  {card.categories[index].title}
+                                  {category?.title}
                                 </p>
                                 <p className="text-mblue text-[12px] font-normal">
-                                  €{card.categories[index].revenue}
+                                  €{category?.revenue}
                                 </p>
                               </div>
                             ) : (

@@ -51,25 +51,7 @@ const Teams = ({
     contractCreation?.TeamMembers?.updatedTracks || (shareTracks as any)
   );
   const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
-  const [selectedArtists, setSelectedArtists] = useState<any>([
-    ...contractCreation?.members?.artists,
-    ...contractCreation?.members?.masterOwners,
-  ]);
 
-  useEffect(() => {
-    if (selectedArtists)
-      setContractCreation((prevData: any) => ({
-        ...prevData,
-        members: {
-          masterOwners: selectedArtists?.filter(
-            (artist: any) => artist.role === "master owner"
-          ),
-          artists: selectedArtists?.filter(
-            (artist: any) => artist.role !== "master owner"
-          ),
-        },
-      }));
-  }, [selectedArtists]);
 
   const table = useReactTable<any>({
     data: updatedTracks,
@@ -88,7 +70,7 @@ const Teams = ({
       description: "Artists",
       action: {
         label: "X",
-        onClick: () => {},
+        onClick: () => { },
       },
       position: "top-right",
     });
@@ -107,12 +89,74 @@ const Teams = ({
   };
 
   const handleSelectedArtist = (artists: any) => {
-    setSelectedArtists(artists);
+    let updatedMembers = {
+      masterOwners: artists?.filter(
+        (artist: any) => artist.role === "master owner"
+      ),
+      artists: artists?.filter(
+        (artist: any) => artist.role !== "master owner"
+      ),
+    };
+    setContractCreation((prev: any) => {
+      let updatedRoyaltyAdvances = [...prev?.royaltyAdvances?.options];
+      updatedMembers?.artists?.map((member: any) => {
+        const existingMemberIndex = updatedRoyaltyAdvances.findIndex((m) => m.id === member.id);
+        if (existingMemberIndex !== -1) {
+          updatedRoyaltyAdvances = updatedRoyaltyAdvances.filter((existingMember) => {
+            return updatedMembers?.artists.some((newMember: any) => newMember.id === existingMember.id);
+          });
+        } else {
+          updatedRoyaltyAdvances.push(member);
+        }
+      });
+
+      let updatedRates = [...prev?.rates];
+
+      updatedMembers?.artists?.map((member: any) => {
+        const existingMemberIndex = updatedRates.findIndex((m) => m?.id === member?.id);
+        if (existingMemberIndex !== -1) {
+          updatedRates = updatedRates?.filter((existingMember) => {
+            return updatedMembers?.artists?.some((newMember: any) => newMember?.id === existingMember?.id);
+          });
+        } else {
+          updatedRates.push(member);
+        }
+      });
+
+
+      let updatedShares = [...prev?.shares];
+
+      updatedMembers?.masterOwners?.map((member: any) => {
+        const existingMemberIndex = updatedShares.findIndex((m) => m?.id === member?.id);
+        if (existingMemberIndex !== -1) {
+          updatedShares = updatedShares?.filter((existingMember) => {
+            return updatedMembers?.artists?.some((newMember: any) => newMember?.id === existingMember?.id);
+          });
+        } else {
+          updatedShares.push(member);
+        }
+      });
+
+      return {
+        ...prev,
+        members: updatedMembers,
+        shares: updatedShares,
+        rates: updatedRates,
+        royaltyAdvances: { ...prev?.royaltyAdvances, options: updatedRoyaltyAdvances },
+      };
+    });
+
     const masterOwners = artists?.filter(
       (artist: any) => artist.role === "master owner"
     );
-    if (masterOwners?.length > 1) handleSwitchChange({ id: 4 }, true);
-    else handleSwitchChange({ id: 4 }, false);
+
+    if (masterOwners?.length > 1) {
+      handleSwitchChange({ id: 4 }, true);
+    } else {
+      handleSwitchChange({ id: 4 }, false);
+    }
+
+    return artists;
   };
 
   return (
@@ -189,9 +233,9 @@ const Teams = ({
                           {header.isPlaceholder
                             ? null
                             : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
                         </TableHead>
                       );
                     })}

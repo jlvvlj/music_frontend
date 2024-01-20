@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -52,38 +52,18 @@ const Budget = ({
   contractCreation,
   setContractCreation,
 }: any) => {
-  const [enabled, setEnabled] = useState<number | null>(
-    contractCreation.initialBudget || null
-  );
-  const { dispatch } = useContractBuilder();
 
-  const [selectedBudgets, setSelectedBudgets] = useState([]);
-  const getDataById = (selectedOptions: string[]) =>
-    Array.isArray(selectedOptions)
-      ? budgetCards.filter((item) => selectedOptions.includes(item.value))
-      : [budgetCards.find((item) => item.value === selectedOptions)] || [];
-
-  useEffect(() => {
-    setSelectedBudgets(
-      getDataById(contractCreation.additionalConditions) as any
-    );
-  }, [contractCreation.additionalConditions]);
-
-  useEffect(() => {
-    if (enabled) {
-      setContractCreation((prevData: any) => ({
-        ...prevData,
-        initialBudget: budgetCards,
-      }));
-    }
-  }, [enabled]);
-
-  const onCheckHandle = (id: number) => {
-    if (enabled === id) {
-      setEnabled(null);
-    } else {
-      setEnabled(id);
-    }
+  const onCheckHandle = (value: string, e: any) => {
+    setContractCreation((prev: any) => {
+      const updateSubOptions = prev?.initialBudget?.map(
+        (subOption: any) => {
+          if (subOption.value === value) {
+            return { ...subOption, isOpen: e };
+          }
+          return subOption
+        });
+      return { ...prev, initialBudget: updateSubOptions };
+    });
   };
 
   const handleClickNext = () => {
@@ -91,37 +71,30 @@ const Budget = ({
       description: "Initial Budget",
       action: {
         label: "X",
-        onClick: () => {},
+        onClick: () => { },
       },
       position: "top-right",
     });
     handleNextStep();
   };
 
-  const handleUpdateGoal = (cardId: any, member: TeamMember, value: number) => {
-    const _members = [...contractCreation.initialBudget];
-    const newMember = {
-      ...member,
-      cost: value.toString(),
-    };
-
-    const cardIndex = _members.findIndex((card) => card.id === cardId);
-
-    const index = _members[cardIndex]?.activityCards?.findIndex(
-      (m: any) => m.id === member.id
-    );
-    _members[cardIndex].activityCards.splice(index, 1, newMember);
-
-    setContractCreation((prevData: any) => ({
-      ...prevData,
-      cost: { enabled: enabled, budgetCards: _members },
-    }));
-
-    dispatch({
-      type: Steps.SHARES,
-      payload: {
-        members: _members,
-      },
+  const handleUpdateGoal = (card: any, member: TeamMember, value: number) => {
+    setContractCreation((prev: any) => {
+      const updatedInitialBudget = prev?.initialBudget?.map(
+        (budget: any) => {
+          if (budget?.id === card?.id) {
+            const updatedSubOptions = (budget?.categories)?.map((cat: any) => {
+              if (cat?.id === member?.id) {
+                return { ...cat, revenue: value };
+              }
+              return cat;
+            });
+            return { ...budget, categories: updatedSubOptions }
+          }
+          return budget;
+        }
+      );
+      return { ...prev, initialBudget: updatedInitialBudget };
     });
   };
 
@@ -136,26 +109,29 @@ const Budget = ({
             <p className="text-sm text-muted-foreground mb-12">
               Enter the budget details
             </p>
-            <Card className="bg-transparent border-none shadow-none">
+            {!contractCreation?.initialBudget?.length &&
+              <h1 className="text-xl text-[#737373] text-normal">No Selected Categories</h1>
+            }
+            <Card className={`bg-transparent border-none shadow-none ${!contractCreation?.initialBudget?.length && 'h-[calc(100%-160px)] flex justify-center items-center'}`}>
               <CardContent className="space-y-6 p-0">
                 <div className="pl-2.5">
-                  {selectedBudgets.map((card: any) => (
+                  {contractCreation?.initialBudget?.map((card: any) => (
                     <Card
-                      key={card.value}
+                      key={card?.value}
                       className="border-none bg-modal-foreground mb-8 rounded-3xl	"
                     >
                       <CardHeader className="py-5 pb-0">
                         <CardTitle className="text-[17px] font-normal flex justify-between">
                           <div>
-                            <h6>{card.title}</h6>
+                            <h6>{card?.title}</h6>
                             <Badge className="bg-[#0F233D] hover:bg-[#0F233D] text-[11px] py-0 px-1 text-[#4FABFE] rounded-3xl">
                               Budget
                             </Badge>
                           </div>
                           <Switch
                             className="mt-2.5"
-                            checked={enabled === card.id}
-                            onCheckedChange={() => onCheckHandle(card.id)}
+                            checked={card?.isOpen}
+                            onCheckedChange={(e) => onCheckHandle(card?.value, e)}
                           />
                         </CardTitle>
                       </CardHeader>
@@ -163,17 +139,17 @@ const Budget = ({
                         <p className="text-sm	mt-2.5 text-muted-foreground">
                           A budget for registration will be committed
                         </p>
-                        {enabled === card.id && (
+                        {card?.isOpen &&
                           <div className="space-y-8 mt-10">
-                            <div className="">
-                              {card.activityCards.map(
-                                (activity: any, index: any) => (
+                            <div className="pl-4 w-3/5">
+                              {card?.categories?.map(
+                                (category: any, index: any) => (
                                   <CategoryCard
                                     key={index}
-                                    card={activity}
+                                    card={category}
                                     step={1000}
                                     updateGoal={(v) =>
-                                      handleUpdateGoal(card.id, activity, v)
+                                      handleUpdateGoal(card, category, v)
                                     }
                                     avatar={false}
                                     bgcolor="bg-modal"
@@ -188,7 +164,7 @@ const Budget = ({
                               </div>
                             )}
                           </div>
-                        )}
+                        }
                       </CardContent>
                     </Card>
                   ))}
@@ -224,9 +200,9 @@ const Budget = ({
             <h6 className="text-2xl	mb-3">Initial Budget</h6>
             <p className="mb-7 text-sm text-muted-foreground">Budget details</p>
             <div className="flex flex-wrap gap-[18px]">
-              {budgetCards.map((card, index) => (
-                <>
-                  {card.activityCards.map((activity: any, index: any) => (
+              {contractCreation?.initialBudget.map((budget: any, index: number) => (
+                <Fragment key={index}>
+                  {budget?.categories?.map((activity: any, index: any) => (
                     <Card
                       key={index}
                       className="bg-modal-foreground border-[#1D1D1F] pt-2 px-2.5 pb-6 w-[132px] h-[102px]"
@@ -238,12 +214,12 @@ const Budget = ({
                       </CardHeader>
                       <CardContent className="p-0">
                         <div className="text-xs font-normal text-[#4EABFE]">
-                          {activity.cost}
+                        €{activity.cost}
                         </div>
                       </CardContent>
                     </Card>
                   ))}
-                </>
+                </Fragment>
               ))}
             </div>
           </div>

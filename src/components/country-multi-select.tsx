@@ -5,9 +5,9 @@ import { X } from "lucide-react";
 import { Badge } from "@/registry/new-york/ui/badge";
 import { Command, CommandGroup, CommandItem } from "@/components/ui/command";
 import { Command as CommandPrimitive } from "cmdk";
-import { ES, FR, GB } from "country-flag-icons/react/3x2";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 
-type Framework = Record<"value" | "label" | "code", string>;
+type Framework = Record<"value" | "label" | "code", string | any>;
 
 type Props = {
   frameworks: Framework[];
@@ -55,18 +55,12 @@ export function CountryMultiSelect({ frameworks, placeholder }: Props) {
       onKeyDown={handleKeyDown}
       className="overflow-visible bg-transparent"
     >
-      <div className="group border bg-modal border-input px-3 py-2 text-sm ring-offset-background rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 max-w-[180px]">
+      <div className="group border bg-modal border-input px-3 py-2 text-sm ring-offset-background rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 max-w-[138px]">
         <div className="flex gap-1 flex-wrap">
           {selected.map((framework) => {
             return (
-              <Badge key={framework.value} variant="secondary" className="bg-mblue">
-                {framework.code === "FR" ? (
-                  <FR title={framework.label} className="w-3 h-4" />
-                ) : framework.code === "ES" ? (
-                  <ES title={framework.label} className="w-3 h-4" />
-                ) : (
-                  <GB title={framework.label} className="w-3 h-4" />
-                )}
+              <Badge key={framework.value} variant="secondary" className="bg-mblue w-full justify-between">
+                {framework.code}
                 <span className="ml-2">{framework.label}</span>
                 <button
                   className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
@@ -81,21 +75,23 @@ export function CountryMultiSelect({ frameworks, placeholder }: Props) {
                   }}
                   onClick={() => handleUnselect(framework)}
                 >
-                  <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
+                  <X className="h-3 w-3 text-white" />
                 </button>
               </Badge>
             );
           })}
-          {/* Avoid having the "Search" Icon */}
-          <CommandPrimitive.Input
-            ref={inputRef}
-            value={inputValue}
-            onValueChange={setInputValue}
-            onBlur={() => setOpen(false)}
-            onFocus={() => setOpen(true)}
-            placeholder={placeholder}
-            className="ml-2 bg-transparent outline-none placeholder:text-muted-foreground flex-1"
-          />
+          <div className="flex justify-between w-full items-center relative">
+            <CommandPrimitive.Input
+              ref={inputRef}
+              value={inputValue}
+              onValueChange={setInputValue}
+              onBlur={() => setOpen(false)}
+              onFocus={() => setOpen(true)}
+              placeholder={placeholder}
+              className="bg-transparent outline-none placeholder:text-muted-foreground flex-1 w-full"
+            />
+            <ChevronDownIcon className="absolute right-0 top-0.5" />
+          </div>
         </div>
       </div>
       <div className="relative mt-2">
@@ -116,13 +112,7 @@ export function CountryMultiSelect({ frameworks, placeholder }: Props) {
                     }}
                     className={"cursor-pointer"}
                   >
-                    {framework.code === "FR" ? (
-                      <FR title={framework.label} className="w-3 h-4" />
-                    ) : framework.code === "ES" ? (
-                      <ES title={framework.label} className="w-3 h-4" />
-                    ) : (
-                      <GB title={framework.label} className="w-3 h-4" />
-                    )}
+                    {framework.code}
                     <span className="ml-2">{framework.label}</span>
                   </CommandItem>
                 );

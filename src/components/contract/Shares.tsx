@@ -19,24 +19,18 @@ const Shares = ({
   setContractCreation,
   contractCreation,
 }: any) => {
+
   const handleClickNext = () => {
     toast("Shares added successfully!", {
       description: "Shares",
       action: {
         label: "X",
-        onClick: () => {},
+        onClick: () => { },
       },
       position: "top-right",
     });
     handleNextStep();
   };
-
-  useEffect(() => {
-    setContractCreation((prevData: any) => ({
-      ...prevData,
-      shares: [...contractCreation?.members?.masterOwners],
-    }));
-  }, []);
 
   const { dispatch } = useContractBuilder();
   const handleUpdateGoal = (member: any, value: number) => {
@@ -74,15 +68,17 @@ const Shares = ({
               Enter the appropriate amount of shares to each producer on the
               team
             </p>
-            {contractCreation?.shares.map((member: any, index: number) => (
-              <MemberCard
-                key={index}
-                member={member}
-                unit={"%"}
-                updateGoal={(v) => handleUpdateGoal(member, v)}
-                avatar={true}
-              />
-            ))}
+            <div className="w-[69%] mx-auto">
+              {contractCreation?.shares.map((member: any, index: number) => (
+                <MemberCard
+                  key={index}
+                  member={member}
+                  unit={"%"}
+                  updateGoal={(v) => handleUpdateGoal(member, v)}
+                  avatar={true}
+                />
+              ))}
+            </div>
           </div>
         </div>
         <div className="flex justify-between w-full mt-8 px-10">
@@ -116,12 +112,12 @@ const Shares = ({
               <p className="text-muted-foreground mb-7 text-sm">
                 Edit the shares on each track for a specific allocation
               </p>
-              <div className="pl-4 gap-10">
+              <div className="pl-4 gap-10 w-[82%]">
                 {contractCreation?.shares.map((member: any, index: number) => (
                   <MemberCard
                     key={index}
                     unit={"%"}
-                    member={member}
+                    member={{ ...member, role: "" }}
                     updateGoal={(v) => handleUpdateGoal(member, v)}
                     buttonHidden={true}
                     avatar={true}

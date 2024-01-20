@@ -18,15 +18,16 @@ export default function SidebarLayout({
     ]
     const [isCollapsed, setIsCollapsed] = useState<number>(0);
 
-    const handleResize = (size:number) => {
+    const handleResize = (size: number) => {
         setIsCollapsed(size)
-      };
+    };
 
     return (
         <div className="w-full h-screen fixed">
             {!allowedRoutes.includes(pathname as string) && (
                 <ResizablePanelGroup direction="horizontal">
-                    <ResizablePanel collapsible collapsedSize={4} defaultSize={250} maxSize={14} minSize={10} onResize={handleResize} >
+                    <ResizablePanel collapsible collapsedSize={4} defaultSize={400} maxSize={30
+                    } minSize={15} onResize={handleResize} className="min-w-[75px] max-w-[250px]" >
                         <Sidebar isCollapsed={isCollapsed} />
                     </ResizablePanel>
                     <ResizableHandle withHandle />
