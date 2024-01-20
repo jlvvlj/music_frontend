@@ -45,70 +45,50 @@ const DerivativeUse = ({
   setContractCreation,
 }: any) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const { members, dispatch } = useContractBuilder();
-  const [enabled, setEnabled] = useState<number | null>(
-    contractCreation.derivativeUse
-  );
 
-  const [selectedDerivativeUse, setSelectedDerivativeUse] = useState([]);
-  const getDataById = (ids: any) =>
-    Array.isArray(ids)
-      ? cards.filter((item) => ids.includes(item.value))
-      : [cards.find((item) => item.id === ids)] || [];
-
-  useEffect(() => {
-    setSelectedDerivativeUse(
-      getDataById(contractCreation.additionalConditions) as any
-    );
-  }, [contractCreation.additionalConditions]);
-
-  const onCheckHandle = (id: number) => {
-    if (enabled === id) {
-      setEnabled(null);
-    } else {
-      setEnabled(id);
-    }
+  const onCheckHandle = (value: string, e: any) => {
+    setContractCreation((prev: any) => {
+      const updateDerivativeUses = prev?.derivativeUses?.map(
+        (derivativeUse: any) => {
+          if (derivativeUse?.value === value) {
+            return { ...derivativeUse, isOpen: e };
+          }
+          return derivativeUse
+        });
+      return { ...prev, derivativeUses: updateDerivativeUses };
+    });
   };
-  // DerivativeUse
+
   const handleClickNext = () => {
     toast("Derivative used successfully", {
       description: "Derivative",
       action: {
         label: "X",
-        onClick: () => {},
+        onClick: () => { },
       },
       position: "top-right",
     });
     handleNextStep(1);
   };
 
-  useEffect(() => {
-    if (enabled) {
-      setContractCreation((prevData: any) => ({
-        ...prevData,
-        derivativeUse: cards,
-      }));
-    }
-  }, [enabled]);
-
-  const handleUpdateGoal = (cardId: any, member: any, value: number) => {
-    const _members = [...contractCreation.derivativeUse];
-    const newMember = {
-      ...member,
-      cost: value.toString(),
-    };
-
-    const cardIndex = _members.findIndex((card) => card.id === cardId);
-
-    const index = _members[cardIndex]?.subCards?.findIndex(
-      (m: any) => m.id === member.id
-    );
-    _members[cardIndex].subCards.splice(index, 1, newMember);
-
-    setContractCreation((prevData: any) => ({
-      ...prevData,
-      cost: { enabled: enabled, derivativeUse: _members },
-    }));
+  const handleUpdateGoal = (card: any, member: any, value: number) => {
+    setContractCreation((prev: any) => {
+      const updatedDerivativeUses = prev?.derivativeUses?.map(
+        (derivativeUse: any) => {
+          if (derivativeUse?.id === card?.id) {
+            const updatedCategories = (derivativeUse?.categories)?.map((cat: any) => {
+              if (cat?.id === member?.id) {
+                return { ...cat, revenue: value };
+              }
+              return cat;
+            });
+            return { ...derivativeUse, categories: updatedCategories }
+          }
+          return derivativeUse;
+        }
+      );
+      return { ...prev, derivativeUses: updatedDerivativeUses };
+    });
   };
 
   return (
@@ -128,7 +108,7 @@ const DerivativeUse = ({
               <Card className="bg-transparent border-none shadow-none">
                 <CardContent className="space-y-6 p-0">
                   <div className="pl-2.5">
-                    {selectedDerivativeUse.map((card: any) => (
+                    {contractCreation?.derivativeUses?.map((card: any) => (
                       <Card
                         key={card.id}
                         className="border-none bg-modal-foreground mb-8 rounded-3xl	"
@@ -143,8 +123,8 @@ const DerivativeUse = ({
                             </div>
                             <Switch
                               className="mt-2.5"
-                              checked={enabled === card.id}
-                              onCheckedChange={() => onCheckHandle(card.id)}
+                              checked={card?.isOpen}
+                              onCheckedChange={(e) => onCheckHandle(card.value, e)}
                             />
                           </CardTitle>
                         </CardHeader>
@@ -152,10 +132,10 @@ const DerivativeUse = ({
                           <p className="text-sm	mt-2.5 text-muted-foreground">
                             Lorem
                           </p>
-                          {enabled === card.id && (
+                          {card?.isOpen && (
                             <div className="space-y-8 mt-10">
                               <div className="pl-4">
-                                {card?.subCards?.map(
+                                {card?.categories?.map(
                                   (member: any, index: number) => (
                                     <div
                                       className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md w-fit bg-modal pb-1.5 mb-8"
@@ -172,16 +152,14 @@ const DerivativeUse = ({
                                       <div className="">
                                         <CardsActivityGoal
                                           label="Abatement rate"
-                                          initialValue={member.cost || 30}
+                                          initialValue={member?.revenue || 30}
                                           unit="%"
                                           step={10}
-                                          buttonTitle="Set Rate"
                                           minValue={5}
                                           maxValue={100}
-                                          buttonHidden
-                                          onClickButton={() => {}}
+                                          onClickButton={() => { }}
                                           setGoal={(v) =>
-                                            handleUpdateGoal(card.id, member, v)
+                                            handleUpdateGoal(card, member, v)
                                           }
                                         />
                                       </div>
@@ -231,9 +209,9 @@ const DerivativeUse = ({
                 </CardDescription>
               </CardHeader>
               <CardContent className="">
-                {cards.map((card) => (
+                {contractCreation?.derivativeUses?.map((card: any, index: number) => (
                   <Card
-                    key={card.id}
+                    key={index}
                     className="bg-transparent border-none shadow-none"
                   >
                     <CardHeader>
@@ -243,18 +221,19 @@ const DerivativeUse = ({
                       <CardDescription>{card.desc}</CardDescription>
                     </CardHeader>
                     <CardContent className="flex justify-start items-center gap-6">
-                      {card?.subCards.map((innercard) => (
-                        <div className="rounded-md bg-modal-foreground px-[10px] py-2 w-[150px] min-h-[90px] space-y-1">
-                          <p className="text-[12px] font-normal">
-                            {innercard.title}
-                          </p>
-                          <p className="text-[#94A3B8] text-[9px] font-normal">
-                            {innercard.desc}
-                          </p>
-                          <p className="text-mblue text-[12px] font-normal">
-                            {innercard.cost}
-                          </p>
-                        </div>
+                      {card?.categories?.map((category: any, index: number) => (
+                        category?.revenue ?
+                          <div className="rounded-md bg-modal-foreground px-[10px] py-2 w-[150px] min-h-[90px] space-y-1" key={index}>
+                            <p className="text-[12px] font-normal">
+                              {category?.title}
+                            </p>
+                            <p className="text-[#94A3B8] text-[9px] font-normal">
+                              {category?.desc}
+                            </p>
+                            <p className="text-mblue text-[12px] font-normal">
+                              {category?.revenue}%
+                            </p>
+                          </div> : ""
                       ))}
                     </CardContent>
                   </Card>

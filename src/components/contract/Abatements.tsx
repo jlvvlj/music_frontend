@@ -94,20 +94,6 @@ const Abatements = ({
   contractCreation,
   setContractCreation,
 }: any) => {
-  const [enabled, setEnabled] = useState<string>();
-  const [selectedAbatements, setSelectedAbatements] = useState([]);
-  const { members, dispatch } = useContractBuilder();
-
-  const getDataById = (ids: any) =>
-    Array.isArray(ids)
-      ? cards.filter((item) => ids.includes(item.value))
-      : [cards.find((item) => item.id === ids)] || [];
-
-  useEffect(() => {
-    setSelectedAbatements(
-      getDataById(contractCreation.additionalConditions) as any
-    );
-  }, [contractCreation.additionalConditions]);
 
   const handleClickNext = () => {
     toast("Abatements added successfully!", {
@@ -121,43 +107,39 @@ const Abatements = ({
     handleNextStep();
   };
 
-  useEffect(() => {
-    if (enabled) {
-      setContractCreation((prevData: any) => ({
-        ...prevData,
-        abatements: cards,
-      }));
-    }
-  }, [enabled]);
-
-  const handleUpdateGoal = (cardId: number, member: TeamMember, value: number) => {
-    const _members = [...contractCreation.abatements];
-    const newMember = {
-      ...member,
-      cost: value,
-    };
-
-    const cardIndex = _members.findIndex((card) => card.id === cardId);
-
-    const index = _members[cardIndex]?.subCards?.findIndex((m: any) => m.id === member.id);
-    _members[cardIndex].subCards.splice(index, 1, newMember);
-
-    setContractCreation((prevData: any) => ({
-      ...prevData,
-      abatements: _members,
-    }));
-
-    dispatch({
-      type: Steps.SHARES,
-      payload: {
-        members: _members,
-      },
+  const handleUpdateGoal = (card:any,member: TeamMember, value: number) => {
+    setContractCreation((prev: any) => {
+      const updatedAbatements = prev?.abatements?.map(
+        (abatement: any) => {
+          if(abatement?.id === card?.id){
+            const updatedSubOptions = (abatement?.categories)?.map((cat: any) => {
+              if (cat?.id === member?.id) {
+                return { ...cat, revenue: value };
+              }
+              return cat;
+            });
+            return { ...abatement, categories: updatedSubOptions }
+          }
+          return abatement;
+        }
+      );
+      return { ...prev, abatements: updatedAbatements };
     });
   };
 
-  const handleUpdateCountry = () => {
+  const onCheckHandle = (value: string, e: any) => {
+    setContractCreation((prev: any) => {
+      const updateSubOptions = prev?.abatements?.map(
+        (subOption: any) => {
+          if (subOption.value === value) {
+            return { ...subOption, isOpen: e };
+          }
+          return subOption
+        });
+      return { ...prev, abatements: updateSubOptions };
+    });
+  };
 
-  }
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
@@ -177,7 +159,7 @@ const Abatements = ({
             <Card className="bg-transparent border-none shadow-none">
               <CardContent className="space-y-6 p-0">
                 <div className="pl-2.5">
-                  {selectedAbatements?.map((card: any, index:number) => (
+                  {contractCreation?.abatements?.map((card: any, index:number) => (
                     <Card
                       key={index}
                       className="border-none bg-modal-foreground mb-8 rounded-3xl	"
@@ -192,8 +174,8 @@ const Abatements = ({
                           </div>
                           <Switch
                             className="mt-2.5"
-                            checked={enabled === card.value}
-                            onCheckedChange={() => setEnabled(card.value)}
+                            checked={card?.isOpen}
+                            onCheckedChange={(e) => onCheckHandle(card.value,e)}
                           />
                         </CardTitle>
                       </CardHeader>
@@ -201,17 +183,17 @@ const Abatements = ({
                         <p className="text-sm	mt-2.5 text-muted-foreground">
                           An abatement for foreign sales will be applied
                         </p>
-                        {enabled === card.value && (
+                        {card?.isOpen && (
                           <div className="space-y-8 mt-10">
                             <div className="pl-4 gap-7 flex flex-col justify-center items-center">
-                              {card?.subCards?.map((activity: any, index: number) => (
+                              {card?.categories?.map((activity: any, index: number) => (
                                 <CategoryCard  
                                   key={index}
                                   card={activity}
                                   step={0}
                                   buttonTitle={activity?.rate ? "Set Rate" :""}
                                   unit={"%"}
-                                  updateGoal={(v) => handleUpdateGoal(card.id, activity, v)}
+                                  updateGoal={(v) => handleUpdateGoal(card, activity, v)}
                                   avatar={false}
                                   bgcolor="bg-modal"
                                 />
@@ -266,7 +248,7 @@ const Abatements = ({
               </CardDescription>
             </CardHeader>
             <CardContent className="">
-              {cards.map((card) => (
+              {contractCreation?.abatements?.map((card:any) => (
                 <Card
                   key={card.id}
                   className="bg-transparent border-none shadow-none"
@@ -278,16 +260,16 @@ const Abatements = ({
                     <CardDescription>{card.desc}</CardDescription>
                   </CardHeader>
                   <CardContent className="flex justify-start items-center gap-6">
-                    {card?.subCards.map((innercard, index) => (
+                    {card?.categories?.map((category:any, index:number) => (
                       <div className="rounded-md bg-modal-foreground px-[10px] py-2 w-[150px] min-h-[90px] space-y-1" key={index}>
                         <p className="text-[12px] font-normal">
-                          {innercard.title}
+                          {category?.title}
                         </p>
                         <p className="text-[#94A3B8] text-[9px] font-normal">
                           Lorem Ipsum
                         </p>
                         <p className="text-mblue text-[12px] font-normal">
-                          {innercard.cost}%
+                          {category?.revenue || 0}%
                         </p>
                       </div>
                     ))}

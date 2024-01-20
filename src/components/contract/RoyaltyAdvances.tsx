@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import {
   Card,
@@ -19,41 +18,7 @@ import { TableCommon } from "./TableCommon";
 import { royaltiesTracks } from "@/app/data/data";
 import { RoyaltiesColumn } from "./RoyaltiesColumn";
 import MemberCard from "./MemberCard";
-import useContractBuilder from "@/hooks/useContractBuilder";
 import { TeamMember } from "./types";
-import { Steps } from "@/contexts/ContractBuilderContext";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
-import DatePicker from "../ui/date-picker";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { ArtistMultiSelect } from "./ArtistMultiSelect";
-
-interface Props extends React.PropsWithChildren {
-  currentStep?: number;
-  updateStep: (step: number) => void;
-}
-
-const cards = [
-  {
-    id: 1,
-    title: "At signature",
-    value: "at_signature",
-    showDatePicker: false,
-  },
-  {
-    id: 2,
-    title: "At Commercial release",
-    value: "at_commercial_release",
-    showDatePicker: false,
-  },
-  {
-    id: 3,
-    title: "At Specific Date",
-    value: "at_specific_date",
-    showDatePicker: true,
-  },
-];
 
 export default function RoyaltyAdvances({
   handleNextStep,
@@ -61,6 +26,7 @@ export default function RoyaltyAdvances({
   contractCreation,
   setContractCreation,
 }: any) {
+
   const onCheckHandle = (value: string, e: any) => {
     setContractCreation((prev: any) => {
       const updateSubOptions = prev?.royaltyAdvances?.subOptions?.map(
@@ -153,7 +119,7 @@ export default function RoyaltyAdvances({
                           </div>
                           <Switch
                             className="mt-2.5"
-                            checked={contractCreation?.royaltyAdvances?.subOptions.find((subOption: any) => subOption?.value === card?.value)?.isOpen}
+                            checked={card?.isOpen}
                             onCheckedChange={(e) => onCheckHandle(card.value, e)}
                           />
                         </CardTitle>
@@ -162,7 +128,7 @@ export default function RoyaltyAdvances({
                         <p className="text-sm	mt-2.5 text-muted-foreground">
                           An advance will be paid a signature
                         </p>
-                        {contractCreation?.royaltyAdvances?.subOptions.find((subOption: any) => subOption?.value === card?.value)?.isOpen && (
+                        {card?.isOpen && (
                           <div className="space-y-8 mt-10">
                             <div className="pl-4 gap-10">
                               {contractCreation?.royaltyAdvances?.options?.map(
@@ -227,7 +193,6 @@ export default function RoyaltyAdvances({
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {console.log("contractCreationcontractCreationcontractCreation", contractCreation)}
               {contractCreation?.royaltyAdvances?.options?.map((card: any) => {
                 return (
                   <>

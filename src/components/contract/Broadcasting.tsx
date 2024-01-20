@@ -54,29 +54,6 @@ const Broadcasting = ({
   const [broadCasting, setBroadCasting] =
     useState<BroadCasting>(baseBroadCasting);
 
-  const [enabled, setEnabled] = useState<number | null>(
-    contractCreation.BroadCasting
-  );
-  const [selectedBroadCasting, setSelectedBroadCasting] = useState([]);
-  const getDataById = (ids: any) =>
-    Array.isArray(ids)
-      ? cards.filter((item) => ids.includes(item.value))
-      : [cards.find((item) => item.id === ids)] || [];
-
-  useEffect(() => {
-    setSelectedBroadCasting(
-      getDataById(contractCreation.additionalConditions) as any
-    );
-  }, [contractCreation.additionalConditions]);
-
-  const onCheckHandle = (id: number) => {
-    if (enabled === id) {
-      setEnabled(null);
-    } else {
-      setEnabled(id);
-    }
-  };
-
   const handleClickNext = () => {
     toast("Broadcasting created successfully!", {
       description: "Broadcasting",
@@ -89,33 +66,37 @@ const Broadcasting = ({
     handleNextStep(1);
   };
 
-  useEffect(() => {
-    if (enabled) {
-      setContractCreation((prevData: any) => ({
-        ...prevData,
-        broadCasting: cards,
-      }));
-    }
-  }, [enabled]);
+  const onCheckHandle = (value: string, e: any) => {
+    setContractCreation((prev: any) => {
+      const updateSubOptions = prev?.broadCastings?.map(
+        (subOption: any) => {
+          if (subOption?.value === value) {
+            return { ...subOption, isOpen: e };
+          }
+          return subOption
+        });
+      return { ...prev, broadCastings: updateSubOptions };
+    });
+  };
 
-  const handleUpdateGoal = (cardId: any, member: any, value: number) => {
-    const _members = [...contractCreation.broadCasting];
-    const newMember = {
-      ...member,
-      cost: value.toString(),
-    };
-
-    const cardIndex = _members.findIndex((card) => card.id === cardId);
-
-    const index = _members[cardIndex]?.activityCards?.findIndex(
-      (m: any) => m.id === member.id
-    );
-    _members[cardIndex].activityCards.splice(index, 1, newMember);
-
-    setContractCreation((prevData: any) => ({
-      ...prevData,
-      cost: { enabled: enabled, budgetCards: _members },
-    }));
+  const handleUpdateGoal = (card:any,member: any, value: number) => {
+    setContractCreation((prev: any) => {
+      const updatedBroadCastings = prev?.broadCastings?.map(
+        (broadCasting: any) => {
+          if(broadCasting?.id === card?.id){
+            const updatedSubOptions = (broadCasting?.categories)?.map((cat: any) => {
+              if (cat?.id === member?.id) {
+                return { ...cat, revenue: value };
+              }
+              return cat;
+            });
+            return { ...broadCasting, categories: updatedSubOptions }
+          }
+          return broadCasting;
+        }
+      );
+      return { ...prev, broadCastings: updatedBroadCastings };
+    });
   };
 
   return (
@@ -136,7 +117,7 @@ const Broadcasting = ({
             <Card className="bg-transparent border-none shadow-none">
               <CardContent className="space-y-6 p-0">
                 <div className="pl-2.5">
-                  {selectedBroadCasting.map((card: any) => (
+                  {contractCreation?.broadCastings?.map((card: any) => (
                     <Card
                       key={card.id}
                       className="border-none bg-modal-foreground mb-8 rounded-3xl	"
@@ -151,8 +132,8 @@ const Broadcasting = ({
                           </div>
                           <Switch
                             className="mt-2.5"
-                            checked={enabled === card.id}
-                            onCheckedChange={() => onCheckHandle(card.id)}
+                            checked={card?.isOpen}
+                            onCheckedChange={(e) => onCheckHandle(card.value, e)}
                           />
                         </CardTitle>
                       </CardHeader>
@@ -160,10 +141,10 @@ const Broadcasting = ({
                         <p className="text-sm	mt-2.5 text-muted-foreground">
                           Paid concession of television broadcasting rights
                         </p>
-                        {enabled === card.id && (
+                        {card?.isOpen && (
                           <div className="space-y-8 mt-10">
                             <div className="pl-4">
-                              {card?.activityCards.map(
+                              {card?.categories?.map(
                                 (member: any, index: any) => (
                                   <div
                                     className="flex items-start gap-4 pl-2.5 pt-1.5 rounded-md w-fit bg-modal pb-1.5 mb-8"
@@ -180,16 +161,14 @@ const Broadcasting = ({
                                     <div className="">
                                       <CardsActivityGoal
                                         label="Abatement rate"
-                                        initialValue={member.cost || 30}
+                                        initialValue={member?.revenue || 30}
                                         unit="%"
                                         step={10}
-                                        buttonTitle="Set Rate"
                                         minValue={5}
                                         maxValue={100}
-                                        buttonHidden
                                         onClickButton={() => {}}
                                         setGoal={(v) =>
-                                          handleUpdateGoal(card.id, member, v)
+                                          handleUpdateGoal(card, member, v)
                                         }
                                       />
                                     </div>
@@ -238,7 +217,7 @@ const Broadcasting = ({
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {selectedBroadCasting.map((card: any) => (
+              {contractCreation?.broadCastings?.map((card: any) => (
                 <Card
                   key={card.id}
                   className="bg-transparent border-none shadow-none"
@@ -250,7 +229,8 @@ const Broadcasting = ({
                     <CardDescription>{card.desc}</CardDescription>
                   </CardHeader>
                   <CardContent className="flex justify-start items-center gap-6">
-                    {card.activityCards?.map((activity: any, index: number) => (
+                    {card.categories?.map((activity: any, index: number) => (
+                      activity?.revenue ?
                       <div
                         className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4"
                         key={index}
@@ -259,9 +239,9 @@ const Broadcasting = ({
                           {activity?.title}
                         </p>
                         <p className="text-mblue text-[12px] font-normal">
-                          {activity?.cost}%
+                          {activity?.revenue}%
                         </p>
-                      </div>
+                      </div> : ""
                     ))}
                   </CardContent>
                 </Card>

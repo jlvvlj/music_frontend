@@ -19,6 +19,7 @@ const Shares = ({
   setContractCreation,
   contractCreation,
 }: any) => {
+  
   const handleClickNext = () => {
     toast("Shares added successfully!", {
       description: "Shares",
@@ -30,13 +31,6 @@ const Shares = ({
     });
     handleNextStep();
   };
-
-  useEffect(() => {
-    setContractCreation((prevData: any) => ({
-      ...prevData,
-      shares: [...contractCreation?.members?.masterOwners],
-    }));
-  }, []);
 
   const { dispatch } = useContractBuilder();
   const handleUpdateGoal = (member: any, value: number) => {

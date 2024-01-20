@@ -94,19 +94,6 @@ const TeamAndRates = ({
   );
   const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
 
-  const form = useForm<RecordingFormValues>({
-    resolver: zodResolver(recordingFormSchema),
-    defaultValues,
-    mode: "onChange",
-  });
-
-  useEffect(() => {
-      setContractCreation((prevData: any) => ({
-        ...prevData,
-        rates: [...contractCreation?.members?.artists],
-      }));
-  }, []);
-
   const table = useReactTable<any>({
     data: updatedTracks,
     columns: RecordingsColumn,

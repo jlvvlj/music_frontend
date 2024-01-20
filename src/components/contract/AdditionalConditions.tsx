@@ -55,15 +55,26 @@ const additionalCards = [
     saveBtnHidden: false,
     description: "Enter the contract royalties details",
     checkboxCards: [
-      { id: 1, value: "foreign_sales", title: "Foreign Sales", subTitle: "Abatement rate" },
-      { id: 2, value: "compilations", title: "Compilations", subTitle: "Abatement rate" },
-      { id: 3, value: "promotions", title: "Promotions", subTitle: "Abatement rate" },
-      { id: 4, value: "discounted_sales", title: "Discounted Sales", subTitle: "Abatement rate" },
+      {
+        id: 1, value: "foreign_sales", title: "Foreign Sales", subTitle: "Abatement rate", categories: [
+          {
+            id: 1,
+            title: "Abatement rate",
+            cost: 10,
+            rate: true,
+            country: []
+          },
+        ]
+      },
+      { id: 2, value: "compilations", title: "Compilations", subTitle: "Abatement rate", categories: [{ id: 1, title: "Share of Base", cost: 40, rate: false }] },
+      { id: 3, value: "promotions", title: "Promotions", subTitle: "Abatement rate", categories: [{ id: 1, title: "Share of Base", cost: 50, rate: false }] },
+      { id: 4, value: "discounted_sales", title: "Discounted Sales", subTitle: "Abatement rate", categories: [{ id: 1, title: "Abatement rate", cost: 80, rate: false }] },
       {
         id: 5,
         title: "Off Traditional Circuits Sales",
         value: "off_traditional_circuits_sales",
         subTitle: "Abatement rate",
+        categories: [{ id: 1, title: "Abatement rate", cost: 10, rate: false }]
       },
     ],
   },
@@ -77,8 +88,8 @@ const additionalCards = [
     saveBtnHidden: false,
     description: "Enter the contract secondary use details",
     checkboxCards: [
-      { id: 1, value: "broadcasting", title: "Broadcasting", subTitle: "Royalty rate" },
-      { id: 2, value: "secondary_use", title: "Secondary Use", subTitle: "Royalty rate" },
+      { id: 1, value: "broadcasting", title: "Broadcasting", subTitle: "Royalty rate", categories: [{ id: 1, title: "Concession", cost: 0 }] },
+      { id: 2, value: "secondary_use", title: "Secondary Use", subTitle: "Royalty rate", categories: [{ id: 1, title: "Share", cost: 0 }] },
     ],
   },
   {
@@ -90,12 +101,18 @@ const additionalCards = [
     saveBtnHidden: false,
     description: "Enter the contract secondary use details",
     checkboxCards: [
-      { id: 1, value: "direct_merchandising", title: "Direct Merchandising", subTitle: "Commission rate" },
+      {
+        id: 1, value: "direct_merchandising", title: "Direct Merchandising", subTitle: "Commission rate", categories: [
+          { id: 1, title: "Direct Commission", desc: "Lorem ipsum", cost: 30 },
+          { id: 2, title: "License Comission", desc: "Lorem ipsum", cost: 10 },
+        ]
+      },
       {
         id: 2,
         title: "Partnerships and Live events",
         value: "commission_rate",
         subTitle: "Commission rate",
+        categories: [{ id: 1, title: "Commission rate", desc: "", cost: 30 }]
       },
     ],
   },
@@ -120,12 +137,27 @@ export default function AdditionalConditions({
       switch (card.id) {
         case StepIndex.BUDGET:
           setContractCreation((prev: any) => {
-            return { ...prev, initialBudget: prev?.initialBudget?.filter((category: any) => category?.value !== subcard?.value) } 
+            return { ...prev, initialBudget: prev?.initialBudget?.filter((category: any) => category?.value !== subcard?.value) }
           })
           break;
         case StepIndex.ROYALTIES_ADVANCES:
           setContractCreation((prev: any) => {
             return { ...prev, royaltyAdvances: { ...prev?.royaltyAdvances, subOptions: prev?.royaltyAdvances?.subOptions?.filter((category: any) => category?.value !== subcard?.value) } }
+          })
+          break;
+        case StepIndex.ABATEMENTS:
+          setContractCreation((prev: any) => {
+            return { ...prev, abatements: prev?.abatements?.filter((category: any) => category?.value !== subcard?.value) }
+          })
+          break;
+        case StepIndex.BROADCASTING:
+          setContractCreation((prev: any) => {
+            return { ...prev, broadCastings: prev?.broadCastings?.filter((category: any) => category?.value !== subcard?.value) }
+          })
+          break;
+        case StepIndex.DERIVATIVE_USE:
+          setContractCreation((prev: any) => {
+            return { ...prev, derivativeUses: prev?.derivativeUses?.filter((category: any) => category?.value !== subcard?.value) }
           })
           break;
       }
@@ -140,6 +172,21 @@ export default function AdditionalConditions({
         case StepIndex.ROYALTIES_ADVANCES:
           setContractCreation((prev: any) => {
             return { ...prev, royaltyAdvances: { ...prev?.royaltyAdvances, subOptions: [...prev?.royaltyAdvances?.subOptions, { ...subcard, isOpen: false }] } }
+          })
+          break;
+        case StepIndex.ABATEMENTS:
+          setContractCreation((prev: any) => {
+            return { ...prev, abatements: [...prev?.abatements, { ...subcard, isOpen: false }] }
+          })
+          break;
+        case StepIndex.BROADCASTING:
+          setContractCreation((prev: any) => {
+            return { ...prev, broadCastings: [...prev?.broadCastings, { ...subcard, isOpen: false }] }
+          })
+          break;
+        case StepIndex.DERIVATIVE_USE:
+          setContractCreation((prev: any) => {
+            return { ...prev, derivativeUses: [...prev?.derivativeUses, { ...subcard, isOpen: false }] }
           })
           break;
       }

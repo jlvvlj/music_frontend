@@ -127,7 +127,7 @@ const Budget = ({
                           </div>
                           <Switch
                             className="mt-2.5"
-                            checked={contractCreation?.initialBudget?.find((budget: any) => budget?.value === card?.value)?.isOpen}
+                            checked={card?.isOpen}
                             onCheckedChange={(e) => onCheckHandle(card?.value, e)}
                           />
                         </CardTitle>
@@ -136,7 +136,7 @@ const Budget = ({
                         <p className="text-sm	mt-2.5 text-muted-foreground">
                           A budget for registration will be committed
                         </p>
-                        {contractCreation?.initialBudget?.find((budget: any) => budget?.value === card?.value)?.isOpen &&
+                        {card?.isOpen &&
                           <div className="space-y-8 mt-10">
                             <div className="">
                               {card?.categories?.map(
