@@ -24,7 +24,7 @@ const Shares = ({
       description: "Shares",
       action: {
         label: "X",
-        onClick: () => {},
+        onClick: () => { },
       },
       position: "top-right",
     });
@@ -121,7 +121,7 @@ const Shares = ({
                   <MemberCard
                     key={index}
                     unit={"%"}
-                    member={member}
+                    member={{ ...member, role: "" }}
                     updateGoal={(v) => handleUpdateGoal(member, v)}
                     buttonHidden={true}
                     avatar={true}

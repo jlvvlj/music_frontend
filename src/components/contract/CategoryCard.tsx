@@ -34,7 +34,7 @@ const CategoryCard = ({
       <div className="">
         <CardsActivityGoal
           label="SHARES OF REVENUES"
-          initialValue={card.cost || 30}
+          initialValue={card.revenue || 30}
           unit={unit || "€"}
           step={step || 10}
           buttonTitle={buttonTitle || ""}

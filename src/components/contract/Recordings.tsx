@@ -103,7 +103,7 @@ const TeamAndRates = ({
   useEffect(() => {
       setContractCreation((prevData: any) => ({
         ...prevData,
-        rates: [...contractCreation?.members?.masterOwners, ...contractCreation?.members?.artists],
+        rates: [...contractCreation?.members?.artists],
       }));
   }, []);
 
@@ -147,14 +147,14 @@ const TeamAndRates = ({
     const _members = [...contractCreation?.rates];
     const newMember = {
       ...member,
-      revenue: value.toString(),
+      revenue: value,
     };
     const index = _members.findIndex((m) => m.id === member.id);
     _members.splice(index, 1, newMember);
 
     setContractCreation((prevData: any) => ({
       ...prevData,
-      teamAndRates: _members
+      rates: _members
     }));
     dispatch({
       type: Steps.SHARES,

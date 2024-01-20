@@ -61,35 +61,17 @@ export default function RoyaltyAdvances({
   contractCreation,
   setContractCreation,
 }: any) {
-  const [selectedRoyaltiesCards, setSelectedRoyaltiesCards] = useState([]);
-  const getDataById = (ids: any) =>
-    Array.isArray(ids)
-      ? cards.filter((item) => ids.includes(item.value))
-      : [cards.find((item) => item.id === ids)] || [];
-
-  useEffect(() => {
-    setSelectedRoyaltiesCards(
-      getDataById(contractCreation.additionalConditions) as any
-    );
-  }, [contractCreation.additionalConditions]);
-
   const onCheckHandle = (value: string, e: any) => {
-    if (e) {
-      setContractCreation((prev: any) => {
-        return {
-          ...prev, royaltyAdvances: { ...prev.royaltyAdvances, selected: { ...prev?.royaltyAdvances?.selected, [value]: e } }
-        }
-      })
-    }
-    else {
-      setContractCreation((prev: any) => {
-        return {
-          ...prev, royaltyAdvances: {
-            ...prev.royaltyAdvances, selected: { ...prev?.royaltyAdvances?.selected, [value]: e }
+    setContractCreation((prev: any) => {
+      const updateSubOptions = prev?.royaltyAdvances?.subOptions?.map(
+        (subOption: any) => {
+          if (subOption.value === value) {
+            return { ...subOption, isOpen: e };
           }
-        }
-      })
-    }
+          return subOption
+        });
+      return { ...prev, royaltyAdvances: { ...prev?.royaltyAdvances, subOptions: updateSubOptions } };
+    });
   };
 
   const handleClickNext = () => {
@@ -103,8 +85,6 @@ export default function RoyaltyAdvances({
     });
     handleNextStep();
   };
-
-  const { dispatch } = useContractBuilder();
 
   const handleUpdateGoal = (
     category: any,
@@ -121,7 +101,7 @@ export default function RoyaltyAdvances({
               }
               return cat;
             });
-    
+
             if (updatedCategories.some((cat: any) => cat.id === category?.id)) {
               return { ...artist, categories: updatedCategories };
             } else {
@@ -131,7 +111,7 @@ export default function RoyaltyAdvances({
           return artist;
         }
       );
-      
+
       return { ...prev, royaltyAdvances: { ...prev?.royaltyAdvances, options: updatedRoyaltyAdvances } };
     });
   };
@@ -173,7 +153,7 @@ export default function RoyaltyAdvances({
                           </div>
                           <Switch
                             className="mt-2.5"
-                            checked={contractCreation?.royaltyAdvances?.selected[card?.value]}
+                            checked={contractCreation?.royaltyAdvances?.subOptions.find((subOption: any) => subOption?.value === card?.value)?.isOpen}
                             onCheckedChange={(e) => onCheckHandle(card.value, e)}
                           />
                         </CardTitle>
@@ -182,7 +162,7 @@ export default function RoyaltyAdvances({
                         <p className="text-sm	mt-2.5 text-muted-foreground">
                           An advance will be paid a signature
                         </p>
-                        {contractCreation?.royaltyAdvances?.selected[card?.value] && (
+                        {contractCreation?.royaltyAdvances?.subOptions.find((subOption: any) => subOption?.value === card?.value)?.isOpen && (
                           <div className="space-y-8 mt-10">
                             <div className="pl-4 gap-10">
                               {contractCreation?.royaltyAdvances?.options?.map(

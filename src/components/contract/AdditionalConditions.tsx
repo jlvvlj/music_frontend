@@ -20,9 +20,15 @@ const additionalCards = [
     saveBtnHidden: false,
     description: "Enter the budget  details",
     checkboxCards: [
-      { id: 1, value: "registration", title: "Registration", subTitle: "Free for two weeks" },
-      { id: 2, value: "image", title: "Image", subTitle: "Budget" },
-      { id: 3, value: "promotion", title: "Promotion", subTitle: "Budget" },
+      {
+        id: 1, value: "registration", title: "Registration", subTitle: "Free for two weeks", categories: [
+          { id: 1, title: "Minimum Budget", revenue: 3000, subTitle: false },
+          { id: 2, title: "Maximum Budget", revenue: 4000, subTitle: false },
+          { id: 3, title: "External Royalties", revenue: 2000, subTitle: false },
+        ]
+      },
+      { id: 2, value: "image", title: "Image", subTitle: "Budget", categories: [{ id: 1, title: "Salary", revenue: 3000, subTitle: true }] },
+      { id: 3, value: "promotion", title: "Promotion", subTitle: "Budget", categories: [{ id: 1, title: "Budget", revenue: 3000, subTitle: true }] },
     ],
   },
   {
@@ -112,18 +118,28 @@ export default function AdditionalConditions({
     if (checkExist) {
       setCheck((prev) => prev?.filter((item) => item !== subcard.value));
       switch (card.id) {
+        case StepIndex.BUDGET:
+          setContractCreation((prev: any) => {
+            return { ...prev, initialBudget: prev?.initialBudget?.filter((category: any) => category?.value !== subcard?.value) } 
+          })
+          break;
         case StepIndex.ROYALTIES_ADVANCES:
           setContractCreation((prev: any) => {
-            return { ...prev, royaltyAdvances: { ...prev?.royaltyAdvances, subOptions: prev?.royaltyAdvances?.subOptions.filter((category:any) => category?.value !== subcard?.value) } }
+            return { ...prev, royaltyAdvances: { ...prev?.royaltyAdvances, subOptions: prev?.royaltyAdvances?.subOptions?.filter((category: any) => category?.value !== subcard?.value) } }
           })
           break;
       }
     } else {
       setCheck((prev) => [...prev, subcard.value]);
       switch (card.id) {
+        case StepIndex.BUDGET:
+          setContractCreation((prev: any) => {
+            return { ...prev, initialBudget: [...prev?.initialBudget, { ...subcard, isOpen: false }] }
+          })
+          break;
         case StepIndex.ROYALTIES_ADVANCES:
           setContractCreation((prev: any) => {
-            return { ...prev, royaltyAdvances: { ...prev?.royaltyAdvances, subOptions:[...prev?.royaltyAdvances?.subOptions, subcard] } }
+            return { ...prev, royaltyAdvances: { ...prev?.royaltyAdvances, subOptions: [...prev?.royaltyAdvances?.subOptions, { ...subcard, isOpen: false }] } }
           })
           break;
       }
