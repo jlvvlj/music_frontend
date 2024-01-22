@@ -60,21 +60,21 @@ const additionalCards = [
           {
             id: 1,
             title: "Abatement rate",
-            cost: 10,
+            revenue: 10,
             rate: true,
             country: []
           },
         ]
       },
-      { id: 2, value: "compilations", title: "Compilations", subTitle: "Abatement rate", categories: [{ id: 1, title: "Share of Base", cost: 40, rate: false }] },
-      { id: 3, value: "promotions", title: "Promotions", subTitle: "Abatement rate", categories: [{ id: 1, title: "Share of Base", cost: 50, rate: false }] },
-      { id: 4, value: "discounted_sales", title: "Discounted Sales", subTitle: "Abatement rate", categories: [{ id: 1, title: "Abatement rate", cost: 80, rate: false }] },
+      { id: 2, value: "compilations", title: "Compilations", subTitle: "Abatement rate", categories: [{ id: 1, title: "Share of Base", revenue: 40, rate: false }] },
+      { id: 3, value: "promotions", title: "Promotions", subTitle: "Abatement rate", categories: [{ id: 1, title: "Share of Base", revenue: 50, rate: false }] },
+      { id: 4, value: "discounted_sales", title: "Discounted Sales", subTitle: "Abatement rate", categories: [{ id: 1, title: "Abatement rate", revenue: 80, rate: false }] },
       {
         id: 5,
         title: "Off Traditional Circuits Sales",
         value: "off_traditional_circuits_sales",
         subTitle: "Abatement rate",
-        categories: [{ id: 1, title: "Abatement rate", cost: 10, rate: false }]
+        categories: [{ id: 1, title: "Abatement rate", revenue: 10, rate: false }]
       },
     ],
   },

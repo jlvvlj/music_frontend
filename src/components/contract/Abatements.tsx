@@ -59,7 +59,7 @@ const Abatements = ({
 
   const handleUpdateGoal = (card:any,member: TeamMember, value: number) => {
     setContractCreation((prev: any) => {
-      const updatedAbatements = prev?.abatements?.map(
+      const updatedAbatements = prev?.abatements?.map(  
         (abatement: any) => {
           if(abatement?.id === card?.id){
             const updatedSubOptions = (abatement?.categories)?.map((cat: any) => {
@@ -73,6 +73,7 @@ const Abatements = ({
           return abatement;
         }
       );
+      console.log("updatedAbatementsupdatedAbatementsupdatedAbatements",updatedAbatements)
       return { ...prev, abatements: updatedAbatements };
     });
   };
@@ -136,14 +137,14 @@ const Abatements = ({
                         {card?.isOpen && (
                           <div className="mt-10 flex gap-4 items-start">
                           <div className="pl-4 w-[68%]">
-                            {card?.subCards?.map((activity: any, index: number) => (
+                            {card?.categories?.map((activity: any, index: number) => (
                               <CategoryCard
                                 key={index}
                                 card={activity}
                                 step={0}
                                 buttonTitle={activity?.rate ? "Set Rate" : ""}
                                 unit={"%"}
-                                updateGoal={(v) => handleUpdateGoal(card.id, activity, v)}
+                                updateGoal={(v) => handleUpdateGoal(card, activity, v)}
                                 avatar={false}
                                 bgcolor="bg-modal"
                               />
