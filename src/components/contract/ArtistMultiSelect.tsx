@@ -172,11 +172,7 @@ export function ArtistMultiSelect({
                   }}
                   onClick={() => {
                     handleUnselect(artist);
-                    handleArtist(
-                      (selectedArtists as any).filter(
-                        (s: any) => s.value !== artist.value
-                      )
-                    );
+                    handleArtist(artist,"remove");
                   }}
                 >
                   <X className="h-3 w-3 text-white" />
@@ -225,7 +221,7 @@ export function ArtistMultiSelect({
                     onSelect={(value) => {
                       setInputValue("");
                       setSelectedArtists((prev) => [...prev, artist]);
-                      handleArtist([...selectedArtists, artist]);
+                      handleArtist(artist,"");
                     }}
                     className={
                       "cursor-pointer justify-between aria-selected:bg-mblue aria-selected:text-white text-[#4EABFE]"

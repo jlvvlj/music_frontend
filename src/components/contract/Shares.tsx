@@ -42,7 +42,7 @@ const Shares = ({
 
     const index = _members.findIndex((m) => m.id === member.id);
     _members.splice(index, 1, newMember);
-
+    console.log("_members_members_members_members",contractCreation?.shares)
     setContractCreation((prevData: any) => ({
       ...prevData,
       shares: _members,

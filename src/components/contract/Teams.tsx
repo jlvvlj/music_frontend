@@ -88,75 +88,52 @@ const Teams = ({
     setUpdatedTracks(updatedData);
   };
 
-  const handleSelectedArtist = (artists: any) => {
-    let updatedMembers = {
-      masterOwners: artists?.filter(
-        (artist: any) => artist.role === "master owner"
-      ),
-      artists: artists?.filter(
-        (artist: any) => artist.role !== "master owner"
-      ),
-    };
+  const handleSelectedArtist = (artist: any, type: string) => {
     setContractCreation((prev: any) => {
-      let updatedRoyaltyAdvances = [...prev?.royaltyAdvances?.options];
-      updatedMembers?.artists?.map((member: any) => {
-        const existingMemberIndex = updatedRoyaltyAdvances.findIndex((m) => m.id === member.id);
-        if (existingMemberIndex !== -1) {
-          updatedRoyaltyAdvances = updatedRoyaltyAdvances.filter((existingMember) => {
-            return updatedMembers?.artists.some((newMember: any) => newMember.id === existingMember.id);
-          });
-        } else {
-          updatedRoyaltyAdvances.push(member);
+      let artists: any = [...prev?.members?.artists];
+      let masterOwners: any = [...prev?.members?.masterOwners];
+      let shares = [...prev?.shares];
+      let rates = [...prev?.rates];
+      let royaltyAdvances = [...prev?.royaltyAdvances?.options]
+      if (type === "remove") {
+        if (artist?.role === "master owner") {
+          masterOwners = masterOwners?.filter((member: any) => member?.id !== artist?.id);
+          shares = shares?.filter((member: any) => member?.id !== artist?.id);
         }
-      });
-
-      let updatedRates = [...prev?.rates];
-
-      updatedMembers?.artists?.map((member: any) => {
-        const existingMemberIndex = updatedRates.findIndex((m) => m?.id === member?.id);
-        if (existingMemberIndex !== -1) {
-          updatedRates = updatedRates?.filter((existingMember) => {
-            return updatedMembers?.artists?.some((newMember: any) => newMember?.id === existingMember?.id);
-          });
-        } else {
-          updatedRates.push(member);
+        else {
+          artists = artists?.filter((member: any) => member?.id !== artist?.id);
+          rates = rates?.filter((member: any) => member?.id !== artist?.id);
+          royaltyAdvances = royaltyAdvances?.filter((member: any) => member?.id !== artist?.id);
         }
-      });
-
-
-      let updatedShares = [...prev?.shares];
-
-      updatedMembers?.masterOwners?.map((member: any) => {
-        const existingMemberIndex = updatedShares.findIndex((m) => m?.id === member?.id);
-        if (existingMemberIndex !== -1) {
-          updatedShares = updatedShares?.filter((existingMember) => {
-            return updatedMembers?.artists?.some((newMember: any) => newMember?.id === existingMember?.id);
-          });
-        } else {
-          updatedShares.push(member);
+      }
+      else {
+        if (artist?.role === "master owner") {
+          masterOwners = [...prev?.members?.masterOwners, artist];
+          shares?.push(artist);
         }
-      });
+        else {
+          artists = [...prev?.members?.artists, artist];
+          rates?.push(artist);
+          royaltyAdvances?.push(artist);
+        }
+      }
 
       return {
         ...prev,
-        members: updatedMembers,
-        shares: updatedShares,
-        rates: updatedRates,
-        royaltyAdvances: { ...prev?.royaltyAdvances, options: updatedRoyaltyAdvances },
+        members: { artists: artists, masterOwners: masterOwners },
+        shares: shares,
+        rates: rates,
+        royaltyAdvances: { ...prev?.royaltyAdvances, options: royaltyAdvances },
       };
     });
 
-    const masterOwners = artists?.filter(
-      (artist: any) => artist.role === "master owner"
-    );
-
-    if (masterOwners?.length > 1) {
+    if (contractCreation?.members?.masterOwners?.length > 1) {
       handleSwitchChange({ id: 4 }, true);
     } else {
       handleSwitchChange({ id: 4 }, false);
     }
 
-    return artists;
+    return artist;
   };
 
   return (

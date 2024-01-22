@@ -214,7 +214,7 @@ const Budget = ({
                       </CardHeader>
                       <CardContent className="p-0">
                         <div className="text-xs font-normal text-[#4EABFE]">
-                        €{activity.cost}
+                        €{activity.revenue | 0}
                         </div>
                       </CardContent>
                     </Card>
