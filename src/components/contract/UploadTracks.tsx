@@ -12,6 +12,7 @@ import { Sheet, SheetTrigger } from "@/registry/new-york/ui/sheet";
 import { AlertCircle } from "lucide-react";
 import ContractDrawer from "@/app/dashboard/components/contract-drawer";
 import { toast } from "sonner";
+import { InfoIcon } from "lucide-react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 
 interface Props {
@@ -95,7 +96,7 @@ export default function UploadTracks({
       description: "Tracks",
       action: {
         label: "X",
-        onClick: () => {},
+        onClick: () => { },
       },
       position: "top-right",
     });
@@ -106,19 +107,24 @@ export default function UploadTracks({
     <div className="w-full py-7 rounded-s-3xl h-full flex flex-col justify-between">
       <div className="scrollbox overflow-auto w-full h-full">
         <div className="h-[calc(100%-40px)] px-10">
-          <div className="flex items-center gap-2 mb-3">
+          <div className="mb-7 mt-3">
+            <svg className="mx-auto" fill="hsl(var(--white3))" width="50px" height="40px" id="Calque_1" data-name="Calque 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 145.04 116.32"><defs></defs><path className="cls-1" d="M79,58.91a7.18,7.18,0,1,1,14.35,0V66a8.59,8.59,0,0,0,8.62,8.62h4.31A8.57,8.57,0,0,0,114.84,66V60.35a8.59,8.59,0,0,0-8.61-8.62h-4.31a8.59,8.59,0,0,1-8.62-8.61V38.81a8.57,8.57,0,0,0-8.61-8.61H80.38a8.57,8.57,0,0,0-8.61,8.61v5.75a7.18,7.18,0,1,1-14.36,0V38.81a8.57,8.57,0,0,0-8.62-8.61H30.13a8.57,8.57,0,0,0-8.62,8.61V86.19a8.57,8.57,0,0,0,8.62,8.62h4.3a8.57,8.57,0,0,0,8.62-8.62V58.91a7.18,7.18,0,0,1,12.26-5.08,6.91,6.91,0,0,1,2.1,5.08V86.19A8.57,8.57,0,0,0,66,94.81h4.31A8.59,8.59,0,0,0,79,86.19Z"
+            />
+              <path className="cls-1" d="M110.6,43.05A8.57,8.57,0,0,1,102,34.44V30.13a8.57,8.57,0,0,1,8.61-8.62h4.31a8.59,8.59,0,0,1,8.62,8.62v4.31a8.59,8.59,0,0,1-8.62,8.61Z" />
+            </svg>
+          </div>
+          <div className="flex items-center justify-center gap-2 mb-3">
             <h1 className="text-3xl font-semibold tracking-tight">
               Let’s upload your tracks
             </h1>
             <Sheet>
               <SheetTrigger asChild>
-                <AlertCircle className="cursor-pointer" />
+                <InfoIcon className="cursor-pointer mt-1" />
               </SheetTrigger>
               <ContractDrawer title="Let’s upload your tracks" />
             </Sheet>
           </div>
-          <h6 className="text-lg">Album</h6>
-          <p className="text-sm mb-[41px] text-muted-foreground">
+          <p className="text-sm mb-[41px] text-muted-foreground text-center">
             Enter the album title and your tracks audio folder.
           </p>
           <h6 className="mb-2.5">Album title</h6>

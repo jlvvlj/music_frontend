@@ -47,7 +47,7 @@ const ShareCard = ({
       )}
       <div className="pt-3">
         <p className="text-sm font-medium leading-none">{member.name}</p>
-        <p className="text-sm">{member.role}</p>
+        <p className="text-sm capitalize">{member.role}</p>
       </div>
       <div className="">
         <CardsActivityGoal
@@ -59,7 +59,7 @@ const ShareCard = ({
           minValue={0}
           maxValue={100}
           buttonHidden={buttonHidden}
-          onClickButton={() => {}}
+          onClickButton={() => { }}
           isOwner={isOwner(member)}
           setGoal={handleChangeGoal}
         />

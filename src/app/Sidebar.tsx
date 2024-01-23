@@ -48,8 +48,8 @@ const Sidebar = ({ isCollapsed }: { isCollapsed: number }) => {
                         </Link>
                         <Accordion type="single" collapsible>
                             <AccordionItem value="item-1" className="border-0">
-                                <AccordionTrigger className="p-0 w-full justify-between items-center  mb-1 px-4 py-2.5 rounded-md hover:no-underline hover:bg-accent hover:text-accent-foreground">
-                                    <div className="flex">
+                                <AccordionTrigger className="p-0 w-full justify-between items-center mb-1 rounded-md hover:no-underline hover:bg-accent hover:text-accent-foreground">
+                                    <div className="w-full flex items-center px-4 py-2.5">
                                         <Settings className="h-5 w-5 mr-3" />
                                         <span className="cursor-pointer">Settings</span>
                                     </div>
@@ -91,7 +91,7 @@ const Sidebar = ({ isCollapsed }: { isCollapsed: number }) => {
                             <TooltipProvider>
                                 <Tooltip delayDuration={0}>
                                     <TooltipTrigger asChild>
-                                        <Button variant="ghost" className={`${pathname === '/dashboard' ? 'bg-accent text-accent-foreground' : ''} w-full justify-start items-center mb-1`}>
+                                        <Button variant="ghost" className={`${pathname === '/dashboard' ? 'bg-accent text-accent-foreground' : ''} w-full justify-center items-center mb-1`}>
                                             <Home className="h-5 w-5" />
                                         </Button>
                                     </TooltipTrigger>
@@ -105,7 +105,7 @@ const Sidebar = ({ isCollapsed }: { isCollapsed: number }) => {
                             <TooltipProvider>
                                 <Tooltip delayDuration={0}>
                                     <TooltipTrigger asChild>
-                                        <Button variant="ghost" className={`${pathname === '/contracts' ? 'bg-accent text-accent-foreground' : ''} w-full justify-start items-center mb-1`}>
+                                        <Button variant="ghost" className={`${pathname === '/contracts' ? 'bg-accent text-accent-foreground' : ''} w-full justify-center items-center mb-1`}>
                                             <Music className="h-5 w-5" />
                                         </Button>
                                     </TooltipTrigger>
@@ -119,7 +119,7 @@ const Sidebar = ({ isCollapsed }: { isCollapsed: number }) => {
                             <TooltipProvider>
                                 <Tooltip delayDuration={0}>
                                     <TooltipTrigger asChild>
-                                        <Button variant="ghost" className={`${pathname === '/music' ? 'bg-accent text-accent-foreground' : ''} w-full justify-start items-center mb-1`}>
+                                        <Button variant="ghost" className={`${pathname === '/music' ? 'bg-accent text-accent-foreground' : ''} w-full justify-center items-center mb-1`}>
                                             <Music className="h-5 w-5" />
                                         </Button>
                                     </TooltipTrigger>
@@ -133,7 +133,7 @@ const Sidebar = ({ isCollapsed }: { isCollapsed: number }) => {
                             <TooltipProvider>
                                 <Tooltip delayDuration={0}>
                                     <TooltipTrigger asChild>
-                                        <Button variant="ghost" className={`${pathname === '/archive' ? 'bg-accent text-accent-foreground' : ''} w-full justify-start items-center mb-1`}>
+                                        <Button variant="ghost" className={`${pathname === '/archive' ? 'bg-accent text-accent-foreground' : ''} w-full justify-center items-center mb-1`}>
                                             <Music className="h-5 w-5" />
                                         </Button>
                                     </TooltipTrigger>
@@ -145,15 +145,15 @@ const Sidebar = ({ isCollapsed }: { isCollapsed: number }) => {
                         </Link>
                         <Accordion type="single" collapsible>
                             <AccordionItem value="item-1" className="border-0">
-                                <AccordionTrigger className="p-0 w-full justify-between items-center  mb-1 px-4 py-2.5 rounded-md hover:no-underline hover:bg-accent hover:text-accent-foreground sidebar-accordion">
+                                <AccordionTrigger className="p-0 w-full justify-center items-center mb-1 rounded-md hover:no-underline hover:bg-accent hover:text-accent-foreground sidebar-accordion">
                                     <TooltipProvider>
                                         <Tooltip delayDuration={0}>
                                             <TooltipTrigger asChild>
-                                                <div className="flex">
+                                                <div className="w-full flex justify-center items-center px-4 py-2.5">
                                                     <Settings className="h-5 w-5" />
                                                 </div>
                                             </TooltipTrigger>
-                                            <TooltipContent side="right" className="flex items-center gap-4 ml-4">
+                                            <TooltipContent side="right" className="flex items-center gap-4">
                                                 <span>Settings</span>
                                             </TooltipContent>
                                         </Tooltip>
@@ -164,7 +164,7 @@ const Sidebar = ({ isCollapsed }: { isCollapsed: number }) => {
                                         <TooltipProvider>
                                             <Tooltip delayDuration={0}>
                                                 <TooltipTrigger asChild>
-                                                    <Button variant="ghost" className={`${pathname === '/settings/account' ? 'bg-accent text-accent-foreground' : ''} w-full justify-start items-center mb-1`}>
+                                                    <Button variant="ghost" className={`${pathname === '/settings/account' ? 'bg-accent text-accent-foreground' : ''} w-full justify-center items-center mb-1`}>
                                                         <PersonStanding className="h-5 w-5" />
                                                     </Button>
                                                 </TooltipTrigger>
@@ -178,7 +178,7 @@ const Sidebar = ({ isCollapsed }: { isCollapsed: number }) => {
                                         <TooltipProvider>
                                             <Tooltip delayDuration={0}>
                                                 <TooltipTrigger asChild>
-                                                    <Button variant="ghost" className={`${pathname === '/settings/notifications' ? 'bg-accent text-accent-foreground' : ''} w-full justify-start items-center mb-1`}>
+                                                    <Button variant="ghost" className={`${pathname === '/settings/notifications' ? 'bg-accent text-accent-foreground' : ''} w-full justify-center items-center mb-1`}>
                                                         <Bell className="h-5 w-5" />
                                                     </Button>
                                                 </TooltipTrigger>
@@ -192,7 +192,7 @@ const Sidebar = ({ isCollapsed }: { isCollapsed: number }) => {
                                         <TooltipProvider>
                                             <Tooltip delayDuration={0}>
                                                 <TooltipTrigger asChild>
-                                                    <Button variant="ghost" className={`${pathname === '/settings/display' ? 'bg-accent text-accent-foreground' : ''} w-full justify-start items-center mb-1`}>
+                                                    <Button variant="ghost" className={`${pathname === '/settings/display' ? 'bg-accent text-accent-foreground' : ''} w-full justify-center items-center mb-1`}>
                                                         <Monitor className="h-5 w-5" />
                                                     </Button>
                                                 </TooltipTrigger>

@@ -333,7 +333,7 @@ const Contributors = ({ updateStep, children }: StepProps) => {
           </div>
         </Tabs>
       </div>
-      <div className="relative flex items-end flex-col pb-7 pt-6 bg-modal-foreground rounded-r-3xl h-[782px]">
+      <div className="relative flex items-end flex-col py-7 bg-modal-foreground rounded-r-3xl h-[782px]">
         <div className="scrollbox overflow-auto px-4 w-full h-full">
           <TeamShare />
         </div>

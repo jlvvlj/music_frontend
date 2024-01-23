@@ -10,6 +10,7 @@ import useContractBuilder from "@/hooks/useContractBuilder";
 import { Steps } from "@/contexts/ContractBuilderContext";
 import { Sheet, SheetTrigger } from "@/registry/new-york/ui/sheet";
 import { AlertCircle } from "lucide-react";
+import { InfoIcon } from "lucide-react";
 import ContractDrawer from "@/app/dashboard/components/contract-drawer";
 import { shareTracks } from "@/app/data/data";
 import { Popover, PopoverTrigger } from "@/registry/new-york/ui/popover";
@@ -147,7 +148,7 @@ const Teams = ({
               </h1>
               <Sheet>
                 <SheetTrigger asChild>
-                  <AlertCircle className="cursor-pointer" />
+                  <InfoIcon className="cursor-pointer mt-1" />
                 </SheetTrigger>
                 <ContractDrawer title="Who’s in the team?" />
               </Sheet>
@@ -188,7 +189,7 @@ const Teams = ({
           </Button>
         </div>
       </div>
-      <div className="relative flex items-end flex-col pb-7 pt-6 bg-modal-foreground rounded-r-3xl h-[782px]">
+      <div className="relative flex items-end flex-col py-7 bg-modal-foreground rounded-r-3xl h-[782px]">
         <div className="scrollbox overflow-auto px-4 w-full h-full">
           <TeamShare members={contractCreation?.members} />
           <div className="rounded-2xl bg-modal border border-muted w-full p-4 mt-8">

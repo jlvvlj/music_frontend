@@ -12,7 +12,7 @@ const budgetCard = [
   { title: "Maximum Budget", cost: "9000" },
   { title: "External Royalties", cost: "50%" },
   { title: "Image", cost: "3000" },
-  { title: "Promotion", cost: "7000" },
+  { title: "PR & Promotion", cost: "7000" },
 ];
 
 export default function BudgetCard({ color }: { color: string }) {

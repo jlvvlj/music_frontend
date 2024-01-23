@@ -194,7 +194,7 @@ const Budget = ({
           </div>
         </div>
       </div>
-      <div className="relative flex items-end flex-col pb-7 pt-6 bg-modal-foreground rounded-r-3xl h-[782px]">
+      <div className="relative flex items-end flex-col py-7 bg-modal-foreground rounded-r-3xl h-[782px]">
         <div className="scrollbox overflow-auto px-4 w-full h-full">
           <div className="p-8 rounded-2xl bg-modal border border-muted w-full mb-[76px]">
             <h6 className="text-2xl	mb-3">Initial Budget</h6>
@@ -214,7 +214,7 @@ const Budget = ({
                       </CardHeader>
                       <CardContent className="p-0">
                         <div className="text-xs font-normal text-[#4EABFE]">
-                        €{activity.revenue | 0}
+                          €{activity.cost | 0}
                         </div>
                       </CardContent>
                     </Card>

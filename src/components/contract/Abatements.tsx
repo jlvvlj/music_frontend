@@ -57,11 +57,11 @@ const Abatements = ({
     handleNextStep();
   };
 
-  const handleUpdateGoal = (card:any,member: TeamMember, value: number) => {
+  const handleUpdateGoal = (card: any, member: TeamMember, value: number) => {
     setContractCreation((prev: any) => {
-      const updatedAbatements = prev?.abatements?.map(  
+      const updatedAbatements = prev?.abatements?.map(
         (abatement: any) => {
-          if(abatement?.id === card?.id){
+          if (abatement?.id === card?.id) {
             const updatedSubOptions = (abatement?.categories)?.map((cat: any) => {
               if (cat?.id === member?.id) {
                 return { ...cat, revenue: value };
@@ -73,7 +73,7 @@ const Abatements = ({
           return abatement;
         }
       );
-      console.log("updatedAbatementsupdatedAbatementsupdatedAbatements",updatedAbatements)
+      console.log("updatedAbatementsupdatedAbatementsupdatedAbatements", updatedAbatements)
       return { ...prev, abatements: updatedAbatements };
     });
   };
@@ -110,7 +110,7 @@ const Abatements = ({
             <Card className="bg-transparent border-none shadow-none">
               <CardContent className="space-y-6 p-0">
                 <div className="pl-2.5">
-                  {contractCreation?.abatements?.map((card: any, index:number) => (
+                  {contractCreation?.abatements?.map((card: any, index: number) => (
                     <Card
                       key={index}
                       className="border-none bg-modal-foreground mb-8 rounded-3xl	"
@@ -126,7 +126,7 @@ const Abatements = ({
                           <Switch
                             className="mt-2.5"
                             checked={card?.isOpen}
-                            onCheckedChange={(e) => onCheckHandle(card.value,e)}
+                            onCheckedChange={(e) => onCheckHandle(card.value, e)}
                           />
                         </CardTitle>
                       </CardHeader>
@@ -136,38 +136,38 @@ const Abatements = ({
                         </p>
                         {card?.isOpen && (
                           <div className="mt-10 flex gap-4 items-start">
-                          <div className="pl-4 w-[68%]">
-                            {card?.categories?.map((activity: any, index: number) => (
-                              <CategoryCard
-                                key={index}
-                                card={activity}
-                                step={0}
-                                buttonTitle={activity?.rate ? "Set Rate" : ""}
-                                unit={"%"}
-                                updateGoal={(v) => handleUpdateGoal(card, activity, v)}
-                                avatar={false}
-                                bgcolor="bg-modal"
+                            <div className="pl-4 w-[68%]">
+                              {card?.subCards?.map((activity: any, index: number) => (
+                                <CategoryCard
+                                  key={index}
+                                  card={activity}
+                                  step={0}
+                                  buttonTitle={activity?.rate ? "Set Rate" : ""}
+                                  unit={"%"}
+                                  updateGoal={(v) => handleUpdateGoal(card.id, activity, v)}
+                                  avatar={false}
+                                  bgcolor="bg-modal"
+                                />
+                              ))}
+                            </div>
+                            <div
+                              className={cn(card.id === 1 ? "" : "hidden")}
+                            >
+                              <CountryMultiSelect
+                                frameworks={COUNTRIES}
+                                placeholder="Countries"
                               />
-                            ))}
-                          </div>
-                          <div
-                            className={cn(card.id === 1 ? "" : "hidden")}
-                          >
-                            <CountryMultiSelect
-                              frameworks={COUNTRIES}
-                              placeholder="Countries"
-                            />
-                          </div>
-                        </div>
+                            </div>
+                          </div >
                         )}
-                      </CardContent>
-                    </Card>
+                      </CardContent >
+                    </Card >
                   ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+                </div >
+              </CardContent >
+            </Card >
+          </div >
+        </div >
         <div className="flex justify-between w-full mt-10 px-10">
           <Button
             className="bg-mblue"
@@ -188,8 +188,8 @@ const Abatements = ({
             </Button>
           </div>
         </div>
-      </div>
-      <div className="relative flex items-end flex-col pb-7 pt-6 bg-modal-foreground rounded-r-3xl h-[782px]">
+      </div >
+      <div className="relative flex items-end flex-col py-7 bg-modal-foreground rounded-r-3xl h-[782px]">
         <div className="scrollbox overflow-auto px-4 w-full h-full">
           <Card className="bg-modal border-muted">
             <CardHeader>
@@ -199,7 +199,7 @@ const Abatements = ({
               </CardDescription>
             </CardHeader>
             <CardContent className="">
-              {contractCreation?.abatements?.map((card:any) => (
+              {contractCreation?.abatements?.map((card: any) => (
                 <Card
                   key={card.id}
                   className="bg-transparent border-none shadow-none"
@@ -211,7 +211,7 @@ const Abatements = ({
                     <CardDescription>{card.desc}</CardDescription>
                   </CardHeader>
                   <CardContent className="flex justify-start items-center gap-6 flex-wrap">
-                    {card?.categories?.map((category:any, index:number) => (
+                    {card?.categories?.map((category: any, index: number) => (
                       <div className="rounded-md bg-modal-foreground px-[10px] py-2 w-[150px] min-h-[90px] space-y-1" key={index}>
                         <p className="text-[12px] font-normal">
                           {category?.title}
@@ -234,7 +234,7 @@ const Abatements = ({
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

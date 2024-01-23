@@ -138,8 +138,8 @@ const DerivativeUse = ({
                                 {card?.categories?.map(
                                   (member: any, index: number) => (
                                     <div
-                                    className="flex items-start justify-between gap-4 pl-2.5 pt-1.5 rounded-md bg-modal pb-1.5 mb-8"
-                                    key={index}
+                                      className="flex items-start justify-between gap-4 pl-2.5 pt-1.5 rounded-md bg-modal pb-1.5 mb-8"
+                                      key={index}
                                     >
                                       <div className="pt-3">
                                         <p className="text-sm font-normal leading-none mb-1">
@@ -198,7 +198,7 @@ const DerivativeUse = ({
             </div>
           </div>
         </div>
-        <div className="relative flex items-end flex-col pb-7 pt-6 bg-modal-foreground rounded-r-3xl h-[782px]">
+        <div className="relative flex items-end flex-col py-7 bg-modal-foreground rounded-r-3xl h-[782px]">
           <div className="scrollbox overflow-auto px-4 w-full h-full">
             <Card className="bg-modal border-muted">
               <CardHeader>

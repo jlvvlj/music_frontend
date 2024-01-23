@@ -83,7 +83,7 @@ const Shares = ({ updateStep }: StepProps) => {
           </Button>
         </div>
       </div>
-      <div className="relative flex items-end flex-col pb-7 pt-6 bg-modal-foreground rounded-r-3xl h-[782px]">
+      <div className="relative flex items-end flex-col py-7 bg-modal-foreground rounded-r-3xl h-[782px]">
         <div className="scrollbox overflow-auto px-4 w-full h-full">
           <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
             <h6 className="text-2xl	mb-3">Team & Shares</h6>
@@ -97,14 +97,14 @@ const Shares = ({ updateStep }: StepProps) => {
               </p>
               <div className="pl-4 gap-10">
                 {members.map((member, index) => (
-                       <MemberCard
-                       key={index}
-                       unit={"%"}
-                       member={member}
-                       updateGoal={(v) => handleUpdateGoal(member, v)}
-                       buttonHidden={true}
-                       avatar={true}
-                     />
+                  <MemberCard
+                    key={index}
+                    unit={"%"}
+                    member={member}
+                    updateGoal={(v) => handleUpdateGoal(member, v)}
+                    buttonHidden={true}
+                    avatar={true}
+                  />
                 ))}
               </div>
             </div>

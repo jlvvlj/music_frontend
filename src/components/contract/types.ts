@@ -193,7 +193,7 @@ export interface Budget {
     maximum: number;
     royalties: number;
   };
-  Image: {
+  image: {
     salary: number;
   };
   promotion: {
