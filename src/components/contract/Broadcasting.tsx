@@ -161,10 +161,10 @@ const Broadcasting = ({
                                     <div className="">
                                       <CardsActivityGoal
                                         label="Abatement rate"
-                                        initialValue={member?.revenue || 30}
+                                        initialValue={member?.revenue}
                                         unit="%"
                                         step={10}
-                                        minValue={5}
+                                        minValue={0}
                                         maxValue={100}
                                         onClickButton={() => { }}
                                         setGoal={(v) =>

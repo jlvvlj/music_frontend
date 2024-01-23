@@ -99,7 +99,6 @@ const TeamAndRates = ({
       },
     });
   };
-  console.log("contractCreation?.rates=======>", contractCreation?.rates)
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">

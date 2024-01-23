@@ -12,12 +12,13 @@ type Framework = Record<"value" | "label" | "code", string | any>;
 type Props = {
   frameworks: Framework[];
   placeholder: string;
+  handleCountry: any;
 };
 
-export function CountryMultiSelect({ frameworks, placeholder }: Props) {
+export function CountryMultiSelect({ frameworks, placeholder, handleCountry }: Props) {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
-  const [selected, setSelected] = React.useState<Framework[]>([frameworks[0]]);
+  const [selected, setSelected] = React.useState<Framework[]>([]);
   const [inputValue, setInputValue] = React.useState("");
 
   const handleUnselect = React.useCallback((framework: Framework) => {
@@ -37,7 +38,6 @@ export function CountryMultiSelect({ frameworks, placeholder }: Props) {
             });
           }
         }
-        // This is not a default behaviour of the <input /> field
         if (e.key === "Escape") {
           input.blur();
         }
@@ -49,6 +49,10 @@ export function CountryMultiSelect({ frameworks, placeholder }: Props) {
   const selectables = frameworks.filter(
     (framework) => !selected.includes(framework)
   );
+
+  React.useEffect(() => {
+    handleCountry(selected);
+  },[selected])
 
   return (
     <Command
@@ -73,7 +77,9 @@ export function CountryMultiSelect({ frameworks, placeholder }: Props) {
                     e.preventDefault();
                     e.stopPropagation();
                   }}
-                  onClick={() => handleUnselect(framework)}
+                  onClick={() => {
+                    handleUnselect(framework)
+                  }}
                 >
                   <X className="h-3 w-3 text-white" />
                 </button>
@@ -95,10 +101,10 @@ export function CountryMultiSelect({ frameworks, placeholder }: Props) {
         </div>
       </div>
       <div className="relative mt-2">
-        {open && selectables.length > 0 ? (
+        {open && selectables?.length > 0 ? (
           <div className="absolute w-full z-10 top-0 rounded-md border bg-modal text-popover-foreground shadow-md outline-none animate-in">
             <CommandGroup className="h-full overflow-auto">
-              {selectables.map((framework) => {
+              {selectables?.map((framework) => {
                 return (
                   <CommandItem
                     key={framework.value}
@@ -106,9 +112,10 @@ export function CountryMultiSelect({ frameworks, placeholder }: Props) {
                       e.preventDefault();
                       e.stopPropagation();
                     }}
-                    onSelect={(value) => {
+                    onSelect={() => {
                       setInputValue("");
                       setSelected((prev) => [...prev, framework]);
+                      handleCountry(selected)
                     }}
                     className={"cursor-pointer"}
                   >

@@ -18,26 +18,6 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import useContractBuilder from "@/hooks/useContractBuilder";
 import { CardsActivityGoal } from "../activity-goal";
 
-const cards = [
-  {
-    id: 14,
-    title: "Merchandising",
-    value: "direct_merchandising",
-    desc: "Royalties taken on merchandising comissions",
-    subCards: [
-      { id: 1, title: "Direct Commission", desc: "Lorem ipsum", cost: 30 },
-      { id: 2, title: "License Comission", desc: "Lorem ipsum", cost: 10 },
-    ],
-  },
-  {
-    id: 15,
-    title: "Partnerships and Live events",
-    value: "commission_rate",
-    desc: "Royalties taken on merchandising comissions",
-    subCards: [{ id: 1, title: "Commission rate", desc: "", cost: 30 }],
-  },
-];
-
 const DerivativeUse = ({
   handleNextStep,
   handleBackStep,
@@ -152,7 +132,7 @@ const DerivativeUse = ({
                                       <div className="">
                                         <CardsActivityGoal
                                           label="Abatement rate"
-                                          initialValue={member?.revenue || 30}
+                                          initialValue={member?.revenue}
                                           unit="%"
                                           step={10}
                                           minValue={5}

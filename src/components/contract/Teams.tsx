@@ -6,8 +6,6 @@ import {
   ArrowRightIcon,
   Pencil2Icon,
 } from "@radix-ui/react-icons";
-import useContractBuilder from "@/hooks/useContractBuilder";
-import { Steps } from "@/contexts/ContractBuilderContext";
 import { Sheet, SheetTrigger } from "@/registry/new-york/ui/sheet";
 import { AlertCircle } from "lucide-react";
 import { InfoIcon } from "lucide-react";
@@ -127,7 +125,7 @@ const Teams = ({
         royaltyAdvances: { ...prev?.royaltyAdvances, options: royaltyAdvances },
       };
     });
-
+    console.log("contractCreation?.members?.masterOwners",contractCreation?.members?.masterOwners)
     if (contractCreation?.members?.masterOwners?.length > 1) {
       handleSwitchChange({ id: 4 }, true);
     } else {

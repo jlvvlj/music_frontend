@@ -18,34 +18,6 @@ import { Label } from "@/registry/new-york/ui/label";
 import { Input } from "@/registry/new-york/ui/input";
 import CategoryCard from "./CategoryCard";
 
-const budgetCards = [
-  {
-    id: 1,
-    title: "Registration",
-    value: "registration",
-    otherInput: false,
-    activityCards: [
-      { id: 1, title: "Minimum Budget", cost: 3000, subTitle: false },
-      { id: 2, title: "Maximum Budget", cost: 4000, subTitle: false },
-      { id: 3, title: "External Royalties", cost: 2000, subTitle: false },
-    ],
-  },
-  {
-    id: 2,
-    title: "Image",
-    value: "image",
-    otherInput: false,
-    activityCards: [{ id: 1, title: "Salary", cost: 3000, subTitle: true }],
-  },
-  {
-    id: 3,
-    title: "PR & Promotion",
-    value: "promotion",
-    otherInput: true,
-    activityCards: [{ id: 1, title: "Budget", cost: 3000, subTitle: true }],
-  },
-];
-
 const Budget = ({
   handleNextStep,
   handleBackStep,
@@ -214,7 +186,7 @@ const Budget = ({
                       </CardHeader>
                       <CardContent className="p-0">
                         <div className="text-xs font-normal text-[#4EABFE]">
-                          €{activity.cost | 0}
+                          €{activity?.revenue | 0}
                         </div>
                       </CardContent>
                     </Card>

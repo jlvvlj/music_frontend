@@ -46,7 +46,7 @@ export function ArtistMultiSelect({
       email: "",
       avatar: "/julie.svg",
       code: "JD",
-      revenue: 50,
+      revenue: 0,
       role: "master owner",
     },
     {
@@ -57,7 +57,7 @@ export function ArtistMultiSelect({
       email: "",
       avatar: "/amandine.svg",
       code: "JS",
-      revenue: 30,
+      revenue: 0,
       role: "master owner",
     },
     {
@@ -68,7 +68,7 @@ export function ArtistMultiSelect({
       email: "",
       avatar: "/orlane.svg",
       code: "OS",
-      revenue: 10,
+      revenue: 0,
       role: "singer",
     },
     {
@@ -79,7 +79,7 @@ export function ArtistMultiSelect({
       email: "",
       avatar: "/jon.svg",
       code: "OS",
-      revenue: 40,
+      revenue: 0,
       role: "musician",
     },
   ],
@@ -152,7 +152,7 @@ export function ArtistMultiSelect({
                 {artistRate && (
                   <CardsActivityGoal
                     label=""
-                    initialValue={artist.revenue}
+                    initialValue={artist?.revenue}
                     unit="%"
                     step={10}
                     minValue={0}

@@ -12,7 +12,6 @@ import { Switch } from "@/registry/default/ui/switch";
 import { Badge } from "@/registry/new-york/ui/badge";
 
 import { cn } from "@/lib/utils";
-import { TeamMember } from "./types";
 import { CountryMultiSelect } from "../country-multi-select";
 import { abatementTracks } from "@/app/data/data";
 import { TableCommon } from "./TableCommon";
@@ -44,7 +43,6 @@ const Abatements = ({
   contractCreation,
   setContractCreation,
 }: any) => {
-
   const handleClickNext = () => {
     toast("Abatements added successfully!", {
       description: "Abatements",
@@ -57,14 +55,17 @@ const Abatements = ({
     handleNextStep();
   };
 
-  const handleUpdateGoal = (card: any, member: TeamMember, value: number) => {
+  const handleUpdateGoal = (card: any, category: any, value: number, country?: any) => {
     setContractCreation((prev: any) => {
       const updatedAbatements = prev?.abatements?.map(
         (abatement: any) => {
           if (abatement?.id === card?.id) {
             const updatedSubOptions = (abatement?.categories)?.map((cat: any) => {
-              if (cat?.id === member?.id) {
-                return { ...cat, revenue: value };
+              if (cat?.id === category?.id) {
+                if (country?.length)
+                  return { ...cat, country: country };
+                else
+                  return { ...cat, revenue: value, country: [] };
               }
               return cat;
             });
@@ -73,7 +74,6 @@ const Abatements = ({
           return abatement;
         }
       );
-      console.log("updatedAbatementsupdatedAbatementsupdatedAbatements", updatedAbatements)
       return { ...prev, abatements: updatedAbatements };
     });
   };
@@ -90,7 +90,6 @@ const Abatements = ({
       return { ...prev, abatements: updateSubOptions };
     });
   };
-
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
@@ -137,14 +136,16 @@ const Abatements = ({
                         {card?.isOpen && (
                           <div className="mt-10 flex gap-4 items-start">
                             <div className="pl-4 w-[68%]">
-                              {card?.subCards?.map((activity: any, index: number) => (
+                              {card?.categories?.map((category: any, index: number) => (
                                 <CategoryCard
                                   key={index}
-                                  card={activity}
-                                  step={0}
-                                  buttonTitle={activity?.rate ? "Set Rate" : ""}
+                                  card={category}
+                                  step={10}
+                                  minValue={0}
+                                  maxValue={100}
+                                  buttonTitle={category?.rate ? "Set Rate" : ""}
                                   unit={"%"}
-                                  updateGoal={(v) => handleUpdateGoal(card.id, activity, v)}
+                                  updateGoal={(v) => handleUpdateGoal(card, category, v)}
                                   avatar={false}
                                   bgcolor="bg-modal"
                                 />
@@ -156,6 +157,7 @@ const Abatements = ({
                               <CountryMultiSelect
                                 frameworks={COUNTRIES}
                                 placeholder="Countries"
+                                handleCountry={(e: any) => handleUpdateGoal(card, card?.categories[0], 0, e)}
                               />
                             </div>
                           </div >
@@ -217,7 +219,7 @@ const Abatements = ({
                           {category?.title}
                         </p>
                         <p className="text-[#94A3B8] text-[9px] font-normal">
-                          Lorem Ipsum
+                          {card?.id === 1 ? `in ${category?.country?.map((country:any) => { return country?.label })}` : "Lorem Ipsum"}
                         </p>
                         <p className="text-mblue text-[12px] font-normal">
                           {category?.revenue || 0}%

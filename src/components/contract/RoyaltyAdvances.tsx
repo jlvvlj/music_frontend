@@ -198,6 +198,9 @@ export default function RoyaltyAdvances({
                                             category.id === card.id
                                         )?.revenue,
                                       }}
+                                      step={1000}
+                                      minValue={0}
+                                      maxValue={50000}
                                       updateGoal={(v) =>
                                         handleUpdateGoal(card, member, v)
                                       }
@@ -274,11 +277,11 @@ export default function RoyaltyAdvances({
                       <div className="">
                         <CardsActivityGoal
                           label={"base rate on sales"}
-                          initialValue={calculateTotalRevenue(card.categories) || 0}
+                          initialValue={calculateTotalRevenue(card?.categories) || 0}
                           unit="€"
-                          step={10}
+                          step={1000}
                           minValue={0}
-                          maxValue={1000}
+                          maxValue={50000}
                           buttonHidden
                           onClickButton={() => { }}
                           setGoal={() => { }}

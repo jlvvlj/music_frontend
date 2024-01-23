@@ -1,9 +1,3 @@
-import { useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { TeamMember } from "./types";
-import { cn, fallbackAvatar } from "@/lib/utils";
-import Image from "next/image";
-import { isOwner } from "./utils";
 import { CardsActivityGoal } from "@/components/activity-goal";
 
 const CategoryCard = ({
@@ -12,7 +6,9 @@ const CategoryCard = ({
   updateGoal,
   buttonHidden,
   buttonTitle,
-  unit
+  unit,
+  minValue,
+  maxValue
 }: {
   card: any;
   step?:number,
@@ -22,6 +18,8 @@ const CategoryCard = ({
   bgcolor?: string;
   buttonTitle?: string;
   unit?: string;
+  minValue?: number;
+  maxValue?: number;
 }) => {
   const handleChangeGoal = (v: number) => {
     updateGoal(v);
@@ -34,12 +32,12 @@ const CategoryCard = ({
       <div className="">
         <CardsActivityGoal
           label="SHARES OF REVENUES"
-          initialValue={card.revenue || 30}
+          initialValue={Number(card?.revenue) || 0}
           unit={unit || "€"}
           step={step || 10}
           buttonTitle={buttonTitle || ""}
-          minValue={0}
-          maxValue={10000000000}
+          minValue={minValue || 0}
+          maxValue={maxValue || 50000}
           buttonHidden={buttonHidden}
           onClickButton={() => {}}
           isOwner={false}
