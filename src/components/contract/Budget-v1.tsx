@@ -28,7 +28,7 @@ const TABS: Tab[] = [
     value: "multimedia",
   },
   {
-    label: "Promotion",
+    label: "PR & Promotion",
     value: "promotion",
   },
 ];
@@ -48,7 +48,7 @@ const Budget = ({ updateStep }: StepProps) => {
       maximum: 5000,
       royalties: 30,
     },
-    Image: {
+    image: {
       salary: 3000,
     },
     promotion: {
@@ -294,7 +294,7 @@ const Budget = ({ updateStep }: StepProps) => {
                                 </div>
                                 <CardsActivityGoal
                                   label="EUR"
-                                  initialValue={budget.multimedia.salary}
+                                  initialValue={budget.image.salary}
                                   unit=""
                                   step={10}
                                   buttonTitle="Set Share"
@@ -320,7 +320,7 @@ const Budget = ({ updateStep }: StepProps) => {
                         <>
                           <div>
                             <p className="text-[#FAFAFA] text-base font-normal">
-                              Promotion
+                              PR & Promotion
                             </p>
                             <p className="text-[#A1A1AA] text-sm font-normal">
                               Select if a budget for image / promotion /

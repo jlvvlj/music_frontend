@@ -44,15 +44,15 @@ export default function NewContract() {
   });
 
   const handleBack = () => {
-    if (currentStep === 5) {
-      if (checkedBoxes[4]) {
-        setCurrentStep(4);
+    if (currentStep === StepIndex.ADDITIONALCONDITIONS) {
+      if (checkedBoxes[StepIndex.SHARES]) {
+        setCurrentStep(StepIndex.SHARES);
       } else {
-        setCurrentStep(3);
+        setCurrentStep(StepIndex.RECORDINGS);
       }
-    } else if (currentStep < 6) {
+    } else if (currentStep < StepIndex.BUDGET) {
       setCurrentStep((prevStep) => Math.max(prevStep - 1, 1));
-    } else if (currentStep === 5) {
+    } else if (currentStep === StepIndex.ADDITIONALCONDITIONS) {
       const previousPage = Object.keys(checkedBoxes)
         .reverse()
         .find((page) => checkedBoxes[page] && parseInt(page, 11) < currentStep);
@@ -65,32 +65,35 @@ export default function NewContract() {
       const previousPage = Object.keys(checkedBoxes)
         .reverse()
         .find((page) => checkedBoxes[page] && parseInt(page, 10) < currentStep);
-      if (previousPage) {
-        setCurrentStep(previousPage ? parseInt(previousPage, 10) : 5);
+      if(previousPage && parseInt(previousPage) < 5){
+        setCurrentStep(StepIndex.ADDITIONALCONDITIONS);
+      }
+        else if (previousPage) {
+        setCurrentStep(previousPage ? parseInt(previousPage, 10) : StepIndex.ADDITIONALCONDITIONS);
       } else {
-        setCurrentStep(5);
+        setCurrentStep(StepIndex.ADDITIONALCONDITIONS);
       }
     }
   };
 
   const handleNext = () => {
-    if (currentStep === 3) {
-      if (!checkedBoxes[4]) {
-        setCurrentStep(5);
+    if (currentStep === StepIndex.RECORDINGS) {
+      if (!checkedBoxes[StepIndex.SHARES]) {
+        setCurrentStep(StepIndex.ADDITIONALCONDITIONS);
       } else {
-        setCurrentStep(4);
+        setCurrentStep(StepIndex.SHARES);
       }
-    } else if (currentStep < 5) {
+    } else if (currentStep < StepIndex.ADDITIONALCONDITIONS) {
       setCurrentStep((prevStep) => Math.min(prevStep + 1, 11));
-    } else if (currentStep === 5) {
+    } else if (currentStep === StepIndex.ADDITIONALCONDITIONS) {
       const selectedSteps = Object.keys(checkedBoxes).filter(
-        (step) => checkedBoxes[step] && parseInt(step, 11) > 5
+        (step) => checkedBoxes[step] && parseInt(step, 11) > StepIndex.ADDITIONALCONDITIONS
       );
       if (selectedSteps.length > 0) {
         const nextStep = Math.min(...selectedSteps.map(Number));
         setCurrentStep(nextStep);
       } else {
-        setCurrentStep(11);
+        setCurrentStep(StepIndex.INTRODUCTION);
       }
     } else {
       const nextPage = Object.keys(checkedBoxes).find(
@@ -99,7 +102,7 @@ export default function NewContract() {
       if (nextPage && currentStep !== 10) {
         setCurrentStep(parseInt(nextPage));
       } else {
-        setCurrentStep(11);
+        setCurrentStep(StepIndex.INTRODUCTION);
       }
     }
   };

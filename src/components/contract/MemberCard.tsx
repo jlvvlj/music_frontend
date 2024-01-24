@@ -15,6 +15,8 @@ const ShareCard = ({
   avatar,
   bgcolor,
   unit,
+  minValue,
+  maxValue
 }: {
   step?: number;
   member: TeamMember;
@@ -24,6 +26,9 @@ const ShareCard = ({
   avatar?: boolean;
   bgcolor?: string;
   unit?: string;
+  minValue?:number;
+  maxValue?:number;
+
 }) => {
   const handleChangeGoal = (v: number) => {
     updateGoal(v);
@@ -47,19 +52,19 @@ const ShareCard = ({
       )}
       <div className="pt-3">
         <p className="text-sm font-medium leading-none">{member.name}</p>
-        <p className="text-sm">{member.role}</p>
+        <p className="text-sm capitalize">{member.role}</p>
       </div>
       <div className="">
         <CardsActivityGoal
           label="SHARES OF REVENUES"
-          initialValue={Number(member.revenue) || 30}
+          initialValue={Number(member?.revenue) | 0}
           unit={unit || "€"}
           step={step || 10}
           buttonTitle={buttonTitle || ""}
-          minValue={0}
-          maxValue={100}
+          minValue={minValue || 0}
+          maxValue={maxValue || 100}
           buttonHidden={buttonHidden}
-          onClickButton={() => {}}
+          onClickButton={() => { }}
           isOwner={isOwner(member)}
           setGoal={handleChangeGoal}
         />

@@ -18,26 +18,6 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import useContractBuilder from "@/hooks/useContractBuilder";
 import { CardsActivityGoal } from "../activity-goal";
 
-const cards = [
-  {
-    id: 14,
-    title: "Merchandising",
-    value: "direct_merchandising",
-    desc: "Royalties taken on merchandising comissions",
-    subCards: [
-      { id: 1, title: "Direct Commission", desc: "Lorem ipsum", cost: 30 },
-      { id: 2, title: "License Comission", desc: "Lorem ipsum", cost: 10 },
-    ],
-  },
-  {
-    id: 15,
-    title: "Partnerships and Live events",
-    value: "commission_rate",
-    desc: "Royalties taken on merchandising comissions",
-    subCards: [{ id: 1, title: "Commission rate", desc: "", cost: 30 }],
-  },
-];
-
 const DerivativeUse = ({
   handleNextStep,
   handleBackStep,
@@ -138,8 +118,8 @@ const DerivativeUse = ({
                                 {card?.categories?.map(
                                   (member: any, index: number) => (
                                     <div
-                                    className="flex items-start justify-between gap-4 pl-2.5 pt-1.5 rounded-md bg-modal pb-1.5 mb-8"
-                                    key={index}
+                                      className="flex items-start justify-between gap-4 pl-2.5 pt-1.5 rounded-md bg-modal pb-1.5 mb-8"
+                                      key={index}
                                     >
                                       <div className="pt-3">
                                         <p className="text-sm font-normal leading-none mb-1">
@@ -152,7 +132,7 @@ const DerivativeUse = ({
                                       <div className="">
                                         <CardsActivityGoal
                                           label="Abatement rate"
-                                          initialValue={member?.revenue || 30}
+                                          initialValue={member?.revenue}
                                           unit="%"
                                           step={10}
                                           minValue={5}
@@ -198,7 +178,7 @@ const DerivativeUse = ({
             </div>
           </div>
         </div>
-        <div className="relative flex items-end flex-col pb-7 pt-6 bg-modal-foreground rounded-r-3xl h-[782px]">
+        <div className="relative flex items-end flex-col py-7 bg-modal-foreground rounded-r-3xl h-[782px]">
           <div className="scrollbox overflow-auto px-4 w-full h-full">
             <Card className="bg-modal border-muted">
               <CardHeader>

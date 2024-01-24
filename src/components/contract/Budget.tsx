@@ -18,34 +18,6 @@ import { Label } from "@/registry/new-york/ui/label";
 import { Input } from "@/registry/new-york/ui/input";
 import CategoryCard from "./CategoryCard";
 
-const budgetCards = [
-  {
-    id: 1,
-    title: "Registration",
-    value: "registration",
-    otherInput: false,
-    activityCards: [
-      { id: 1, title: "Minimum Budget", cost: 3000, subTitle: false },
-      { id: 2, title: "Maximum Budget", cost: 4000, subTitle: false },
-      { id: 3, title: "External Royalties", cost: 2000, subTitle: false },
-    ],
-  },
-  {
-    id: 2,
-    title: "Image",
-    value: "image",
-    otherInput: false,
-    activityCards: [{ id: 1, title: "Salary", cost: 3000, subTitle: true }],
-  },
-  {
-    id: 3,
-    title: "PR & Promotion",
-    value: "promotion",
-    otherInput: true,
-    activityCards: [{ id: 1, title: "Budget", cost: 3000, subTitle: true }],
-  },
-];
-
 const Budget = ({
   handleNextStep,
   handleBackStep,
@@ -194,7 +166,7 @@ const Budget = ({
           </div>
         </div>
       </div>
-      <div className="relative flex items-end flex-col pb-7 pt-6 bg-modal-foreground rounded-r-3xl h-[782px]">
+      <div className="relative flex items-end flex-col py-7 bg-modal-foreground rounded-r-3xl h-[782px]">
         <div className="scrollbox overflow-auto px-4 w-full h-full">
           <div className="p-8 rounded-2xl bg-modal border border-muted w-full mb-[76px]">
             <h6 className="text-2xl	mb-3">Initial Budget</h6>
@@ -214,7 +186,7 @@ const Budget = ({
                       </CardHeader>
                       <CardContent className="p-0">
                         <div className="text-xs font-normal text-[#4EABFE]">
-                        €{activity.cost}
+                          €{activity?.revenue | 0}
                         </div>
                       </CardContent>
                     </Card>

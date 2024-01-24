@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import {
   Card,
@@ -19,6 +20,12 @@ import { royaltiesTracks } from "@/app/data/data";
 import { RoyaltiesColumn } from "./RoyaltiesColumn";
 import MemberCard from "./MemberCard";
 import { TeamMember } from "./types";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import DatePicker from "../ui/date-picker";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { ArtistMultiSelect } from "./ArtistMultiSelect";
 
 export default function RoyaltyAdvances({
   handleNextStep,
@@ -88,6 +95,29 @@ export default function RoyaltyAdvances({
     }, 0);
   };
 
+  const royaltyFormSchema = z.object({
+    number: z.number().default(10),
+    programType: z.enum(["album", "single"], {
+      required_error: "Select program type",
+    }),
+    completedAt: z.date().default(new Date()),
+    releasedAt: z.date().default(new Date()),
+    optionRightsLimit: z.date().default(new Date()),
+  });
+  type RoyaltyFormValues = z.infer<typeof royaltyFormSchema>;
+
+  const defaultValues: Partial<RoyaltyFormValues> = {};
+  const form = useForm<RoyaltyFormValues>({
+    resolver: zodResolver(royaltyFormSchema),
+    defaultValues,
+    mode: "onChange",
+  });
+
+  const [selectedArtists, setSelectedArtists] = useState<any>([]);
+  const handleSelectedArtist = (artists: any) => {
+    setSelectedArtists(artists)
+  }
+
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">
       <div className="w-full pb-7 pt-[92px] bg-modal rounded-s-3xl h-[782px] flex flex-col justify-between">
@@ -129,28 +159,58 @@ export default function RoyaltyAdvances({
                           An advance will be paid a signature
                         </p>
                         {card?.isOpen && (
-                          <div className="space-y-8 mt-10">
-                            <div className="pl-4 gap-10 w-[82%]">
-                              {contractCreation?.royaltyAdvances?.options?.map(
-                                (member: any, index: number) => (
-                                  <MemberCard
-                                    key={index}
-                                    member={{
-                                      ...member,
-                                      revenue: member?.categories?.find(
-                                        (category: any) =>
-                                          category.id === card.id
-                                      )?.revenue,
-                                    }}
-                                    updateGoal={(v) =>
-                                      handleUpdateGoal(card, member, v)
-                                    }
-                                    unit="€"
-                                    avatar={true}
-                                    bgcolor="bg-modal"
+                          <div>
+                            {card.value === "at_signature" ?
+                              <div className="mt-3 space-y-3 flex flex-col justify-center items-center">
+                                <Form {...form}>
+                                  <FormField
+                                    control={form.control}
+                                    name="optionRightsLimit"
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormControl>
+                                          <DatePicker
+                                            className="max-w-[230px]"
+                                            buttonClassName="w-[230px] text-sm text-white3 bg-card3"
+                                            placeholder="Jan 20, 2023"
+                                            date={field.value}
+                                            onDateChange={(d) =>
+                                              field.onChange(d || new Date())
+                                            }
+                                          />
+                                        </FormControl>
+                                      </FormItem>
+                                    )}
                                   />
-                                )
-                              )}
+                                </Form>
+                                <ArtistMultiSelect width="max-w-[230px]" artistRate={false} handleArtist={handleSelectedArtist} />
+                              </div> : <></>}
+                            <div className="space-y-8 mt-10">
+                              <div className="pl-4 gap-10 w-[82%]">
+                                {contractCreation?.royaltyAdvances?.options?.map(
+                                  (member: any, index: number) => (
+                                    <MemberCard
+                                      key={index}
+                                      member={{
+                                        ...member,
+                                        revenue: member?.categories?.find(
+                                          (category: any) =>
+                                            category.id === card.id
+                                        )?.revenue,
+                                      }}
+                                      step={1000}
+                                      minValue={0}
+                                      maxValue={50000}
+                                      updateGoal={(v) =>
+                                        handleUpdateGoal(card, member, v)
+                                      }
+                                      unit="€"
+                                      avatar={true}
+                                      bgcolor="bg-modal"
+                                    />
+                                  )
+                                )}
+                              </div>
                             </div>
                           </div>
                         )}
@@ -183,7 +243,7 @@ export default function RoyaltyAdvances({
           </div>
         </div>
       </div>
-      <div className="relative flex items-end flex-col pb-7 pt-6 bg-modal-foreground rounded-r-3xl h-[782px]">
+      <div className="relative flex items-end flex-col py-7 bg-modal-foreground rounded-r-3xl h-[782px]">
         <div className="scrollbox overflow-auto px-4 w-full h-full">
           <Card className="bg-modal border-muted mb-[76px]">
             <CardHeader>
@@ -217,11 +277,11 @@ export default function RoyaltyAdvances({
                       <div className="">
                         <CardsActivityGoal
                           label={"base rate on sales"}
-                          initialValue={calculateTotalRevenue(card.categories) || 0}
+                          initialValue={calculateTotalRevenue(card?.categories) || 0}
                           unit="€"
-                          step={10}
+                          step={1000}
                           minValue={0}
-                          maxValue={1000}
+                          maxValue={50000}
                           buttonHidden
                           onClickButton={() => { }}
                           setGoal={() => { }}

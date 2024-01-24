@@ -59,7 +59,7 @@ const Broadcasting = ({
       description: "Broadcasting",
       action: {
         label: "X",
-        onClick: () => {},
+        onClick: () => { },
       },
       position: "top-right",
     });
@@ -79,11 +79,11 @@ const Broadcasting = ({
     });
   };
 
-  const handleUpdateGoal = (card:any,member: any, value: number) => {
+  const handleUpdateGoal = (card: any, member: any, value: number) => {
     setContractCreation((prev: any) => {
       const updatedBroadCastings = prev?.broadCastings?.map(
         (broadCasting: any) => {
-          if(broadCasting?.id === card?.id){
+          if (broadCasting?.id === card?.id) {
             const updatedSubOptions = (broadCasting?.categories)?.map((cat: any) => {
               if (cat?.id === member?.id) {
                 return { ...cat, revenue: value };
@@ -147,8 +147,8 @@ const Broadcasting = ({
                               {card?.categories?.map(
                                 (member: any, index: any) => (
                                   <div
-                                  className="flex items-start justify-between gap-4 pl-2.5 pt-1.5 rounded-md bg-modal pb-1.5 mb-8"
-                                  key={index}
+                                    className="flex items-start justify-between gap-4 pl-2.5 pt-1.5 rounded-md bg-modal pb-1.5 mb-8"
+                                    key={index}
                                   >
                                     <div className="pt-3">
                                       <p className="text-sm font-normal leading-none mb-1">
@@ -161,12 +161,12 @@ const Broadcasting = ({
                                     <div className="">
                                       <CardsActivityGoal
                                         label="Abatement rate"
-                                        initialValue={member?.revenue || 30}
+                                        initialValue={member?.revenue}
                                         unit="%"
                                         step={10}
-                                        minValue={5}
+                                        minValue={0}
                                         maxValue={100}
-                                        onClickButton={() => {}}
+                                        onClickButton={() => { }}
                                         setGoal={(v) =>
                                           handleUpdateGoal(card, member, v)
                                         }
@@ -207,7 +207,7 @@ const Broadcasting = ({
           </div>
         </div>
       </div>
-      <div className="relative flex items-end flex-col pb-7 pt-6 bg-modal-foreground rounded-r-3xl h-[782px]">
+      <div className="relative flex items-end flex-col py-7 bg-modal-foreground rounded-r-3xl h-[782px]">
         <div className="scrollbox overflow-auto px-4 w-full h-full">
           <Card className="bg-modal border-muted">
             <CardHeader>
@@ -231,17 +231,17 @@ const Broadcasting = ({
                   <CardContent className="flex justify-start items-center gap-6 flex-wrap">
                     {card.categories?.map((activity: any, index: number) => (
                       activity?.revenue ?
-                      <div
-                        className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4"
-                        key={index}
-                      >
-                        <p className="text-[12px] font-normal">
-                          {activity?.title}
-                        </p>
-                        <p className="text-mblue text-[12px] font-normal">
-                          {activity?.revenue}%
-                        </p>
-                      </div> : ""
+                        <div
+                          className="rounded-xl bg-modal-foreground px-[10px] py-2 min-w-[150px] min-h-[90px] space-y-4"
+                          key={index}
+                        >
+                          <p className="text-[12px] font-normal">
+                            {activity?.title}
+                          </p>
+                          <p className="text-mblue text-[12px] font-normal">
+                            {activity?.revenue}%
+                          </p>
+                        </div> : ""
                     ))}
                   </CardContent>
                 </Card>

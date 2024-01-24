@@ -19,7 +19,6 @@ const Shares = ({
   setContractCreation,
   contractCreation,
 }: any) => {
-
   const handleClickNext = () => {
     toast("Shares added successfully!", {
       description: "Shares",
@@ -34,26 +33,32 @@ const Shares = ({
 
   const { dispatch } = useContractBuilder();
   const handleUpdateGoal = (member: any, value: number) => {
-    const _members = [...contractCreation?.shares];
-    const newMember = {
-      ...member,
-      revenue: value,
-    };
+    const currentSum = contractCreation?.shares.reduce(
+      (sum: number, member: any) => sum + member.revenue,
+      0
+    );
 
-    const index = _members.findIndex((m) => m.id === member.id);
-    _members.splice(index, 1, newMember);
+    if (currentSum + value - member.revenue <= 100) {
+      const _members = [...contractCreation?.shares];
+      const newMember = {
+        ...member,
+        revenue: value,
+      };
+      const index = _members.findIndex((m) => m.id === member.id);
+      _members.splice(index, 1, newMember);
 
-    setContractCreation((prevData: any) => ({
-      ...prevData,
-      shares: _members,
-    }));
+      setContractCreation((prevData: any) => ({
+        ...prevData,
+        shares: _members,
+      }));
 
-    dispatch({
-      type: Steps.SHARES,
-      payload: {
-        members: _members,
-      },
-    });
+      dispatch({
+        type: Steps.SHARES,
+        payload: {
+          members: _members,
+        },
+      });
+    }
   };
 
   return (
@@ -100,7 +105,7 @@ const Shares = ({
           </Button>
         </div>
       </div>
-      <div className="relative flex items-end flex-col pb-7 pt-6 bg-modal-foreground rounded-r-3xl h-[782px]">
+      <div className="relative flex items-end flex-col py-7 bg-modal-foreground rounded-r-3xl h-[782px]">
         <div className="scrollbox overflow-auto px-4 w-full h-full">
           <div className="p-8 rounded-2xl bg-modal border border-muted w-full">
             <h6 className="text-2xl	mb-3">Team & Shares</h6>

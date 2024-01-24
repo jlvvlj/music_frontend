@@ -8,22 +8,22 @@ const members = [
     {
         name: "Julie Depree",
         avatar: "/julie.svg",
-        value: 40
+        value: 0    
     },
     {
         name: "Jeff Scott",
         avatar: "/amandine.svg",
-        value: 30
+        value: 0
     },
     {
         name: "Orlane Song",
         avatar: "/orlane.svg",
-        value: 30
+        value: 0
     },
     {
         name: "Jon Savior",
         avatar: "/jon.svg",
-        value: 20
+        value: 0
     },
 ];
 
