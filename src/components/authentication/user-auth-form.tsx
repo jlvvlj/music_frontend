@@ -6,6 +6,8 @@ import { useSignIn } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
+import { toast } from "sonner";
+import axiosClient from "@/utils/axiosClient";
 
 import { cn, catchClerkError } from "@/lib/utils";
 import { signInSchema, signUpSchema } from "@/lib/validations/auth";
@@ -37,28 +39,47 @@ const UserAuthForm = ({ className, ...props }: UserAuthFormProps) => {
     resolver: zodResolver(pathname === "/signup" ? signUpSchema : signInSchema)
   });
 
-  function onSubmit(data: Inputs) {
+  async function onSubmit(data: Inputs) {
     if (!isLoaded) return;
+    const regData = getPathnameData(data);
 
     startTransition(async () => {
       try {
-        const result = await signIn.create({
-          identifier: data.email,
-          password: data.password,
-        });
-
-        if (result.status === "complete") {
-          await setActive({ session: result.createdSessionId });
-
-          router.push(`${window.location.origin}/dashboard`);
-        } else {
-          /*Investigate why the login hasn't completed */
-          console.log(result);
-        }
-      } catch (err) {
-        catchClerkError(err);
+        const endpoint = getEndpoint();
+        const result = await axiosClient.post(endpoint, regData);
+        handleResult(result);
+      } catch (err: any) {
+        toast.error(err.response.data.error)
       }
     });
+  }
+
+  function getPathnameData(data: Inputs) {
+    if (pathname === "/signup") {
+      const { firstname, lastname, email, password, confirmPassword }: any = data;
+      return { firstName: firstname, lastName: lastname, emailAddress: email, password, cPassword: confirmPassword };
+    } else {
+      const { email, password } = data;
+      return { emailAddress: email, password };
+    }
+  }
+
+  function getEndpoint() {
+    return pathname === "/signup" ? '/user/register' : '/user/login';
+  }
+
+  function handleResult(result: any) {
+    const { status, data } = result;
+
+    if (status === 201) {
+      router.push(`${window.location.origin}/login`);
+      // await setActive({ session: createdSessionId });
+      toast.success("Register Successfull")
+    } else if (status === 200) {
+      localStorage.setItem("token", data.token)
+      router.push(`${window.location.origin}/dashboard`);
+      toast.success("Login Successfull")
+    }
   }
 
   return (
@@ -69,47 +90,47 @@ const UserAuthForm = ({ className, ...props }: UserAuthFormProps) => {
           onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
         >
           <div className="grid gap-2">
-            {pathname === "/signup" && 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="grid gap-1">
-                <FormField
-                  control={form.control}
-                  name="firstname"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Firstname</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="Rodney"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+            {pathname === "/signup" &&
+              <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-1">
+                  <FormField
+                    control={form.control}
+                    name="firstname"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Firstname</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="text"
+                            placeholder="Rodney"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="grid gap-1">
+                  <FormField
+                    control={form.control}
+                    name="lastname"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Lastname</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="text"
+                            placeholder="Mullen"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </div>
-              <div className="grid gap-1">
-                <FormField
-                  control={form.control}
-                  name="lastname"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Lastname</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="Mullen"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </div>
             }
             <div className="grid gap-1">
               <FormField
