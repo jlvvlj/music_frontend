@@ -29,6 +29,7 @@ import {
 } from "@/store/actions/users.action";
 import {
   getAllTrackTotalRevenue,
+  getOneTrack,
   getTrackTotalStreams,
 } from "@/store/actions/tracks.action";
 
@@ -39,6 +40,7 @@ export default function DashboardPage() {
     dispatch(getTrackTotalStreams() as any);
     dispatch(getUserFriends() as any);
     dispatch(getUserTracks() as any);
+    dispatch(getOneTrack() as any);
 
     dispatch(getUserContracts() as any);
   }, [dispatch]);

@@ -51,7 +51,7 @@ const cards = [
 ];
 
 const Graph = () => {
-  const { trackTotalStreams, allTrackTotalRevenue } = Tracks();
+  const { trackTotalStreams, allTrackTotalRevenue, oneTrack } = Tracks();
   const { userFriends, userTracks } = Users();
 
   const [shuffledCards, setShuffledCards] = useState(
@@ -303,7 +303,9 @@ const Graph = () => {
                 </svg>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">€ 4567</div>
+                <div className="text-2xl font-bold">
+                  € {oneTrack.TotalRevenue}
+                </div>
                 <p className="text-xs text-muted-foreground">
                   +17% from last month
                 </p>
@@ -328,7 +330,7 @@ const Graph = () => {
                 </svg>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">+5639</div>
+                <div className="text-2xl font-bold">+{oneTrack.Streaming}</div>
                 <p className="text-xs text-muted-foreground">
                   +43% from last month
                 </p>
@@ -355,7 +357,7 @@ const Graph = () => {
                 </svg>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">+564</div>
+                <div className="text-2xl font-bold">+{oneTrack.Sales}</div>
                 <p className="text-xs text-muted-foreground">
                   +12% from last month
                 </p>
@@ -383,7 +385,9 @@ const Graph = () => {
                 </svg>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">+573</div>
+                <div className="text-2xl font-bold">
+                  +{oneTrack.ActiveTracks}
+                </div>
                 <p className="text-xs text-muted-foreground">
                   +20 tracks in the last month
                 </p>
@@ -396,7 +400,7 @@ const Graph = () => {
                 <CardTitle>Streaming Data</CardTitle>
               </CardHeader>
               <CardContent className="pl-2">
-                <Overview />
+                <Overview oneTrack={oneTrack} />
               </CardContent>
             </Card>
             <Card className="col-span-3">
