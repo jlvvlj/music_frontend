@@ -1,8 +1,14 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
+
+export type APISuccessResponse<T = undefined> = {
+  error: boolean;
+  message: string;
+  data: T;
+  response: AxiosResponse<T>;
+};
 
 const axiosClient = axios.create({
   baseURL: "http://localhost:3000",
-  timeout: 5000,
   headers: {
     "Content-Type": "application/json",
   },
