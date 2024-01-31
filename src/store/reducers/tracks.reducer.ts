@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getAllTrackTotalRevenue,
+  getOneTrack,
   getTrackTotalStreams,
 } from "../actions/tracks.action";
 
@@ -9,6 +10,7 @@ export const trackSlice = createSlice({
   initialState: {
     trackTotalStreams: [],
     allTrackTotalRevenue: [],
+    oneTrack: {},
     status: "idle",
     error: null,
   },
@@ -57,6 +59,22 @@ export const trackSlice = createSlice({
         if (payload) state.message = payload?.message;
       }
     );
+
+    // getOneTrack
+    builder.addCase(getOneTrack.pending, (state: any) => {
+      state.isLoading = true;
+      state.error = false;
+    });
+    builder.addCase(getOneTrack.fulfilled, (state: any, { payload }: any) => {
+      state.oneTrack = payload;
+      state.isLoading = false;
+      state.error = false;
+    });
+    builder.addCase(getOneTrack.rejected, (state: any, { payload }: any) => {
+      state.isLoading = false;
+      state.error = true;
+      if (payload) state.message = payload?.message;
+    });
   },
 });
 

@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
-import { AreaChart, Area, CartesianGrid, Tooltip } from 'recharts';
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { AreaChart, Area, CartesianGrid, Tooltip } from "recharts";
 const data = [
   {
     name: "Jan",
@@ -51,61 +51,61 @@ const data = [
     name: "Dec",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
-]
+];
 
 const data2 = [
   {
-    name: 'Page A',
+    name: "Page A",
     uv: 4000,
     pv: 2400,
     amt: 2400,
   },
   {
-    name: 'Page B',
+    name: "Page B",
     uv: 3000,
     pv: 1398,
     amt: 2210,
   },
   {
-    name: 'Page C',
+    name: "Page C",
     uv: 2000,
     pv: 9800,
     amt: 2290,
   },
   {
-    name: 'Page D',
+    name: "Page D",
     uv: 2780,
     pv: 3908,
     amt: 2000,
   },
   {
-    name: 'Page E',
+    name: "Page E",
     uv: 1890,
     pv: 4800,
     amt: 2181,
   },
   {
-    name: 'Page F',
+    name: "Page F",
     uv: 2390,
     pv: 3800,
     amt: 2500,
   },
   {
-    name: 'Page G',
+    name: "Page G",
     uv: 3490,
     pv: 4300,
     amt: 2100,
   },
 ];
 
-export default function Overview() {
+export default function Overview({ oneTrack }: any) {
   return (
     <>
-    <ResponsiveContainer width="100%" height={350}>
+      <ResponsiveContainer width="100%" height={350}>
         <AreaChart
           width={500}
           height={400}
-          data={data2}
+          data={oneTrack.StreamingDataLineChart}
           margin={{
             top: 10,
             right: 30,
@@ -122,25 +122,24 @@ export default function Overview() {
       </ResponsiveContainer>
 
       <ResponsiveContainer className="mt-32" width="100%" height={350}>
-      <BarChart data={data}>
-        <XAxis
-          dataKey="name"
-          stroke="#888888"
-          fontSize={12}
-          tickLine={false}
-          axisLine={false}
+        <BarChart data={oneTrack.StreamingDataBarChart}>
+          <XAxis
+            dataKey="name"
+            stroke="#888888"
+            fontSize={12}
+            tickLine={false}
+            axisLine={false}
           />
-        <YAxis
-          stroke="#888888"
-          fontSize={12}
-          tickLine={false}
-          axisLine={false}
-          tickFormatter={(value) => `$${value}`}
+          <YAxis
+            stroke="#888888"
+            fontSize={12}
+            tickLine={false}
+            axisLine={false}
+            tickFormatter={(value) => `$${value}`}
           />
-        <Bar dataKey="total" fill="#4FABFF" radius={[4, 4, 0, 0]} />
-          
-      </BarChart>
-          </ResponsiveContainer>
-          </>
-  )
+          <Bar dataKey="total" fill="#4FABFF" radius={[4, 4, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </>
+  );
 }

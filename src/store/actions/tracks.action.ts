@@ -26,3 +26,15 @@ export const getAllTrackTotalRevenue = createAsyncThunk(
     }
   }
 );
+
+export const getOneTrack = createAsyncThunk(
+  "tracks/getOneTrack",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axiosClient.get("/track/getOneTrack");
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message || "Something went wrong");
+    }
+  }
+);
