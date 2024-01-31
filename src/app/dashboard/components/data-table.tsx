@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { useState } from "react"
+import React, { useState } from "react";
+import CountUp from "react-countup";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -15,7 +15,8 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table"
+} from "@tanstack/react-table";
+import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 
 import {
   Table,
@@ -24,14 +25,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/registry/new-york/ui/table"
-import { Badge } from "@/registry/new-york/ui/badge"
+} from "@/registry/new-york/ui/table";
+import { Badge } from "@/registry/new-york/ui/badge";
 
-import { DashboardDataTablePagination } from "./dashboard-data-table-pagination"
-import { DataTableToolbar } from "./data-table-toolbar"
-import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons"
-import { statuses } from "../data/data"
-import CountUp from 'react-countup';
+import { DashboardDataTablePagination } from "./dashboard-data-table-pagination";
+import { DataTableToolbar } from "./data-table-toolbar";
+import { statuses } from "../data/data";
+import Users from "@/hooks/users";
 
 interface SubRow {
   album: string;
@@ -44,25 +44,27 @@ interface SubRow {
 }
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  columns: ColumnDef<TData, TValue>[];
 }
 
 export function DataTable<TData, TValue>({
   columns,
-  data,
 }: DataTableProps<TData, TValue>) {
-  const [rowSelection, setRowSelection] = React.useState({})
+  const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
+    React.useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
-  )
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [collapsedRows, setCollapsedRows] = useState<{ [key: string]: boolean }>({});
+  );
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [collapsedRows, setCollapsedRows] = useState<{
+    [key: string]: boolean;
+  }>({});
+
+  const { userContracts } = Users();
 
   const table = useReactTable<any>({
-    data,
+    data: userContracts,
     columns,
     state: {
       sorting,
@@ -81,7 +83,7 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
-  })
+  });
 
   const toggleRowCollapse = (rowId: string) => {
     setCollapsedRows((prevCollapsedRows) => ({
@@ -97,16 +99,23 @@ export function DataTable<TData, TValue>({
         <Table className="dashboard-table">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} style={{ border: 'none' }} className="bg-table3-foreground">
+              <TableRow
+                key={headerGroup.id}
+                style={{ border: "none" }}
+                className="bg-table3-foreground"
+              >
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] text-center">
+                    <TableHead
+                      key={header.id}
+                      className="h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] text-center"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                     </TableHead>
                   );
                 })}
@@ -125,23 +134,43 @@ export function DataTable<TData, TValue>({
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell
-                        key={cell.id} className="justify-center text-center">
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        {cell.column.id === "id" && collapsedRows[row.id] && <ChevronUpIcon className="h-4 w-4 mt-0.5 cursor-pointer ml-2" onClick={() => toggleRowCollapse(row.id)} />}
-                        {cell.column.id === "id" && !collapsedRows[row.id] && row?.original?.subRows?.length && <ChevronDownIcon className="h-4 w-4 mt-0.5 cursor-pointer ml-2" onClick={() => toggleRowCollapse(row.id)} />}
+                        key={cell.id}
+                        className="justify-center text-center"
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                        {cell.column.id === "id" && collapsedRows[row.id] && (
+                          <ChevronUpIcon
+                            className="h-4 w-4 mt-0.5 cursor-pointer ml-2"
+                            onClick={() => toggleRowCollapse(row.id)}
+                          />
+                        )}
+                        {cell.column.id === "id" &&
+                          !collapsedRows[row.id] &&
+                          row?.original?.subRows?.length && (
+                            <ChevronDownIcon
+                              className="h-4 w-4 mt-0.5 cursor-pointer ml-2"
+                              onClick={() => toggleRowCollapse(row.id)}
+                            />
+                          )}
                       </TableCell>
                     ))}
                   </TableRow>
-                  {collapsedRows[row.id] && (
+                  {collapsedRows[row.id] &&
                     row?.original?.subRows?.map((subrow: SubRow) => {
                       const status: any = statuses.find(
-                        (status) => status.value === subrow?.status)
+                        (status) => status.value === subrow?.status
+                      );
 
                       return (
                         <TableRow
                           key={row.id}
                           data-state={row.getIsSelected() && "selected"}
-                        >                            <TableCell className="px-2 py-3.5 text-center" />
+                        >
+                          {" "}
+                          <TableCell className="px-2 py-3.5 text-center" />
                           <TableCell className="px-2 py-3.5 text-center">
                             {subrow?.album}
                           </TableCell>
@@ -149,31 +178,66 @@ export function DataTable<TData, TValue>({
                             {subrow?.title}
                           </TableCell>
                           <TableCell className="px-2 py-3.5 flex gap-2 justify-center">
-                            {subrow?.platforms?.map((platform: string) =>
-                              <Badge variant="outline" className="bg-[#4FABFF] justify-center px-2.5 rounded-full text-white">{platform}</Badge>
-                            )}
+                            {subrow?.platforms?.map((platform: string) => (
+                              <Badge
+                                variant="outline"
+                                className="bg-[#4FABFF] justify-center px-2.5 rounded-full text-white"
+                              >
+                                {platform}
+                              </Badge>
+                            ))}
                           </TableCell>
                           <TableCell className="px-2 py-3.5 text-center">
                             <div className="flex w-25 items-center gap-2 justify-center">
                               {status.color && (
-                                <span className={`w-2.5 h-2.5 rounded-full ${status.color}`} />
+                                <span
+                                  className={`w-2.5 h-2.5 rounded-full ${status.color}`}
+                                />
                               )}
                               <span>{status.label}</span>
                             </div>
                           </TableCell>
                           <TableCell className="px-2 py-3.5 text-center">
-                            <CountUp start={0} end={parseFloat(subrow?.revenues.toString().replace(/[^\d.]/g, ''))} duration={5} formattingFn={(value) => `€${value.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}`} />
+                            <CountUp
+                              start={0}
+                              end={parseFloat(
+                                subrow?.revenues
+                                  .toString()
+                                  .replace(/[^\d.]/g, "")
+                              )}
+                              duration={5}
+                              formattingFn={(value) =>
+                                `€${value.toLocaleString(undefined, {
+                                  minimumFractionDigits: 1,
+                                  maximumFractionDigits: 1,
+                                })}`
+                              }
+                            />
                           </TableCell>
                           <TableCell className="px-2 py-3.5 text-center">
-                              {subrow?.YourShare}
+                            {subrow?.YourShare}
                           </TableCell>
                           <TableCell className="px-2 py-3.5 text-center">
-                            <CountUp start={0} end={parseFloat(subrow?.YourRevenues.toString().replace(/[^\d.]/g, ''))} duration={5} formattingFn={(value) => `€${value.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}`} />
+                            <CountUp
+                              start={0}
+                              end={parseFloat(
+                                subrow?.YourRevenues.toString().replace(
+                                  /[^\d.]/g,
+                                  ""
+                                )
+                              )}
+                              duration={5}
+                              formattingFn={(value) =>
+                                `€${value.toLocaleString(undefined, {
+                                  minimumFractionDigits: 1,
+                                  maximumFractionDigits: 1,
+                                })}`
+                              }
+                            />
                           </TableCell>
                         </TableRow>
-                      )
-                    })
-                  )}
+                      );
+                    })}
                 </React.Fragment>
               ))
             ) : (
