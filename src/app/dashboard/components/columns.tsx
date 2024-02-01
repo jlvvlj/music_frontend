@@ -1,9 +1,10 @@
 "use client";
 
+import { useState } from "react";
+import CountUp from "react-countup";
 import { ColumnDef } from "@tanstack/react-table";
 
 import { Badge } from "@/registry/new-york/ui/badge";
-import CountUp from "react-countup";
 
 import { albums, priorities, statuses, titles } from "../data/data";
 import { Task } from "../data/schema";
@@ -17,16 +18,24 @@ export const columns: ColumnDef<Task>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Contract" />
     ),
-    cell: ({ row }) => (
-      <Sheet>
-        <SheetTrigger asChild>
-          <div className="max-w-[160px] cursor-pointer">
-            {row.getValue("id")}
-          </div>
-        </SheetTrigger>
-        <TableDrawer name={row.getValue("id")} />
-      </Sheet>
-    ),
+    cell: ({ row }) => {
+      const [contractID, setContractID] = useState<string>("");
+      return (
+        <Sheet>
+          <>
+            <SheetTrigger asChild>
+              <div
+                className="max-w-[160px] cursor-pointer"
+                onClick={() => setContractID(row.getValue("id"))}
+              >
+                {row.getValue("id")}
+              </div>
+            </SheetTrigger>
+            <TableDrawer id={contractID} />
+          </>
+        </Sheet>
+      );
+    },
     enableSorting: false,
     enableHiding: false,
   },
