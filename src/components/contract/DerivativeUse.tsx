@@ -23,6 +23,8 @@ const DerivativeUse = ({
   handleBackStep,
   contractCreation,
   setContractCreation,
+  watch,
+  setValue
 }: any) => {
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -35,6 +37,7 @@ const DerivativeUse = ({
           }
           return derivativeUse
         });
+      setValue("derivativeUses", updateDerivativeUses)
       return { ...prev, derivativeUses: updateDerivativeUses };
     });
   };
@@ -67,6 +70,7 @@ const DerivativeUse = ({
           return derivativeUse;
         }
       );
+      setValue("derivativeUses", updatedDerivativeUses)
       return { ...prev, derivativeUses: updatedDerivativeUses };
     });
   };

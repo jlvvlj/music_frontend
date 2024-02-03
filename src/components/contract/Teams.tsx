@@ -45,9 +45,13 @@ const Teams = ({
   contractCreation,
   setContractCreation,
   handleSwitchChange,
+  setValue,
+  watch,
+  schema,
+  errors,
 }: any) => {
   const [updatedTracks, setUpdatedTracks] = useState(
-    contractCreation?.TeamMembers?.updatedTracks || (shareTracks as any)
+    watch("TeamMembers?.updatedTracks") || (shareTracks as any)
   );
   const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
 
@@ -65,6 +69,16 @@ const Teams = ({
   });
 
   const handleClickNext = () => {
+    const validationResult = schema?.safeParse({
+      members: {
+        masterOwners: watch("members.masterOwners"),
+        artists: watch("members.artists"),
+      }
+    })
+
+    if (!validationResult.success) {
+      return;
+    }
     toast("Artists added successfully!", {
       description: "Artists",
       action: {
@@ -116,7 +130,8 @@ const Teams = ({
           royaltyAdvances?.push(artist);
         }
       }
-
+      setValue("members.masterOwners", masterOwners)
+      setValue("members.artists", artists)
       return {
         ...prev,
         members: { artists: artists, masterOwners: masterOwners },
@@ -125,7 +140,7 @@ const Teams = ({
         royaltyAdvances: { ...prev?.royaltyAdvances, options: royaltyAdvances },
       };
     });
-    console.log("contractCreation?.members?.masterOwners",contractCreation?.members?.masterOwners)
+
     if (contractCreation?.members?.masterOwners?.length > 1) {
       handleSwitchChange({ id: 4 }, true);
     } else {
@@ -166,6 +181,11 @@ const Teams = ({
               />
               <InvitationPopover />
             </div>
+            <p className="validation-message">
+              {contractCreation?.members?.masterOwners.length === 0 ? errors?.members?.masterOwners?.message :
+                contractCreation?.members.artists.length === 0 ? errors?.members?.artists.message :
+                  errors?.members?.message}
+            </p>
           </div>
         </div>
         <div className="flex justify-between w-full mt-8 px-10">
@@ -191,7 +211,6 @@ const Teams = ({
         <div className="scrollbox overflow-auto px-4 w-full h-full">
           <TeamShare members={contractCreation?.members} />
           <div className="rounded-2xl bg-modal border border-muted w-full p-4 mt-8">
-            {/* <TableCommon data={shareTracks} columns={ShareTrackColumn} /> */}
             <Table>
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
@@ -200,21 +219,19 @@ const Teams = ({
                     style={{ border: "none" }}
                     className="bg-table3-foreground"
                   >
-                    {headerGroup.headers.map((header) => {
-                      return (
-                        <TableHead
-                          key={header.id}
-                          className="h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] font-normal"
-                        >
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                        </TableHead>
-                      );
-                    })}
+                    {headerGroup.headers.map((header) => (
+                      <TableHead
+                        key={header.id}
+                        className="h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] font-normal"
+                      >
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                      </TableHead>
+                    ))}
                     <TableHead className="h-12 first:rounded-s-[20px] text-white3 last:rounded-r-[20px] font-normal">
                       Edit
                     </TableHead>

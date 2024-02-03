@@ -18,6 +18,8 @@ const Shares = ({
   handleBackStep,
   setContractCreation,
   contractCreation,
+  watch,
+  setValue
 }: any) => {
   const handleClickNext = () => {
     toast("Shares added successfully!", {
@@ -51,6 +53,8 @@ const Shares = ({
         ...prevData,
         shares: _members,
       }));
+
+      setValue("shares", _members)
 
       dispatch({
         type: Steps.SHARES,

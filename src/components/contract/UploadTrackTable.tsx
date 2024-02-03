@@ -27,6 +27,7 @@ import UploadTrackPopover from "./UploadTrackPopover";
 import { ImageOff } from "lucide-react";
 
 export default function UploadTrackTable({
+  watch,
   selectedFile,
   updateValue,
   setUpdatedTracks,
@@ -60,14 +61,14 @@ export default function UploadTrackTable({
     <div className="relative flex items-end flex-col py-7 bg-modal-foreground rounded-r-3xl h-[782px]">
       <div className="scrollbox overflow-auto px-4 w-full h-full">
         <div className="p-8 rounded-2xl bg-modal border border-muted w-full min-h-full">
-          {updateValue && (
-            <h1 className="text-center mb-7 text-2xl">{updateValue}</h1>
+          {watch("album.title") && (
+            <h1 className="text-center mb-7 text-2xl">{watch("album.title")}</h1>
           )}
           <div className="relative bg-modal border border-3 rounded-xl relative mb-16 h-[350px] w-[350px] mx-auto flex justify-center items-center flex-col">
-            {selectedFile && (
+            {watch("album.cover") && (
               <div className="absolute h-full w-full bg-modal rounded-xl">
                 <img
-                  src={selectedFile}
+                  src={watch("album.cover")}
                   alt="Selected Image"
                   className="object-fit rounded-xl h-full w-full"
                 />

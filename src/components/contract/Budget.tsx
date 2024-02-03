@@ -23,6 +23,7 @@ const Budget = ({
   handleBackStep,
   contractCreation,
   setContractCreation,
+  setValue
 }: any) => {
 
   const onCheckHandle = (value: string, e: any) => {
@@ -34,6 +35,7 @@ const Budget = ({
           }
           return subOption
         });
+      setValue("initialBudget", updateSubOptions)
       return { ...prev, initialBudget: updateSubOptions };
     });
   };
@@ -66,6 +68,7 @@ const Budget = ({
           return budget;
         }
       );
+      setValue("initialBudget", updatedInitialBudget)
       return { ...prev, initialBudget: updatedInitialBudget };
     });
   };

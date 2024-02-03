@@ -32,6 +32,8 @@ export default function RoyaltyAdvances({
   handleBackStep,
   contractCreation,
   setContractCreation,
+  watch,
+  setValue
 }: any) {
 
   const onCheckHandle = (value: string, e: any) => {
@@ -43,6 +45,7 @@ export default function RoyaltyAdvances({
           }
           return subOption
         });
+      setValue("royaltyAdvances.subOptions", updateSubOptions)
       return { ...prev, royaltyAdvances: { ...prev?.royaltyAdvances, subOptions: updateSubOptions } };
     });
   };
@@ -84,7 +87,7 @@ export default function RoyaltyAdvances({
           return artist;
         }
       );
-
+      setValue("royaltyAdvances.options", updatedRoyaltyAdvances)
       return { ...prev, royaltyAdvances: { ...prev?.royaltyAdvances, options: updatedRoyaltyAdvances } };
     });
   };

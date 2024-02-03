@@ -7,20 +7,26 @@ import UploadTracks from "./UploadTracks";
 import UploadTrackTable from "./UploadTrackTable";
 import { Button } from "../ui/button";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
+import { URL } from "url";
 
 const Contributors = ({
   handleNextStep,
   contractCreation,
   setContractCreation,
+  register,
+  watch,
+  setValue,
+  schema,
+  errors
 }: any) => {
   const [selectedFile, setSelectedFile] = useState(
-    contractCreation.album.cover || ""
+    watch("album.cover") || ""
   );
   const [updateValue, setUpdateValue] = useState(
-    contractCreation.album.title || ""
+    watch("album.title") || ""
   );
   const [updatedTracks, setUpdatedTracks] = useState(
-    contractCreation.album.audios
+    watch("album.audios") || []
   );
 
   useEffect(() => {
@@ -33,6 +39,9 @@ const Contributors = ({
           audios: updatedTracks,
         },
       }));
+      setValue("album.title", updateValue)
+      setValue("album.cover", selectedFile)
+      setValue("album.audios", updatedTracks)
     }
   }, [selectedFile, updateValue, updatedTracks]);
 
@@ -40,6 +49,7 @@ const Contributors = ({
     <div className={cn("grid grid-cols-2 h-full shadow-lg border rounded-3xl")}>
       <div className="flex-grow bg-modal pt-16 h-[782px] rounded-s-3xl">
         <UploadTracks
+          contractCreation={contractCreation}
           handleNextStep={handleNextStep}
           selectedFile={selectedFile}
           setSelectedFile={setSelectedFile}
@@ -47,9 +57,15 @@ const Contributors = ({
           setUpdateValue={setUpdateValue}
           setUpdatedTracks={setUpdatedTracks}
           updatedTracks={updatedTracks}
+          register={register}
+          setValue={setValue}
+          watch={watch}
+          schema={schema}
+          errors={errors}
         />
       </div>
       <UploadTrackTable
+        watch={watch}
         selectedFile={selectedFile}
         updateValue={updateValue}
         setUpdateValue={setUpdateValue}

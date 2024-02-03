@@ -50,6 +50,8 @@ const Broadcasting = ({
   handleBackStep,
   contractCreation,
   setContractCreation,
+  watch,
+  setValue
 }: any) => {
   const [broadCasting, setBroadCasting] =
     useState<BroadCasting>(baseBroadCasting);
@@ -75,6 +77,7 @@ const Broadcasting = ({
           }
           return subOption
         });
+      setValue("broadCastings", updateSubOptions)
       return { ...prev, broadCastings: updateSubOptions };
     });
   };
@@ -95,6 +98,7 @@ const Broadcasting = ({
           return broadCasting;
         }
       );
+      setValue("broadCastings", updatedBroadCastings)
       return { ...prev, broadCastings: updatedBroadCastings };
     });
   };

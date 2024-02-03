@@ -125,6 +125,7 @@ export default function AdditionalConditions({
   checkedBoxes,
   contractCreation,
   setContractCreation,
+  setValue
 }: any) {
   const [check, setCheck] = useState<string[]>(
     contractCreation?.additionalConditions || []
@@ -199,6 +200,7 @@ export default function AdditionalConditions({
         ...prevData,
         additionalConditions: check,
       }));
+      setValue("additionalConditions", check)
     }
   }, [check]);
 

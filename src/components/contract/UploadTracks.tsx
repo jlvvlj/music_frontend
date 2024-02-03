@@ -16,6 +16,7 @@ import { InfoIcon } from "lucide-react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 
 interface Props {
+  contractCreation: any;
   handleNextStep: any;
   selectedFile: any;
   setSelectedFile: any;
@@ -23,9 +24,15 @@ interface Props {
   setUpdateValue: any;
   setUpdatedTracks: any;
   updatedTracks: any;
+  register: any
+  setValue: any
+  watch: any
+  schema: any
+  errors: any
 }
 
 export default function UploadTracks({
+  contractCreation,
   handleNextStep,
   selectedFile,
   setSelectedFile,
@@ -33,6 +40,11 @@ export default function UploadTracks({
   setUpdateValue,
   setUpdatedTracks,
   updatedTracks,
+  register,
+  setValue,
+  watch,
+  schema,
+  errors,
 }: Props) {
   const [selectedAudios, setSelectedAudios] = useState<
     { id: string; title: string; audio: string; url?: string }[]
@@ -92,6 +104,16 @@ export default function UploadTracks({
   };
 
   const handleClickNext = () => {
+    const validationResult = schema?.safeParse({
+      album: {
+        title: watch("album.title"),
+        cover: watch("album.cover"),
+        audios: watch("album.audios")
+      }
+    })
+    if (!validationResult.success) {
+      return;
+    }
     toast("Tracks updated successfully!", {
       description: "Tracks",
       action: {
@@ -133,6 +155,8 @@ export default function UploadTracks({
             value={updateValue}
             onChange={(e) => setUpdateValue(e.target.value)}
           />
+
+          <p>{(updateValue === "" && !contractCreation?.album?.title) && errors?.album?.title?.message}</p> {/* TODO - Do css in validation */}
           <Card className="bg-modal mb-8">
             <CardHeader className="flex-row gap-3 space-y-0 items-center py-2.5">
               <UploadCloud className="h-5 w-5" />
@@ -161,21 +185,21 @@ export default function UploadTracks({
                         type="file"
                         hidden
                         onChange={handleFileUpload}
-                        value={""}
                       />
                     </label>
+                    <p> {(selectedFile === "" && !contractCreation?.album?.cover) && errors?.album?.cover?.message}</p> {/* TODO - Do css in validation */}
                   </div>
                 </label>
-                {selectedFile && (
+                {watch("album.cover") && (
                   <div>
                     <div className="bg-modal rounded-xl selected-image-container z-20 absolute h-full w-full inset-0 flex items-center justify-center">
                       <img
-                        src={selectedFile}
+                        src={watch("album.cover")}
                         alt="Selected Image"
                         className="h-full w-full object-cover rounded-xl"
                       />
                       <Button
-                        onClick={handleRemoveFile}
+                        onClick={() => setValue("album.cover", "")}
                         className="absolute top-1 right-1 h-5 w-5 flex items-center justify-center shadow-sm rounded-full p-0"
                       >
                         <XMarkIcon className="text-black3" />
@@ -215,6 +239,7 @@ export default function UploadTracks({
                         value={""}
                       />
                     </label>
+                    <p>{(!selectedAudio && !contractCreation?.album?.audios) && errors?.album?.audios?.message}</p> {/* TODO - Do css in validation */}
                   </div>
                 </label>
                 {selectedAudio && (
