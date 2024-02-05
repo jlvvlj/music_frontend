@@ -232,7 +232,7 @@ const Graph = () => {
               </CardContent>
             </Card>
           </div>
-          <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-7">
+          <div className="grid 2xl:gap-4 gap-y-4 md:grid-cols-2 2xl:grid-cols-7">
             <Card className="col-span-3">
               <CardHeader>
                 <CardTitle>Top Tracks</CardTitle>

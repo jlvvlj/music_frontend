@@ -181,10 +181,12 @@ const Teams = ({
               />
               <InvitationPopover />
             </div>
-            <p className="validation-message">
-              {contractCreation?.members?.masterOwners.length === 0 ? errors?.members?.masterOwners?.message :
-                contractCreation?.members.artists.length === 0 ? errors?.members?.artists.message :
-                  errors?.members?.message}
+            <p className="validation-message mt-2 text-[red] text-center">
+              {contractCreation?.members?.masterOwners.length === 0 && errors?.members?.masterOwners?.message
+                ? errors?.members?.masterOwners?.message
+                : contractCreation?.members.artists.length === 0 && errors?.members?.artists?.message
+                  ? errors?.members?.artists?.message
+                  : errors?.members?.message}
             </p>
           </div>
         </div>

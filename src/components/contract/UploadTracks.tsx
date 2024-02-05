@@ -150,13 +150,15 @@ export default function UploadTracks({
             Enter the album title and your tracks audio folder.
           </p>
           <h6 className="mb-2.5">Album title</h6>
-          <Input
-            className="bg-modal mb-[55px]"
-            value={updateValue}
-            onChange={(e) => setUpdateValue(e.target.value)}
-          />
+          <div className="mb-[55px]">
+            <Input
+              className="bg-modal"
+              value={updateValue}
+              onChange={(e) => setUpdateValue(e.target.value)}
+            />
 
-          <p>{(updateValue === "" && !contractCreation?.album?.title) && errors?.album?.title?.message}</p> {/* TODO - Do css in validation */}
+            <p className="mt-2 text-[red]">{(updateValue === "" && !contractCreation?.album?.title) && errors?.album?.title?.message}</p>
+          </div>
           <Card className="bg-modal mb-8">
             <CardHeader className="flex-row gap-3 space-y-0 items-center py-2.5">
               <UploadCloud className="h-5 w-5" />
@@ -187,7 +189,7 @@ export default function UploadTracks({
                         onChange={handleFileUpload}
                       />
                     </label>
-                    <p> {(selectedFile === "" && !contractCreation?.album?.cover) && errors?.album?.cover?.message}</p> {/* TODO - Do css in validation */}
+                    <p className="mt-2 text-[red]"> {(selectedFile === "" && !contractCreation?.album?.cover) && errors?.album?.cover?.message}</p>
                   </div>
                 </label>
                 {watch("album.cover") && (
@@ -239,7 +241,7 @@ export default function UploadTracks({
                         value={""}
                       />
                     </label>
-                    <p>{(!selectedAudio && !contractCreation?.album?.audios) && errors?.album?.audios?.message}</p> {/* TODO - Do css in validation */}
+                    <p className="mt-2 text-[red]">{(contractCreation?.album?.audios?.length === 0 && errors?.album?.audios?.message) && errors?.album?.audios?.message}</p>
                   </div>
                 </label>
                 {selectedAudio && (

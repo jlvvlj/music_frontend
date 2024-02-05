@@ -14,19 +14,19 @@ const questions = [
     { id: 3, que: 'What\'s your annual revenue?', value1: 'option 1', value2: 'option 2' }
 ]
 
-const Introduction = ({ handleBackStep, watch, setValue }: any) => {
+const Introduction = ({ handleBackStep, watch, onSubmit }: any) => {
     const [modalOpen, setModalOpen] = useState(false);
 
     const handleClickNext = () => {
-        toast("Derivative used successfully", {
-            description: "Derivative",
+        toast("Contract Created successfully", {
+            description: "",
             action: {
                 label: "X",
                 onClick: () => { },
             },
             position: "top-right"
         });
-        console.log("======>", watch())
+        onSubmit(watch())
         setModalOpen(true)
     };
 

@@ -12,7 +12,7 @@ const Sidebar = ({ isCollapsed }: { isCollapsed: number }) => {
         <div data-collapsed={isCollapsed} className="bg-foreground3 h-full shadow-2xl">
             {isCollapsed > 4 ?
                 <div>
-                    <div className="flex justify-between items-center border-b p-3">
+                    <div className="md:flex hidden justify-between items-center border-b p-3">
                         <Link href="/dashboard" className="flex items-center text-lg font-medium text-white3">
                             <svg fill="hsl(var(--white3))" width="50px" height="40px" id="Calque_1" data-name="Calque 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 145.04 116.32"><defs></defs><path className="cls-1" d="M79,58.91a7.18,7.18,0,1,1,14.35,0V66a8.59,8.59,0,0,0,8.62,8.62h4.31A8.57,8.57,0,0,0,114.84,66V60.35a8.59,8.59,0,0,0-8.61-8.62h-4.31a8.59,8.59,0,0,1-8.62-8.61V38.81a8.57,8.57,0,0,0-8.61-8.61H80.38a8.57,8.57,0,0,0-8.61,8.61v5.75a7.18,7.18,0,1,1-14.36,0V38.81a8.57,8.57,0,0,0-8.62-8.61H30.13a8.57,8.57,0,0,0-8.62,8.61V86.19a8.57,8.57,0,0,0,8.62,8.62h4.3a8.57,8.57,0,0,0,8.62-8.62V58.91a7.18,7.18,0,0,1,12.26-5.08,6.91,6.91,0,0,1,2.1,5.08V86.19A8.57,8.57,0,0,0,66,94.81h4.31A8.59,8.59,0,0,0,79,86.19Z"
                             />

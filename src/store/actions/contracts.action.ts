@@ -12,3 +12,18 @@ export const getContractById = createAsyncThunk<APISuccessResponse, string>(
     }
   }
 );
+
+export const createNewContract = createAsyncThunk<APISuccessResponse, any>(
+  "contract/createNewContract",
+  async (contract, thunkAPI) => {
+    try {
+      const response = await axiosClient.post(
+        `/contract/createContract`,
+        contract
+      );
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message || "Something went wrong");
+    }
+  }
+);

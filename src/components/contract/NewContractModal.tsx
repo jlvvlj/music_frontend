@@ -17,6 +17,8 @@ import Introduction from "./Introduction";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { createNewContract } from "@/store/actions/contracts.action";
+import { useDispatch } from "react-redux";
 
 const albumSchema = z.object({
   album: z.object({
@@ -77,6 +79,7 @@ const membersSchema = z.object({
 });
 
 export default function NewContract() {
+  const dispatch = useDispatch();
   const [steps, setSteps] = useState(STEPS);
   const [contractCreation, setContractCreation] = useState({
     album: {
@@ -201,125 +204,17 @@ export default function NewContract() {
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     console.log("data Console in onSubmit", data);
-    console.log("watch Console in onSubmit", watch());
+    dispatch(createNewContract(data) as any)
   };
-
-  const loadCardByStep = useCallback(() => {
-    switch (currentStep) {
-      case StepIndex.CONTRIBUTORS:
-        return (
-          <Contributors
-            handleNextStep={handleNext}
-            contractCreation={contractCreation}
-            setContractCreation={setContractCreation}
-            register={register}
-          />
-        );
-      case StepIndex.TEAMS:
-        return (
-          <Teams
-            handleNextStep={handleNext}
-            handleBackStep={handleBack}
-            contractCreation={contractCreation}
-            handleSwitchChange={handleSwitchChange}
-            setContractCreation={setContractCreation}
-          />
-        );
-      case StepIndex.RECORDINGS:
-        return (
-          <Recordings
-            handleNextStep={handleNext}
-            handleBackStep={handleBack}
-            contractCreation={contractCreation}
-            setContractCreation={setContractCreation}
-          />
-        );
-      case StepIndex.SHARES:
-        return (
-          <Shares
-            handleNextStep={handleNext}
-            handleBackStep={handleBack}
-            contractCreation={contractCreation}
-            setContractCreation={setContractCreation}
-          />
-        );
-      case StepIndex.ADDITIONALCONDITIONS:
-        return (
-          <AdditionalConditions
-            handleNextStep={handleNext}
-            handleBackStep={handleBack}
-            checkedBoxes={checkedBoxes}
-            handleSwitchChange={handleSwitchChange}
-            contractCreation={contractCreation}
-            setContractCreation={setContractCreation}
-          />
-        );
-      case StepIndex.BUDGET:
-        return (
-          <Budget
-            handleNextStep={handleNext}
-            handleBackStep={handleBack}
-            contractCreation={contractCreation}
-            setContractCreation={setContractCreation}
-          />
-        );
-      case StepIndex.ROYALTIES_ADVANCES:
-        return (
-          <RoyaltyAdvances
-            handleNextStep={handleNext}
-            handleBackStep={handleBack}
-            contractCreation={contractCreation}
-            setContractCreation={setContractCreation}
-          />
-        );
-      case StepIndex.ABATEMENTS:
-        return (
-          <Abatements
-            handleNextStep={handleNext}
-            handleBackStep={handleBack}
-            contractCreation={contractCreation}
-            setContractCreation={setContractCreation}
-          />
-        );
-      case StepIndex.BROADCASTING:
-        return (
-          <Broadcasting
-            handleNextStep={handleNext}
-            handleBackStep={handleBack}
-            contractCreation={contractCreation}
-            setContractCreation={setContractCreation}
-          />
-        );
-      case StepIndex.DERIVATIVE_USE:
-        return (
-          <DerivativeUse
-            handleNextStep={handleNext}
-            handleBackStep={handleBack}
-            contractCreation={contractCreation}
-            setContractCreation={setContractCreation}
-          />
-        );
-      case StepIndex.INTRODUCTION:
-        return (
-          <Introduction
-            handleNextStep={handleNext}
-            handleBackStep={handleBack}
-            contractCreation={contractCreation}
-          />
-        );
-      default:
-        return;
-    }
-  }, [currentStep, handleNext]);
 
   return (
     <ContractBuilderProvider>
       <div className="h-[inherit] xl:w-[1241px] w-full flex flex-col gap-20 relative">
         <div
-          className={`absolute top-9 hidden lg:block z-10 ${currentStep === StepIndex.INTRODUCTION ||
+          className={`absolute top-9 hidden lg:flex z-10 ${currentStep === StepIndex.INTRODUCTION ||
             currentStep === StepIndex.ADDITIONALCONDITIONS
             ? "left-1/2 translate-x-[-50%] w-[454px]"
-            : "left-[88px] w-[50%]"
+            : "left-0 w-[50%] justify-center"
             }`}
         >
           <ProgressSteps
@@ -452,12 +347,12 @@ export default function NewContract() {
                 handleBackStep={handleBack}
                 contractCreation={contractCreation}
                 watch={watch}
-                setValue={setValue}
+                onSubmit={onSubmit}
               />
             )}
           </form>
         </div>
       </div>
-    </ContractBuilderProvider>
+    </ContractBuilderProvider >
   );
 }
