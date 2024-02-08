@@ -37,6 +37,8 @@ const TeamAndRates = ({
   handleBackStep,
   contractCreation,
   setContractCreation,
+  watch,
+  setValue
 }: any) => {
   const [updatedTracks, setUpdatedTracks] = useState(
     recordingTracks
@@ -88,10 +90,19 @@ const TeamAndRates = ({
     const index = _members.findIndex((m) => m.id === member.id);
     _members.splice(index, 1, newMember);
 
+    const totalPercentage = _members.reduce((sum, m) => sum + m.percentage, 0);
+    const totalRevenue = _members.reduce((sum, m) => sum + m.revenue, 0);
+    if (totalPercentage + value > 100 || totalRevenue > 100) {
+      return;
+    }
+
     setContractCreation((prevData: any) => ({
       ...prevData,
-      rates: _members
+      rates: _members,
     }));
+
+    setValue("rates", _members);
+
     dispatch({
       type: Steps.SHARES,
       payload: {
@@ -99,6 +110,7 @@ const TeamAndRates = ({
       },
     });
   };
+
 
   return (
     <div className="grid grid-cols-2 h-full shadow-lg border rounded-3xl">

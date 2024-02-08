@@ -6,7 +6,7 @@ import { useSignIn } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
-import { toast } from "sonner";
+import { toast } from "sonner"; // Assuming this is the correct import for your toast library
 import axiosClient from "@/utils/axiosClient";
 
 import { cn, catchClerkError } from "@/lib/utils";
@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/password-input";
 import { OAuthSignIn } from "./oauth-signin";
+import useAuth from "@/hooks/useAuth";
 
 type Inputs = z.infer<typeof signUpSchema> | z.infer<typeof signInSchema>;
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
@@ -31,63 +32,56 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 const UserAuthForm = ({ className, ...props }: UserAuthFormProps) => {
   const router = useRouter();
   const pathname = usePathname();
-  const { isLoaded, signIn, setActive } = useSignIn();
+  const { signUp, login, isLoading } = useAuth();
   const [isPending, startTransition] = React.useTransition();
 
-  // react-hook-form
   const form = useForm<Inputs>({
     resolver: zodResolver(pathname === "/signup" ? signUpSchema : signInSchema)
   });
 
-  async function onSubmit(data: Inputs) {
-    if (!isLoaded) return;
-    const regData = getPathnameData(data);
+  async function onSubmit(user: Inputs) {
+    if (isLoading) return;
 
     startTransition(async () => {
       try {
-        const endpoint = getEndpoint();
-        const result = await axiosClient.post(endpoint, regData);
-        handleResult(result);
+        let result;
+        if (pathname === "/signup") {
+          result = await signUp({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            password: user.password,
+          });
+        } else {
+          result = await login({
+            email: user.email,
+            password: user.password,
+          });
+        }
+
+        if (result.payload.status === 201) {
+          router.push("/login");
+        } else if (result.payload.status === 200) {
+          localStorage.setItem("tokens", JSON.stringify(result.payload.data.tokens))
+          router.push("/dashboard");
+        }
       } catch (err: any) {
-        toast.error(err.response.data.error)
+        if (err?.message) {
+          toast.error(err?.message);
+        } else {
+          toast.error(err.response.data.error);
+        }
       }
     });
   }
 
-  function getPathnameData(data: Inputs) {
-    if (pathname === "/signup") {
-      const { firstname, lastname, email, password, confirmPassword }: any = data;
-      return { firstName: firstname, lastName: lastname, emailAddress: email, password, cPassword: confirmPassword };
-    } else {
-      const { email, password } = data;
-      return { emailAddress: email, password };
-    }
-  }
-
-  function getEndpoint() {
-    return pathname === "/signup" ? '/user/register' : '/user/login';
-  }
-
-  function handleResult(result: any) {
-    const { status, data } = result;
-
-    if (status === 201) {
-      router.push(`${window.location.origin}/login`);
-      // await setActive({ session: createdSessionId });
-      toast.success("Register Successfull")
-    } else if (status === 200) {
-      localStorage.setItem("token", data.token)
-      router.push(`${window.location.origin}/dashboard`);
-      toast.success("Login Successfull")
-    }
-  }
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
       <Form {...form}>
         <form
           className="grid gap-4"
-          onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
+          onSubmit={form.handleSubmit(onSubmit)}
         >
           <div className="grid gap-2">
             {pathname === "/signup" &&
@@ -95,7 +89,7 @@ const UserAuthForm = ({ className, ...props }: UserAuthFormProps) => {
                 <div className="grid gap-1">
                   <FormField
                     control={form.control}
-                    name="firstname"
+                    name="firstName"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Firstname</FormLabel>
@@ -114,7 +108,7 @@ const UserAuthForm = ({ className, ...props }: UserAuthFormProps) => {
                 <div className="grid gap-1">
                   <FormField
                     control={form.control}
-                    name="lastname"
+                    name="lastName"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Lastname</FormLabel>
@@ -215,6 +209,5 @@ const UserAuthForm = ({ className, ...props }: UserAuthFormProps) => {
     </div>
   );
 }
-
 
 export default UserAuthForm;

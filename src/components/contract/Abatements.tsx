@@ -42,6 +42,8 @@ const Abatements = ({
   handleBackStep,
   contractCreation,
   setContractCreation,
+  watch,
+  setValue
 }: any) => {
   const handleClickNext = () => {
     toast("Abatements added successfully!", {
@@ -74,6 +76,7 @@ const Abatements = ({
           return abatement;
         }
       );
+      setValue("abatements", updatedAbatements)
       return { ...prev, abatements: updatedAbatements };
     });
   };
@@ -87,6 +90,7 @@ const Abatements = ({
           }
           return subOption
         });
+      setValue("abatements", updateSubOptions)
       return { ...prev, abatements: updateSubOptions };
     });
   };
@@ -219,7 +223,7 @@ const Abatements = ({
                           {category?.title}
                         </p>
                         <p className="text-[#94A3B8] text-[9px] font-normal">
-                          {card?.id === 1 ? `in ${category?.country?.map((country:any) => { return country?.label })}` : "Lorem Ipsum"}
+                          {card?.id === 1 ? `in ${category?.country?.map((country: any) => { return country?.label })}` : "Lorem Ipsum"}
                         </p>
                         <p className="text-mblue text-[12px] font-normal">
                           {category?.revenue || 0}%

@@ -14,8 +14,72 @@ import Abatements from "./Abatements";
 import Broadcasting from "./Broadcasting";
 import DerivativeUse from "./DerivativeUse";
 import Introduction from "./Introduction";
+import { SubmitHandler, useForm } from "react-hook-form";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createNewContract } from "@/store/actions/contracts.action";
+import { useDispatch } from "react-redux";
+
+const albumSchema = z.object({
+  album: z.object({
+    title: z.string().refine((value) => value.trim() !== "", {
+      message: "Title is required.",
+    }),
+    cover: z.string().refine((value) => value.trim() !== "", {
+      message: "Cover is required.",
+    }),
+    audios: z.array(z.object({
+      id: z.string(),
+      title: z.string(),
+      audio: z.string(),
+      url: z.string(),
+      code: z.string(),
+    })).refine((value) => value.length > 0, {
+      message: "At least one audio is required.",
+    }),
+  }),
+});
+
+const membersSchema = z.object({
+  members: z.object({
+    masterOwners: z.array(
+      z.object({
+        id: z.number(),
+        name: z.string(),
+        surName: z.string(),
+        value: z.string(),
+        email: z.string(),
+        avatar: z.string(),
+        code: z.string(),
+        revenue: z.number(),
+        role: z.string(),
+      })
+    ).refine((value) => value.length > 0, {
+      message: "At least one Master Owner is required.",
+    }),
+
+    artists: z.array(
+      z.object({
+        id: z.number(),
+        name: z.string(),
+        surName: z.string(),
+        value: z.string(),
+        email: z.string(),
+        avatar: z.string(),
+        code: z.string(),
+        revenue: z.number(),
+        role: z.string(),
+      })
+    ).refine((value) => value.length > 0, {
+      message: "At least one Artists is required.",
+    }),
+  }).refine((value) => value.masterOwners.length > 0 || value.artists.length > 0, {
+    message: "At least one Master Owner & Artists is required.",
+  }),
+});
 
 export default function NewContract() {
+  const dispatch = useDispatch();
   const [steps, setSteps] = useState(STEPS);
   const [contractCreation, setContractCreation] = useState({
     album: {
@@ -43,6 +107,19 @@ export default function NewContract() {
     10: false,
   });
 
+  const schema = currentStep === StepIndex.CONTRIBUTORS ? albumSchema : currentStep === StepIndex.TEAMS ? membersSchema : ""
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(schema as any),
+    defaultValues: contractCreation,
+  });
+
   const handleBack = () => {
     if (currentStep === StepIndex.ADDITIONALCONDITIONS) {
       if (checkedBoxes[StepIndex.SHARES]) {
@@ -65,11 +142,14 @@ export default function NewContract() {
       const previousPage = Object.keys(checkedBoxes)
         .reverse()
         .find((page) => checkedBoxes[page] && parseInt(page, 10) < currentStep);
-      if(previousPage && parseInt(previousPage) < 5){
+      if (previousPage && parseInt(previousPage) < 5) {
         setCurrentStep(StepIndex.ADDITIONALCONDITIONS);
-      }
-        else if (previousPage) {
-        setCurrentStep(previousPage ? parseInt(previousPage, 10) : StepIndex.ADDITIONALCONDITIONS);
+      } else if (previousPage) {
+        setCurrentStep(
+          previousPage
+            ? parseInt(previousPage, 10)
+            : StepIndex.ADDITIONALCONDITIONS
+        );
       } else {
         setCurrentStep(StepIndex.ADDITIONALCONDITIONS);
       }
@@ -87,7 +167,9 @@ export default function NewContract() {
       setCurrentStep((prevStep) => Math.min(prevStep + 1, 11));
     } else if (currentStep === StepIndex.ADDITIONALCONDITIONS) {
       const selectedSteps = Object.keys(checkedBoxes).filter(
-        (step) => checkedBoxes[step] && parseInt(step, 11) > StepIndex.ADDITIONALCONDITIONS
+        (step) =>
+          checkedBoxes[step] &&
+          parseInt(step, 11) > StepIndex.ADDITIONALCONDITIONS
       );
       if (selectedSteps.length > 0) {
         const nextStep = Math.min(...selectedSteps.map(Number));
@@ -120,121 +202,19 @@ export default function NewContract() {
     });
   };
 
-  const loadCardByStep = useCallback(() => {
-    switch (currentStep) {
-      case StepIndex.CONTRIBUTORS:
-        return (
-          <Contributors
-            handleNextStep={handleNext}
-            contractCreation={contractCreation}
-            setContractCreation={setContractCreation}
-          />
-        );
-      case StepIndex.TEAMS:
-        return (
-          <Teams
-            handleNextStep={handleNext}
-            handleBackStep={handleBack}
-            contractCreation={contractCreation}
-            handleSwitchChange={handleSwitchChange}
-            setContractCreation={setContractCreation}
-          />
-        );
-      case StepIndex.RECORDINGS:
-        return (
-          <Recordings
-            handleNextStep={handleNext}
-            handleBackStep={handleBack}
-            contractCreation={contractCreation}
-            setContractCreation={setContractCreation}
-          />
-        );
-      case StepIndex.SHARES:
-        return (
-          <Shares
-            handleNextStep={handleNext}
-            handleBackStep={handleBack}
-            contractCreation={contractCreation}
-            setContractCreation={setContractCreation}
-          />
-        );
-      case StepIndex.ADDITIONALCONDITIONS:
-        return (
-          <AdditionalConditions
-            handleNextStep={handleNext}
-            handleBackStep={handleBack}
-            checkedBoxes={checkedBoxes}
-            handleSwitchChange={handleSwitchChange}
-            contractCreation={contractCreation}
-            setContractCreation={setContractCreation}
-          />
-        );
-      case StepIndex.BUDGET:
-        return (
-          <Budget
-            handleNextStep={handleNext}
-            handleBackStep={handleBack}
-            contractCreation={contractCreation}
-            setContractCreation={setContractCreation}
-          />
-        );
-      case StepIndex.ROYALTIES_ADVANCES:
-        return (
-          <RoyaltyAdvances
-            handleNextStep={handleNext}
-            handleBackStep={handleBack}
-            contractCreation={contractCreation}
-            setContractCreation={setContractCreation}
-          />
-        );
-      case StepIndex.ABATEMENTS:
-        return (
-          <Abatements
-            handleNextStep={handleNext}
-            handleBackStep={handleBack}
-            contractCreation={contractCreation}
-            setContractCreation={setContractCreation}
-          />
-        );
-      case StepIndex.BROADCASTING:
-        return (
-          <Broadcasting
-            handleNextStep={handleNext}
-            handleBackStep={handleBack}
-            contractCreation={contractCreation}
-            setContractCreation={setContractCreation}
-          />
-        );
-      case StepIndex.DERIVATIVE_USE:
-        return (
-          <DerivativeUse
-            handleNextStep={handleNext}
-            handleBackStep={handleBack}
-            contractCreation={contractCreation}
-            setContractCreation={setContractCreation}
-          />
-        );
-      case StepIndex.INTRODUCTION:
-        return (
-          <Introduction
-            handleNextStep={handleNext}
-            handleBackStep={handleBack}
-            contractCreation={contractCreation}
-          />
-        );
-      default:
-        return;
-    }
-  }, [currentStep, handleNext]);
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    console.log("data Console in onSubmit", data);
+    dispatch(createNewContract(data) as any)
+  };
 
   return (
     <ContractBuilderProvider>
       <div className="h-[inherit] xl:w-[1241px] w-full flex flex-col gap-20 relative">
         <div
-          className={`absolute top-9 hidden lg:block z-10 ${currentStep === StepIndex.INTRODUCTION ||
-              currentStep === StepIndex.ADDITIONALCONDITIONS
-              ? "left-1/2 translate-x-[-50%] w-[454px]"
-              : "left-[88px] w-[50%]"
+          className={`absolute top-9 hidden lg:flex z-10 ${currentStep === StepIndex.INTRODUCTION ||
+            currentStep === StepIndex.ADDITIONALCONDITIONS
+            ? "left-1/2 translate-x-[-50%] w-[454px]"
+            : "left-0 w-[50%] justify-center"
             }`}
         >
           <ProgressSteps
@@ -243,8 +223,136 @@ export default function NewContract() {
             steps={steps?.sort((a: any, b: any) => a.id - b.id)}
           />
         </div>
-        <div className="flex-1 h-full">{loadCardByStep()}</div>
+        <div className="flex-1 h-full">
+          <form onSubmit={handleSubmit(onSubmit as any)}>
+            {/* {loadCardByStep()} */}
+            {currentStep === StepIndex.CONTRIBUTORS && (
+              <Contributors
+                handleNextStep={handleNext}
+                contractCreation={contractCreation}
+                setContractCreation={setContractCreation}
+                register={register}
+                watch={watch}
+                setValue={setValue}
+                schema={albumSchema}
+                errors={errors}
+              />
+            )}
+
+            {currentStep === StepIndex.TEAMS && (
+              <Teams
+                handleNextStep={handleNext}
+                handleBackStep={handleBack}
+                contractCreation={contractCreation}
+                handleSwitchChange={handleSwitchChange}
+                setContractCreation={setContractCreation}
+                watch={watch}
+                setValue={setValue}
+                schema={membersSchema}
+                errors={errors}
+              />
+            )}
+
+            {currentStep === StepIndex.RECORDINGS && (
+              <Recordings
+                handleNextStep={handleNext}
+                handleBackStep={handleBack}
+                contractCreation={contractCreation}
+                setContractCreation={setContractCreation}
+                watch={watch}
+                setValue={setValue}
+              />
+            )}
+
+            {currentStep === StepIndex.SHARES && (
+              <Shares
+                handleNextStep={handleNext}
+                handleBackStep={handleBack}
+                contractCreation={contractCreation}
+                setContractCreation={setContractCreation}
+                watch={watch}
+                setValue={setValue}
+              />
+            )}
+
+            {currentStep === StepIndex.ADDITIONALCONDITIONS && (
+              <AdditionalConditions
+                handleNextStep={handleNext}
+                handleBackStep={handleBack}
+                checkedBoxes={checkedBoxes}
+                handleSwitchChange={handleSwitchChange}
+                contractCreation={contractCreation}
+                setContractCreation={setContractCreation}
+                setValue={setValue}
+              />
+            )}
+
+            {currentStep === StepIndex.BUDGET && (
+              <Budget
+                handleNextStep={handleNext}
+                handleBackStep={handleBack}
+                contractCreation={contractCreation}
+                setContractCreation={setContractCreation}
+                setValue={setValue}
+              />
+            )}
+
+            {currentStep === StepIndex.ROYALTIES_ADVANCES && (
+              <RoyaltyAdvances
+                handleNextStep={handleNext}
+                handleBackStep={handleBack}
+                contractCreation={contractCreation}
+                setContractCreation={setContractCreation}
+                watch={watch}
+                setValue={setValue}
+              />
+            )}
+
+            {currentStep === StepIndex.ABATEMENTS && (
+              <Abatements
+                handleNextStep={handleNext}
+                handleBackStep={handleBack}
+                contractCreation={contractCreation}
+                setContractCreation={setContractCreation}
+                watch={watch}
+                setValue={setValue}
+              />
+            )}
+
+            {currentStep === StepIndex.BROADCASTING && (
+              <Broadcasting
+                handleNextStep={handleNext}
+                handleBackStep={handleBack}
+                contractCreation={contractCreation}
+                setContractCreation={setContractCreation}
+                watch={watch}
+                setValue={setValue}
+              />
+            )}
+
+            {currentStep === StepIndex.DERIVATIVE_USE && (
+              <DerivativeUse
+                handleNextStep={handleNext}
+                handleBackStep={handleBack}
+                contractCreation={contractCreation}
+                setContractCreation={setContractCreation}
+                watch={watch}
+                setValue={setValue}
+              />
+            )}
+
+            {currentStep === StepIndex.INTRODUCTION && (
+              <Introduction
+                handleNextStep={handleNext}
+                handleBackStep={handleBack}
+                contractCreation={contractCreation}
+                watch={watch}
+                onSubmit={onSubmit}
+              />
+            )}
+          </form>
+        </div>
       </div>
-    </ContractBuilderProvider>
+    </ContractBuilderProvider >
   );
 }

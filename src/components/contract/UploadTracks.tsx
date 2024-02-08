@@ -16,6 +16,7 @@ import { InfoIcon } from "lucide-react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 
 interface Props {
+  contractCreation: any;
   handleNextStep: any;
   selectedFile: any;
   setSelectedFile: any;
@@ -23,9 +24,15 @@ interface Props {
   setUpdateValue: any;
   setUpdatedTracks: any;
   updatedTracks: any;
+  register: any
+  setValue: any
+  watch: any
+  schema: any
+  errors: any
 }
 
 export default function UploadTracks({
+  contractCreation,
   handleNextStep,
   selectedFile,
   setSelectedFile,
@@ -33,6 +40,11 @@ export default function UploadTracks({
   setUpdateValue,
   setUpdatedTracks,
   updatedTracks,
+  register,
+  setValue,
+  watch,
+  schema,
+  errors,
 }: Props) {
   const [selectedAudios, setSelectedAudios] = useState<
     { id: string; title: string; audio: string; url?: string }[]
@@ -92,6 +104,16 @@ export default function UploadTracks({
   };
 
   const handleClickNext = () => {
+    const validationResult = schema?.safeParse({
+      album: {
+        title: watch("album.title"),
+        cover: watch("album.cover"),
+        audios: watch("album.audios")
+      }
+    })
+    if (!validationResult.success) {
+      return;
+    }
     toast("Tracks updated successfully!", {
       description: "Tracks",
       action: {
@@ -128,11 +150,15 @@ export default function UploadTracks({
             Enter the album title and your tracks audio folder.
           </p>
           <h6 className="mb-2.5">Album title</h6>
-          <Input
-            className="bg-modal mb-[55px]"
-            value={updateValue}
-            onChange={(e) => setUpdateValue(e.target.value)}
-          />
+          <div className="mb-[55px]">
+            <Input
+              className="bg-modal"
+              value={updateValue}
+              onChange={(e) => setUpdateValue(e.target.value)}
+            />
+
+            <p className="mt-2 text-[red]">{(updateValue === "" && !contractCreation?.album?.title) && errors?.album?.title?.message}</p>
+          </div>
           <Card className="bg-modal mb-8">
             <CardHeader className="flex-row gap-3 space-y-0 items-center py-2.5">
               <UploadCloud className="h-5 w-5" />
@@ -161,21 +187,21 @@ export default function UploadTracks({
                         type="file"
                         hidden
                         onChange={handleFileUpload}
-                        value={""}
                       />
                     </label>
+                    <p className="mt-2 text-[red]"> {(selectedFile === "" && !contractCreation?.album?.cover) && errors?.album?.cover?.message}</p>
                   </div>
                 </label>
-                {selectedFile && (
+                {watch("album.cover") && (
                   <div>
                     <div className="bg-modal rounded-xl selected-image-container z-20 absolute h-full w-full inset-0 flex items-center justify-center">
                       <img
-                        src={selectedFile}
+                        src={watch("album.cover")}
                         alt="Selected Image"
                         className="h-full w-full object-cover rounded-xl"
                       />
                       <Button
-                        onClick={handleRemoveFile}
+                        onClick={() => setValue("album.cover", "")}
                         className="absolute top-1 right-1 h-5 w-5 flex items-center justify-center shadow-sm rounded-full p-0"
                       >
                         <XMarkIcon className="text-black3" />
@@ -215,6 +241,7 @@ export default function UploadTracks({
                         value={""}
                       />
                     </label>
+                    <p className="mt-2 text-[red]">{(contractCreation?.album?.audios?.length === 0 && errors?.album?.audios?.message) && errors?.album?.audios?.message}</p>
                   </div>
                 </label>
                 {selectedAudio && (

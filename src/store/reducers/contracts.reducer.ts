@@ -1,10 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getContractById } from "../actions/contracts.action";
+import {
+  createNewContract,
+  getContractById,
+} from "../actions/contracts.action";
 
 export const contractSlice = createSlice({
   name: "contracts",
   initialState: {
     contractbyID: {},
+    newContract: {},
     status: "idle",
     error: null,
   },
@@ -25,6 +29,28 @@ export const contractSlice = createSlice({
     );
     builder.addCase(
       getContractById.rejected,
+      (state: any, { payload }: any) => {
+        state.isLoading = false;
+        state.error = true;
+        if (payload) state.message = payload?.message;
+      }
+    );
+
+    // createContract
+    builder.addCase(createNewContract.pending, (state: any) => {
+      state.isLoading = true;
+      state.error = false;
+    });
+    builder.addCase(
+      createNewContract.fulfilled,
+      (state: any, { payload }: any) => {
+        state.newContract = payload;
+        state.isLoading = false;
+        state.error = false;
+      }
+    );
+    builder.addCase(
+      createNewContract.rejected,
       (state: any, { payload }: any) => {
         state.isLoading = false;
         state.error = true;

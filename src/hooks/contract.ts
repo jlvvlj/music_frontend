@@ -1,10 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
-import { getContractById } from "@/store/actions/contracts.action";
+import {
+  createNewContract,
+  getContractById,
+} from "@/store/actions/contracts.action";
 
 const Contracts = () => {
   const dispatch = useDispatch();
-  const { contractbyID }: any = useSelector<RootState>(
+  const { contractbyID, newContract }: any = useSelector<RootState>(
     (state: any) => state.contracts
   );
 
@@ -12,9 +15,15 @@ const Contracts = () => {
     return dispatch<any>(getContractById(id));
   };
 
+  const createContract = (contract: any) => {
+    return dispatch<any>(createNewContract(contract));
+  };
+
   return {
     contractbyID,
     getContractByID,
+    newContract,
+    createContract,
   };
 };
 

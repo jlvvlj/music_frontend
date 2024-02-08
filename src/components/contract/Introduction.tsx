@@ -14,18 +14,19 @@ const questions = [
     { id: 3, que: 'What\'s your annual revenue?', value1: 'option 1', value2: 'option 2' }
 ]
 
-const Introduction = ({ handleBackStep }: any) => {
+const Introduction = ({ handleBackStep, watch, onSubmit }: any) => {
     const [modalOpen, setModalOpen] = useState(false);
 
     const handleClickNext = () => {
-        toast("Derivative used successfully", {
-            description: "Derivative",
+        toast("Contract Created successfully", {
+            description: "",
             action: {
                 label: "X",
                 onClick: () => { },
             },
             position: "top-right"
         });
+        onSubmit(watch())
         setModalOpen(true)
     };
 
@@ -68,7 +69,7 @@ const Introduction = ({ handleBackStep }: any) => {
                                 )}
                                 <div className="space-y-1">
                                     <Label>How did you hear about Circle?</Label>
-                                    <Input type="text" placeholder="" className="bg-modal"/>
+                                    <Input type="text" placeholder="" className="bg-modal" />
                                 </div>
                             </div>
                         </div>
@@ -85,6 +86,7 @@ const Introduction = ({ handleBackStep }: any) => {
                         <div className="flex gap-4">
                             <Button
                                 className="bg-mblue"
+                                type="submit"
                                 variant="outline"
                                 onClick={handleClickNext}
                             >
