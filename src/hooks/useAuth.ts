@@ -1,15 +1,15 @@
 import { RootState } from "@/store";
 import { loginAction, signUpAction } from "@/store/actions/auth.action";
-import { UserState, setIsToast } from "@/store/reducers/auth.reducer";
+import { UserInitialState, setIsToast } from "@/store/reducers/users.reducer";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 
 const useAuth = () => {
-  const { data, isLoading, isToast, error, message } = useSelector<
+  const { user, tokens, isLoading, isToast, error, message } = useSelector<
     RootState,
-    UserState
-  >((state) => state.auth);
+    UserInitialState
+  >((state: any) => state.users);
   const dispatch = useDispatch();
 
   const signUp = async (body: {
@@ -35,7 +35,8 @@ const useAuth = () => {
   }, [isToast, message, error]);
 
   return {
-    data,
+    user,
+    tokens,
     isLoading,
     isToast,
     error,

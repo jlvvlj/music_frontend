@@ -62,8 +62,8 @@ const UserAuthForm = ({ className, ...props }: UserAuthFormProps) => {
         if (result.payload.status === 201) {
           router.push("/login");
         } else if (result.payload.status === 200) {
-          router.push("/dashboard");
           localStorage.setItem("tokens", JSON.stringify(result.payload.data.tokens))
+          router.push("/dashboard");
         }
       } catch (err: any) {
         if (err?.message) {

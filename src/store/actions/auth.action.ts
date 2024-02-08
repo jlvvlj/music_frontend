@@ -35,7 +35,7 @@ export const loginAction = createAsyncThunk<
       "/auth/login",
       arg
     );
-    if (status !== 201) {
+    if (status !== 200) {
       return thinkAPI.rejectWithValue(
         new Error(data.message || "Something is wrong here")
       );
@@ -43,12 +43,12 @@ export const loginAction = createAsyncThunk<
     localStorage.setItem("tokens", data.data);
     return thinkAPI.fulfillWithValue(data);
   } catch (error: any) {
-    if (error.data.message)
+    if (error.response.data)
       return thinkAPI.rejectWithValue(
-        new Error(error.data.message || "Something went wrong")
+        new Error(error.response.data.error || "Something went wrong")
       );
     return thinkAPI.rejectWithValue(
-      new Error(error.message || "Something is wrong here")
+      new Error(error.response || "Something is wrong here")
     );
   }
 });
