@@ -40,7 +40,6 @@ export const loginAction = createAsyncThunk<
         new Error(data.message || "Something is wrong here")
       );
     }
-    localStorage.setItem("tokens", data.data);
     return thinkAPI.fulfillWithValue(data);
   } catch (error: any) {
     if (error.response.data)
