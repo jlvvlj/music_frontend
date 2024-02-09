@@ -6,10 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 
 const useAuth = () => {
-  const { user, tokens, isLoading, isToast, error, message } = useSelector<
-    RootState,
-    UserInitialState
-  >((state: any) => state.users);
+  const { user, tokens, isLoading, isToast, error, message, isLogin } =
+    useSelector<RootState, UserInitialState>((state: any) => state.users);
   const dispatch = useDispatch();
 
   const signUp = async (body: {
@@ -43,6 +41,7 @@ const useAuth = () => {
     message,
     signUp,
     login,
+    isLogin,
   };
 };
 
