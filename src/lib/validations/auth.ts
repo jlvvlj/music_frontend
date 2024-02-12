@@ -1,5 +1,15 @@
 import * as z from "zod";
 
+export const verifyCodeSchema = z
+  .object({
+    code: z
+      .string({
+        required_error: "Code is required",
+      })
+      .min(1, { message: "Code is required" })
+      .max(6, { message: "Code is required" }),
+  });
+
 export const signUpSchema = z
   .object({
     firstName: z

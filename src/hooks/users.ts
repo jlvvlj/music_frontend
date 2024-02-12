@@ -8,8 +8,11 @@ import {
 
 const Users = () => {
   const dispatch = useDispatch();
-  const { userFriends, userContracts, userTracks, loading }: any =
+  const { userFriends, userContracts, userTracks, loading, user }: any =
     useSelector<RootState>((state: any) => state.users);
+
+    const ddd = useSelector((state) => state.users);
+    console.log("dsdsd sd sd sd s ds d sd", ddd)
 
   const getFriends = () => {
     return dispatch<any>(getUserFriends());

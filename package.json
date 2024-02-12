@@ -50,6 +50,7 @@
     "class-variance-authority": "^0.6.1",
     "clsx": "^1.2.1",
     "cmdk": "^0.2.0",
+    "cookies-next": "^4.1.1",
     "country-flag-icons": "^1.5.9",
     "date-fns": "^2.30.0",
     "eslint": "8.44.0",

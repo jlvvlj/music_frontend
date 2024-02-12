@@ -4,9 +4,9 @@ import { currentUser } from "@clerk/nextjs";
 export default async function ProtectedAuthLayout({
   children,
 }: React.PropsWithChildren) {
-  const tokens = typeof localStorage !== 'undefined' ? localStorage.getItem("tokens") : false
+  const user = await currentUser();
 
-  if (tokens) {
+  if (user) {
     redirect("/dashboard");
   }
 

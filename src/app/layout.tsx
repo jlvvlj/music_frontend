@@ -6,7 +6,6 @@ import { Roboto_Mono, Inter, Noto_Sans_Display } from "next/font/google";
 import Sidebar from "./Sidebar";
 import SidebarLayout from "./SidebarLayout";
 import { Toaster } from "sonner";
-import { PublicRoutes } from "@/hocs/PublicRoutes";
 
 const roboto = Roboto_Mono({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
@@ -17,7 +16,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <PublicRoutes>
       <ClerkProvider>
         <html lang="en">
           <body className={`${roboto.className} flex`}>
@@ -26,6 +24,5 @@ export default function RootLayout({
           <Toaster />
         </html>
       </ClerkProvider>
-    </PublicRoutes>
   );
 }

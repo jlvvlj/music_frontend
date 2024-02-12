@@ -6,15 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 
 const useAuth = () => {
-  const { user, tokens, isLoading, isToast, error, message, isLogin } =
+  const { user, isLoading, isToast, error, message, isLogin } =
     useSelector<RootState, UserInitialState>((state: any) => state.users);
   const dispatch = useDispatch();
 
-  const signUp = async (body: {
+  const createUser = async (body: {
     firstName: string;
     lastName: string;
     email: string;
     password: string;
+    clerkUserId: string;
   }) => {
     return await dispatch<any>(signUpAction(body));
   };
@@ -34,12 +35,11 @@ const useAuth = () => {
 
   return {
     user,
-    tokens,
     isLoading,
     isToast,
     error,
     message,
-    signUp,
+    createUser,
     login,
     isLogin,
   };
