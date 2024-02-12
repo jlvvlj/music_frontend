@@ -5,6 +5,8 @@ import {
   getUserTracks,
 } from "../actions/users.action";
 import { loginAction, signUpAction } from "../actions/auth.action";
+import { getCookie } from 'cookies-next';
+import Cookie from "../../services/cookie.service";
 
 export type User = {
   id: number;
@@ -34,10 +36,6 @@ export type Tokens = {
 };
 
 export type UserState = {
-  data: {
-    user?: User;
-    tokens?: Tokens;
-  };
   isLogin: boolean;
   isLoading: boolean;
   error: boolean;
@@ -46,7 +44,6 @@ export type UserState = {
 };
 export type UserInitialState = {
   user: User;
-  tokens: Tokens;
   isLogin: boolean;
   isLoading: boolean;
   error: boolean;
@@ -58,21 +55,23 @@ export type UserInitialState = {
   status: string;
 };
 
+const initialState = {
+  user: Cookie.getItem('user'),
+  token: getCookie('__session'),
+  isLogin: false,
+  userFriends: [],
+  userContracts: [],
+  userTracks: [],
+  status: "idle",
+  error: false,
+  isLoading: false,
+  message: "",
+  isToast: false,
+};
+
 export const userSlice = createSlice({
   name: "users",
-  initialState: {
-    userFriends: [],
-    userContracts: [],
-    userTracks: [],
-    status: "idle",
-    error: false,
-    user: {},
-    tokens: {},
-    isLogin: false,
-    isLoading: false,
-    message: "",
-    isToast: false,
-  },
+  initialState,
   reducers: {
     setIsToast(
       state,
@@ -92,6 +91,7 @@ export const userSlice = createSlice({
     });
     builder.addCase(signUpAction.fulfilled, (state, { payload }: any) => {
       state.isLoading = false;
+      state.user = payload.data;
       state.isToast = true;
       state.error = false;
       if (payload.message) {
@@ -112,8 +112,7 @@ export const userSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(loginAction.fulfilled, (state: any, { payload }: any) => {
-      state.user = payload.data.user;
-      state.tokens = payload.data.tokens;
+      state.user = payload.data;
       state.isLogin = true;
       state.isLoading = false;
       state.isToast = true;

@@ -1,9 +1,11 @@
+import Cookie from "@/services/cookie.service";
 import axiosClient, { APISuccessResponse } from "@/utils/axiosClient";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { setCookie } from 'cookies-next';
 
 export const signUpAction = createAsyncThunk<
   APISuccessResponse,
-  { firstName: string; lastName: string; email: string; password: string }
+  { firstName: string; lastName: string; email: string; password: string, clerkUserId: string }
 >("auth/register", async (arg, thinkAPI) => {
   try {
     const { data, status } = await axiosClient.post<APISuccessResponse, any>(
@@ -14,6 +16,7 @@ export const signUpAction = createAsyncThunk<
       return thinkAPI.rejectWithValue(
         new Error(data.message || "Something is wrong here")
       );
+    Cookie.setItem("user", data?.data)
     return thinkAPI.fulfillWithValue(data);
   } catch (error: any) {
     if (error.response.data)
@@ -40,7 +43,7 @@ export const loginAction = createAsyncThunk<
         new Error(data.message || "Something is wrong here")
       );
     }
-    localStorage.setItem("tokens", data.data);
+    Cookie.setItem("user", data?.data)
     return thinkAPI.fulfillWithValue(data);
   } catch (error: any) {
     if (error.response.data)

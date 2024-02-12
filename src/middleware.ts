@@ -9,12 +9,6 @@ export default authMiddleware({
     "/login(.*)",
     "/signup(.*)",
     "/sso-callback(.*)(.*)",
-    "/signout",
-    "/dashboard(.*)",
-    "/settings",
-    "/artist-settings",
-    "/music(.*)",
-    "/contracts_settings(.*)(.*)",
   ],
 
   async afterAuth(auth, req) {

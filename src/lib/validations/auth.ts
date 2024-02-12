@@ -1,17 +1,27 @@
 import * as z from "zod";
 
+export const verifyCodeSchema = z
+  .object({
+    code: z
+      .string({
+        required_error: "Code is required",
+      })
+      .min(1, { message: "Code is required" })
+      .max(6, { message: "Code is required" }),
+  });
+
 export const signUpSchema = z
   .object({
     firstName: z
       .string({
-        required_error: "First name is required",
+        required_error: "FirstName is required",
       })
-      .min(1, { message: "First name is required" }),
+      .min(1, { message: "FirstName is required" }),
     lastName: z
       .string({
-        required_error: "Last name is required",
+        required_error: "LastName is required",
       })
-      .min(1, { message: "Last name is required" }),
+      .min(1, { message: "LastName is required" }),
     email: z
       .string({
         required_error: "Email is required",

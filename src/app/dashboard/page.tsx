@@ -2,23 +2,16 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Plus, X } from "lucide-react";
-import Image from "next/image";
 import "../globals.css";
-import SheetSide from "./sheet-side";
 import { ThemeProvider } from "@/components/theme-provider";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-import CreateTrackTabs from "@/components/track/createTrackTabs";
 import TracksTable from "./tracks_table";
 import Graph from "./graph";
 import NewContractModal from "@/components/contract/NewContractModal";
@@ -41,7 +34,6 @@ export default function DashboardPage() {
     dispatch(getUserFriends() as any);
     dispatch(getUserTracks() as any);
     dispatch(getOneTrack() as any);
-
     dispatch(getUserContracts() as any);
   }, [dispatch]);
   return (
